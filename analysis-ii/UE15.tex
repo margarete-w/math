@@ -1,0 +1,109 @@
+\documentclass[a4paper, landscape,twocolumn,8pt]{scrartcl}
+
+\usepackage[latin1]{inputenc}  
+\usepackage[T1]{fontenc}        %Schriftsatz Dokument
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{ mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{blindtext}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{skak}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{physics}
+\usepackage{ulem}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Style
+\setlength{\columnsep}{8mm}
+\geometry{
+ left=8mm,
+ right=8mm,
+ bottom=16mm,
+ top = 16mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Sofia (391511), Robert (390593)}
+\lhead{\textbf{Analysisblatt 15} |  Niklas Jakob (MA 642, Freitag 10-12 Uhr)}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+
+\section*{Aufgabe 1}
+\begin{proof}
+Sei $G \in \mathbb R$. Gesucht ist ein $\delta>0$, sodass f"ur alle $x\in(r-\delta,r)$ gilt $\sum^{\infty}_{k=0}a_kx^k > G$.  Es gilt $\sum^{\infty}_{k=0}a_kr^k = \infty$, weil alle $a_k\geq0$ und $r>0$. Dann gibt es ein Index $J \in \mathbb N$ mit $\sum^{J}_{k=0}a_kr^k = \crown P > G$. Sei $p(x) \coloneqq \sum^{J}_{k=0}a_kx^k$. Die Funktion $p$ ist ein Polynom und somit stetig in $r$. Wegen der Stetigkeit von $p$ gibt es f"ur $\epsilon \coloneqq \crown P - G$ ein $\delta > 0$, sodass f"ur alle $x \in (r-\delta,r)$ gilt $|p(x)-\crown P| < \epsilon$. Also f"ur alle $x \in (r-\delta,r)$: $\crown P - \epsilon = G < p(x) \underset{(*)}{\leq} \sum^{\infty}_{k=0}a_kx^k$, wobei sich (*) ergibt wegen $a_k\geq 0$ f"ur alle $k \in \mathbb N$. Damit haben wir ein solches $\delta$ gefunden.
+\end{proof}
+
+
+\section*{Aufgabe 2}
+\begin{enumerate}[label=(\roman*)]
+    %%%%%%%%%%%%%%%%%%
+    %% Aufgabe i
+    %%%%%%%%%%%%%%%%%%
+    \item \underline{1.Fall:} $n$ ist gerade. 
+    \begin{align*}
+        n! &= n \cdot (n-1) \cdot ... \cdot (\frac{n}{2}+1) \cdot \frac{n}{2} \cdot (\frac{n}{2}-1) \cdot ... \cdot 1 > \underbrace{n \cdot (n-1) \cdot ... \cdot (\frac{n}{2}+1)}_{\frac{n}{2} Faktoren} > (\frac{n}{2})^{\frac{n}{2}}
+    \end{align*}
+    \underline{2.Fall:} $n$ ist ungerade. 
+    \begin{align*}
+        n! > \underbrace{n \cdot (n-1) \cdot ... \cdot \frac{n+1}{2}}_{\frac{n+1}{2} Faktoren} > (\frac{n+1}{2})^{\frac{n+1}{2}} > (\frac{n}{2})^{\frac{n}{2}}
+    \end{align*}
+    Wir untersuchen nun $\lim_{n \to \infty} \sqrt[n]{n!}$. Wegen $\lim_{n \to \infty} \sqrt[n]{(\frac{n}{2})^{\frac{n}{2}}} = \lim_{n \to \infty}\sqrt{\frac{n}{2}} = \infty$ und $n! > (\frac{n}{2})^{\frac{n}{2}}$ f"ur $n \in \mathbb N_{>0}$ ist auch $\lim_{n \to \infty} \sqrt[n]{n!} = \infty$.
+    %%%%%%%%%%%%%%%%%%
+    %% Aufgabe ii
+    %%%%%%%%%%%%%%%%%%
+    \item Die Reihe $J_n(x) = \sum^{\infty}_{k=0}\frac{(-1)^kx^{n+2k}}{2^{n+2k}k!(n+k)!} = \sum^{\infty}_{i=0}a_{i,n}x^i$ hat die Koeffizienten 
+    \[
+        a_{i,n} \coloneqq \begin{cases}
+                            \frac{(-1)^k}{2^{n+2k}k!(n+k)!}, \quad &\text{falls $i = n+2k$ f"ur ein $k \in \mathbb N$} \\
+                            0, \quad &\text{sonst.}
+                        \end{cases}
+    \]
+    
+    Berechne den Konvergenzradius von $J_n$, indem wir $\limsup_{i \to \infty} \sqrt[i]{|a_{i,n}|}$ f"ur beliebige $n \in \mathbb N$ betrachten. Wegen $|\frac{(-1)^k}{2^{n+2k}k!(n+k)!}| > 0$ brauchen wir nur den $\lim$ betrachten, also
+    \begin{align*}
+        \limsup_{i \to \infty} \sqrt[i]{|a_{i,n}|} = \lim_{k \to \infty} \sqrt[k]{\frac{1}{2^{n+2k}k!(n+k)!}} = \lim_{k \to \infty} \frac{1}{\sqrt[k]{2^n}\cdot4\underbrace{\sqrt[k]{k!}\sqrt[k]{(n+k)!}}_{=\infty}} = 0.
+    \end{align*}
+    Der Konvergenzradius betr"agt $R = \infty$ f"ur alle $n \in \mathbb N$, sodass $J_n(x)$ f"ur alle $x \in \mathbb R$ und $n \in \mathbb N$ konvergiert.
+    %%%%%%%%%%%%%%%%%%
+    %% Aufgabe iii
+    %%%%%%%%%%%%%%%%%%
+    \item Es gilt $y''(x)+\frac{y'(x)}{x}+(1-\frac{n^2}{x^2})y(x)=0 \iff x^2y''(x)+xy'(x)+(x^2-n^2)y(x)=0$. Gliedweises Differenzieren von $J_n$ ergibt
+    \begin{align*}
+        xJ'_n(x) &= \sum^{\infty}_{k=0}(n+2k)\frac{(-1)^kx^{n+2k}}{2^{n+2k}k!(n+k)!},\\
+        x^2J''_n(x) &= \sum^{\infty}_{k=0}(n+2k-1)(n+2k)\frac{(-1)^kx^{n+2k}}{2^{n+2k}k!(n+k)!} \\
+        (x^2-n^2)J_n(x) &= \sum^{\infty}_{k=0}\frac{(-1)^kx^{n+2(k+1)}}{2^{n+2k}k!(n+k)!} - \sum^{\infty}_{k=0}\frac{n^2(-1)^kx^{n+2k}}{2^{n+2k}k!(n+k)!}\\
+        &= \sum^{\infty}_{k=1}\frac{(-1)^{k-1}x^{n+2k}}{2^{n+2k-2}(k-1)!(n+k-1)!} - \sum^{\infty}_{k=0}\frac{n^2(-1)^kx^{n+2k}}{2^{n+2k}k!(n+k)!}
+    \end{align*}
+    Betrachte Koeffizienten von $x^2J''_n(x)+xJ'_n(x)+(x^2-n^2)J_n(x)$. F"ur $k=0$ ergibt sich $\frac{n}{2^nn!} + \frac{(n-1)n}{2^nn!} - \frac{n^2}{2^nn!} = 0.$ F"ur $k>0$ ergibt sich f"ur die Koeffizienten
+    \begin{align*}
+        &\frac{(-1)^k(n+2k)}{2^{n+2k}k!(n+k)!} + \frac{(-1)^k(n+2k-1)(n+2k)}{2^{n+2k}k!(n+k)!} + \frac{(-1)^{k-1}}{2^{n+2k-2}(k-1)!(n+k-1)!} - \frac{(-1)^kn^2}{2^{n+2k}k!(n+k)!}\\
+        &= \frac{(-1)^k(n+2k)+(-1)^k(n+2k-1)(n+2k)+(-1)^{k-1}4k(n+k)-(-1)^kn^2}{2^{n+2k}k!(n+k)!}\\
+        &= \frac{(-1)^k(n+2k+n^2+2kn+2kn+4k^2-n-2k-n^2-4kn-4k^2)}{2^{n+2k}k!(n+k)!} = 0.
+    \end{align*}
+    Damit ist $x^2J''_n(x)+xJ'_n(x)+(x^2-n^2)J_n(x)=0$ und die Bessel'sche Gleichung ist erf"ullt.
+\end{enumerate}
+
+\end{document}

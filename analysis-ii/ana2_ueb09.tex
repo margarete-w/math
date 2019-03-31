@@ -1,0 +1,266 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=8pt]{scrartcl}
+
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{blindtext}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{skak}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage[dvipsnames]{xcolor} % coole Farben. muss vor pgfplots geladen werden
+\usepackage{tikz}
+\usepackage{breqn}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Style
+\setlength{\columnsep}{8mm}
+\geometry{
+ left=10mm,
+ right=10mm,
+ bottom=20mm,
+ top = 16mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Nguyen (395220) und Faltenbacher (391511)}
+\lhead{\textbf{\"Ubungsblatt 9 | Deutschland - Australien (1:5) } (Lehrmann MA850, Dienstag 8-10 Uhr)}
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+
+\begin{document}
+
+
+
+
+
+
+\section*{Aufgabe 34}
+Sei $A_0 \in L(E,F)$ sowie $x_0 \in E$. "Uberpr"ufe $\mathrm{ev}$ auf Differenzierbarkeit in $(A_0,x_0)$. Sie ist differenzierbar, falls es eine lineare Funktion $D_{(A_0,x_0)}\mathrm{ev}: L(E,F) \times E \to F$ gibt mit 
+\begin{align*}
+    \mathrm{ev}(A_0+H,x_0+h) = \mathrm{ev}(A_0,x_0) + D_{(A_0,x_0)}\mathrm{ev}(H,h) + R(H,h)
+\end{align*}
+f"ur $H \in L(E,F), h \in E$, sodass 
+\[
+    \lim_{(H,h) \to (0,0)} \frac{||R(H,h)||_F}{||(H,h)||} = 0.
+\]
+\textbf{Berechne 1. Ableitung:} Nun sind $H,A_0 \in L(E,F)$ lineare Funktionen und es gilt 
+\begin{align*}
+    \mathrm{ev}(A_0+H,x_0+h) &= (A_0+H)(x_0+h)\\ 
+    &= A_0(x_0+h) + H(x_0+h)\\ 
+    &= \underbrace{A_0(x_0)}_{=\mathrm{ev}(A_0,x_0)}+A_0(h) + H(x_0) + \underbrace{H(h)}_{=R(H,h)}.
+\end{align*}
+Demnach ist 
+\begin{framed}
+\begin{align}\label{glumanda}
+    D_{(A_0,x_0)}\mathrm{ev}(H,h) = A_0(h) + H(x_0).
+\end{align}
+\end{framed}
+
+\textbf{Beweis der Linearit"at:} Diese Funktion ist wirklich linear, denn f"ur alle $(H,h),(H',h') \in L(E,F) \times E$ gilt:
+\begin{align*}
+    D_{(A_0,x_0)}\mathrm{ev}(H+H',h+h') &= A_0(h+h') + (H+H')(x_0)\\
+    &= A_0(h) + H(x_0)  + A_0(h') + H'(x_0)\\
+    &= D_{(A_0,x_0)}\mathrm{ev}(H,h) + D_{(A_0,x_0)}\mathrm{ev}(H',h').
+\end{align*}
+\textbf{Resttermabsch"atzung:} "Uberpr"ufe, ob $R(H,h)$ schneller als linear gegen $0$ l"auft.
+\begin{align*}
+    \lim_{(H,h) \to (0,0)} \frac{||R(H,h)||_F}{||(H,h)||} = \lim_{(H,h) \to (0,0)} \frac{||H(h)||_F}{||(H,h)||}.
+\end{align*}
+Nun ist $||(H,h)|| = \max\{||H||, ||h||_E\}$, wobei $||H|| = \sup_{v \neq 0} \frac{||H(v)||_F}{||v||_E}$.
+\begin{itemize}
+    \item \emph{1.Fall:} $||(H,h)|| = ||h||_E$. Das bedeutet $||H|| \leq ||h||_E$. Also 
+    \begin{align}\label{tunesien}
+        \sup_{v \neq 0} \frac{||H(v)||_F}{||v||_E} \leq ||h||_E.
+    \end{align}
+    Wir erhalten 
+    \[
+        0 \leq \frac{||R(H,h)||_F}{||(H,h)||}  = \frac{||H(h)||_F}{||h||_E} \overset{\eqref{tunesien}}{\leq} ||h||_E.
+    \]
+    Wegen $||h||_E \to 0$ f"ur $h \to 0$ ergibt sich nach dem Sandwichlemma f"ur $(H,h) \to (0,0)$:
+    \[
+        \frac{||R(H,h)||_F}{||(H,h)||} \to 0.
+    \]
+    
+    
+    \item \emph{2.Fall:} $||(H,h)|| = ||H|| = \sup_{v \neq 0} \frac{||H(v)||_F}{||v||_E} > ||h||_E$. Also 
+    \begin{align*}
+        0 \leq \frac{||R(H,h)||_F}{||(H,h)||}  = \frac{||H(h)||_F}{||H||} &= \underbrace{\frac{||H(h)||_F}{||h||_E} \cdot \sup_{v \neq 0} \left(\frac{||H(v)||_F}{||v||_E}\right )^{-1}}_{\leq 1}  \cdot ||h||_E 
+         \leq ||h||_E.
+    \end{align*}
+    Wegen $||h||_E \to 0$ f"ur $h \to 0$ ergibt sich nach dem Sandwichlemma f"ur $(H,h) \to (0,0)$:
+    \[
+        \frac{||R(H,h)||_F}{||(H,h)||} \to 0.
+    \]
+\end{itemize}
+
+\textbf{Stetigkeit der 1. Ableitung:} Die Ableitung ist stetig, denn nach Voraussetzung sind $A_0,H \in L(E,F)$ stetig und die Addition stetiger Funktionen ist wieder stetig.\\
+
+\textbf{Berechne 2. Ableitung:} Seien $A_0,H_1,H_2 \in L(E,F)$ und $x_0,h_1,h_2 \in E$. Berechne die zweite Ableitung in $(A_0,x_0)$, d.h.  $D_{(A_0,x_0)}^2\mathrm{ev}(H_2,h_2)(H_1,h_1)$. Betrachte $\eqref{glumanda}$ und definiere f"ur ein \emph{festes} $(Y,y) \in L(E,F) \times E$:
+\[
+    \varphi_{(Y,y)}(A_0,x_0) \coloneqq A_0(y) + Y(x_0).
+\]
+
+Dann ist 
+\[
+    D_{(A_0,x_0)}^2\mathrm{ev}(H_2,h_2)(H_1,h_1) = D_{(A_0,x_0)}\varphi_{(H_2,h_2)}(H_1,h_1).
+\]
+
+Wir m"ussen also nur $\varphi_{(H_2,h_2)}$ ableiten in $(A_0,x_0)$. Es ist 
+\begin{align*}
+    \varphi_{(H_2,h_2)}(A_0+H_1,x_0+h_1) &= (A_0+H_1)(h_2) + H_2(x_0+h_1) \\
+    &= \underbrace{A_0(h_2) + H_2(x_0)}_{=\varphi_{(H_2,h_2)}(A_0,x_0)} + H_1(h_2) + H_2(h_1).
+\end{align*}
+Die zweite Ableitung lautet 
+\begin{framed}
+\begin{align*}
+    D_{(A_0,x_0)}^2\mathrm{ev}(H_2,h_2)(H_1,h_1) = H_1(h_2) + H_2(h_1) \quad \text{ mit } R = 0.
+\end{align*}
+\end{framed}
+
+\textbf{Linearit"at und Stetigkeit der 2. Ableitung: }Sie ist linear und stetig, denn $H_1,H_2 \in L(E,F)$ und somit auch $H_1+H_2 \in L(E,F)$.\\
+
+\textbf{Berechne 3. Ableitung:} Definiere $\psi_{(Y,y)(Z,z)}(A,x) \coloneqq D^2_{(A,x)}\mathrm{ev}(Y,y)(Z,z)$ mit festem $Y,Z \in L(E,F)$, $y,z \in E$ und beliebigem $(A,x) \in L(E,F) \times E$. F"ur die dritte Ableitung ergibt sich also
+\[
+    D_{(A_0,x_0)}^3\mathrm{ev}(H_3,h_3)(H_2,h_2)(H_1,h_1) = D_{(A_0,x_0)}\psi_{(H_3,h_3)(H_2,h_2)}(H_1,h_1).
+\]
+Nun ist 
+\[
+    \psi_{(H_3,h_3)(H_2,h_2)}(A_0,x_0) = H_1(h_2) + H_2(h_1) = \psi_{(H_3,h_3)(H_2,h_2)}(A_0+H_1,x_0+h_1).
+\]
+Daher ist die dritte Ableitung gleich $0$ mit Restterm $0$.
+\begin{framed}
+\[
+    D_{(A_0,x_0)}^3\mathrm{ev}(H_3,h_3)(H_2,h_2)(H_1,h_1) = 0, \quad \text{ mit } R(H_1,h_1) = 0.
+\]
+\end{framed}
+\textbf{4. und h"ohere Ableitungen: }Um $D^k\mathrm{ev}$ mit $k > 3$ zu berechnen, muss $D^{k-1}\mathrm{ev}$ abgeleitet werden. F"ur $k=4$ ergibt sich, dass $D^{4}\mathrm{ev} = 0$ wegen $D^{3}\mathrm{ev} = 0$. Dann ist f"ur $k \leadsto k+1$ auch $D^{k+1}\mathrm{ev} = 0$ wegen $D^{k}\mathrm{ev} = 0$. Also sind alle h"oheren Ableitungen der Stufe $4$ oder h"oher gleich $0$.
+
+\section*{Aufgabe 35}
+Sei $f(x,y) = \frac{x^3y-xy^3}{x^2+y^2}$ falls $(x,y) \neq (0,0)$. Ansonsten ist $f(0,0) = 0$.
+\begin{enumerate}[label=(\roman*)]
+    \item Berechne die partiellen Ableitungen von $f$ f"ur $(x,y) \neq (0,0)$. Verwende hierf"ur die Quotientenregel f"ur $\mathbb R$.
+    
+    \begin{align*}
+        \partial_1f(x,y) = \frac{(3x^2y-y^3)(x^2+y^2) - 2x(x^3y-xy^3)}{(x^2+y^2)^2} &= \frac{3x^4y-y^3x^2+3x^2y^3-y^5-2x^4y+2x^2y^3}{(x^2+y^2)^2}\\
+        &= \frac{4x^2y^3+x^4y-y^5}{(x^2+y^2)^2}.
+    \end{align*}
+    Sowie 
+    \begin{align*}
+        \partial_2f(x,y) = \frac{(x^3-3xy^2)(x^2+y^2)-2y(x^3y-xy^3)}{(x^2+y^2)^2} &= \frac{x^5+x^3y^2-3x^3y^2-3xy^4-2x^3y^2+2xy^4}{(x^2+y^2)^2}\\
+        &= \frac{-4x^3y^2-xy^4+x^5}{(x^2+y^2)^2}.
+    \end{align*}
+    Beide partiellen Ableitungen $\partial_1f(x,y),\partial_2f(x,y)$ sind auf $\mathbb R^2 \setminus \{(0,0)\}$ stetig nach Korollar 75. Berechne die partielle Ableitung im Punkt $(0,0)$.
+    \begin{align*}
+        \partial_1f(0,0) &= \lim_{t \to 0} \frac{f(\begin{pmatrix}0\\0\end{pmatrix}+t\begin{pmatrix}1\\0\end{pmatrix}) - f(\begin{pmatrix}0\\0\end{pmatrix})}{t} = \lim_{t \to 0} \frac{f(t,0)-f(0,0)}{t} = \lim_{t \to 0} \frac{\frac{t^3\cdot0-t\cdot 0^3}{t^2}}{t} = \lim_{t \to 0} \frac{0}{t^3} = 0,\\
+        \partial_2f(0,0) &= \lim_{t \to 0} \frac{f(\begin{pmatrix}0\\0\end{pmatrix}+t\begin{pmatrix}0\\1\end{pmatrix}) - f(\begin{pmatrix}0\\0\end{pmatrix})}{t} = \lim_{t \to 0} \frac{f(0,t)-f(0,0)}{t} = \lim_{t \to 0} \frac{\frac{0^3\cdot t-0\cdot t^3}{t^2}}{t} = \lim_{t \to 0} \frac{0}{t^3} = 0.
+    \end{align*}
+    Untersuche die Stetigkeit der partiellen Ableitungen im Nullpunkt. Sei $(x_n,y_n)_{n \in \mathbb N}$ eine Folge in $\mathbb R^2$ mit $(x_n,y_n) \to (0,0)$, wobei $(x_n,y_n) \neq (0,0)$ f"ur alle $n \in \mathbb N$.
+    \begin{align*}
+        \lim_{n \to \infty} \partial_1f(x_n,y_n) = \lim_{n \to \infty} \frac{4x_n^2y_n^3+x_n^4y_n-y_n^5}{(x_n^2+y_n^2)^2} = \lim_{n \to \infty} \frac{4x_n^2y_n^3+x_n^4y_n-y_n^5}{x_n^4+2x_n^2y_n^2+y_n^4}
+    \end{align*}
+    Da $x_n \to 0$ und $y_n \to 0$ f"ur $n \to 0$ (wegen komponentenweiser Konvergenz), k"onnen wir beide Folgen $x_n$ und $y_n$ durch eine Nullfolge $c_n$ ersetzen, wobei $c_n \to 0$ f"ur $n \to 0$.
+    \begin{align*}
+        \lim_{n \to \infty} \partial_1f(x_n,y_n) = \lim_{n \to \infty} \frac{4c_n^2c_n^3+c_n^4c_n-c_n^5}{c_n^4+2c_n^2c_n^2+c_n^4} = \lim_{n \to \infty} \frac{4c_n^5+c_n^5-c_n^5}{4c_n^4} = \lim_{n \to \infty} c_n = 0 = \partial_1f(0,0).
+    \end{align*}
+    Analog mit $\partial_2f$:
+    \[
+        \lim_{n \to \infty} \partial_2f(x_n,y_n) = \lim_{n \to \infty} \frac{-4c_n^2c_n^3-c_n^4c_n+c_n^5}{c_n^4+2c_n^2c_n^2+c_n^4} = \lim_{n \to \infty} \frac{-4c_n^5-c_n^5+c_n^5}{4c_n^4} = \lim_{n \to \infty} -c_n = 0 = \partial_2f(0,0).
+    \]
+    Demnach sind beide partiellen Ableitungen auf ganz $\mathbb R^2$ stetig. Nach Satz 129 ist $f$ auf ganz $\mathbb R^2$ differenzierbar. Die Ableitung $Df$ ist sogar stetig, da die partiellen Ableitungen stetig sind und die (einzige) Zeile der Jacobimatrix gerade dem Gradienten von $f$ entspricht (wegen der Differenzierbarkeit, siehe Beispiel 127). 
+    
+    \item Aus der vorherigen Teilaufgabe wissen wir, dass 
+    \[
+        f'(x,y) = \begin{pmatrix} \frac{4x^2y^3+x^4y-y^5}{(x^2+y^2)^2} &  \frac{-4x^3y^2-xy^4+x^5}{(x^2+y^2)^2} \end{pmatrix}, \quad \text{ falls $x \neq 0 \land y \neq 0$}.
+    \]
+    Sonst ist $f'(0,0) = 0$.
+    Berechne nun mithilfe der Quotientenregel f"ur $(x,y) \neq (0,0)$
+    \begin{align*}
+        \partial_2\partial_1 f(x,y) &= \partial_2 \frac{4x^2y^3+x^4y-y^5}{(x^2+y^2)^2}\\
+        &=\frac{(12x^2y^2+x^4-5y^4)(x^2+y^2)^2-4y(x^2+y^2)(4x^2y^3+x^4y-y^5)}{(x^2+y^2)^4} \\
+        &= \frac{(12x^2y^2+x^4-5y^4)(x^2+y^2)^2-(4x^2y+4y^3)(4x^2y^3+x^4y-y^5)}{(x^2+y^2)^4} \\
+        &= \frac{(12x^2y^2+x^4-5y^4)(x^2+y^2)^2-(16x^4y^4+4x^6y^2-4x^2y^6+16x^2y^6+4x^4y^4-4y^8)}{(x^2+y^2)^4}\\
+        &= \frac{(12x^2y^2+x^4-5y^4)(x^2+y^2)^2-16x^4y^4-4x^6y^2+4x^2y^6-16x^2y^6-4x^4y^4+4y^8}{(x^2+y^2)^4} \\
+        &= \frac{(12x^2y^2+x^4-5y^4)(x^2+y^2)^2-20x^4y^4-4x^6y^2-12x^2y^6+4y^8}{(x^2+y^2)^4}\\
+        &= \frac{(12x^2y^2+x^4-5y^4)(x^4+2x^2y^2+y^4)-20x^4y^4-4x^6y^2-12x^2y^6+4y^8}{(x^2+y^2)^4}\\
+        &= \frac{10x^6y^2-10x^2y^6+x^8-y^8}{(x^2+y^2)^4}
+    \end{align*}
+    Au"serdem f"ur $(x,y) \neq (0,0)$:
+    \begin{align*}
+        \partial_1\partial_2 f(x,y) &= \partial_2\frac{-4x^3y^2-xy^4+x^5}{(x^2+y^2)^2}\\
+        &= \frac{(-12x^2y^2-y^4+5x^4)(x^2+y^2)^2-(-4x^3y^2-xy^4+x^5)(x^2+y^2)4x}{(x^2+y^2)^4}\\
+        &= \frac{5 x^8 - 2 x^6 y^2 - 20 x^4 y^4 - 14 x^2 y^6 - y^8-4x(-4x^3y^2-xy^4+x^5)(x^2+y^2)}{(x^2+y^2)^4} \\
+        &= \frac{5 x^8 - 2 x^6 y^2 - 20 x^4 y^4 - 14 x^2 y^6 - y^8-(-16x^4y^2-4x^2y^4+4x^6)(x^2+y^2)}{(x^2+y^2)^4} \\
+        &= \frac{x^8 + 10 x^6 y^2 - 10 x^2 y^6 - y^8}{(x^2+y^2)^4}.
+    \end{align*}
+    Wir sehen: $\partial_1\partial_2 f(x,y) = \partial_2\partial_1 f(x,y)$ falls $(x,y) \neq (0,0)$. Beide h"ohere Ableitungen sind dort auch stetig wegen Korollar 75. Zeige nun die Existenz von $\partial_2\partial_1f(0,0)$.
+    \begin{align*}
+        \partial_2\partial_1 f(0,0) = \lim_{t \to 0} \frac{\partial_1f(0,t)-\partial_1f(0,0)}{t} = \lim_{t \to 0} \frac{\partial_1f(0,t)}{t} = \lim_{t \to 0} \frac{\frac{-t^5}{t^4}}{t} = -1.
+    \end{align*}
+    Ebenso ergibt sich
+    \begin{align*}
+        \partial_1\partial_2 f(0,0) = \lim_{t \to 0} \frac{\partial_2f(t,0)-\partial_2f(0,0)}{t} = \lim_{t \to 0} \frac{\partial_2f(t,0)}{t} = \lim_{t \to 0} \frac{\frac{t^5}{t^4}}{t} = 1.
+    \end{align*}
+    Damit existieren $\partial_1\partial_2 f$ und $\partial_2\partial_1 f$ auf ganz $\mathbb R^2$. Wir sehen, $\partial_1\partial_2 f(0,0) \neq \partial_2\partial_1 f(0,0)$. Das ist kein Widerspruch zu Schwarz, denn wir wissen noch gar nicht, ob $f$ \emph{zweimal} differenzierbar ist. Dazu muss noch gezeigt werden, dass die partiellen Ableitungen der Ordnung $2$ in $(0,0)$ stetig sind. Wie sich zeigt, ist dies nicht der Fall und der Satz von Schwarz ist nicht anwendbar.
+    \begin{align*}
+        \lim_{(x,y) \to (0,0)} \partial_1\partial_2 f(x,y) = \lim_{(x,y) \to (0,0)} \frac{x^8 + 10 x^6 y^2 - 10 x^2 y^6 - y^8}{(x^2+y^2)^4}.
+    \end{align*}
+    Sei $(c_n)_{n \in \mathbb N}$ eine Nullfolge. Dann folgt 
+    \[
+        \lim_{(x,y) \to (0,0)} \partial_1\partial_2 f(x,y) = \lim_{n \to \infty} \frac{c^8 + 10 c^6 c^2 - 10 c^2 c^6 - c^8}{(c^2+c^2)^4} =\lim_{n \to \infty} \frac{c^8 + 10 c^8 - 10 c^8 - c^8}{16c^8} = 0 \neq 1.
+    \]
+    So ist $\partial_1\partial_2 f(x,y)$ nicht stetig in $(0,0)$.
+\end{enumerate}
+
+
+
+
+\section*{Aufgabe 36}
+\begin{enumerate}[label=(\roman*)]
+	\item \textit{Zu zeigen:} $\mu$ ist stetig genau dann, wenn $\mu$ in $0$ stetig 	ist. 
+	\begin{proof}
+		$\implies:$ Sei $\mu$ stetig, so ist $\mu$ auch in $0$ stetig.
+		
+		$\implies:$ F"ur die andere Richtung, sei $\mu$ stetig in $0$. Sei $\mathbf E \coloneqq  E_1 \times ... \times E_k$ und $\mathbf p \coloneqq (p_1,...,p_k) \in \mathbf E$. Wir wollen zeigen, dass $\mu$ in $\mathbf p$ stetig ist. Die Beweiskette sieht folgenderma"sen aus:
+		\[
+			\mu \text{ ist stetig in } 0 \implies \mu \text{ ist beschr"ankt} \implies \mu \text{ ist stetig in p}.
+		\]
+	
+	Zeige zuerst, dass $\mu$ beschr"ankt ist. Das hei"st, es gibt eine Konstante $C \in \mathbb R$, sodass $||\mu(\mathbf x)||_F \leq C$ f"ur alle $\mathbf x \in \mathbf E$. Es gilt:
+	\begin{align*}
+		\mu \text{ stetig in } 0 \implies \exists \delta > 0: \mu(U_\delta(0) \cap \mathbf E) \subset U_1(0)
+	\end{align*}
+	Sei $\mathbf y \coloneqq (y_1,...,y_k) \in U_\delta(0) \cap \mathbf E$. Dann gilt f"ur dieses $\mathbf y$:
+	\[
+		||y_i||_i < \delta  \quad \forall i \in \{1,...,k\}.
+	\]
+	\end{proof}
+\end{enumerate}
+
+
+
+
+\end{document}

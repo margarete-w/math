@@ -1,0 +1,163 @@
+\documentclass[a4paper,fontsize=12pt]{article}
+
+\usepackage[latin1]{inputenc}  
+\usepackage[T1]{fontenc}        %Schriftsatz Dokument
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{blindtext}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{skak}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Viet Duc Nguyen (395220)}
+\lhead{\textbf{\"Ubungsblatt 3 |  Lineare Algebra II } Richard MA143}
+\cfoot{Seite \thepage}
+
+\geometry{
+ bottom=32mm,
+}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+
+\begin{document}
+
+\section*{Aufgabe 2c}
+\emph{Voraussetzung:} $F$ und $G$ kommutieren. Zudem sind $F$ und $G$ diagonalisierbar. Daher gilt nach Satz aus der Vorlesung, dass man den Vektorraum $V$ als direkte Summe von allen Eigenr"aumen von $F$ darstellen kann. Ebenso mit $G$.
+\begin{align*}
+    V &= \mathrm{Eig}(F,\lambda_1) \oplus ... \oplus \mathrm{Eig}(F,\lambda_k) \\
+    V &= \mathrm{Eig}(G,\mu_1) \oplus ... \oplus \mathrm{Eig}(G,\mu_l)
+\end{align*}
+
+\emph{Beweisidee:} Zeige, dass f"ur beliebige Eigenwerte $\lambda \in \{\lambda_1,...,\lambda_k\}$ gilt:
+\begin{align}
+    \mathrm{Eig}(F,\lambda) = \underbrace{\Big( \mathrm{Eig}(F,\lambda) \cap \mathrm{Eig}(G,\mu_1) \Big)}_{\coloneqq \Phi_1} \oplus ... \oplus \underbrace{\Big( \mathrm{Eig}(F,\lambda) \cap \mathrm{Eig}(G,\mu_l) \Big)}_{\coloneqq \Phi_l}. \label{toto} \tag{$\bigstar$}
+\end{align}
+
+Was hilft das jetzt? Fassen wir erst mal einige Dinge zusammen, die bekannt sind. 
+\begin{itemize}
+    \item F"ur $ \Phi_1 $ existieren Basisvektoren $v^{(1)}_1,...,v^{(1)}_{\alpha_1}$ mit $\alpha_1 = \dim \Phi_1$.
+    
+    \item F"ur $ \Phi_2 $ existieren Basisvektoren $v^{(2)}_{1},...,v^{(2)}_{\alpha_2}$ mit $\alpha_2 = \dim \Phi_2$
+    
+    \item $...$
+    
+    
+    \item Und so weiter bis $ \Phi_l $ mit Basisvektoren $v^{(l)}_{1},...,v^{(l)}_{\alpha_l}$ mit $\alpha_l = \dim \Phi_l$
+\end{itemize}
+Wegen der direkten Summe aus \eqref{toto} bilden all die Vektoren $(v^{(1)}_1,...,v^{(1)}_{\alpha_1}, ... , v^{(l)}_{1},...,v^{(l)}_{\alpha_l})$ auch wieder eine Basis und \emph{sie bilden sogar eine Basis von $\mathrm{Eig}(F,\lambda)$}, siehe \eqref{toto}. Fassen wir zusammen:
+\begin{itemize}
+    \item Jede dieser Basisvektoren ist ein Eigenvektor von $F$ mit Eigentwert $\lambda$, denn sie bilden eine Basis von $\mathrm{Eig}(F,\lambda)$.
+    
+    \item Jede dieser Basisvektoren ist \emph{auch} ein Eigenvektor von $G$, denn betrachte, wie wir die Basis konstruiert haben und wie $\Phi_i = \mathrm{Eig}(F,\lambda) \cap \mathrm{Eig}(G,\mu_i)$ definiert ist
+    \begin{align*}
+        (\underbrace{v^{(1)}_1,...,v^{(1)}_{\alpha_1}}_{\text{bilden Basis von $\Phi_1$}}, ... , \underbrace{v^{(l)}_{1},...,v^{(l)}_{\alpha_l}}_{\text{bilden Basis von $\Phi_l$}})
+    \end{align*}
+    Mit anderen Worten: $v^{(1)}_1,...,v^{(1)}_{\alpha_1} \in \mathrm{Eig}(G,\mu_1)$ sind Eigenvektoren in $G$ mit Eigenwert $\mu_1$ und so weiter, sodass $v^{(l)}_1,...,v^{(l)}_{\alpha_1} \in \mathrm{Eig}(G,\mu_l)$ auch Eigenvektoren in $G$ mit Eigenwert $\mu_l$ sind.
+\end{itemize}
+Um deutlich zu werden, wir haben eine Basis von $\mathrm{Eig}(F,\lambda)$ gefunden, bei der \emph{jeder Basisvektor sowohl Eigenvektor von $F$ als auch von $G$ ist!} Wir bezeichnen diese besondere Basis als \textit{K"onigsbasis}
+\[
+    \crown B \coloneqq (v^{(1)}_1,...,v^{(1)}_{\alpha_1}, ... ,v^{(l)}_{1},...,v^{(l)}_{\alpha_l}).
+\]
+
+Dieses Prozedere wiederholen wir f"ur jedes $\lambda_1,...,\lambda_k$, denn wir haben anfangs ein beliebiges $\lambda$ gew"ahlt. Das hei"st, man kann f"ur jedes $\lambda_1,...,\lambda_k$ eine K"onigsbasis w"ahlen, falls \eqref{toto} gilt. Da $V = \mathrm{Eig}(F,\lambda_1) \oplus ... \oplus \mathrm{Eig}(F,\lambda_k)$ nach Voraussetzung gilt, bilden die einzelnen Basen von $\mathrm{Eig}(F,\lambda_1),...,\mathrm{Eig}(F,\lambda_k)$ zusammen auch eine Basis von $V$ wegen der direkten Summe! Daher bilden die K"onigsbasen von $\mathrm{Eig}(F,\lambda_1),...,\mathrm{Eig}(F,\lambda_k)$ zusammen eine Basis von $V$. Diese Basis enth"alt Eigenvektoren in $F$ und $G$, was zu zeigen war.
+
+\begin{proof}
+    Zeige die Gleichung \eqref{toto}. Nehme ein beliebiges $v \in \mathrm{Eig}(F,\lambda)$. Wenn sich $v$ nun \emph{eindeutig} darstellen l"asst als 
+    \[
+        v = \varphi_1 + ... + \varphi_l
+    \]
+    mit $\varphi_1 \in \Phi_1, ..., \varphi_l \in \Phi_l$, so gilt \eqref{toto} nach Definition der direkten Summe.
+    
+    \begin{enumerate}
+        \item Da $v \in \mathrm{Eig}(F,\lambda)$ nach Voraussetzung gilt, ist auch $v \in V$, denn $V \supset \mathrm{Eig}(F,\lambda)$.
+        
+        \item Wegen $V = \mathrm{Eig}(G,\mu_1) \oplus ... \oplus \mathrm{Eig}(G,\mu_l)$ nach Voraussetzung, l"asst sich $v \in V$ eindeutig darstellen als 
+        \[
+            v = \varphi_1 + ... + \varphi_l
+        \]
+        mit \emph{$\varphi_1 \in \mathrm{Eig}(G,\mu_1), ..., \varphi_l \in \mathrm{Eig}(G,\mu_l)$} nach Definition der direkten Summe.
+        
+        \item \emph{Ist $\varphi_i \in \mathrm{Eig}(F,\lambda)$} f"ur jedes $i \in \{1,...,l\}$? Wenn wir das zeigen k"onnten, so ist 
+        \[
+            \varphi_1 \in \Phi_1, ..., \varphi_l \in \Phi_l
+        \]
+        nach Definition von $\Phi$ und wir sind fertig, denn $v = \varphi_1 + ... + \varphi_l$ mit $\varphi_1 \in \Phi_1, ..., \varphi_l \in \Phi_l$, was zu zeigen war.
+    \end{enumerate}
+    
+    Wir zeigen zum Schluss nur noch, dass $\varphi_1,...,\varphi_l \in \mathrm{Eig}(F,\lambda)$ gilt. Nach Aufgabe 2b sind alle R"aume $\mathrm{Eig}(G,\mu_1), ..., \mathrm{Eig}(G,\mu_l)$ $F$-invariant, denn $F$ und $G$ kommutieren \textit{(Aha, hier brauchen wir die Voraussetzung!)}. Also
+    \begin{align}\label{hunde}
+        \forall i \in \{1,...,l\}: F(\mathrm{Eig}(G,\mu_i)) \subset \mathrm{Eig}(G,\mu_i).
+    \end{align}
+    Diesen Sachverhalt brauchen wir f"ur die folgende Beweiskette:
+    \begin{itemize}
+        \item Wende auf $v$ die Funktion $F$ an. Es gilt $F(v) = \lambda v$  wegen $v \in \mathrm{Eig}(F,\lambda)$. Auch ist $v = \varphi_1+...+\varphi_l$ und folglich $\lambda v = \lambda \varphi_1+...+\lambda \varphi_l$. Zusammengefasst:
+        \begin{align*}
+            F(v) = F(\varphi_1+...+\varphi_l) = F(\varphi_1) +...+F(\varphi_l) = \lambda v  = \lambda \varphi_1+...+\lambda \varphi_l 
+        \end{align*}
+        Wir wollen als n"achstes $F(\varphi_i)$ mit $\lambda \varphi_i$ vergleichen und halten zuerst fest:
+        \[
+            \underbrace{\lambda \varphi_i \in \mathrm{Eig}(G,\mu_i)}_{\text{wegen $\varphi_i \in \mathrm{Eig}(G,\mu_i)$}} \, \text{ und } \, \underbrace{F(\varphi_i) \in \mathrm{Eig}(G,\mu_i)}_{\text{wegen F-Invarianz in \eqref{hunde}}} 
+        \]
+        Es muss $F(\varphi_i) = \lambda \varphi_i$ gelten, denn auch $F(v)$ l"asst sich \emph{eindeutig} darstellen wegen der eindeutigen Darstellung von $v = \varphi_1 + ... + \varphi_l$. Also $F(v) = \lambda v = \lambda \varphi_1 + ... + \lambda \varphi_l$. All die $\lambda \varphi_i$ sind in $\mathrm{Eig}(G,\mu_i)$ und es gibt \emph{genau} einen solchen Vektor f"ur die Darstellung von $F(v)$ wegen der eindeutigen Darstellung. Da aber auch $F(\varphi_i) \in \mathrm{Eig}(G,\mu_i)$ gilt, muss $F(\varphi_i) = \lambda \varphi_i$. Also ist $\varphi_i$ ein Eigenvektor in $F$ und $\varphi_i \in \mathrm{Eig}(F,\lambda)$, was zu zeigen war.
+    \end{itemize}
+\end{proof}
+
+\section*{Aufgabe 3}
+\begin{enumerate}[label=(\alph*)]
+    \item Sei $v_k$ ein Hauptvektor der Stufe $k$ von $\lambda$. Nach Definition gilt
+    \[
+        (A-\lambda E)^k v_k = 0 \text{, aber } (A-\lambda E)^{k-1} v_k \neq 0
+    \]
+    "Uberpr"ufe, ob $v_j$ mit $j \in \{1,...,k\}$ ein Hauptvektor ist. Falls $j = k$, so ist $v_j$ nach Voraussetzung ein Hauptvektor. Sei $j < k$. Dann ergibt sich nach $k-j$ maliger Anwendung von $v_{i-1} = (A-\lambda E) v_{i}$ folgende Gleichung:
+    \[
+        (A-\lambda E)^jv_j = \underbrace{(A-\lambda E)^{j} (A-\lambda E) v_{j+1} = ... = (A-\lambda E)^{j} (A-\lambda E)^{k-j} v_{k}}_{k-j \text{ malige Substitution von $v_{i-1}$ durch einen Term mit $v_i$}} = \underbrace{(A-\lambda E)^{k}v_k = 0}_{\text{nach Voraussetzung}}.
+    \]
+    Auch ist $(A-\lambda E)^{j-1} v_j \neq 0$, denn wegen $v_{i-1} = (A-\lambda E) v_{i}$ f"ur $i \in \{2,...,k\}$ gilt: 
+    \[
+        (A-\lambda E)^{k-1}v_k \neq 0 \iff (A-\lambda E)^{k-2} v_{k-1} \neq 0 \iff (A-\lambda E)^{k-1-(k-j)} v_{k-(k-j)} = (A-\lambda E)^{j-1} v_{j} \neq 0.
+    \]
+    Schlussendlich ist $v_j$ ein Hauptvektor der Stufe $j$.
+    
+    
+    
+    \item Leite die Abbildung $x(t) \coloneqq e^{\lambda t} \big( v_k+ tv_{k-1} + \frac{t^2}{2}v_{k-2} + \frac{t^3}{3!}v_{k-3}+ ... + \frac{t^{k-1}}{(k-1)!}v_1 \big)$ ab. Wir schreiben die Formel um und leiten mit der Produktregel ab:
+    \begin{align*}
+    	x(t) &= e^{\lambda t}\sum_{i=1}^k\frac{t^{i-1}}{(i-1)!}v_{k+1-i},\\
+	\quad \frac{\mathrm d}{\mathrm dt}x(t) &= \lambda e^{\lambda t}\sum_{i=1}^k\frac{t^{i-1}}{(i-1)!}v_{k+1-i} + e^{\lambda t}\sum_{i=2}^k\frac{t^{i-2}}{(i-2)!}v_{k+1-i} 
+	\shortintertext{Indexverschiebung des zweiten Summanden:}
+	\frac{\mathrm d}{\mathrm dt}x(t) &=  \lambda e^{\lambda t}\sum_{i=1}^k\frac{t^{i-1}}{(i-1)!}v_{k+1-i} + e^{\lambda t}\sum_{i=1}^k\frac{t^{i-1}}{(i-1)!}v_{k} 
+    \end{align*}
+    
+    
+\end{enumerate}
+
+\end{document}

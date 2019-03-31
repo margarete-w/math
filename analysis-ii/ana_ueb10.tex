@@ -1,0 +1,229 @@
+\documentclass{article}
+
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{newpxtext} \usepackage[euler-digits]{eulervm}
+
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{skak}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage[dvipsnames]{xcolor} % coole Farben. muss vor pgfplots geladen werden
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+
+
+
+% Style
+\geometry{
+ left= 25mm,
+ right= 25mm,
+ bottom=32mm,
+ top= 32mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Nguyen (395220) und Faltenbacher (391511)}
+\lhead{\textbf{Analysis II - UE10} bei Lehrmann (Di 8-10 Uhr)}
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+
+\section*{Aufgabe 37}
+Sei $\phi: \R \to \R$ eine beliebig oft differenzierbare Funktion mit
+\begin{align*}
+    \varphi(x) > 0 \quad &\text{ f"ur } -1 < z < 1,\\
+    \varphi(x) = 0 \quad &\text{ f"ur } z \leq -1 \text{ oder } z \geq 1.
+\end{align*}
+Definiere $f: \R^2 \to \R$ mit 
+\begin{align*}
+    f(x,y) \coloneqq 
+    \begin{cases}
+        \frac{1}{x}\varphi(\frac{y}{x^2}-2) \quad & \text{ falls } x \neq 0, \\
+        0                                   \quad & \text{ sonst.}
+    \end{cases}
+\end{align*}
+
+\textbf{Teilaufgaben:}
+\begin{enumerate}[label=(\roman*)]
+    \item \textit{Zu zeigen:} $f$ ist in $p = (\alpha,\beta)$ mit $\alpha \neq 0, \beta \neq 0$ beliebig oft differenzierbar.
+    
+    \textit{L"osung:} Wir zeigen nun, dass $f$ beliebig oft in $p$ differenzierbar ist. Da $p$ nicht der Nullpunkt ist, hat die Funktion $f$ die Form:
+    \begin{align*}
+        f(x,y) = \frac{1}{x}\varphi(\frac{y}{x^2}-2).
+    \end{align*}
+    Wir definieren nun zwei Hilfsfunktionen $g,h: \R^2 \to \R$ mit 
+    \begin{align*}
+        g(x,y) = \frac{1}{x} \quad \text{sowie} \quad h(x,y) = \frac{y}{x^2}-2,
+    \end{align*}
+    sodass $f$ dargestellt werden kann als 
+    \begin{align*}
+        f(x,y) = g(x,y) \cdot  \varphi(h(x,y)).
+    \end{align*}
+    Wir leiten $f$ mithilfe der Produktregel ab 
+    \[
+        D_{(\alpha,\beta)}f = D_{(\alpha,\beta)}g \cdot (\phi \circ h) + g \cdot D_{(\alpha,\beta)}(\varphi \circ h).
+    \] 
+    
+    \textit{Berechne:}
+    \begin{itemize}
+        \item Es ist \doubleunderline{$D_{(\alpha,\beta)}g(x,y) = -\frac{x}{\alpha^2}$}, wie man mithilfe der partiellen Ableitung herausbekommt:
+        \begin{align*}
+            \partial_1 g(\alpha,\beta) = - \frac{1}{\alpha^2} \quad \text{ und } \quad \partial_2 g(\alpha,\beta) = 0.
+        \end{align*}
+        Damit sieht die Jacobimatrix so aus
+        \begin{align*}
+            J(\alpha,\beta) = 
+            \begin{pmatrix}
+                -\alpha^{-2} & 0
+            \end{pmatrix} \implies D_{(\alpha,\beta)}g(x,y) = J(\alpha,\beta) \cdot \begin{pmatrix}x \\ y\end{pmatrix} = 
+            \begin{pmatrix}
+                -\alpha^{-2} & 0
+            \end{pmatrix}
+            \begin{pmatrix}x \\ y\end{pmatrix}.
+        \end{align*}
+        Da jede partielle Ableitung existiert und auch stetig ist in $p$, ist $g$ differenzierbar und hat die eingangserw"ahnte Gestalt.
+        
+        
+        
+        \item  Um den zweiten Summanden $\varphi \circ h$ abzuleiten, benutzen wir die Kettenregel:
+        \[
+            D_{(\alpha,\beta)}(\varphi \circ h) = (D_{h(\alpha,\beta)}\varphi) \circ (D_{(\alpha,\beta)}h).
+        \]
+        Mithilfe partieller Ableitungen bestimmen wir das Differential von $h$.
+        \begin{align*}
+            \partial_1h(\alpha,\beta) 
+            = \frac{d}{d\alpha}\left (\frac{\beta}{\alpha^2}-2 \right)
+            = -\frac{2\beta}{\alpha^3} \quad \text{und} \quad 
+            \partial_2h(\alpha,\beta)
+            = \frac{d}{d\beta}\left (\frac{\beta}{\alpha^2}-2 \right)
+            = \frac{1}{\alpha^2}.
+        \end{align*}
+        Es ergibt sich 
+        \[
+            \doubleunderline {D_{(\alpha,\beta)}h(x,y) = -\frac{2\beta}{\alpha^3}x + \frac{1}{\alpha^2}y} \quad \text{ bzw. } \quad \doubleunderline{ J_h(\alpha,\beta) = \begin{pmatrix}-\frac{2\beta}{\alpha^3} & \frac{1}{\alpha^2}\end{pmatrix} }.
+        \]
+        Nun berechne $D_{h(\alpha,\beta)}\varphi$. Da $\varphi$ \textit{"uberall} differenzierbar ist, muss nur "uberpr"uft werden, ob $h(\alpha,\beta)$ reell ist. Das ist der Fall, da $\alpha \neq 0$. Also 
+        \[
+            J_\varphi(h(\alpha,\beta)) = \begin{pmatrix} \varphi'(h(\alpha,\beta)) \end{pmatrix} = \begin{pmatrix} \varphi'(\frac{\beta}{\alpha^2}-2) \end{pmatrix}
+        \]
+        Wir fassen jetzt alles zusammen und wenden die Kettenregel an
+        \begin{align*}
+            D_{(\alpha,\beta)}(\varphi \circ h) (x,y)
+            &= (D_{h(\alpha,\beta)}\varphi) \circ (D_{(\alpha,\beta)}h)(x,y)  \\
+            &= \begin{pmatrix} \varphi'(\frac{\beta}{\alpha^2}-2) \end{pmatrix} \cdot \begin{pmatrix}-\frac{2\beta}{\alpha^3} & \frac{1}{\alpha^2}\end{pmatrix} (x,y)^T \\[4pt]
+            &= \begin{pmatrix} -\frac{2\beta}{\alpha^3} \varphi'(\frac{\beta}{\alpha^2}-2) & \frac{1}{\alpha^2} \varphi'(\frac{\beta}{\alpha^2}-2) \end{pmatrix} (x,y)^T\\[4pt]
+            &= -\frac{2\beta}{\alpha^3} \varphi'(\frac{\beta}{\alpha^2}-2)x + \frac{1}{\alpha^2} \varphi'(\frac{\beta}{\alpha^2}-2)y \\[4pt]
+            &= \varphi'(\frac{\beta}{\alpha^2}-2)\left(
+                -\frac{2\beta}{\alpha^3} x + \frac{1}{\alpha^2}y
+            \right) \\[4pt]
+            &= \varphi'(h(\alpha,\beta)) \cdot D_{(\alpha,\beta)}h(x,y) \\
+            &= \doubleunderline{(\varphi' \circ h)(\alpha,\beta) \cdot D_{(\alpha,\beta)}h(x,y)}.
+        \end{align*}
+    \end{itemize}
+    
+    Wieder zur"uck zum Differential von $f$.
+    \begin{align*}
+        D_{(\alpha,\beta)}f(x,y)
+        &= (D_{(\alpha,\beta)}g \cdot (\phi \circ h) + g \cdot D_{(\alpha,\beta)}(\varphi \circ h))(x,y) \\
+        &= D_{(\alpha,\beta)}g(x)  \varphi(h(x)) + g(x) (\varphi'(h(\alpha,\beta))    D_{(\alpha,\beta)}h(x,y) \eqqcolon \psi_{(x,y)}(\alpha,\beta).
+    \end{align*}
+    F"ur die zweite Ableitung gilt
+    \begin{align*}
+        D^2_{(\alpha,\beta)}f(a,b)(x,y) = D_{(\alpha,\beta)}\psi_{(a,b)}(x,y), \quad \text{$a,b \in \R$ fest.}
+    \end{align*}
+    
+\end{enumerate}
+
+
+
+
+
+
+
+\section*{Aufgabe 38}
+Berechne das Taylor-Swift Polynom dritter Ordnung von $f(x,y) \coloneqq e^x \sin(y)$ im Entwicklungspunkt $(p_x,p_y)$. Dieses Polynom hat die Form:
+\begin{align*}
+    T_3(x,y) &= \sum^3_{k=0}\frac{1}{k!}D^k_pf\underbrace{((x-p_x,y-p_y),...,(x-p_x,y-p_y))}_{\text{k-mal}} \\
+    &= f(p_x,p_y) + D_{(p_x,p_y)}f(x-p_x,y-p_y) + \frac{1}{2}D_{(p_x,p_y)}^2f((x-p_x),(x-p_x))\\
+    &\qquad + \frac{1}{6}D_{(p_x,p_y)}^3f((x-p_x),(x-p_x),(x-p_x)).
+\end{align*}
+
+Wir entwicklen eine Formel dieses Taylor-Swift Polynoms dritten Grades mithilfe der partiellen Ableitungen. Wir setzen voraus, dass $f$ dreimal differenzierbar ist.\\ 
+
+\textit{Behauptung:} Es gilt  f"ur zweidimensionale reelle Vektoren $\mathbf x = (x,y) \in \mathbb \R^2$ und Entwicklungspunkt $\mathbf p = (x_0,y_0) \in \mathbb \R^2$, dass
+\begin{align*}
+    T_3(\mathbf x) 
+    &= \sum^3_{k=0}\frac{1}{k!}D^k_{\mathbf p}f\underbrace{(\mathbf x-\mathbf p,...,\mathbf x- \mathbf p)}_{\text{k-mal}} \\
+    &= f(x_0,y_0) + \partial_{1}f(x_0,y_0) \cdot (x-x_0) + \partial_{2}f(x_0,y_0) \cdot (y-y_0)\\
+    &\qquad +\frac{1}{2}\Big( \partial_{1}\partial_{1}f(x_0,y_0) \cdot (x-x_0)^2 + 2\partial_{1}\partial_{2}f(x_0,y_0) \cdot (x-x_0)(y-y_0) + \partial_{2}\partial_{2}f(x_0,y_0) \cdot (y-y_0)^2 \Big ) \\
+    &\qquad +\frac{1}{6}\Big( \partial_{1}\partial_{1}\partial_{1}f(x_0,y_0) \cdot (x-x_0)^3 + 3\partial_{1}\partial_{1}\partial_{2}f(x_0,y_0) \cdot (x-x_0)^2(y-y_0) + 3\partial_{1}\partial_{2}\partial_{2}f(x_0,y_0) \cdot (x-x_0)(y-y_0)^2 \\
+    &\qquad \qquad \qquad\qquad \qquad \qquad\qquad \qquad \qquad\qquad \qquad \qquad\qquad \qquad \qquad\qquad \qquad \qquad +  \partial_{2}\partial_{2}\partial_{2}f(x_0,y_0) \cdot (y-y_0)^3 \Big )
+\end{align*}
+
+\begin{proof}
+	Wir beweisen nun die oben erw"ahnte Formel.
+	\begin{itemize}
+		\item Berechne $D_{\mathbf p}f$ mithilfe der Jacobimatrix. Diese Matrix lautet dann
+		\begin{align*}
+    			J_f(x_0,y_0) = 
+			\begin{pmatrix}
+				\partial_1 f(x_0,y_0) & \partial_2 f(x_0,y_0)                        
+                       	\end{pmatrix}.                                
+                       \end{align*}                          
+                       F"ur das Differential ergibt sich dann:                   
+                       \begin{align*}                                 
+                       D_{(x_0,y_0)}f(x,y) &= f'(x_0,y_0)\cdot(x,y) \nonumber \\
+                      &= J_f(x_0,y_0) \cdot (x,y)^T\nonumber \\
+                      &=\partial_1 f(x_0,y_0) \cdot x + \partial_2 f(x_0,y_0) \cdot y. \label{hurensohn}
+                       \end{align*}      
+                       Damit ist 
+                       \begin{align*}
+                       	D_{(x_0,y_0)}f(x-x_0,y-y_0) = \partial_1 f(x_0,y_0) \cdot (x-x_0) + \partial_2 f(x_0,y_0) \cdot (y-y_0).
+                       \end{align*}      
+                       
+                       
+                       
+                 \item Berechne $D^2_{\mathbf p}f$. Definiere eine Hilfsfunktion $\varphi: \R^2 \to \R$ mit 
+                 \[
+                 	\varphi_{(x,y)}(x_0,y_0) =  \partial_1 f(x_0,y_0) \cdot (x-x_0) + \partial_2 f(x_0,y_0) \cdot (y-y_0), \; \text{wobei $x,y \in \R$ \emph{fest} sind.}
+		\]
+		Jetzt ist $D^2_{(x_0,y_0)}f((x-x_0,y-y_0),(x,y)) = D_{(x_0,y_0)}\varphi_{(x,y)}(x,y)$. Wir m"ussen jetzt also nur $\varphi_{(x,y)}$ in $(x_0,y_0)$ ableiten. Dazu bilden wir die Jacobimatrix.
+		\begin{align*}
+			J_{\varphi_{(x,y)}}(x_0,y_0) =
+			 \begin{pmatrix} 
+				w
+			\end{pmatrix}.
+		\end{align*}
+		                  
+	\end{itemize}
+\end{proof}
+
+\end{document}

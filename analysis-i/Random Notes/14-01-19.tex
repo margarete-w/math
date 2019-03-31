@@ -1,0 +1,98 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Ana I}
+\author{Viet Duc Nguyen}
+\date{January 14, 2019}
+\maketitle
+\tableofcontents
+
+
+
+\section{Rule of l'Hospital}
+\textbf{Problem:} $\lim_{x \to 0} \frac{1- \cos x}{\sin x}$ or more generally $\frac{f(x)}{g(x)} \to 0$ for $x \to x_0$ equals $\frac{0}{0}$.
+
+\textbf{Idea:} We linearise the term, and hopefully, we obtain a easier term of which we can compute the limit. We see that $f(x_0) \approx g(x_0) \approx 0$. So we extend the domain of both functions to include the point $x=0$, and we define $f(0) \coloneqq 0 \eqqcolon g(0)$. These functions are continuous and differentiable, and we  linearise these extensions to obtain a limit. $$\frac{f(x)}{g(x)} \approx \frac{f(x_0) + f'(x_0)(x-x_0)}{g(x_0) + g'(x_0)(x-x_0)} = \frac{f'(x_0)}{g'(x_0)}.$$
+
+\begin{lemma*}
+	Let $f,g: [a,b] \to \mathbb R$ be continuous and be differentiable in $(a,b)$ such that $g'(x) \neq 0$. Then it holds $g(a) \neq g(b)$ and there exists $\xi \in (a,b)$ with
+	\[
+		\frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(\xi)}{g'(\xi)}.
+	\]	
+\end{lemma*}
+
+\begin{theorem*}
+	Let $I \subset \mathbb R$ be an intervall, $x_0 \in I$ and $f,g: I \setminus\{ x_0\} \to \mathbb R$ differentiable. Further, it holds that $\lim_{x \to x_0} f(x) = 0  = \lim_{x \to x_0} g(x)$ and $g'(x) \neq 0$ for all $x \in I \setminus\{x_0\}$. If $\lim_{x \to x_0} \frac{f'(x)}{g'(x)}$ exists, then $\lim_{x \to x_0} \frac{f(x)}{g(x)}$ and it holds
+	\[
+		\lim_{x \to x_0} \frac{f(x)}{g(x)} = \lim_{x \to x_0} \frac{f'(x)}{g'(x)}.
+	\]
+\end{theorem*}
+
+\section{Higher derivatives}
+Consider $x \mapsto x |x|$. Its second derivative at $x=0$ does not exist. 
+
+\section{Convex functions}
+Convex functions are continuous.
+
+\section{Modulus of continuity}
+A function $\omega: \mathbb R_{+} \to \mathbb R_{+} \cup \{ \infty \}$ is called a modulus of continuity if $\omega$ is continuous at $x = 0$ and $\omega(0) = 0$. For any function $f: D \to \mathbb R$ there exists a modulus of conintuity $\omega$ with $|f(x)-f(y)| \leq \omega(|x-y|)$ for all $x,y \in D$ iff $f$ is uniformly continuous. 
+
+\end{document}
