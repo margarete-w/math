@@ -1,0 +1,175 @@
+\documentclass[9pt]{extarticle}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+\usepackage{kpfonts}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Linda (349481), Frido (374658)}
+\lhead{\textbf{Numerik I WS 2018/19} }
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 1}
+Sei $A \coloneqq \begin{pmatrix}1 &2 & 3 \\ 2 & 6 & 14 \\ 3 & 14 & 44\end{pmatrix}$. Wir suchen $L \in \mathbb R^{3 \times 3}$, sodass $LL^T = A$ und $L$ ist eine untere Dreiecksmatrix.
+\begin{align*}
+	A = \begin{pmatrix}1 &2 & 3 \\ 2 & 6 & 14 \\ 3 & 14 & 44\end{pmatrix} =
+	\begin{pmatrix}l_{11} & 0 & 0 \\ l_{21} & l_{22} & 0 \\ l_{31} & l_{32} & l_{33} \end{pmatrix}
+	\begin{pmatrix}l_{11} & l_{21} & l_{31} \\ 0 & l_{22} & l_{32} \\  0 & 0 & l_{33} \end{pmatrix}  =
+	\begin{pmatrix}
+		l_{11}^2 & l_{11}l_{21} & l_{11}l_{31} \\ * & l_{21}^2+l_{22}^2 & l_{21}l_{31} + l_{22} l_{32} \\ * & * & l_{31}^2+l_{32}^2 + l_{33}^2
+	\end{pmatrix}.
+\end{align*}
+Also
+\begin{gather*}
+l_{11}^2 = 1 \implies l_{11} = 1, \quad l_{21} = 2, \quad l_{31} = 3 \\
+4 + l_{22}^2 = 6 \implies l_{22} = \sqrt{2}, \quad 6 + \sqrt{2}l_{32} = 14 \implies l_{32} = 4\sqrt 2 \\
+9 + 32 + l_{33}^2 = 44 \implies l_{33} = \sqrt 3
+\end{gather*}
+Damit
+\[
+	L = 
+	\begin{pmatrix}
+		1 & 0 & 0 \\
+		2 & \sqrt 2 & 0 \\
+		3 & 4\sqrt 2 & \sqrt 3
+	\end{pmatrix}, \quad 
+	L^T = \begin{pmatrix}
+	1 & 2 & 3 \\
+	 0 & \sqrt 2 & 4\sqrt 2 \\
+	0 & 0 & \sqrt 3
+	\end{pmatrix}
+\]
+Nun suchen wir $\tilde L$ und $D$, wobei $D$ eine Diagonalmatrix ist und $\tilde L$ eine untere Dreiecksmatrix mit $\mathrm{diag} \tilde L = (1,1,1)$.
+\begin{align*}
+	A = \begin{pmatrix}1 &2 & 3 \\ 2 & 6 & 14 \\ 3 & 14 & 44\end{pmatrix} &= 
+	\begin{pmatrix}
+		1 & 0 & 0 \\ l_{21} & 1 & 0 \\ l_{31} & l_{32} &1
+	\end{pmatrix}
+	\begin{pmatrix}
+	d_{11} & 0 & 0 \\ 0 & d_{22} & 0 \\ 0 & 0 & d_{33}
+	\end{pmatrix}
+	\begin{pmatrix}
+	1 & l_{21} & l_{31} \\ 0 & 1 & l_{32} \\ 0 & 0 & 1
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		d_{11} & 0 & 0 \\l_{21}d_{11} & d_{22} & 0 \\ l_{31}d_{11} & l_{32}d_{22} & d_{33}
+	\end{pmatrix}\begin{pmatrix}
+	1 & l_{21} & l_{31} \\ 0 & 1 & l_{32} \\ 0 & 0 & 1
+	\end{pmatrix} \\
+	&= \begin{pmatrix}
+		d_{11} & * & * \\
+		l_{21}d_{11} & l_{21}^2d_{11} + d_{22} & * \\
+		l_{31}d_{11} & l_{31}d_{11}l_{21} + l_{32}d_{22} & l_{31}^2d_{11} + l_{32}^2d_{22}+d_{33}.
+	\end{pmatrix}
+\end{align*}
+Wir erhalten somit
+\begin{gather*}
+	d_{11} = 1, \quad l_{21} = 2, \quad l_{31} = 3 \\
+	4 + d_{22} = 6 \implies d_{22} = 2, \quad 3 \cdot 2 + l_{32} 2 = 14 \implies l_{32} = 4 \\
+	9 + 16 \cdot 2 + d_{33} = 44 \implies d_{33} = 3.
+\end{gather*}
+Schlussendlich
+\[
+	D = \begin{pmatrix}
+	1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3
+	\end{pmatrix} \quad \tilde L = 
+	\begin{pmatrix}
+	1 & 0 & 0 \\ 2 & 1 & 0 \\ 3 & 4 & 1
+	\end{pmatrix} \quad \tilde L^T = \begin{pmatrix}
+		1 & 2 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & 1
+	\end{pmatrix}.
+\]
+
+\section*{Aufgabe 2}
+Sei $A \in \mathbb R^{n \times m}$ mit vollem Rang. Bezeichne $(v_1,...,v_m)$ die Spalten von $A$. Dann ist $ A^TA = (\langle v_i,v_j \rangle)_{i,j = 1,...,m}$. Wir wollen zeigen, dass $A^TA$ vollen Rang besitzt. 
+
+\begin{proof}
+	Kontraposition. $A^TA \in \mathbb R^{m \times m}$ besitze keinen vollen Rang. Wir wissen, dass $v_1,...,v_m$ ein Erzeugendensystem von $A$ ist (aber wir wissen nicht, ob es eine Basis ist). Wegen der linearen Abhängigkeit von $A^TA$ gibt es $\lambda_i$ mit $i=1,...,m$ und mindestens ein $\lambda_j \neq 0$ für ein $j = 1,...,m$, sodass die Spalten von $A^TA$ mit $\begin{pmatrix}
+	\langle v_1,v_1 \rangle \\ \langle v_2,v_1 \rangle \\ \vdots \\ \langle v_m,v_1 \rangle
+	\end{pmatrix}$, ...,  $\begin{pmatrix}
+	\langle v_1,v_m \rangle \\ \langle v_2,v_m \rangle \\ \vdots \\ \langle v_m,v_m \rangle
+	\end{pmatrix}$ linear abhängig sind. Es gilt also:
+	\begin{align*}
+		\lambda_1 \langle v_1, v_1 \rangle + \lambda_2 \langle v_1, v_2 \rangle + ... + \lambda_m \langle v_1,v_m \rangle   = \langle v_1, \sum^m_{i=1}\lambda_i v_i \rangle = 0 \\
+		\lambda_1 \langle v_2, v_1 \rangle + \lambda_2 \langle v_2, v_2 \rangle + ... + \lambda_m \langle v_2,v_m \rangle   = \langle v_2, \sum^m_{i=1}\lambda_i v_i \rangle = 0 \\
+		... \\
+		\lambda_1 \langle v_m, v_1 \rangle + \lambda_2 \langle v_m, v_2 \rangle + ... + \lambda_m \langle v_1,v_m \rangle   = \langle v_m, \sum^m_{i=1}\lambda_i v_i \rangle = 0 \\
+	\end{align*}
+	Wir haben einen Vektor $w \coloneqq \sum^m_{i=1}\lambda_i v_i \in \mathrm{Im}(A)$ gefunden, der orthogonal zu jedem Erzeugendenvektor $v_1,...,v_m$ steht. Damit gilt $$\langle w,w \rangle = \langle w, \sum \lambda_i v_i \rangle = \sum \lambda_i \underbrace{\langle w, v_i \rangle}_{=0} = 0 \iff w = \sum^m_{i=1}\lambda_i v_i = 0.$$
+	Also sind die $v_1,...,v_m$ linear abhängig und $A$ besitzt keinen vollen Rang.\\
+\end{proof}
+
+	Nun zeigen wir, dass $AA^T$ nicht vollen Rang besitzen muss. 
+\[
+\begin{pmatrix}
+1 \\ 0
+\end{pmatrix} \begin{pmatrix}
+1 & 0
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 \\ 0 & 0
+\end{pmatrix}.
+\]
+
+\section*{Aufgabe 3}
+Wir wissen, dass eine Cholesky-Zerlegung von $A$ genau dann existiert, wenn $A$ positiv definit ist. Die komplexe Matrix $A \coloneqq (-1)$ ist nicht positiv definit, da die Eigenwerte nicht positiv sind. Denn zum Beispiel ist $(-i)A(i) = -1 < 0$ und $(1)A(1) = -1 < 0$. Damit existiert für $(-1)$ keine Cholesky Zerlegung. Es existiert also keine Matrix $L$ mit $(-1) = LL^*= L \bar L^{T}$.
+
+\section*{Aufgabe 4}
+\begin{proof}
+	Zu beweisen: $H$ ist hermitesch, also $H = H^*$.
+	\[
+		\overline{(I- 2 \frac{n \overline{n}^T}{\overline{n}^Tn})}^T = I - 2 \left(\frac{\overline{n\overline n^T}}{\overline{\overline n^T n}}\right)^T = I - 2 \left( \frac{\overline nn^T}{n^T \overline n} \right)^T = I-2 \frac{n \overline n^T}{\overline n^T n} = I -2 \frac{nn^*}{n^*n}.
+	\]
+\end{proof}
+\begin{proof}
+	Zu beweisen: $H$ ist unitär, also $HH^* = I$. Da $H = H^*$, folgt
+	\[
+		(I - \frac{2nn^*}{n^*n})^2 = I - 4\frac{nn^*}{n^*n} + 4\frac{(nn^*)(nn^*)}{(n^*n)(n^*n)} = I - 4\frac{nn^*}{n^*n} + 4\frac{nn^*(nn^*)}{n^*(nn^*)n} = I - 4\frac{nn^*}{n^*n} + 4\frac{nn^*}{n^*n} = I. 
+	\]
+	Damit haben wir gezigt, dass $HH = I$ und das $\Vert Hv \Vert= \Vert v \Vert$. Letzteres ergibt sich aus der Linearen Algebra, denn wir wissen dass unitär ($AA^* = I$) und längenerhaltende Abbildungen das gleiche sind.
+\end{proof}
+
+Es muss $r = \Vert v \Vert$ gewählt werden, denn $\Vert e^{i\theta}e_1 \Vert = 1$.
+\end{document}

@@ -1,0 +1,138 @@
+\documentclass[9pt]{extarticle}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+\usepackage{kpfonts}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Linda (349481), Frido (374658)}
+\lhead{\textbf{Numerik I WS 2018/19} }
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 1}
+Wir zeigen, dass $B(x,y) \coloneqq \langle x, Qy \rangle$ ein Skalarprodukt ist und somit ist $\Vert x \Vert_Q \coloneqq \sqrt{B(x,x)}$ die vom Skalarprodukt induzierte Norm. \\
+
+Bilinearität: Seien $x_1,x_2,y \in \mathbb R^n$. Dann gilt $B(x_1+x_2,y) =  \langle x_1+x_2, Qy \rangle =  \langle x_1, Qy \rangle + \langle x_2, Qy \rangle = B(x_1,y) + B(x_2,y)$. Seien $x_1,x_2,y \in \mathbb R^n$. Dann gilt $B(y,x_1+x_2) =  \langle y, Q(x_1+x_2) \rangle =  \langle y, Qx_1 \rangle + \langle y, Qx_2 \rangle = B(y,x_1) + B(y,x_2)$. Seien $\lambda, \mu \in \mathbb R$. Dann gilt:  $B(\lambda x, \mu y) = \langle \lambda x, Q\mu y \rangle = \lambda \mu \langle x,Qy \rangle = \lambda \mu B(x,y), \forall x,y \in \mathbb R^n$. \\
+
+Symmetrie: Da $Q$ reell und symmetrisch ist, ist $Q$ auch selbstadjungiert. Also $B(x,y) = \langle x,Qy \rangle = \langle Qx, y \rangle = \langle y, Qx \rangle = B(y,x), \forall x,y \in \mathbb R^n$ (unter Verwendung der Symmetrie des Skalarproduktes). \\
+
+Positive Definitheit: $B(x,x) = \langle x, Qx \rangle = x^TQx > 0, \forall x \in \mathbb R^n\setminus \{0\}$ wegen der positiven Definitheit von $Q$. Außerdem gilt $B(0,0) = 0$. Falls $B(x,x) = 0$, so ist $x^TQx = 0$ und da alle $x^TQx > 0$ für alle $x \in \mathbb R^n\setminus \{0\}$, folgt $x = 0$. Demnach ist $B(x,x) = 0 \iff x=0$. \\
+
+$B(x,y)$ ist also ein Skalarprodukt und $\Vert x \Vert_Q$ ist die von $B$ induzierte Norm.
+
+\section*{Aufgabe 2}
+\begin{enumerate}[label=(\roman*)]
+	\item Eindeutigkeit: Seien $P(x)$ und $\tilde P(x)$ die orthogonale Projektion von $x \in \mathbb R^n$ auf den Untervektorraum $W \subset \mathbb R^n$. Das heißt, es gilt
+	\begin{enumerate}
+		\item $P(x)$ und $\tilde P(x)$ sind in $W$,
+		\item $\langle P(x)-x, w \rangle = 0$ und $\langle \tilde P(x)-x, w \rangle = 0$ für alle $w \in W$.
+	\end{enumerate}
+	Nun folgt
+	\begin{alignat*}{3}
+		 &&\langle P(x)-x, w \rangle &=  \langle \tilde P(x)-x, w \rangle  \\
+		\iff \quad && \langle P(x),w\rangle - \langle x,y \rangle &= \langle \tilde P(x), w \rangle - \langle x,w \rangle\\
+		\iff \quad && \langle P(x),w\rangle &= \langle \tilde P(x), w \rangle \\
+		\iff \quad && \langle P(x)- \tilde P(x), w \rangle &= 0 \tag{1} \label{23}
+	\end{alignat*}
+	Die Gleichung \eqref{23} soll für alle $w \in W$ gelten, das heißt, der Vektor $P(x)- \tilde P(x)$ soll orthogonal zu jedem Vektor in $W$ stehen. Dies ist nur der Fall, falls $P(x)- \tilde P(x) = 0$ gilt, denn wegen der positiven Definitheit des Skalarproduktes gilt:
+	\[
+		\langle P(x)- \tilde P(x), P(x)- \tilde P(x) \rangle = 0 \iff P(x)- \tilde P(x) = 0.
+	\]
+	Also sind $P(x)$ und $\tilde P(x)$ gleich und die Projektion ist damit eindeutig.
+	
+	\item Da $d \coloneqq \dim W < n$, finden wir eine Orthonormalbasis $(u_i)_{i=1,...,d}$ für $W$. Definiere
+	\begin{align*}
+		P(x) \coloneqq \sum^{d}_{i=1} \langle x,u_i \rangle u_i.
+	\end{align*}
+	Zeige, dass $P(x)$ eine orthogonale Projektion ist. Erstens, ist $P(x) \in W$, da $P(x) \in \mathrm{span}(u_1,...,u_d) = W$ mit Koordinaten $(\langle x,u_i \rangle)_{i=1,...,d}$.
+	
+	Sei $w \in W$ beliebig. Insbesondere ist $w = \sum_{i=1}^d \lambda_i u_i$.
+	\begin{align*}
+		P(x)-x, w \rangle 
+		=  \langle \sum \langle x,u_i \rangle u_i, w \rangle - \langle x,w \rangle 
+		&=  \sum \langle \langle x,u_i \rangle u_i, w \rangle - \langle x,w \rangle \\
+		&= \sum \langle x,u_i \rangle \langle u_i, w \rangle - \langle x,w \rangle \\
+		&= \sum \langle x,u_i \rangle \langle u_i, \sum \lambda_ju_j \rangle - \langle x,w \rangle \\
+		&= \sum \Big( \langle x,u_i \rangle \sum_{j=1}^d \lambda_j \underbrace{\langle u_i, u_j \rangle}_{=\delta_{ij}}\Big) - \langle x,w \rangle \\
+	    &= \sum \langle x,u_i \rangle \lambda_i - \langle x,w \rangle \\
+		&= \langle x, \sum  \lambda_i u_i \rangle - \langle x,w \rangle \\
+		&= \langle x, w \rangle - \langle x,w \rangle = 0  
+	\end{align*}
+	Dabei bezeichnet $\delta_{ij}$ das Kroneckerdelta und wir verwenden, dass wir eine ONB haben:
+	\[
+		\langle u_i, u_j \rangle = 0, i \neq j \quad \langle u_i,u_i \rangle = 1.
+	\]
+	
+	\item Linearität: Sei $\lambda$ ein beliebiges Skalar im Vektorraum und $x \in \mathbb R^n$
+	\[
+		P(\lambda x) =  \sum^{d}_{i=1} \langle \lambda x,u_i \rangle u_i =  \sum^{d}_{i=1} \lambda \langle x,u_i \rangle u_i =  \lambda \sum^{d}_{i=1} \langle x,u_i \rangle u_i = \lambda P(x).
+	\] 
+	Seien $x,y \in \mathbb R^n$.
+	\begin{align*}
+		P(x+y) =  \sum^{d}_{i=1} \langle x+y,u_i \rangle u_i =  \sum^{d}_{i=1} \langle x,u_i \rangle u_i + \langle y,u_i \rangle u_i = \sum^{d}_{i=1} \langle x,u_i \rangle u_i +  \sum^{d}_{i=1} \langle y,u_i \rangle u_i = P(x) + P(y).
+	\end{align*}
+	
+	\item Betrachte Aufgabe 3 mit $S = E_n$, wobei $E_n$ die Einheitsmatrix der Dimension $n$ bezeichnet.
+\end{enumerate}
+
+\section*{Aufgabe 3}
+Bezeichne $u_1,...,u_m$ die Spalten der Matrix $A \in \mathbb R^{n \times m}$ mit $n \geq m$. Definiere
+\[
+	P(x) \coloneqq A(A^TSA)^{-1}A^TSx
+\]
+als Projektion von $x \in \mathbb R^n$ auf $W \coloneqq \mathrm{span}(u_1,...,u_m)$. Beachte, dass $S \in \mathbb R^{n \times n}$. Sei $B \coloneqq A^TSA$ und $B$ ist dann eine $m \times m$ Matrix, denn $SA \in \mathbb R^{n \times m}$ und $A^T \in \mathbb R^{m \times n}$. Wir zeigen, dass $P(x) \in W$. Es gilt, dass $Sx \in \mathbb R^n$ und somit $A^TSx \in \mathbb R^m$. Dann ist $b \coloneqq B^{-1}A^TSx \in \mathbb R^{m}$. Somit ist $P(x) = Ab \in W$, da $W$ der Spaltenraum von $A$ ist.\\
+
+Zeige, dass $\langle P(x)-x, w \rangle = 0$ für alle $w \in W$. Es gilt, dass $w = Az$ für ein $z \in \mathbb R^m$ und $B^T = B$ wegen der Symmetrie $S^T = S$.
+\begin{align*}
+	\langle P(x)-x,w \rangle = \langle AB^{-1}A^TSx-x, Az \rangle = \langle AB^{-1}A^TSx, Az \rangle - \langle x,Az \rangle. 
+\end{align*}
+
+Wegen ${(B^{-1})}^T = {(B^T)}^{-1} = B^{-1}$ ergibt sich
+\begin{align*}
+	 \langle AB^{-1}A^TSx, Az \rangle = (AB^{-1}A^TSx)^TSAz = x^TSAB^{-1}\underbrace{A^TSA}_{=B}z = x^TSAz = \langle x, Az \rangle. 
+\end{align*}
+Damit ist $	\langle P(x)-x,w \rangle =  \langle AB^{-1}A^TSx, Az \rangle - \langle x,Az \rangle =  \langle x,Az \rangle -  \langle x,Az \rangle= 0$.
+\end{document}

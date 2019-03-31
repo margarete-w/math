@@ -1,0 +1,227 @@
+\documentclass[a4paper]{extarticle}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{titlesec}
+
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Linda (349481), Frido (374658)}
+\lhead{\textbf{Numerik I WS 2018/19} }
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 1}
+\textbf{(a)} Sei $n \in \mathbb N$. Sei $t_n:[0,2\pi] \to \mathbb C$ von der Form
+\[
+	t_n(x) \coloneqq \sum^{n-1}_{k=0}d_ke^{ikx}.
+\]
+Bezeichne $d_k$ die $k$-te Komponente von
+\[
+	DFT(f) = \frac{1}{n}\begin{pmatrix}
+	\sum_{j=0}^{n-1}f_j e^{-2\pi i \cdot j \frac{0}{n}} \\
+	\sum_{j=0}^{n-1}f_j e^{-2\pi i \cdot j \frac{1}{n}} \\
+	\vdots \\
+	\sum_{j=0}^{n-1}f_j e^{-2\pi i \cdot j \frac{n-1}{n}} 
+	\end{pmatrix}, 
+	\quad \text{also }
+	d_k = \sum_{j=0}^{n-1}f_j e^{-2\pi i \cdot j \frac{k}{n}}
+	. 
+\]
+Wir wollen zeigen, dass für beliebige $x_0,...,x_{n-1}$ gilt, dass $t_n(x_j) = g(x_j) \eqqcolon f_j$ für $j=0,...,n-1$. Dafür benötigen wir das folgende Lemma
+\begin{lemma}\label{kaks}
+	Es gilt für alle ganzzahlige $\alpha \neq 0$ $$\sum^{n-1}_{k=0} e^{2\pi i \cdot \frac{k\alpha}{n}} = 0.$$
+\end{lemma}
+\begin{proof}
+	Wir erhalten eine geometrische Summe
+	\[
+		\sum^{n-1}_{k=0} e^{2\pi i \cdot \frac{k\alpha}{n}} = \sum^{n-1}_{k=0} \left(e^{2\pi i \cdot \frac{\alpha}{n}}\right)^k = \frac{1 - (e^{2\pi i \cdot \frac{\alpha}{n}})^n}{1 - e^{2\pi i \cdot \frac{\alpha}{n}}} = \frac{1 - e^{2\pi i \cdot \alpha}}{1 - e^{2\pi i \cdot \frac{\alpha}{n}}} = \frac{1-1}{1 - e^{2\pi i \cdot \frac{\alpha}{n}}} = 0.
+	\]
+\end{proof}
+Nun ergibt sich für alle $m=0,...,n-1$ mit $x_m = 2\pi\frac{ m}{n}$, dass
+\begin{align*}
+	t_n(x_m) = \sum^{n-1}_{k=0} \frac{1}{n} \sum_{j=0}^{n-1}f_j e^{-2\pi i \cdot j \frac{k}{n}} e^{ik 2\pi \frac{m}{n}} 
+	= \frac{1}{n}\sum^{n-1}_{k=0} \sum^{n-1}_{j=0} f_j e^{2\pi i \frac{k}{n}(m-j)} 
+	= \frac{1}{n}\sum^{n-1}_{j=0} f_j  \sum^{n-1}_{k=0} \left(e^{2\pi i \frac{m-j}{n}}\right)^k
+\end{align*}
+Mit Lemma \ref{kaks} ergibt sich, dass die letztere Summe $\sum^{n-1}_{k=0} \left(e^{2\pi i \frac{m-j}{n}}\right)^k = \begin{cases}
+0 \quad \text{falls $j \neq m$}\\ n \quad \text{falls $j = m$}
+\end{cases}$. Beachte, dass $m$ und $j$ ganze Zahlen sind und daher das Lemma anwendbar ist. Wir erhalten das gewünschte Resultat
+\[
+	t_n(x_m) = \frac{1}{n} \cdot  f_m \cdot n = f_m.
+\]
+
+\textbf{(b)} Betrachten wir nun 
+\[
+	u_n(x) \coloneqq \sum^{\frac{n}{2} -1}_{k=0} d_k e^{ikx} + d_{n-k-1}e^{-i(k+1)x}.
+\]
+Wir zeigen folgendes Lemma\footnote{Dieses Lemma brauchen wir auch in Aufgabe 2, weshalb das Lemma einen Namen verdient.}:
+\begin{lemma}[Periodizitätlemma nach Kovalevskaya-Clifford]\label{kamra}
+	Für alle $k, m,n \in \mathbb N$ gilt, dass
+	\[
+		e^{-2\pi i k \frac{m}{n}} = e^{2\pi i (n-k)\frac{m}{n}}.
+	\]
+\end{lemma}
+\begin{proof}
+	Es gilt nämlich, dass
+	\[
+		e^{-2\pi ik \frac{m}{n}} = e^{2\pi i m} e^{-2\pi ik \frac{m}{n}} = e^{2\pi i(m - k\frac{m}{n} )} = e^{2\pi i(n - k) \frac{m}{n}}.
+	\]
+\end{proof}
+
+Nun gilt also mit Lemma \ref{kamra} für $m,n \in \mathbb N$ und $n$ gerade, dass
+\begin{align*}
+	\sum^{\frac{n}{2}-1}_{k=0}d_{n-k-1} e^{-2\pi i (k+1) \frac{m}{n}} \overset{\text{Lemma }\ref{kamra}}{=} \sum^{\frac{n}{2}-1}_{k=0} d_{n-(k+1)} e^{2\pi i (n-(k+1)) \frac{m}{n}}  = \sum^{n-1}_{k = \frac{n}{2}} d_k e^{2\pi i k \frac{m}{n}}.
+\end{align*}
+Damit ist für alle $m=0,...,n-1$:
+\[
+	u_n(x_m) = \sum^{\frac{n}{2}-1}_{k=0}d_k e^{2\pi i k \frac{m}{n}} d_{n-k-1} e^{-2\pi i (k+1) \frac{m}{n}} = \sum^{n-1}_{k = 0} d_k e^{2\pi i k \frac{m}{n}}.
+\]
+Beachte, dass $n$ gerade ist. Ansonsten ist die Summe $\sum^{\frac{n}{2}}_{k=0}$ nicht definiert.
+
+\section*{Aufgabe 2}
+Wir sollen zeigen, dass für beliebige $n \in \mathbb N$ folgende Beziehung gilt:
+\[
+	DCT(f) = \begin{pmatrix}
+		\sum^{n-1}_{k=0} f_k \cos[\frac{\pi}{n}(k + \frac{1}{2}) 0] \\
+		\sum^{n-1}_{k=0} f_k \cos[\frac{\pi}{n}(k + \frac{1}{2}) 1] \\
+		\vdots \\
+		\sum^{n-1}_{k=0} f_k \cos[\frac{\pi}{n}(k + \frac{1}{2}) (n-1)]
+	\end{pmatrix} = \frac{2n}{4n} \begin{pmatrix}
+		\sum^{4n-1}_{k=0} \tilde f_k e^{-2\pi i k\frac{0}{4n}} \\
+		\sum^{4n-1}_{k=0} \tilde f_k e^{-2\pi i k\frac{1}{4n}} \\
+		\vdots \\
+		\sum^{4n-1}_{k=0} \tilde f_k e^{-2\pi i k\frac{n-1}{4n}}
+	\end{pmatrix} = 2n \cdot \left(DFT(\tilde f)\right)_{j=0}^{n-1}.
+\]
+Der Vektor $\tilde f \in \mathbb C^{4n}$ ist dabei definiert mit Komponenten
+\[
+	\tilde f_k \coloneqq \begin{cases}
+		f_j \quad &\text{falls $k = 2j+1$ oder $k = 4n-(2j+1)$ für ein $j = 0,...,n-1$} \\
+		0 & \text{sonst}
+	\end{cases} ,\qquad \forall k=0,...,4n-1.
+\]
+Wir zeigen folgende Beziehung: $\sum^{n-1}_{k=0}f_k \cos[\frac{\pi}{n} (k+0.5)j] = 2n \frac{1}{4n} \sum^{4n-1}_{k=0} \tilde f_k e^{-2\pi i k \frac{j}{4n}}$ für alle $j = 0,...,n-1$.
+\begin{align*}
+	2n \cdot \left(DFT(\tilde f)\right)_j &=
+	2n \frac{1}{4n} \sum^{4n-1}_{k=0} \tilde f_k e^{-2\pi i k \frac{j}{4n}} \\
+	&\Downarrow \text{$\tilde f$ verschwindet für gerade $k$} \\
+	&=\frac{1}{2} \sum^{2n-1}_{k=0} \tilde f_{2k+1} e^{-2\pi i (2k+1) \frac{j}{4n}} \\
+	&\Downarrow \text{wegen $\tilde f_k = \tilde f_{4n-k}$ ergibt sich}\\
+	&= \frac{1}{2} \sum^{n-1}_{k=0} f_k(e^{-2\pi i (2k+1) \frac{j}{4n}} + e^{-2\pi i (4n-(2k+1)) \frac{j}{4n}}) \\
+	&\Downarrow \text{Lemma von Kovalevskaya-Clifford } \\
+	&= \frac{1}{2} \sum^{n-1}_{k=0} f_k(e^{-2\pi i (2k+1)\frac{j}{4n}} + e^{2\pi i (2k+1) \frac{j}{4n}}) \\
+	&\Downarrow \text{der Kosinus ist definiert als der Realanteil von $e^{i\varphi}$ und $\Re(e^{i\varphi}) = \frac{1}{2}(e^{i\varphi}+ \overline{e^{i\varphi}})$} \\
+	&= \frac{1}{2} \sum^{n-1}_{k=0} f_k2 \cos\left[2\pi (2k+1)\frac{j}{4n}\right] \\
+	&= \sum^{n-1}_{k=0}f_k \cos\left[\frac{\pi }{n}(k + 0.5)j\right]
+\end{align*}
+Genau dies wollten wir zeigen.
+
+\section*{Aufgabe 3}
+\begin{enumerate}[label=(\roman*)]
+	\item Wir wollen eine Näherungsformel für das Doppelintegral
+	\[
+		\int^d_c \int^b_a f(x,y) dx dy
+	\]
+	finden. Seien $a,b,c,d \in \mathbb R$. Dazu definiere $U(v) \coloneqq \int^b_a f(x,v) dx$. Für beliebiges $v \in [c,d]$ nähern wir $U(v)$ mithilfe der Simpsonsregel an:
+	\[
+		U(v) =   \int^b_a f(x,v) dx \approx \frac{h}{3}[f(x_0,v)+4f(x_1,v) + f(x_2,v)],
+	\]
+	wobei $h = \frac{b-a}{2}$ and $x_k = a + k \cdot h$ für $k = 0,1,2$. Als nächstes wollen wir
+	$
+		\int^d_c U(v) dv
+	$
+	durch die Simpsonsregel approximieren. Das ist dann
+	\[
+		\int^d_c U(v) dv \approx \frac{\tilde h}{3}[U(v_0) + 4U(v_1) + U(v_2)]
+	\]
+	für $\tilde h = \frac{d-c}{2}$ und $v_k = c + k \cdot \tilde h$ für $k=0,1,2$. Somit erhalten wir
+	\begin{align*}
+		\int^d_c U(v) dv \approx \frac{\tilde h}{3}[U(v_0) + 4U(v_1) + U(v_2)] 
+		=& \frac{\tilde h}{3}\left( \frac{h}{3}[f(x_0,v_0)+4f(x_1,v_0) + f(x_2,v_0)]\right.\\
+		 &+ 4 \frac{h}{3}[f(x_0,v_1)+4f(x_1,v_1) + f(x_2,v_1)]  \\
+		&+  \left. \frac{h}{3}[f(x_0,v_2)+4f(x_1,v_2) + f(x_2,v_2)] \right)
+	\end{align*}
+	Wir erhalten somit als Quadraturformel
+	\begin{align*}
+			\int^d_c \int^b_a f(x,y) dx dy =  \int^d_c U(v) dv \approx \frac{h \tilde h}{9}[
+		f(x_0,v_0)+4f(x_1,v_0) + f(x_2,v_0) \\
+		+4 f(x_0,v_1)+16f(x_1,v_1) + 4f(x_2,v_1)\\
+		+f(x_0,v_2)+4f(x_1,v_2) + f(x_2,v_2)
+		]
+	\end{align*}
+	
+	\item Aus der Vorlesung wissen wir, dass
+	\[
+		|\mathcal I(U) - \mathcal Q_2(U)| \leq \frac{\tilde h^{4}}{3!} \Vert U^{(3)} \Vert_{\infty}
+	\]
+	
+	\item Wir benutzen die Formel in Aufgabe 3(i). Es soll 
+	\[
+		\int^3_1 \int^1_0 (xy-1)^3dxdy
+	\]
+	berechnet werden. Dazu ist
+	\[
+		\tilde h = \frac{3-1}{2} = 1 \text{ und } h = \frac{1}{2}.
+	\]
+	Die Sützstellen sind $x_0 = 0, x_1 = 0.5, x_2 = 1$ und $v_0 = 1, v_1 = 2, v_3 = 3$. Es gilt 
+	\begin{gather*}
+		f(x_0,v_0) = -1, f(x_0,v_1) = -1, f(x_0,v_2) = -1  \\
+		f(x_1,v_0) = -0.125, f(x_1,v_1) = 0, f(x_1,v_2) = 0.125 \\
+		f(x_2,v_0) = 0, f(x_2,v_1) = 1, f(x_2,v_2) = 8
+	\end{gather*}
+	Wir setzen die Werte in die Formel ein und wir erhalten
+	\[
+		\frac{1}{18}(-1-0.5+0-4+4-1+0.5+8) = \frac{6}{18} = \frac{1}{3}.
+	\]
+\end{enumerate}
+
+\end{document}

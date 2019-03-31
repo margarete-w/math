@@ -1,0 +1,181 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Cheat sheet: Least Squares Approximation}
+\author{Viet Duc Nguyen\\ Technical University of Berlin}
+\date{December 25, 2018}
+\maketitle
+\tableofcontents
+
+\setcounter{section}{-1}
+\section{Preface}
+A concise overview of the least squares approximation. It is based on the monography \textit{Introduction to Linear Algebra} by Gilbert Strang. This sheet is primarily written for me as a learning guide but may be useful for others. Feel free to use it.
+
+\section{Projection onto a line}
+We consider a line thought the origin. In fact, this case is sufficient, as projecting depends on finding an orthgonal vector, and orthogonality is dependent on the direction of the line and not on its origin.
+
+The projection of an arbitrary point $\mathbf b \in \mathbb R^d$ on a line $G$ is the point $\mathbf p$ on the line $G$ that has the smallest distance to $\mathbf b$. That means
+\[
+	 \mathbf p \coloneqq \min_{\mathbf g \in G} \Vert \mathbf g -\mathbf  b \Vert. 
+\]
+Using geometry, we see that $\mathbf p$ is the unique point on $G$ such that $\mathbf p - \mathbf b$ is orthogonal on $G$, i.e. the dot-product is zero:
+\[
+	\forall \mathbf g \in G:  (\mathbf b - \mathbf p) \cdot \mathbf g = 0.
+\]
+So, we have two characteerisations of $\mathbf p$: (1) the point on the line with the minimal distance to $\mathbf b$, and (2) the point on the line such that the vector $\mathbf p - \mathbf b$ is orthogonal to the line. The second characterisation is useful to compute the point $\mathbf p$. We are using the equation:
+\[
+	(\mathbf b - \mathbf p)^T \mathbf g = 0, \quad \forall \mathbf g \in \mathbb G.
+\]
+As $\mathbf p$ lies on the line $G = \mathbb R \mathbf a$, there exists $x \in \mathbb R$ such that $\mathbf p = x \mathbf a$. Instead, we are looking for the parameter $x$, and if we have $x$, we can obtain $\mathbf p$ by $$\mathbf p = x \mathbf a.$$
+Thus, we solve
+\[
+	( \mathbf b - x\mathbf a)^T \cdot \mathbf a  = 0 \iff \mathbf{b}^T\mathbf{a} - x\mathbf{a}^T\mathbf{a} = 0 \iff x = \frac{\mathbf b^T \mathbf a}{\mathbf a^T \mathbf a}.
+\]
+So we get
+\begin{framed}
+\[
+	x = \frac{\mathbf a^T \mathbf b}{\mathbf a^T \mathbf a}, \quad \mathbf p = \frac{\mathbf a \mathbf a^T}{\mathbf a^T \mathbf a}\mathbf b \quad \text{and} \quad  P = \frac{\mathbf a \mathbf a^T}{\mathbf a^T \mathbf a}.
+\]
+\end{framed}
+$ P$ is the projection matrix on $G$, and the column space of $ P$ is $G$. It holds
+\[
+	 P^2 =  P,
+\]
+since the first projection maps $\mathbf b$ onto the column space of $ P$, and thereof, a further projection does nothing. 
+
+The perpendicular subspace of $P$ or $G$ is given by
+\[
+	G^{\perp} = I - P.
+\] 
+Consider $(I-P)\mathbf b = \mathbf b - \mathbf p$, which is perpendicular to $G$. The vector $\mathbf e = \mathbf b - \mathbf p$ is also called the \emph{error} vector which becomes clearer in the following sections.
+
+
+\section{Projection onto a subspace}
+Given a vector $\mathbf b$ and a basis $\mathbf a_1,...,\mathbf a_n$ find the linear combination of $\mathbf a_i$ that is closest to $\mathbf b$. This point $\mathbf p = A \mathbf x$ is called the projection of $\mathbf b$ onto the subspace spanned by $\mathbf a_i$. For such point $\mathbf p$, the error vector $\mathbf e = \mathbf p - \mathbf b$ must be perpendicular to every basis vector $\mathbf a_i$, i.e. for $i = 1,...,n$:
+\begin{gather*}
+	\mathbf a_i^T (\mathbf b - \mathbf p) = 0 \iff \mathbf a_i^T (\mathbf b - A\mathbf x) = 0.
+\end{gather*}
+This gives
+\[
+	A^T(\mathbf b - A \mathbf x) = 0.
+\]
+We get the famous \emph{least squares equation}:
+\begin{framed}
+\[
+	 A^TA\mathbf x = \mathbf A^T \mathbf b.
+\]
+\end{framed}
+The matrix $A^TA$ is $n \times n$ and is symmetric if the columns $\mathbf a_i$ are linearly independent. Then the solution for $\mathbf x$ becomes
+\[
+	\mathbf x = (A^TA)^{-1}A^T\mathbf b.
+\]
+The projection and projection matrix is given by
+\begin{framed}
+\[
+	\mathbf p = A(A^TA)^{-1}A^T\mathbf b, \quad P = A(A^TA)^{-1}A^T
+\]
+\end{framed}
+Note that $A^TA$ is indeed invertible, since $A$ consists of linearly independent columns $\mathbf a_i$. In fact, $A^TA$ is invertible if and only if it has linearly independent columns, i.e. column rank is full. The matrix $A^TA$ is symmetric, invertible and square, if $A$ has linearly independent columns.
+
+\section{Least Squares Approximation}
+When a matrix $A$ has more rows $m$ than columns $n$, there might be no solution at all for $A\mathbf x = \mathbf b$, for $A$ spans a subspace in $\mathbb R^m$ with $n$ vectors and $\mathbf b$ may not lay in this subspace (due to $m > n$). So we try to find a vector $\mathbf p = A \mathbf{\hat x}$ that is close to $\mathbf b$. As we have seen before, $\mathbf p$ is the point in $A$ such that the error vector $p - b \perp A$. To find $\mathbf p$, we obtain $\mathbf{\hat x}$ by
+\[
+	A^TA \mathbf{\hat x} = A^T \mathbf b.
+\]
+In a idiomatic way, we have just multiplied the matrix $A^T$ to the equation $A\mathbf x = \mathbf b$ to get a best approximate solution $\mathbf{\hat x}$. The error is then given by
+\[
+	\mathbf e = A \mathbf{\hat x } - \mathbf b. 
+\]
+Another way to see why $\hat x$ minimises the $\Vert \mathbf e \Vert$ is by splitting $\mathbf b$ into two parts: $\mathbf b = \mathbf p + \mathbf e$. So $\mathbf b$ consists of a vector in $A$ and an orthogonal part $\mathbf e$. We cannot solve $A\mathbf x = \mathbf b = \mathbf p + \mathbf e$ because $\mathbf b$ lies outside of the supspace spanned by $A$. However, we can solve $A \mathbf{ x} = \mathbf p$. Thus, the length of any $\mathbf x$ in the subspace $A$ to $\mathbf b$ is (by theorem of Pythagoras)
+\[
+	\Vert A \mathbf x - \mathbf b \Vert ^2 = \Vert A\mathbf x - \mathbf p \Vert ^2 + \Vert \mathbf e \Vert^2.
+\]
+We can reduce $\Vert A\mathbf x - \mathbf p \Vert ^2$ to zero by choosing $\mathbf x = \mathbf{\hat x}$, and we are left with the error $\mathbf e$, that is unavoidable.
+
+\section{Orthogonal bases}
+When $Q$ consists of orthonormal columns $\mathbf q_i$, it holds $Q^TQ = I$ ($m > n$, i.e. full column rank). Such orthogonal matrices also preserve the length of vectors and the dot product, i.e. $(Q\mathbf x) \cdot (Q\mathbf y) = \mathbf x \cdot \mathbf y$.
+
+Given a least squares problem, the problem of finding the best solution $\mathbf{\hat x}$ becomes much more simpler if $A$ is a orthogonal matrix, that we will denote by $Q$. The formula is then given by
+\[
+	A^TA\mathbf{\hat x} = A^T\mathbf b \iff \mathbf{\hat x} = (A^TA)^{-1}A^T\mathbf b
+\]
+and therefore
+\begin{framed}
+\[
+	\mathbf{\hat x} = Q^T\mathbf b, \quad \mathbf p = QQ^T\mathbf b, \quad P = QQ^T.
+\]
+\end{framed}
+Note that, $QQ^T \neq I$ if $Q$ is not square. $QQ^T = I$ means that the rows of $Q$ are orthonormal but this cannot be the case if $Q^T Q = I$. The latter requires, that the columns of $Q$ are orthonormal with the number of rows larger than the number of columns $m > n$. So we have $m$ rows with dimension $n$ which cannot be linearly independent, for $m > n$.
+
+If $Q \in \mathbb R^{n \times n}$ is square, it spans $\mathbb R^n$. The coordinates of a vector $\mathbf b \in \mathbb R^n$ in respect to the basis $\mathbf q_i$ can be easily calculated:
+\[
+	\mathbf b =  (\mathbf q_1 \cdot \mathbf b)\mathbf q_1 + ... +  (\mathbf q_n \cdot \mathbf b)\mathbf q_n.
+\]
+The coordinates are just $\mathbf x = Q^T \mathbf b$.
+
+\section{Gram-Schmidt Process}
+The idea of the \emph{Gramd-Schmidt process} becomes really simple after all this theory. Starting with a vector $\mathbf a_1 = \mathbf{\tilde a_1}$, we orthogonalise a second vector $\mathbf a_2$ by just projecting projecting $\mathbf a_2$ onto the subspace by $\mathbf{\tilde a_1}$, and take the error vector as the second orthogonalised vector $\mathbf{\tilde a_2}$ (which of course, we have to normalise).
+\[
+	\mathbf{\tilde a_2} = \mathbf a_2 - \frac{\mathbf{\tilde a_1}\mathbf{\tilde a_1}^T}{\mathbf{\tilde a_1}^T\mathbf{\tilde a_1}} \mathbf a_2, \quad 
+	\mathbf{\tilde a_3} = \mathbf a_3 - \frac{\mathbf{\tilde a_2}\mathbf{\tilde a_2}^T}{\mathbf{\tilde a_2}^T\mathbf{\tilde a_2}} \mathbf a_3 - \frac{\mathbf{\tilde a_1}\mathbf{\tilde a_1}^T}{\mathbf{\tilde a_1}^T\mathbf{\tilde a_1}} \mathbf a_3.
+\]
+
+
+
+\end{document}

@@ -1,0 +1,236 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{geometry}
+\setlength{\columnsep}{12mm}
+\geometry{
+ left=12mm,
+ right=12mm,
+ bottom=24mm,
+ top = 16mm
+}
+
+
+\begin{document}
+
+\section*{Requirements for the Matrix Decompositions}
+\subsection*{LDU decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times n}$, $A(1:k,1:k)$ is nonsingular for all $k = 1,...,n$.
+\end{enumerate}
+
+\subsection*{$\mathbf{LDL^H}$ decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times n}$, $A(1:k,1:k)$ is nonsingular
+	\item $A$ is Hermitian.
+\end{enumerate}
+
+\subsection*{Cholesky decomposition}
+\begin{enumerate}
+	\item $A$ is HPD.
+\end{enumerate}
+
+\subsection*{Schur decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times n}$. There are no requirements (except that $A$ must be square).
+\end{enumerate}
+
+\subsection*{Singular value decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times m}$.
+\end{enumerate}
+
+\subsection*{Polar decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times n}$.
+\end{enumerate}
+
+\subsection*{QR decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times m}$ with $n \geq m$.
+\end{enumerate}
+
+\subsection*{Arnoldi decomposition}
+\begin{enumerate}
+	\item $A \in \mathbb C^{n \times n}$.
+\end{enumerate}
+
+
+\section*{Chapter 0: Basic Definitions and Matrix Classes}
+\subsection*{Theorems}
+\begin{enumerate}
+    \item $\forall \text{ Hermitian } A \in  \mathbb C^{n \times n}, \forall x \in  \mathbb C^n: x^HAx \in \mathbb R$
+    
+    \item The ordering $\geq$ defines a Loewner partial ordering on the set of Hermitian matrices $C \in \mathbb C^{n \times n}$. 
+    \begin{enumerate}
+        \item $A \geq A$ (reflexivity)
+        \item $A \geq B \land B \geq A \implies A = B$ (anti symmetrie)
+        \item $A \geq B, B \geq C \implies A \geq C$ (transitivity)
+    \end{enumerate}
+    \textit{What is missing so that it is a total ordering? Can you give an example why the missing property does not hold?}
+    
+    \item Some useful properties of HPSD/ PSD matrices.
+    \begin{enumerate}
+        \item If $A$ is HPSD, then $\lambda \geq 0$. If $A$ is SPD, then $\lambda > 0$. $\det A \geq 0$ or $\det A > 0$ respectively.
+        \item If $A$ is HPSD, then $X^HAX$ is HPSD. If $A$ is SPD and $X \in \mathbb C^{n \times k}$ has full column rank ($rank(X) = k$), then $X^HAX$ is SPD.
+        \item If $A$ is HPSD or SPD, then $A(1:k, 1:k)$ is HPSD or SPD for $\forall k = 1,...,n$.
+    \end{enumerate}
+    
+    \item Inverse of complex matrices (applies \emph{not only} for HPSD or PSD matrices).
+    \begin{enumerate}
+        \item If $A$ is nonsingular then the inverse is unique.
+        
+        \item If $AB = I$ or $BA = I$ then $A$ is nonsingular and $B = A^{-1}$. We only need to check one equation.
+    \end{enumerate}
+\end{enumerate}
+
+\subsection*{Proofs}
+\begin{enumerate}
+    \item \textbf{Idea:} Show $x^HAx = \overline{x^HAx} \implies x^HAx \in \mathbb R$. \begin{proof}
+        $x^HAx = x^HA^Hx = (x^HAx)^H = \overline{(x^HAx)^T} = \overline{x^TA^T \overline{x}} = \overline{x^HAx}$.
+    \end{proof}
+    
+    \item Statement (a) is easy to show. 
+    
+    For statement (b) consider the matrix $D = A-B$ and calculate $e_jDe_j$ and $e_j(-D)e_j$. You will see that $d_{jj} \geq 0$ and $d_{jj} \leq 0$. Hence, $d_{jj} = 0$. Then, consider $(e_i+e_j) (\pm D) (e_i + e_j)$ which will proove that $\Re(d_{ij}) = 0$. To show that $\Im(d_{ij}) = 0$ consider $(e_i + e_j)D(e_i - e_j)$. 
+    
+    For a counterexample of the totality of $\geq$ consider the matrices $\begin{pmatrix} 1& 0 \\ 0 & 0 \end{pmatrix}$ and $\begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}$.
+    
+    \item To show: $\lambda \geq 0$. Consider an eigenvektor $x \neq 0$. It holds: $x^HAx \geq 0 \iff \lambda x^Hx \geq 0 \implies \lambda \geq 0$ since $x^Hx > 0$ ($x \neq 0$).
+    
+    Next, $X^HAX$ is SPD. Substitute $z = Xy$. Then $z \neq 0$ because $rank(X) = k$. Thus, $y^HX^HAXy = z^HAz > 0$ for $z \neq 0$.
+    
+    Chose $X = [e_1,...,e_k]$.
+    
+    \item Let $AB = BA = I = AC = CA$. Then $B = BI = BAC = IC = C$.
+    
+    \textbf{Idea:} Use the rank of $AB$ and $A$ (show that $A$ is nonsingular). If $AB = I_n$ then $rank(AB) = n \leq rank(A) \implies A \text{ is nonsingular}$. Then $A^{-1} = A^{-1} I = A^{-1}AB = B$.
+\end{enumerate}
+
+%%
+%	Matrix Decompositions
+%%
+\section*{Chapter 1: Matrix Decompositions}
+\subsection*{Theorems}
+\begin{enumerate}
+    \item \textbf{LDU decomposition:} The following assertions are equivalent. Let $A \in \mathbb C^{n \times n}$.
+    \begin{enumerate}
+        \item $A = LDU$ where $L$ and $U$ are \emph{unit} lower/ upper triangular matrices and $D$ is a \emph{nonsingular} diagonal matrix. The decomposition is \emph{unique}.
+        
+        \item $A(1:k, 1:k)$ is nonsingular for all $k = 1,...,n$ (including $n$).
+    \end{enumerate}
+    \textit{Give an example where the $LDU$ decomposition does not hold but the $LU$ decomposition.}
+    \item \textbf{$\mathbf{LDL^H}$ decomposition:} Given \emph{Hermitian} $A \in \mathbb C^{n \times n}$ with $A(1:k,1:k)$ is nonsingular for all $k = 1,...,n$. We can find \emph{real, nonsingular, unique, diagonal} $D \in \mathbb R^{n \times n}$ and \emph{unique} unit lower triangular $L$ such that $A = LDL^H$.
+    \item \textbf{Cholesky decomposition:} Given a HPD matrix $A \in \mathbb C^{n \times n}$ we can write it as $A = LL^H$ where $L$ is a lower, unique, triangular matrix. $L$ has positive entries on its diagonal.
+    \item \textbf{Schur decomposition:} Let $A \in \mathbb C^{n \times n}$. Then $A = URU^H$ where $U$ is unitary and $R$ is upper triangular matrix.
+	\item \textbf{Singular Value decomposition:} Let $A \in \mathbb C^{n \times m}$ with $rank(A) = r$. Then $A = U\Sigma_+ V^H$ with $U \in \mathbb C^{n \times n}$ and $V \in \mathbb C^{m \times m}$ unitary and $\Sigma_+ = diag(\sigma_1,...,\sigma_r), \sigma_1 \geq ... \geq \sigma_r > 0$, $\Sigma = \begin{pmatrix}
+			\Sigma_+ & 0 \\ 0 & 0
+	\end{pmatrix}$. Alternatively, $A = \sum^r_{i = 1} \sigma_i u_i  v_i^H$.
+\end{enumerate}
+
+\subsection*{Proofs}
+\begin{enumerate}
+    \item $\implies$: Given $A = LDU$ show that $A(1:k, 1:k)$ is nonsingular. Consider
+  	\[
+  		A = \begin{pmatrix}
+    		A_{11} & A_{12} \\ A_{21} & A_{22}
+    	\end{pmatrix} = 
+    	\begin{pmatrix}
+    		L_{11} & 0 \\ L_{21} & L_{22}
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		D_{11} & 0 \\ 0 & D_{22}
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		U_{11} & U_{12} \\ 0 & U_{22}
+    	\end{pmatrix} = LDU
+    \] with $A_{11} = A(1:k, 1:k)$. Since $L_{11}$ and $U_{11}$ are lower/ upper triangular matrices we obtain $\det(A_{11}) = \det(D_{11}) \neq 0$ because $D$ and thus $D_{11}$ is nonsingular.
+    
+    $\impliedby$: Show that there exists such a decomposition for $A \in \mathbb C^{n \times n}$ whose leading principal submatrix are all nonsingular. \textbf{Idea:} Proof by induction over $n$. 
+    
+    (Beginning:) For $A = (a_{11}) = 1 * a_{11} * 1$ and $a_{11} \neq 0$ because $A$ is nonsingular. 
+    
+    (Assumption:) Assume for every $A \in \mathbb C^{(n-1) \times (n-1)}$ with nonsingular $A(1:k,1:k), k = 1,...,n-1$ there exists a decomposition $L,D, U$. 
+    
+    (Step:) Consider a matrix $A \in \mathbb C^{n \times n}$ with nonsingular leading principle submatrix:
+    \[
+    	A = \begin{pmatrix}
+    		A_{11} & A_{12} \\ A_{21} & A_{22}
+    	\end{pmatrix} = 
+    	\begin{pmatrix}
+    		I_{n-1} & 0 \\ A_{21}A_{11}^{-1} & 1
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		A_{11} & 0 \\ 0 & s
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		I_{n-1} & A_{11}^{-1}A_{12} \\ 0 & 1
+    	\end{pmatrix}
+    \]
+    and nonsingular $A_{11} = A(n-1,n-1)$, $s = A_{22} - A_{21}A_{11}^{-1}A_{12}$. Thus, $s \neq 0$. Since $A_{11}$ is nonsingular, we can use the induction hypothesis to show that $A_{11} = L_{n-1}D_{n-1}U_{n-1}$. So
+        \[
+    	A = 
+    	\begin{pmatrix}
+    		I_{n-1} & 0 \\ A_{21}A_{11}^{-1} & 1
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		L_{n-1} & 0 \\ 0 & 1
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		D_{n-1} & 0 \\ 0 & s
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		U_{n-1} & 0 \\ 0 & 1
+    	\end{pmatrix}
+    	\begin{pmatrix}
+    		I_{n-1} & A_{11}^{-1}A_{12} \\ 0 & 1
+    	\end{pmatrix}.
+    \]
+    
+    Show the unicity of $A=L_1D_1U_1 = L_2D_2U_2 \implies L_2^{-1}L_1D_1 = D_2U_2U_1^{-1}$. This is a diagonal matrix. The diagonal entries of $L_2^{-1}, L_1, U_2, U_1^{-1}$ are ones.
+    
+    \textbf{Counter example:} $\begin{pmatrix}
+    	1 & 0 \\ 0 & 0
+    \end{pmatrix}$
+    
+    \item Let $A = LDU$. Since $A = LDU = (LDU)^H = U^H D^H L^H = A^H$ it follows that $L = U^H$ and $D = D^H$ (LU decomposition is unique and $D$ is nonsingular). Thus, $D$ is real and $A = LDL^H$.
+    \item Write $A = LDL^H$ since $A$ is Hermitian and $A(1:k, 1:k)$ is nonsingular. Then, $D = L^HAL \in \mathbb R^{n \times n}$. $A$ is HPD and $L$ has full rank (it is a lower unit triangular). Thus, $D$ is also HPD and has positive diagonal entries. Set $\tilde L = L \cdot D^{\frac{1}{2}} = L \cdot \mathrm{diag}(d_{1}^{\frac{1}{2}}, ..., d_n^{\frac{1}{2}})$.
+    \item Proof by induction. For $n = 1$ chose $U = 1$ and $R = a_{11}$. $n-1 \leadsto n$: Chose any eigenvalue of $A$ with its unit eigenvector $x$. Find any matrix $Y \in \mathbb C^{n \times (n-1)}$ such that $X = [x,Y]$ is unitary. This means that
+    \[
+    	\begin{pmatrix}
+    		x^H \\ Y^H
+    	\end{pmatrix} \begin{pmatrix}
+    		x, Y
+    	\end{pmatrix} = E_n
+    \]
+    It holds that $x^HY = (0,...,0) \in \mathbb C^{1 \times (n-1)}$ und $Y^Hx = (0,...,0)^T \in \mathbb C^{n-1}$. Consider 
+    \[
+    	X^HAX = \begin{pmatrix}
+    		\lambda & x^HAY \\ 0 & Y^HAY
+    	\end{pmatrix}.
+    \]
+    By induction hypothesis, $Z^H(Y^HAY)Z = \tilde R$ where $R$ is upper triangular. Then, $U = [x, YZ]$. To show: $U$ is unitary and $U^HAU = \begin{pmatrix}
+    	x^HAx & x^HAYZ \\ Z^HY^HAx & Z^HY^HAYZ
+    \end{pmatrix} = \begin{pmatrix}
+    	\lambda & x^HAYZ \\ 0 & \tilde R
+    \end{pmatrix}$ which is relatively easy.
+    \item Consider $A^HA$. It is HPSD, for $x^HA^HAx = ||Ax||^2_2 \geq 0$. Thus, it is unitarily diagonalizable: $V^H A^HAV = diag(\sigma_1^2,...,\sigma_r^2,0,...,0)$ with \underline{$r = rank(A) = rank(A^HA)$}. Partition $V = [V_1,V_2]$ and $V_1 \in \mathbb C^{m \times r}$. Then, $V_2^HA^HAV_2 = 0 \implies AV_2 = 0$. Define $U_1 = AV\Sigma^{-1}_+$ where $\Sigma_+ = diag(\sigma_1,...,\sigma_r)$. We see that it $U_1$ is unitary which means $U_1^HU_1 = \Sigma_+^{-H}V^HA^HAV\Sigma_+^{-1} = \Sigma^{-H} \Sigma_+^2 \Sigma^{-1} = I_r$. So, we find $U = [U_1,U_2]$ such that $U$ is unitary. Finally, $$U^H A V = \begin{pmatrix}
+    		U_1^HAV_1 & U_1^HAV_2 \\ U_2^HAV_1 & U_2^HAV_2
+    	\end{pmatrix} = \begin{pmatrix}
+    		\Sigma_+ & 0 \\ U_2^HU_1\Sigma_+ & 0
+    	\end{pmatrix} = \begin{pmatrix}
+    		\Sigma_+ & 0 \\ 0 & 0
+    	\end{pmatrix}.$$
+\end{enumerate}
+
+\section*{General questions}
+\begin{enumerate}
+	\item Why is $rank(A) = rank(A^HA)$ for any matrix $A \in \mathbb C^{n \times m}$?
+\end{enumerate}
+
+\end{document}

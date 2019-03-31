@@ -1,0 +1,168 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Cheat sheet: Linear Algebra and Differential Equations}
+\author{Viet Duc Nguyen\\ Technical University of Berlin}
+\date{December 26, 2018}
+\maketitle
+\tableofcontents
+
+\setcounter{section}{-1}
+\section{Preface}
+A concise overview of solving linear differential equations with constant coefficients by methods of Eigenvalues and Eigenvectors. It is based on the monography \textit{Introduction to Linear Algebra} by Gilbert Strang. This sheet is primarily written for me as a learning guide but may be useful for others. Feel free to use it.
+
+\section{The matrix is diagonalisable}
+Consider the problem
+\begin{align}\label{originalproblem}
+	\mathbf{\dot u} = A \mathbf u.
+\end{align}
+This is a first order differential equation with constant coefficients (\emph{non-autonomous}). The problem becomes easy when $A \mathbf x = \lambda \mathbf x$ for specific $\mathbf x$. If this is the case, we get a solution of \eqref{originalproblem} with
+\begin{framed}
+\[
+	\mathbf u(t) =  e^{\lambda t} \mathbf x,
+\] 
+\end{framed}
+for $\mathbf{\dot u} = \lambda e^{\lambda t} \mathbf x$ and substituting in \eqref{originalproblem} yields
+\[
+	\mathbf{\dot u}(t) = \lambda e^{\lambda t} \mathbf x = A e^{\lambda t} \mathbf x = \lambda e^{\lambda t} \mathbf x = A \mathbf u(t).
+\]
+The questions is: \underline{how do we find such $\lambda$ and $\mathbf x$?} The scalars $\lambda$ are the Eigenvalues of $A$ with Eigenvectors $\mathbf x$. If $A$ with dimension $n$ decomposes into $n$ distinct eigenvalues $\lambda_i$, we obtain $n$ distinct solutions $\mathbf u_i(t) = e^{\lambda_it}\mathbf x_i$.
+
+The idea is basically a change of coordinates. We try to display the solution $\mathbf u$ as a linear combination of Eigenvectors $\mathbf x_i$. We get specific solutions by setting the $i$-th coordinate to $e^{\lambda_i t}$ and everything else to null. As linear combinations of Eigenvectors remain Eigenvectors, $A \mathbf u$ is the same as $\lambda \mathbf u$, and simple derivation confirms the solution.
+
+By change of coordinates to a basis of Eigenvectors, we are essentially decoupling the system. The matrix $A$ can be displayed as a matrix in \emph{diagonal} form, which means the equations are now independent from each other. We just need to solve $n$ linear differential equations with constant coefficients (without change of coordinates this is not possible because the equations depend on each other).
+
+\section{Higher order equations}
+We increase the dimension of $A$ and as a tradeoff we obtain a system of first order differential equations. For a system of $n$-th order, we introduce $n-1$ new variables $z_1, ..., z_{n-1}$ that reflect the derivatives. Given a higher order differential equation
+\[
+	a_0y + a_1y' + ... + a_ny^{(5)} = 0,
+\]
+we convert it to
+\[
+	\begin{pmatrix}
+		0 & 1 & 0 & 0 & 0 \\
+		& 0 & 1 & 0 &  0 \\
+		 &  &  0 & 1 & 0 \\
+		 		 &  &  & 0  & 1 \\
+		-\frac{a_0}{a_n} & -\frac{a_1}{a_n} & ... &... & -\frac{a_{n-1}}{a_n}
+	\end{pmatrix} \begin{pmatrix}
+		y \\ z_1 \\ z_2 \\ z_3 \\ z_4
+	\end{pmatrix} = \frac{d}{dt}\begin{pmatrix}
+	y \\ y' \\ y'' \\ y''' \\ y^{(4)} 
+	\end{pmatrix}.
+\]
+It contains the following constraints: $z_1 = y'$,..., $z_4 = \frac{d}{dt}y'''$ and $y^{(5)} = ...$. We can solve $A \mathbf y = \mathbf{\dot y}$ for $y$, and obtain the original solution.
+
+\section{Stability of $2 \times 2$ matrices}
+If all Eigenvalues have negative real part, then $A$ is stable and solutions $\mathbf u(t) \to 0$ for $t \to \infty$. The reason is that every component of $\mathbf u$ is of the form $e^{\lambda_i t}$. This part indeed converges to zero for negative $\lambda_i$. The matrix $A$ must pass two requirements:
+\begin{gather*}
+\mathrm{tr} A < 0 \quad \text{and} \quad \lambda_1\lambda_2 > 0.
+\end{gather*}
+First, we know that the sum of all Eigenvalues equals the trace. Secondly, the determinant of $A$ is the product of all Eigenvalues.
+
+
+\section{Matrix expontial}
+We cannot work with Eigenvalues and Eigenvectors if $A$ is not diagonalisable. Instead, we can use the matrix exponential, \underline{which will always work.} The problem consists of finding the exponential of a matrix $A$, i.e. calculate $e^{At}$.
+
+The matrix exponential $e^{A}$ is a matrix defined as
+\[
+	e^{A} = \sum^{\infty}_{k=0} \frac{A^k}{k!}.
+\]
+The problem will be calculating $A^k$. If we take the matrix $At$, the formula is
+\begin{framed}
+\[
+	e^{At} = \sum^{\infty}_{k=0} \frac{A^kt^k}{k!}.
+\]
+\end{framed}
+Note that $t \in \mathbb R$ is a scalar and not a vector. The solution $$\mathbf u(t) = e^{At}\mathbf u(0)$$ solves $\mathbf{\dot u} = A \mathbf u$ with initial value $\mathbf u(0)$ for $t = 0$. We can prove it by
+\[
+	\frac{d}{dt}e^{At} = Ae^{At}.
+\]
+Just put it into the equation and we get the result.
+
+We collect some properties:
+\begin{itemize}
+	\item The inverse of $e^{A}$ is $e^{-A}$
+	\item For \underline{commutative} matrices: $e^{A}e^{B} = e^{B}e^{A} = e^{A+B}$
+	\item $e^{(A^T)} = (e^{A})^T$. This means, the exponential matrix maps \emph{symmetric} matrices to \emph{symmetric} matrices.
+	\[
+		(e^{A})^T = e^{(A^T)} = e^{A} \quad \text{for symmetric $A$}.
+	\]
+	The exponential matrix maps \emph{skew-symmetric} matrices ($A^T = -A$) to \emph{orthogonal} matrices ($AA^T = I$). 
+	\[
+		e^{A}(e^{A})^T = e^{A}e^{(A^T)} = e^{A}e^{-A} = I \quad \text{for skew-symmetric $A$}.
+	\]
+\end{itemize}
+
+\subsection{$A$ is diagonalisable}
+If $A$ decomposes into $S \Lambda S^{-1}$, where $\Lambda = \mathrm{diag}(\lambda_1,...,\lambda_n)$, the matrix exponential $e^{At}$ is easy to compute.
+\[
+	e^{At} = S(e^{\Lambda t})S^{-1} = S\left (\mathrm{diag}(e^{\lambda_1t}, ..., e^{\lambda_n t})\right)S^{-1}.
+\]
+The trick is that $e^{A}$ becomes really easy if $A = \mathrm{diag}(\lambda_1,...,\lambda_n)$ is a diagonal matrix. For
+\[
+	e^{A} = \sum^{\infty}_{k = 0} \frac{\mathrm{diag}(\lambda_1^k,...,\lambda_n^k)}{k!} = \mathrm{diag}(e^{\lambda_1},..., e^{\lambda_n}).
+\]
+
+\section{Examples}
+\begin{enumerate}
+	\item f
+\end{enumerate}
+
+\end{document}
