@@ -1,0 +1,109 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{405592 Victor, 405661 Pantelis, 395220 Duc}
+\lhead{\textbf{MP I}, Jan Techter (Mon 10-12)}
+\cfoot{Page \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Exercise 11.1}
+\begin{enumerate}[label=(\roman*)]
+	\item The Hamilton equations are given by 
+	\[
+		\dot x_j = \frac{\partial H}{\partial p_j} \text{ and } \dot p_j = -\frac{H}{\partial x_j}.
+	\]
+	So for $j = 1,2,3$ we get
+	\[
+		\dot x_j = \frac{\partial }{\partial p_j}\left( \sqrt{\alpha^2 + p_1^2 + p_2^2 + p_3^2} + a_1x_1 + a_2x_2 + a_3x_3 \right)  = \frac{p_j}{ \sqrt{\alpha^2 + p_1^2 + p_2^2 + p_3^2}} 
+	\]
+	and 
+	\[
+		\dot p_j = - \frac{\partial}{\partial x_j}(\sqrt{\alpha^2 + p_1^2 + p_2^2 + p_3^2} + a_1x_1 + a_2x_2 + a_3x_3) = -a_j.
+	\]
+	We get a first order system of linear differential equations
+	\[
+		\begin{cases}
+			\dot x_j = \frac{p_j}{ \sqrt{\alpha^2 + \sum_{i=1}^3p_i^2}} \\
+			 \dot p_j = -a_j
+		\end{cases}, j = 1,2,3.
+	\]
+	
+	\item Idea: Legendre transformation of the Hamilton function gives the Lagrangian function. We know that $\dot x_j = \frac{p_j}{ \sqrt{\alpha^2 + \sum_{i=1}^3p_i^2}} \iff \dot x_j^2 (\alpha^2 + \sum p_i^2) = p_j^2$. Let $v_j \coloneqq \dot x_j$ for $j=1,2,3$. So, we use SageMath to solve that equation for $p_1$ and we get
+	\[
+		p_1^2 = \frac{-(\alpha^2+p_2^2+p_3^2)v_1^2}{v_1^2-1}
+	\]
+	Then we use this information to solve for (again with SageMath)
+	\[
+		p_2^2 = - \frac{(\alpha^2 + p_3^2)v_2^2}{v_1^2+v_2^2-1}.
+	\]
+	Plugging everything into $p_3$ yields
+	\[
+		p_3^2 = - \frac{\alpha^2v_3^2}{v_1^2+v_2^2+v_3^2-1}
+	\]
+	and substituting back into the first two equations finally gives
+	\[
+		p_2^2 = - \frac{\alpha^2v_2^2}{v_1^2+v_2^2+v_3^2-1} \quad \text{and} \quad p_1^2 = - \frac{\alpha^2v_1^2}{v_1^2+v_2^2+v_3^2-1}.
+	\]
+	The Lagrangian is then given by
+	\[
+		\mathcal L(x,  v) = \sum^3_{j=1}  p_j \frac{\partial H}{\partial p_j} - \mathcal H(x,  p) \Bigg |_{p = p(x, v)} = \alpha\sqrt{1-\sum^3_{j=1} v_j^2} - \langle a,x \rangle.
+	\]
+	Everything we have computed was done by SageMath. The code can be found on \url{https://github.com/geniegeist/Mathematical-Physics-I/tree/master/UE11}.
+	
+	\item The Euler-Lagrange equation is given by
+	\[
+		\frac{\partial \mathcal L}{\partial x_i} - \frac{d}{dt}(\frac{\partial \mathcal L}{\partial v_i}) = 0.
+	\]
+	We have
+	\[
+		\frac{\partial \mathcal L}{\partial x_i} = -a_i
+	\]
+	and
+	\[
+		\frac{\partial \mathcal L}{\partial v_i} = \frac{\alpha \cdot (-2v_i)}{2\sqrt{1- \sum v_j^2}} = \frac{-\alpha v_i}{\sqrt{1- \sum v_j^2}}.
+	\]
+	Hence,
+	\begin{align*}
+		\frac{d}{dt}\frac{\partial \mathcal L}{\partial v_i} &= \frac{-\alpha \dot v_i \sqrt{1- \sum v_j^2} + \alpha v_i \frac{1}{2\sqrt{1- \sum v_j^2}} \cdot (- \sum 2v_j \dot v_j)}{1-\sum v_j^2} \\
+		&= 
+		\frac{-\alpha \dot v_i \sqrt{1- \sum v_j^2} -  \frac{\alpha v_i}{\sqrt{1- \sum v_j^2}} \cdot  \sum v_j \dot v_j}{1-\sum v_j^2} \\
+		&= \frac{-\alpha \dot v_i}{ \sqrt{1- \sum v_j^2} }  -  \frac{\alpha v_i \cdot  \sum v_j \dot v_j}{(1-\sum v_j^2)\sqrt{1- \sum v_j^2}} \\
+		&=  \frac{-\alpha \dot v_i}{ \sqrt{1- \sum v_j^2} }(1 + \frac{v_i\sum v_j \dot v_j}{\dot v_i\sqrt{1- \sum v_j^2}})
+	\end{align*}
+\end{enumerate}
+
+
+\end{document}

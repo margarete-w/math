@@ -1,0 +1,158 @@
+\documentclass[a4paper,fontsize=8pt,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Style
+\setlength{\columnsep}{8mm}
+\geometry{
+ left=24mm,
+ right=24mm,
+ bottom=32mm,
+ top = 32mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{395220, 391511}
+\lhead{\textbf{Analysis III}}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+
+\section*{Aufgabe 4}
+\begin{enumerate}[label=(\alph*)]
+    \item Bezeichne $\Delta_y(t) \coloneqq \sum a_it^{i}\frac{d^{i}}{dt^{i}}y(t)$. Sei $f_k$ definiert mit
+    \begin{align*}
+    	f_k(t) \coloneqq t^k, \quad \forall k \in \mathbb R.
+    \end{align*}
+	 Bestimme $P(k)$, sodass $P(k)f_k = \Delta_{f_k}$. Dazu setze für $y \coloneqq f_k$ in (CE) ein.
+    	\begin{align}\label{anna}
+    		\Delta_{f_k}(t) = \sum^n_{i=0}a_it^{i}\frac{d^i}{dt^i}t^k = \sum^n_{i=0}a_it^{i}k(k-1)...(k-i+1)t^{k-i} =  \underbrace{\sum^n_{i=0}a_ik(k-1)...(k-i+1)}_{\coloneqq P(k)} t^k
+    	\end{align}
+    	
+    	Also $	\Delta_{f_k}(t) = P(k) \cdot f_k(t)$ für alle $t>0$ ($t$ muss positiv sein, da beispielsweise $x^{0.5}$ für negative $t$ Werte nicht definiert ist). 
+    	\[
+    		P(k) \coloneqq \sum^n_{i=0}a_ik(k-1)...(k-i+1).
+    	\]
+    	Beachte, dass insbesondere für $k<n$ und $k \in \mathbb N$ die Ableitungen $\frac{d^{i}}{dt^{i}}t^k$, die in $\Delta_{f_k}$ auftreten, verschwinden. Für $P(k) = \sum^n_{i=0}a_ik(k-1) \cdot ... \cdot 0 \cdot ... \cdot (k-i+1) = \sum^k_{i=0}a_ik!$ verschwinden ebenfalls die Summanden. Daher gilt auch für $k<n$ mit $n \in \mathbb N$ die Gleichheit \eqref{anna}:
+		\begin{align*}
+			\Delta_{f_k}(t) = \sum^{k}_{i=0}a_it^{i}\frac{d^i}{dt^i}t^k  =  \sum^k_{i=0}a_ik(k-1)...(k-i+1) t^k = P(k)f_k(t) \quad \text{\tiny Summe endet bereits bei $k$}.
+		\end{align*}
+		
+    \item Sei $P(k) = \prod_{i=1}^n (k-\lambda_i)$. Also ist $P(k)f_k(t) = \Delta_{f_k}(t) = 0$ für alle $t > 0$, falls $k \in \{ \lambda_1,...,\lambda_n\}$. Mit dem Ansatz $y(t) = t^k$ erhält man für passende $k$ eine allgemeine Lösung:
+    \[
+        \mathcal L = \{ \sum^n_{i=1} c_ix^{\lambda_i} : c_1,...,c_n \in \mathbb R \}.
+    \]
+    
+    \item 
+    \begin{enumerate}[label=\arabic*.)]
+        \item Löse das homogene Problem. Betrachte $t^2y''(t) -2y(t) = 0$. Wie in den vorherigen Aufgaben beschrieben, verfolgen wir den Ansatz: $y(t) = t^k$. Dann ergibt sich durch Einsetzen in das homogene DGL:
+        \[
+            t^2k(k-1)t^{k-2} -2t^k = 0 \iff (k^2-k-2)t^k = 0 \iff (k-2)(k+1)t^k.
+        \]
+        Der Lösungsraum des homogenen DGL lautet
+        \[
+            \mathcal L_{hom} = \{ c_1t^2 + \frac{c_2}{t} : c_1, c_2 \in \mathbb R \}.
+        \]
+        
+        \item Löse das inhomogene Problem. Wir haben zwei linear unabhängige Lösungen $u_1, u_2$ (denn die Eigenvektoren $u_1,u_2$ zu den verschiedenen Eigenwerten $k_1=2, k_2=-1$ sind linear unabhängig, wie aus der Linearen Algebra bekannt ist):
+        \[
+            u_1(t) \coloneqq t^2, u_2(t) \coloneqq \frac{1}{t}, u_1'(t) = 2t, u_2'(t) = -\frac{1}{t^2}.
+        \]
+        Der Ansatz für eine allgemeine Lösung $u$ des inhomogenen Problems ist
+        \begin{align}\label{ansatz}
+        	u_{allg}(t) = c_1(t)u_1(t) + c_2(t)u_2(t) .
+        \end{align}
+        Gesucht sind die Funktionen $c_1$ und $c_2$. Löse dazu
+        \begin{align}\label{dickesboot}
+        	W(t)\begin{pmatrix}c_1'(t) \\ c_2'(t)\end{pmatrix} = \begin{pmatrix} 0 \\ \frac{1}{t+1} \end{pmatrix} \quad \text{ mit } W(t) = \begin{pmatrix} t^2 & \frac{1}{t} \\ 2t & -\frac{1}{t^2} \end{pmatrix}
+        \end{align}
+        Mithilfe der Cramerschen Regel ergibt sich
+        \[
+        	\det{W(t)} = t^2 \frac{-1}{t^2} - 2t \frac{1}{t} = -3, \quad W^{-1}(t) = -\frac{1}{3} \begin{pmatrix} -\frac{1}{t^2} & -\frac{1}{t} \\ -2t & t^2 \end{pmatrix}.
+        \]
+        Also
+        \[
+        	\begin{pmatrix}c_1'(t) \\ c_2'(t)\end{pmatrix} = W^{-1}(t)  \begin{pmatrix} 0 \\ \frac{1}{t+1} \end{pmatrix} = -\frac{1}{3} \begin{pmatrix} -\frac{1}{t^2} & -\frac{1}{t} \\ -2t & t^2 \end{pmatrix} \begin{pmatrix} 0 \\ \frac{1}{t+1} \end{pmatrix} = -\frac{1}{3} \begin{pmatrix}-\frac{1}{t^2+t} \\ \frac{t^2}{t+1}\end{pmatrix}.
+        \]
+        Daraus folgt
+        \begin{align*}
+	        c_1'(t) &= \frac{1}{3(t^2+t)} \\
+	        c_2'(t) &= -\frac{t^2}{3(t+1)}  
+        \end{align*}
+        und somit
+        \begin{align*}
+	        c_1(t) &= \frac{1}{3} \int^t_{t_0} \frac{1}{s^2+s}ds = \frac{1}{3} \int^t_{t_0} \frac{1}{s}-  \frac{1}{s+1}ds = \frac{1}{3}(\ln |t| - \ln|t+1|) + const. \\
+	        c_2(t) &= -\frac{1}{3} \int^t_{t_0} \frac{s^2}{s+1}ds =  -\frac{1}{3} \int^t_{t_0} s-1 + \frac{1}{s+1}ds = -\frac{1}{3}(0.5t^2 - t + \ln|t+1|) + const.
+        \end{align*}
+        Das heißt mit \eqref{ansatz} ergibt sich
+        \[
+        	u_{allg}(t) = \frac{1}{3}t^2(\ln |t| - \ln|t+1|) - \frac{1}{3t}(0.5t^2 - t + \ln|t+1|).
+        \]
+        
+        \item Löse das Anfangswertproblem mit $y(1) = y'(1) = 1.5$. Bestimme die Konstanten $C_1, C_2$ aus:
+        \begin{align*}
+        	u(1) &= c_1(1)u_1(1) + c_2(1) u_2(1)+ C_1u_1(1) + C_2u_2(1) = \frac{3}{2} \\
+        	u'(1) &= c_1(1)u_1'(1) + c_2(1)u_2'(1) + C_1u_1'(1) + C_2u_2'(1)  = \frac{3}{2}
+        \end{align*}
+        Die Ableitung von $u'$ ergibt sich glücklicherweise aus (unter Verwendung der Produktregel):
+        \[
+       		u'(t) = u_1'(t)c_1(t) + u_2'(t)c_2(t) + \underbrace{u_1(t)c_1'(t) + u_2(t)c_2'(t)}_{=0 \text{ wegen }\eqref{dickesboot}}.
+        \]
+        Es gilt
+        \begin{gather*}
+        	c_1(1) = \frac{1}{3}\ln0.5 \qquad c_2(1) = -\frac{1}{3}(-0.5 + \ln2) = \frac{1}{6} - \frac{\ln2}{3} \\
+        	u_1(1) = 1 = u_2(1) \qquad  u_1'(1) = 2 \qquad  u_2'(1) = -1
+        \end{gather*}
+        Für $u$ ergibt sich
+        \[
+        	u(1) = \frac{1}{3}\ln0.5 -\frac{1}{3}(-0.5 + \ln2) + C_1 + C_2 = \frac{3}{2} \iff C_1 + C_2 = \frac{1}{3}(\ln(0.25) + 5)
+        \]
+        und für $u'$ ergibt sich
+        \[
+        	u'(1) = \frac{2}{3}\ln0.5 +  \frac{1}{3}(-0.5 + \ln2) + 2C_1 - C_2 = \frac{3}{2} \iff 2C_1 - C_2 = \frac{1}{3}(5-\ln0.5).
+        \]
+        
+        Addition der beiden Gleichungen ergibt
+        \[
+        	3C_1 = \frac{1}{3}(10 + \ln{0.5}) \implies C_1 = \frac{1}{9}(10 + \ln 0.5  ).
+        \]
+        Also 
+        \[
+        	\frac{2}{9}(10+\ln0.5) - \frac{1}{3}(5-\ln0.5) = \frac{5}{9} + \frac{2}{9}\ln0.5 + \frac{1}{3}\ln 0.5 =  \frac{5}{9}(1 + \ln 0.5) = C_2
+        \]
+        Damit ist die Lösung
+        \[
+        	u(t) = c_1(t)u_1(t) + c_2(t)u_2(t) + C_1u_1(t) + C_2u_2(t).
+        \]
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

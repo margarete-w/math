@@ -1,0 +1,230 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definiton}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Nguyen (395220)}
+\lhead{\textbf{Lecture notes Mathematical Physics I WS1819}}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+	
+\begin{proof}
+	\textbf{Sufficiency:} We consider a candidate Lyapunov function: $F(x) = \langle x, Px \rangle, P \in GL(n, \mathbb R)$ is positive, definitive, symmetric.\\
+	
+	$F(x) > 0, \forall x \in \mathbb R^n  \setminus \{0 \}, F(0) = 0.$ We need to prove that $\mathcal L_vF(x) < 0, \forall x \in \mathbb R^n \setminus \{  0 \}$. 
+	
+	\[
+		v = \sum^n_{i=1} (Ax)_i \frac{\partial}{\partial x_i}, grad_n F(x) = 2 P_x.
+	\]
+	
+	Then $(\mathcal L_v F)(x) = 2 \langle Ax, Px \rangle = \langle x , A^TPx \rangle + \langle x, PAx \rangle = \langle x, (A^TP+PA)x \rangle = - \langle x,Qx \rangle < 0$. \\
+	
+	\textbf{Necessity:} we assume $\Re \lambda_i < 0 \forall i=1,...,p$. We define $P = \int^\infty_0 \exp(A^Tt) Q \exp(At) dt$. We observe that $P$ is positive definite and the $\int < + \infty$ because $A$ is the matrix of an symptotically stable IVP. We reconstruct Lyapuniv equation: 
+	\begin{align*}
+		&- A^T (\int^\infty_0 \exp(A^Tt) Q \exp(At) dt) - (\int^\infty_0 \exp(A^Tt) Q\exp(At)dt)A \\
+		&= - \int^\infty_0(A^T \exp(A^Tt) Q\exp(At) + \exp(A^Tt)Q\exp(At)A)dt \\
+		&= - \int^\infty_0 \frac{d}{dt} (\exp(A^Tt)Q \exp(At)) dt = - \exp(A^Tt)Q\exp(At) \Big \vert^\infty_0 = Q
+	\end{align*}
+	which shows that our $P$ solves the Lyapunov equation.
+\end{proof}
+
+Consider the IVP:
+\begin{align*}
+\begin{cases}
+\dot x = f(x) \\x(0) = x_0
+\end{cases}
+f \in \mathcal C^k(M, \mathbb R^n), k \geq 1, \tilde x \text{ to be a fixed point }(f(\tilde x) = 0).
+\end{align*}
+We can always assume that $\tilde x = 0$. \\
+
+\textbf{Idea:} Linearization around $\tilde x = 0$ is $\begin{cases}\dot x = Ax,\\ x(0) = x_0\end{cases}$ where $A = \frac{\partial f}{\partial x} \Big \vert_{\tilde x = 0}$ (Jacobian matrix) with
+\begin{gather*}
+\dot x = f(x) = f(0) + Ax + g(x) \\
+g(0) = 0, \Vert g(x) \Vert = O(\Vert x \Vert) \text{ as } \Vert x \Vert \to 0.
+\end{gather*}
+
+\textit{Remark:} $\tilde x = 0$ is hyperbolic if  $\tilde x = 0$ is hyperbolic for the linearized problem.
+
+\begin{theorem}[Poincare-Lyapunov]
+Two statements:
+\begin{enumerate}[label=(\arabic*)]
+	\item If $\tilde x = 0$ is asymptotically stable for the linearization then $\tilde x= 0$ is asymptotically stable for the nonlinear problem.
+	
+	\item As abov, if  $\tilde x= 0$ is unstable.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{proof} 
+$\tilde x = 0$ is asymptotically stable for $\tilde x = Ax, A = \frac{\partial f}{\partial x} \Big \vert_0 \implies \Re \lambda_i < 0 \forall i$, From the previous Theorem, we know that $\exists P \in GL(n, \mathbb R)$ positive, definitive, symmetric Matrix such that $F(x) = \langle x, Px \rangle$ is a strict Lyapunow function if $-PA - A^TP = Q$ is positive, definitive, symmetric matrix. \\
+
+Let $q_i > 0$ be eigenvalues of $Q$, $p_i > 0$ egeinvalues of P, $p_0 = \max p_i > 0, q_0 ) \min q_i > 0$.
+\begin{align*}
+\Vert P_x \Vert \leq p_0 \Vert x \Vert, \langle x,Qx \rangle \geq q_0 \Vert x \Vert^2.
+\end{align*}
+Look at $F$ as a candidate strict Lyapunov function for $\dot x = f(x)$.
+\[
+	F(x) > 0, F(x) = 0 \iff x = 0.
+\]
+The function $g$ is such that $\forall \epsilon > 0 \exists \delta > 0$ such that $\Vert y(x) \Vert < \epsilon \Vert x \Vert$ for all $\Vert x \Vert < \delta$. Then
+\begin{align*}
+(\mathcal L_vF)(x) = 2 \langle f(x), Px \rangle &= \langle f(x), Px \rangle + \langle x, Pf(x) \rangle \\
+&= \langle Ax + g(x), Px \rangle + \langle x, P(Ax+y(x)) \rangle \\
+&= - \langle x, Qx \rangle + 2 \langle g(x), Px \rangle \\
+& \leq - q_0 \Vert x\Vert^2 + 2 \Vert g(x) \Vert \Vert Px \Vert \\
+&\leq - q_0 \Vert x \Vert^2 + 2\epsilon p_0 \Vert x \Vert^2 \\
+& \leq (-q_0 + 2 \epsilon p_0) \Vert x \Vert^2 .
+\end{align*}
+That is $< 0$ if we choose $\epsilon$ such that $-q_0 + 2 \epsilon p_0 < 0$.
+\end{proof}
+
+\begin{theorem}[Poincare-Lyapunov]
+Let $\lambda_1,...,\lambda_p$ eigenvalues of $A = \frac{\partial f}{\partial x}\Big \vert_0$.
+\begin{enumerate}
+	\item If $\Re \lambda_i < -y \forall i = 1,..., p$ with some $y > 0$ then $\exists$ neighbourhoog $\tilde M$ of $\tilde x=0$ such that
+	\begin{enumerate}
+		\item $\Phi_t$ is such that $\Phi_t(x) \in \tilde M \forall x \in \tilde M \forall t \geq 0$
+		\item $\exists C > 0$ such that $\Vert \Phi_t(x) \Vert \leq C \exp(-y\frac{t}{2}) \Vert x \Vert \quad  \forall \tilde x \in \tilde M, t \geq 0$
+	\end{enumerate}
+
+	\item If $\exists \lambda_k$ with $\Re \lambda_k > 0$ then $\tilde x = 0$ is unstable.
+\end{enumerate}
+\end{theorem}
+
+\textbf{Example:} 
+\begin{align*}
+\begin{cases}
+\dot x_1 = x_2 \\
+\dot x_2 = x_2(1-x_1^2)- x_1
+\end{cases} \tag{\text{Van der Pol system}}
+\end{align*}
+Detect stability of fixed point $(0,0)$. Linearize this problem
+\begin{align*}
+\dot x = Ax, \quad A = \begin{pmatrix}
+0 & 1 \\ -1 & 1
+\end{pmatrix}.
+\end{align*}
+
+If this point $(0,0)$ is hyperbolic, we can use Poincare-Lyapunov (?). We find the eigenvalues
+\[
+	\lambda_{1,2} = \frac{(1 \pm i \sqrt 3)}{2}
+\]
+Unstable for the linearized problem, so for the origin problem. \\
+
+\section*{Topological equivalence / conjugacy of dynamical systems}
+\textbf{Idea:} find some equivalence classes for dynamical systems.\\
+
+Consider $\{ \Phi_t, \mathbb R, M_1 \}, M_1 \subset \mathbb R^n$ and $\{ \Psi_t, \mathbb R, M_2 \}, M_2 \subset \mathbb R^n$ with the vector fields $v = \sum^n_{i=1} f_i \frac{\partial}{\partial x_i}$ and $w = \sum^n_{i=1} g_i \frac{\partial}{\partial x_i}$, $f(x) = \frac{d}{dt} \Big \vert_{t=0} \Phi_t(x)$ and $g(x) = \frac{d}{dt} \Big \vert_{t=0} \Psi_t(x)$
+
+\begin{definition}
+	$\{ \Phi_t, \mathbb R, M_1 \}$ and $\{ \Psi_t, \mathbb R, M_2 \}$ are topologically equivalent if there exists a homeomorphism  $\Delta: M_1 \to M_2$ which maps the orbits of $\{ \Phi_t, \mathbb R, M_1 \}$ onto the orbits of $\{ \Psi_t, \mathbb R, M_2 \}$ preserving the direction of time:
+	\[
+		(\Delta \circ \Phi_t)(x) = (\Psi_t \circ \Delta)(x), \tau: \mathbb R \to \mathbb R: t \mapsto \tau(t) \text{ reapproximation of time}.
+	\]
+	If $\Delta$ is $C^k$ then $\{ \Phi_t, \mathbb R, M_1 \}$ and $\{ \Psi_t, \mathbb R, M_2 \}$ are $C^k$-diffeomorphic. If $\tau = id$ then $\{ \Phi_t, \mathbb R, M_1 \}$ and $\{ \Psi_t, \mathbb R, M_2 \}$ are conjugate.
+\end{definition}
+
+Assume that $\{ \Phi_t, \mathbb R, M_1 \}$ and $\{ \Psi_t, \mathbb R, M_2 \}$ are $C^k$-diffeomorphics with $\tau(t) = t$.
+\begin{gather*}
+	\Delta(\Phi_t(x)) = \Psi_t(\Delta(x))  \text{ differentiate with respect to } t \text{ at } t= 0. \\
+	\frac{\partial \Delta}{\partial x}f(x) = y(\Delta(x)) \implies f(x) = (\frac{\partial \Delta}{\partial x})^{-1}g(\Delta(x)) \quad \text{Formular for transformating coordinates}
+\end{gather*}
+
+\textbf{Example:} Let us consider three dynamical systems.
+\begin{align*}
+\begin{cases}
+\dot x_1 = -2x_1 \\
+\dot x_2 = -2x_2
+\end{cases} 
+\begin{cases}
+\dot x_1 = -2x_1 +x_2\\
+\dot x_2 = -x_1-2x_2
+\end{cases}
+\begin{cases}
+\dot x_1 = -2x_1 \\
+\dot x_2 = x_1-2x_2
+\end{cases}
+\end{align*}
+Eigenvalues:
+\begin{align*}
+\lambda_{1,2} = -2, \lambda_{1,2} = -2 \pm i, \lambda_{1,2} = -2
+ \end{align*}
+
+\begin{align*}
+(x_1,x_2) = r (\sin(\sigma), \cos(\sigma)) \\
+\begin{cases}
+\dot r = -2r \\\dot \sigma = 0
+\end{cases}
+\begin{cases}
+\dot s = -2s \\
+\dot \varphi = -1
+\end{cases}
+\end{align*}
+$A: (s, \varphi) \mapsto (r, \sigma) = (s, \varphi - \frac{1}{2}\ln(s))$
+
+\begin{theorem}[Hartman-Grobman]
+Any hyperbolic IVP in $\mathbb R^n$
+\[
+	\begin{cases}
+		\dot x = Ax \\ 
+		x(0) = x_0
+	\end{cases}, A \in gl(n, \mathbb R) \text{ can be non invertible}
+\]
+is locally topologically conjugate in $\tilde M$ (neighbourhood of $\tilde x = 0$) to any nonlinear IVP in $\tilde M$:
+\begin{align}\label{la}
+	\begin{cases}
+		\dot y = Ay + f(y) \\
+		y(0) = x_0
+	\end{cases}
+\end{align}
+where $f \in C^1(\tilde M, \mathbb R^n)$ with $f(0) = 0, \frac{\partial f}{\partial y}\Big \vert_0 = 0$. Precisely, if $\Phi_t$ is the flow of \eqref{la} then there exists homeomorphism $x \mapsto y \Delta (x)$ for which
+\[
+	(\Delta \circ \exp(tA)) (a) = (\Phi_t \circ \Delta) (x) , \quad \forall x \in \tilde M.
+\]
+\end{theorem}
+
+\end{document}

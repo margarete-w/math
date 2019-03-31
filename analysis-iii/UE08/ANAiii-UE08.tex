@@ -1,0 +1,258 @@
+\documentclass[a4paper,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{mathptmx}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{362307 (Marcel), 395220 (Duc), 391511 (Sofia)}
+\lhead{\textbf{Analysis III UE08}, Benedikt Di 10-12}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+	
+\section*{Aufgabe 27}
+\begin{enumerate}[label=(\roman*)]
+	\item \textit{Behauptung:} Jede Nullmenge ist Lebesgue-messbar. 
+
+	\textit{Beweis.} Sei $N \subset E$ eine Nullmenge, sodass gilt $\lambda_E^*(N) = \inf\{ \sum\limits_{n = 1}^{\infty} \lambda_E(R_n) : R_n \in \mathcal R, N \subset \bigcup\limits_{n \in \mathbb N} R_n  \} = 0$. Sei $\epsilon > 0$. Dann ist $\lambda_E^*(N \triangle \emptyset) = \lambda_E^*(N) = 0 < \epsilon$ und wegen $\emptyset \in \mathcal R_E$ ist $N$ Lebesgue-messbar.
+	
+	\item \textit{Behauptung:} Jede abzählbare Vereinigung von Nullmengen ist eine Nullmenge.
+	
+	\textit{Beweis.} Sei $N_i \subset E$ Nullmengen mit $\lambda_E^*(N_i) = 0$ für alle $i \in \mathbb N$. Das heißt, für jedes $i \in \mathbb N$ gibt es eine Folge $(\{R^{(i)}_n(j) \in \mathcal R : n \in \mathbb N\})_{j \in \mathbb N}$ mit 
+	\begin{gather}
+		\forall j \in \mathbb N: N_i \subset \bigcup_{n \in \mathbb N} R^{(i)}_n(j) \quad \text{und} \label{krass} \\
+		 \lim_{j \to \infty}\sum_{n \in \mathbb N}\lambda_E(R_n^{(i)}(j)) = 0 \label{dass}.
+	\end{gather}
+	% COMMENT BEGIN
+	\iffalse
+	Wegen $\lambda_E$ nicht negativ ist, muss für die einzelnen Rechteckglieder der Folge $(R_n^{(i)}(j))_{j \in \mathbb N}$ gelten: 
+	\[
+	 	\forall i,n \in \mathbb N:  \lim_{j \to \infty} \lambda_E(R^{(i)}_n(j)) = 0.
+	\]
+	\fi
+	% COMMENT END
+	Sei $N \coloneqq \bigcup_{i \in \mathbb N} N_i$. Zu zeigen ist, dass $\lambda_E^*(N) = 0$. Dafür werden wir eine Folge von Überdeckungen $\bigcup_{n \in \mathbb N}R(i,n) \supset N$ für alle $i \in \mathbb N$ konstruieren und zeigen, dass $\sum_{n \in \mathbb N}\lambda_E(R(i,n)) \to 0$ für $i \to \infty$ gilt. Wegen \eqref{dass} gibt es eine Folge $R(i,n) \coloneqq \bigcup_{m \in \mathbb N} R_m^{(i)}(j(i,n))$ für ein $j(i,n) \in \mathbb N$, sodass 
+	\[
+		\lambda_E(R(i,n)) \overset{(*)}{\leq} \sum_{n \in \mathbb N}\lambda_E(R_n^{(i)}(j(i,n))) < \frac{1}{i2^{n}}
+	\]
+	(für (*) wurde die Subadditivität verwendet). Nun ist $\forall i \in \mathbb N: \bigcup_{n \in \mathbb N}R(i,n) \supset N$ aufgrund von \eqref{krass}. Also
+	\[
+		\lim_{i \to \infty}\sum_{n \in \mathbb N}\lambda_E(R(i,n)) \leq \lim_{i \to \infty} \sum_{n \in \mathbb N} \frac{1}{i2^n} = \lim_{i \to \infty} \frac{1}{i} = 0.
+	\]
+	Also $\lambda_E^*(N) = 0$.
+	
+	\item \textit{Behauptung:}  Überabzählbare Vereinigungen von Nullmengen sind im Allgemeinen keine Nullmengen.
+	
+	\textit{Beispiel.} Sei $N(x) \coloneqq \{ x \} \times [0,1]$. Dann ist $\bigcup\limits_{0 \leq x \leq 1} N(x) = [0,1]^2$. Es gilt: $\lambda_E^*(N(x)) = \lambda_E(N(x)) = 0$ für alle $x \in \mathbb R$, aber $\lambda_E^*(\bigcup\limits_{0 \leq x \leq 1} N(x)) = \lambda_E^*([0,1]^2) = \lambda_E([0,1]^2) = 1$.
+	
+	\item \textit{Behauptung:} Jede abzählbare Teilmenge von $E$ ist eine Nullmenge.
+	
+	\textit{Beweis.} Sei $A \subset E$ eine abzählbare Menge. Wegen der Abzählbarkeit gibt es eine bijektive Funktion $\tau: \mathbb N \to A$, sodass für jedes $a \in A$ ein $x \in \mathbb N$ gibt mit $\tau(x) = a$. Definiere eine Folge von Rechtecken $R_{\tau(x)}(i)$, wobei $(\xi_1,\xi_2) \coloneqq \tau(x)$, für alle $x \in \mathbb N$ wie folgt:
+	 \[
+	 	R_{\tau(x)}(i) \coloneqq [\xi_1-\frac{1}{2\sqrt{2^xi}},\xi_1+\frac{1}{2\sqrt{2^xi}}] \times [\xi_2-\frac{1}{2\sqrt{2^xi}},\xi_2+\frac{1}{2x\sqrt{2^xi}}], \quad i \in \mathbb N_{> 0}. 
+	 \]
+	Es gilt $\tau(x) \in R_{\tau(x)}(i)$ für alle $i,x \in \mathbb N, i >0$. Nun haben wir eine Überdeckung von $A$ gefunden mit
+	\[
+		A \subset \bigcup\limits_{x \in \mathbb N} R_{\tau(x)}(i), \quad \forall i \in \mathbb N_{>0}.
+	\]
+	Nun gilt
+	\[
+		\lim_{i \to \infty} \sum^{\infty}_{x=1} \lambda_E(R_{\tau(x)}(i)) = \lim_{i \to \infty} \sum_{x =1}^{\infty} \frac{1}{2^xi} =  \lim_{i \to \infty} \frac{1}{i} = 0.
+	\]
+	Also folgt $\lambda_E^*(A) = 0$.
+	
+	\item \textit{Behauptung:} Die Verbindungsstrecke von zwei beliebigen Punkten aus $[0,1]^2$ ist eine Nullmenge.
+	
+	\textit{Beweis.} Seien $\alpha = (\alpha_1, \alpha_2) \in [0,1]^2, \beta = (\beta_1, \beta_2) \in [0,1]^2$  mit $\alpha_i \leq \beta_i$ für $i=1,2$. Betrachte die Strecke $\overline{\alpha\beta} = \{ \lambda\alpha + (1-\lambda) \beta : \lambda \in [0,1] \}$. Wir konstruieren eine Folge von Überdeckung $(R_n^{(i)})_{i \in \mathbb N_{>0}}$ mit $n \in \mathbb N$:
+	\[
+		R_n^{(i)} \coloneqq 
+		\begin{cases}
+			[ \alpha_1 + \frac{\beta_1-\alpha_1}{i}n,  \alpha_1 + \frac{\beta_1-\alpha_1}{i}(n+1) ] \times [ \alpha_2 + \frac{\beta_2-\alpha_2}{i}n,  \alpha_2 + \frac{\beta_2-\alpha_2}{i}(n+1)], &\quad \text{falls } n \in \{0,...,i-1\} \\
+			\emptyset, &\quad \text{sonst.}
+		\end{cases}
+	\]
+	Für jedes $i \in \mathbb N_{>0}$ gilt: $\overline{\alpha\beta} \subset \bigcup\limits_{n \in \mathbb N}R_n^{(i)}$. Nun ist 
+	\[
+		\sum^{\infty}_{n=1} \lambda_E(R_n^{(i)}) = \sum^{i}_{n=1}\frac{(\beta_1-\alpha_1)(\beta_2-\alpha_2)}{i^2} = \frac{(\beta_1-\alpha_1)(\beta_2-\alpha_2)}{i}.
+	\]
+	Sei $\epsilon >0$. Dann finden wir eine Überdeckung $\bigcup\limits_{n \in \mathbb N}R_n^{(\delta)}$ von $\overline{\alpha\beta}$ mit $\delta \coloneqq \frac{2(\beta_1-\alpha_1)(\beta_2-\alpha_2)}{\epsilon}$, sodass $\lambda_E^*(\overline{\alpha\beta}) \leq \sum^{\infty}_{n=1}\lambda_E(R_n^{(i)}) = \frac{\epsilon}{2} < \epsilon$. Da $\lambda_E^*(\overline{\alpha\beta}) \geq 0$ und $\epsilon$ beliebig war, folgt $\lambda_E^*(\overline{\alpha\beta}) = 0$.
+\end{enumerate}
+
+\section*{Aufgabe 28}
+\iffalse
+\begin{lemma}
+	Für jedes $R \in \mathcal R$ gilt, dass
+	\begin{align}
+		\forall x \in \mathbb R: \lambda(R) = \lambda(R+x).
+	\end{align}
+\end{lemma}
+\begin{proof}
+	Falls $\lambda^*(R) = \infty$, so ist auch $\lambda^*(R+x) = \infty$, da $\infty + x = \infty$ für alle $x \in \mathbb R$. Ansonsten sei $R = \{ (x,y) \in \mathbb R^2: a \leq x \leq b \land c \leq y \leq d \}$ mit $a,b,c,d \in \mathbb R$. Dann ist
+	\[
+		\forall x \in \mathbb R: \lambda(R) = (b-a)(d-c) = (b+x-(a+x))(d+x-(c+x)) = \lambda(R+x).
+	\]
+\end{proof}
+\fi
+
+Notationen: Sei $\lambda_{i,j}^*(A,n) \coloneqq \lambda_{[i,i+n] \times [j,j+n]}^*(A) = \inf\{ \sum\limits_{m \in \mathbb N} \lambda(R_m) : R_m \in \mathcal R, R_m \subset [i,i+n] \times [j,j+n], A \subset \bigcup\limits_{m \in \mathbb N} R_m \}$ für alle $A \subset E_{i,j}(n) \coloneqq [i, i+n] \times [j,j + n]$ und $n \in \mathbb N_{> 0}$.
+
+\begin{lemma}\label{lemmalom}
+	Für jede Menge $A \subset E_{i,j}(n)$ mit $n \in \mathbb N_{>0}$ gilt:
+	\begin{align} \label{lemmma}
+		\lambda_{i,j}^*(A,n) = \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y}).
+	\end{align}
+\end{lemma}
+
+\begin{proof}
+	Beweis in zwei Schritten: Sei $A \subset E_{i,j}(n)$ und $n \in \mathbb N_{>1}$. Sei $i,j \in \mathbb N$. Für $n = 1$ ist die Aussage klar.
+	\begin{enumerate}
+		\item Zeige, dass $\lambda_{i,j}^*(A,n) \leq  \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y})$. Wir zeigen, dass die überdeckenden Rechtecke $R(x,y)$ von den einzelnen Summanden $\lambda_{x,y}^*(A)$ als Vereinigung auch $A$ überdecken. Für jedes $x = i,i+1,...,i+n-1$ und $y = j,j+1,...,j+n-1$ gibt es überdeckende Rechtecke $R_m(x,y) \in \mathcal R_{E_{x,y}}$ mit
+		\[
+			\bigcup\limits_{m \in \mathbb N} R_m(x,y) \supset A \cap E_{x,y}
+		\]
+		Damit können wir eine Überdeckung $R_m(x,y) \subset E_{i,j}(n)$ von $A$ konstruieren mit 
+		\begin{align*}\label{langweilig}
+			\bigcup\limits_{x,y,m \in \mathbb N} R_m(x,y) \supset A,
+		\end{align*}
+		 wobei $R_m(x,y) = \emptyset$ für alle $m \in \mathbb N$, falls $x \neq i,i+1,...,i+n-1$ oder $y \neq j,j+1,...,j+n-1$. Nun gibt es für alle $x,y$ eine Folge von Rechtecken $(R^{(l)}_{m}(x,y))_{l \in \mathbb N}$ mit $R_m^{(l)}(x,y) \in \mathcal R_{E_{x,y}}$ für alle $m,l \in \mathbb N$, sodass gilt:
+		 \begin{gather*}
+		 	\lim_{l \to \infty}\sum_{m \in \mathbb N}\lambda(R^{(l)}_{m}(x,y)) = \lambda_{x,y}^*(A \cap E_{x,y}) \quad \text{und} \quad 
+		 	\forall l \in \mathbb N: \bigcup_{m \in \mathbb N}R^{(l)}_{m}(x,y) \supset A \cap E_{x,y}.
+		 \end{gather*}
+		 Dann folgt: 
+		 \[
+		  \forall l \in \mathbb N: \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \sum_{m \in \mathbb N} \lambda(R_m^{(l)}(x,y)) \geq  \inf\{ \sum\limits_{m \in \mathbb N} \lambda(R_m) : R_m \in \mathcal R, R_m \subset E_{i,j}(n), A \subset \bigcup\limits_{m \in \mathbb N} R_m \}.
+		 \]
+		 Damit folgt insbesondere $\sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y}) \geq \lambda_{i,j}^*(A,n)$.
+		 
+		 \item  Zeige, dass $\lambda_{i,j}^*(A,n) \geq  \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y})$. Sei dafür $(\{ R_m^{(l)}: m \in \mathbb N\})_{l \in \mathbb N}$ die Folge von Rechtecken mit 
+		 \begin{itemize}
+		 	\item $\sum_{m \in \mathbb N}R_m^{(l)} \to \lambda_{i,j}^*(A,n)$ für $l \to \infty$,
+		 	\item $\bigcup\limits_{m \in \mathbb N}R_m^{(l)} \supset A$ für alle $l \in \mathbb N$,
+		 	\item sowie $R_m^{(l)} \in \mathcal R$ und $R_m^{(l)} \subset E_{i,j}(n)$ für alle $l \in \mathbb N$.
+		 \end{itemize}
+	 	 Sei $l \in \mathbb N$ beliebig. Wir werden für jedes $m$ das Rechteck $R^{(l)}_m$ derart unterteilen, sodass gilt: 
+	 	 \begin{gather}\label{patrick}
+	 	 	R^{(l)}_m = \bigcup_{p,q = 1}^{n}\zeta_{p,q}^{(l)}(m) \quad \text{ und } \quad 
+	 	 	\forall p,q \in \{1,...,n\}:  \zeta_{p,q}^{(l)}(m)\in \mathcal R \land \zeta_{p,q}^{(l)}(m) \subset E_{i+p-1,j+q-1}. 
+	 	 \end{gather}
+	 	 Sei $m \in \mathbb N$ beliebig. Setze nun
+	 	 \[
+	 	 	\zeta^{(l)}_{p,q}(m) \coloneqq R_m^{(l)} \cap E_{i+p-1,j+q-1}.
+	 	 \]
+	 	 Dann ist \eqref{patrick} erfüllt. Somit haben wir eine Überdeckung gefunden für $A \cap E_{x,y}$ mit $$\forall l \in \mathbb N: A \cap E_{x,y} \subset \bigcup_{m \in \mathbb N} \zeta_{p,q}^{(l)}(m)$$ für jedes $x=i,...,i+n-1$ und $y = j,...,j+n-1$ für geeignete $p,q \in \{1,...,n\}$. Daraus folgt nun
+	 	 \[
+	 	 	 \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y}) \leq  \sum^{n}_{p,q=1} \sum_{m}^{\infty} \zeta^{(l)}_{p,q}(m) \overset{\eqref{patrick}}{\implies}  \sum^{i+n-1}_{x=i}\sum^{j+n-1}_{y=j} \lambda_{x,y}^*(A \cap E_{x,y}) \leq  \lambda_{i,j}^*(A,n).
+	 	 \]
+	\end{enumerate}
+\end{proof}
+
+\begin{lemma}\label{superman}
+	Für jede Menge $A \subset R^2$ gilt:
+	\begin{align}
+		s(A) = \sum_{i,j \in \mathbb Z}\lambda^*_{i,j}(A \cap E_{i,j}),
+	\end{align}
+	wobei $s(A) = \{ \sum_{n \in \mathbb N} \lambda_E(A) :  R_n \in \mathcal R \text{ für jedes }n \in \mathbb N, A \subset \bigcup\limits_{n \in \mathbb N} R_n\}$ wie das äußere Maß im Skript auf Seite 36 definiert ist, bloß für beliebige Rechtecke in $\mathbb R^2$ und nicht nur auf $[0,1]^2$.
+\end{lemma}
+
+\begin{proof}
+	Es ist klar, dass $s(A) \leq  \sum_{i,j \in \mathbb Z}\lambda^*_{i,j}(A \cap E_{i,j})$, da jede überdeckende Folge von Rechtecken von $A \cap E_{i,j}$ auch in $\mathcal R$ enthalten ist. Bleibt noch zu zeigen, dass $s(A) \geq  \sum_{i,j \in \mathbb Z}\lambda^*_{i,j}(A \cap E_{i,j})$. Für $s(A)$ gibt es eine Folge von Rechtecken $((R_m(l))_{m \in \mathbb N})_{l \in \mathbb N}$, die $A$ überdecken. Dann sei $n(l) \coloneqq \sup\mathrm{diam}(R_m(l))$ für $l \in \mathbb N$ und sei $A(i,l) \coloneqq A \cap E_{i,i}(n(l))$. Es gilt: $s(A(i,l)) \to \lambda^*_{i,i}(A,n)$ für $l \to \infty$ aufgrund von \eqref{lemmma}. Wegen der $\sigma$-Subadditivität folgt dann $s(A) = \lim_{l \to \infty}\sum_{i \in \mathbb N}(A(i,l)) \geq \sum_{i,j \in \mathbb Z}\lambda^*_{i,j}(A \cap E_{i,j})$.
+\end{proof}
+
+\begin{enumerate}[label=(\roman*)]
+	\item \textit{Zu zeigen:} Für jede Menge $A \subset \mathbb R^2$ und $x = (x_1,x_2) \in \mathbb R^2$ gilt, dass $\lambda^*(A) = \lambda^*(A+x)$.
+	\begin{proof}
+		Mit Lemma \ref{superman} haben wir eine Überdeckung von beliebig großen, endlichen Rechtecken $(R_m)_{m \in \mathbb N}$ von $A$. Diese Rechtecke sind für jedes $m \in \mathbb N$ gegenüber $\lambda(R_m) = \lambda(R_m+x)$ translationinvariant für jedes $x \in \mathbb R$ wie aus der Vorlesung bekannt (denn $R_m$ sind Rechtecke). Nun ist auch $(R_m+x)_{m \in \mathbb N}$ die Überdeckung von $A+x$ mit dem minimalsten Inhalt $\sum R_m$ (ansonsten würde man für $A$ einen noch kleinere Überdeckung finden, indem man die kleinste Überdeckung von $A+x$ um $-x$ Einheiten verschiebt). Daher ist das äußere Maß translationsinvariant.
+	\end{proof}
+
+	\item \textit{Zu zeigen:} Für jede lesbesgue-messbare Menge $A \subset \mathbb R^2$ ist auch $A+x$ lesbesgue-messbar. 
+	\begin{proof}
+		Sei $\epsilon > 0$. Dann gibt es ein $B \in \mathcal R$ mit $\lambda^*(A \triangle B) < \epsilon$. Nun ist $(A \triangle B)+x = (A+x) \triangle (B+x)$ und aus Ausgabe 29(i) folgt $\lambda^*(A \triangle B) = \lambda^*((A\triangle B)+x) = \lambda^*((A+x) \triangle (B+x)) < \epsilon$. Damit folgt die Lesbesgue-Messbarkeit.
+	\end{proof}
+\end{enumerate}
+
+
+
+	
+\section*{Aufgabe 30}
+\begin{enumerate}[label=(\roman*)]
+	\item Zeige, dass $M_x \in \mathcal F$. Da $M_x$ die abzählbare Vereinigung von Mengen $F \in \mathcal F$ ist, enthält die $\sigma-$Algebra $\mathcal F$ auch die Menge $M_x$ nach Definition 2.2.1(iii).
+	
+	Zeige, dass die Mengen $M_x$ und $M_y$ disjunkt oder identisch sind. Betrachte die zwei Fälle:
+	\begin{enumerate}
+		\item Die Menge $M_x$ enthält $y$. Da $M_x$ der abzählbare Schnitt aller Mengen $F \in \mathcal F$ mit $x \in F$, muss jede Menge $F$, die $x$ enthält, auch $y$ enthalten.
+		\begin{align}\label{xD}
+			\forall F \in \mathcal F: x \in F \implies y \in F.
+		\end{align}
+		Dann folgt aus \eqref{xD}, dass 
+		\begin{align}\label{xad}
+			M_x = \bigcap_{\mathclap{\substack{x \in F\\ F \in \mathcal F}}}F \supset \bigcap_{\mathclap{\substack{y \in F\\ F \in \mathcal F}}}F = M_y.
+		\end{align}
+		Falls $x \in M_y$ ist, so folgt $M_x = M_y$ aus \eqref{xad} und aus
+		\[
+			M_y \supset \bigcap_{\mathclap{\substack{x \in F\\ F \in \mathcal F}}} F = M_x.
+		\]
+		Bleibt zu zeigen, dass $M_y$ tatsächlich $x$ enthält. Angenommen, $x \notin M_y$. Dann gibt es eine Menge $H \in \mathcal F$ mit $y \in H$ und $x \notin H$. Nach Definition 2.2.1(ii) ist das Komplement $H^c$ in der $\sigma$-Algebra $\mathcal F$ enthalten. Damit ist $y \notin M_x \subset H^c$ im Widerspruch zur Voraussetzung. 
+		
+		\item Die Menge $M_x$ enthält nicht $y$. Dann ist $y$ im Komplement von $M_x$ enthalten. Wegen $M_x \cap M_x^c = \emptyset$ und $M_x^c \supset M_y$ gilt $M_x \cap M_y = \emptyset$.
+	\end{enumerate}
+	Dies beendet den Beweis.
+
+	\item Zeige, dass $\mathcal F$ endlich ist, falls $\mathcal F$ abzählbar ist. Falls $X$ endlich ist, so ist die Potenzmenge von $X$ endlich und somit ist auch $\mathcal F \subset \mathcal P(X)$ endlich. Im folgenden besitzt $X$ unendlich viele Elemente. Sei $\mathcal F$ abzählbar. Angenommen, $|\mathcal F| = \infty$. Der Widerspruch folgt in drei Schritten:
+	\begin{enumerate}
+		\item \textit{Behauptung:} Man kann jedes $F \in \mathcal F$ darstellen als $F = \bigcup_{x \in F}M_x$. Einerseits gilt $F \subset  \bigcup_{x \in F}M_x$ wegen $x \in M_x$ für alle $x \in X$. Andererseits gilt für jedes $y \in\bigcup_{x \in F} M_x$, dass es ein $x \in F$ gibt mit $y \in M_x$ und somit
+		\begin{align}\label{kaputt}
+			\forall J \in \mathcal F: x\in J \implies y \in J.
+		\end{align}
+		Mit \eqref{kaputt} folgt $\bigcup_{x \in F}M_x \subset F$. Damit ist $F = \bigcup_{x \in F}M_x$.
+		
+		\item \textit{Behauptung:} $\mathcal F$ enthält unendlich viele unterschiedliche $M_x$, also $\vert\{ M_x : x \in X \}\vert = \infty$. Angenommen $N \coloneqq \vert\{ M_x : x \in X \}\vert < \infty$. Aus Behauptung (ii)(a) folgt $|\mathcal F| \leq 2^N$ im Widerspruch zu $|\mathcal F| = \infty$. Damit gilt $N = \infty$.
+		
+		\item Sei $\Gamma \coloneqq \{ M_x : x \in X \}$ und es gilt $|\Gamma| = N = \infty$ wegen (ii)(b). Aus $\Gamma \subset \mathcal F$ und der Abzählbarkeit von $\mathcal F$ folgt die Abzählbarkeit von $\Gamma$. Somit existiert eine Bijektion $\tau$ zwischen $\mathbb N$ und $\Gamma$. Wegen der Injektivität von $\tau$ gilt für alle $i,j \in \mathbb N$ mit $i \neq j$, dass $\tau(i) \neq \tau(j)$ und somit:
+		\begin{align}\label{lrac}
+			\tau(i) \cap \tau(j) = \emptyset \quad \text{\text{wegen 30(i)}}.
+		\end{align}
+		Sei $\Phi(A) \coloneqq \bigcup_{i \in A}\tau(i)$ für beliebiges $A \subset \mathbb N$. Insbesondere gilt wegen Definition 2.2.1(iii), $\tau(i) \in \mathcal F$ und der Abzählbarkeit von $A$, dass
+		\begin{align}\label{was}
+			\Phi(A) \in \mathcal F.
+		\end{align}
+		Wegen der Injektivität von $\tau$ und \eqref{lrac} gilt:
+		\begin{align}\label{kads}
+			\forall A,B \subset \mathbb N: A \neq B \implies \Phi(A) \neq \Phi(B).
+		\end{align}
+		Aus Analysis I ist bekannt, dass $\mathcal P(\mathbb N)$ überabzählbar ist. Wegen \eqref{was}  und \eqref{kads} enthält $\mathcal F$ überabzählbar viele Elemente $\Phi(A)$ für jedes $A \subset \mathbb N$ im Widerspruch zur Abzählbarkeit von $\mathcal F$. Also $|\mathcal F| < \infty$.
+	\end{enumerate}
+	Dies beendet den Beweis.
+\end{enumerate}
+	
+\end{document}

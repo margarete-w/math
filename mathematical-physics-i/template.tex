@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{mathpazo}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Style
+\geometry{
+	left= 24mm,
+	right= 24mm,
+	bottom=32mm,
+	top= 32mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Nguyen (395220)}
+\lhead{\textbf{Mathematical Physics I WS1819} - Jan Techter (Monday 10-12 am)}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+
+\end{document}

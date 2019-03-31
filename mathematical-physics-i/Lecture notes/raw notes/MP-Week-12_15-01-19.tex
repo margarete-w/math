@@ -1,0 +1,233 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Mathematical Physics I (Week 12) }
+\author{ Lecture by Yuri B. Suris \\ 17th December - 21th December 2018 \\ Technical University Berlin}
+\date{ Notes written by Viet Duc Nguyen}
+\maketitle
+
+
+
+\section*{Lecture on 15th January 2019}
+\begin{theorem}
+	If a flow of a vector field $X$ on $\mathbb R^{2n}(x,p)$ preserves the canonical two form $\omega = \sum^n_{k=1} dx_k \land dp_k$, then (locally) there exists $H: \mathbb R^{2n} \to \mathbb R$ such that $X = X_H = \begin{pmatrix}
+		\mathrm{grad}_pH \\ \mathrm{-grad}_xH
+	\end{pmatrix} = \begin{pmatrix}
+		0 & I \\ -I & 0
+	\end{pmatrix} \mathrm{grad} H$.
+\end{theorem}
+
+\begin{proof}
+	Let 
+	\[
+		X = \begin{pmatrix}
+			f_1(x,p) \\ \vdots \\ f_n(x,p) \\ g_1(x,p) \\ g_n(x,p)
+		\end{pmatrix}
+	\]
+	so that $\begin{cases}
+		\dot x_k = f_k(x,p) \\ \dot p_k ) g_k(x,p)
+	\end{cases}$. 
+	Assume that
+	\begin{align*}
+	L_x\omega = 0 &\iff \sum_{k=1}^n (df_k(x,p) \land dp_k + dx_k \land dg_k(x,p)) = 0\\
+	 &\iff \sum^n_{k=1}(\sum^n_{j=1} (\frac{\partial f_k}{\partial x_j} dx_j + \frac{\partial f_k}{\partial p_j} dp_j) \land dp_k + dx_k \land 
+	  (\sum_{j=1}^n \frac{\partial g_k}{\partial x_j} dx_j + \frac{\partial g_k}{\partial p_j}\land dp_j) ) = 0.
+	\end{align*}
+	Coefficients by $dx_k \land dx_j ; \frac{\partial g_k}{\partial x_j} - \frac{\partial g_j}{\partial x_k} = 0$. By $dp_j \land dp_k: \frac{\partial f_k}{\partial p_j} - \frac{\partial f_j}{\partial p_k} = 0$. By $dx_j \land dp_k: \frac{\partial f_k}{\partial x_j} - \frac{\partial g_j}{\partial p_k} = 0$. The first condition is that there exists a function $H_1$ (defined up to a function of $p$) such that locally it holds $g_k = \frac{\partial H_1}{\partial x_k}$. The second condition is that there exists a function $H_2$ (defined up to a function of $x$) such that locally it holds $f_k = \frac{\partial H_2}{\partial p_k}$. Additionally 
+	\begin{align*}
+		\frac{\partial}{\partial x_j} (\frac{\partial H_2}{\partial p_k}) + \frac{\partial }{\partial p_k} (\frac{\partial H_1}{\partial x_j}) = 0 &\iff \frac{\partial^2}{\partial x_j \partial p_k} (H_1 + H_") = 0 \\
+		&\iff H_1(x,p) + H_2(x,p) = a(x) + b(p) \\
+		& \iff H_1(x,p) - b(p ) = -H_"(x,p) + a(x) \coloneqq -H(x,p).
+	\end{align*} 
+	Then $f_k = \frac{\partial H}{\partial p_k} , g_k = -\frac{\partial H}{\partial x_k}$.
+\end{proof}
+
+An example of a locally Hamiltonian vector field which is not globally Hamiltonian. Consider a vector field on a non-simply-connected manifold - a torus[1]. A torus is analytically described by $(\mathbb R \setminus \mathbb Z)^2 = S^1 \times S^1 = \{ (x(\mod 1), p(\mod 1))  \}$. The canonical two form of the torus is 
+\[
+	\omega = dx \wedge dp \quad \text{it measures the area of the torus.}
+\]
+The simples vector field is $\begin{cases}
+\dot x =1 \\ \dot p = 0
+\end{cases}$. It just describes a translation. We claim that this vector field is locally Hamiltonian $\begin{pmatrix}
+ 	\frac{\partial H}{\partial p} = 1 \\ \frac{\partial H}{\partial x} = 0
+\end{pmatrix}$, but $H(x,p) = p$ is not a smooth function on the torus since it gets an increment $\neq 0$ along closed non-null-homotopic curves $x = \mathrm{const}$.
+
+\begin{definition}
+	A map $\varphi: \mathbb R^{2n}_{(x,p)} \to \mathbb R^{2n}_{(x,p)}$ preserving $\omega = \sum^n_{k=1} dx_k \wedge dp_k$ (that is $\varphi^* \omega = \omega$) is called a \textbf{symplectic map} (so that the flow of $X_H$ consists of symplectic maps).
+\end{definition}
+
+\begin{definition}
+	A matrix $D \in \mathrm{mat}_{2n \times 2n} (\mathbb R)$ is symplectic, i.e. $D \in \mathrm{Sp}_{2n}(\mathbb R)$, if it satisfies 
+	\[
+		D^TJD = J \quad \text{ with $J = \begin{pmatrix}
+			0 & I \\ -I & 0
+			\end{pmatrix}$}.
+	\]
+	
+\end{definition}
+
+\begin{theorem}
+	A map $\varphi$ is symplectic if and only if $d \varphi \in \mathrm{mat}_{2n \times 2n}(\mathbb R)$ is symplectic.
+\end{theorem}
+
+\begin{proof}
+	Let $(\tilde x, \tilde p) = \varphi(x,p)$. 
+	\begin{align*}
+		\sum^n_{k=1} d\tilde x_k \wedge d\tilde p_k =\sum^n_{k=1}
+			\sum^n_{j=1}(\frac{\partial \tilde x_k}{\partial x_j} dx_j + \frac{\partial \tilde  x_k}{\partial p_j} dp_j) \wedge \sum^n_{i=1}(\frac{\partial \tilde p_k}{\partial x_i} dx_i + \frac{\partial \tilde p_k}{\partial p_i} dp_i) \\
+			\sum^n_{j=1} \sum^n_{i=1} (\sum^n_{k=1} \frac{\partial \tilde x_k}{\partial x_j} \frac{\partial \tilde p_k}{\partial x_i} dx_j \wedge dx_i)  + 
+			 \sum^n_{j=1} \sum^n_{i=1} (\sum^n_{k=1} \frac{\partial \tilde x_k}{\partial p_j} \frac{\partial \tilde p_k}{\partial p_i} dp_j \wedge dp_i) +
+			 \sum^n_{j=1} \sum^n_{i=1} (\frac{\partial \tilde x_k}{\partial x_j} \frac{\partial \tilde p_k}{\partial p_i} - \frac{\partial \tilde x_k}{\partial p_i} \frac{\partial \tilde p_k}{\partial x_j}) dx_j \wedge dx_i\\
+	\end{align*} 
+	This should be equal to $\sum^n_{j=1} dx_j \wedge dp_j$.
+	
+	Coefficients by $dx_j \wedge dx_i: \sum^n_{k=1} \frac{\partial \tilde x_k}{\partial x_j} \frac{\partial \tilde p_k}{\partial x_i}  - \frac{\partial \tilde x_k}{\partial x_i} \frac{\partial \tilde p_j}{ \partial x_k} = 0 \iff (\frac{\partial \tilde x}{\partial x})^T \frac{\partial \tilde p}{\partial x} - (\frac{\partial \tilde p}{\partial x})^T(\frac{\partial \tilde x}{\partial x}) = 0_{n \times n}$.
+	
+		Coefficients by $dp_j \wedge dp_i: \sum^n_{k=1} \frac{\partial \tilde x_k}{\partial p_j} \frac{\partial \tilde p_k}{\partial p_i}  - \frac{\partial \tilde x_k}{\partial p_i} \frac{\partial \tilde p_k}{ \partial p_j} = 0 \iff (\frac{\partial \tilde x}{\partial p})^T \frac{\partial \tilde p}{\partial p} - (\frac{\partial \tilde p}{\partial p})^T(\frac{\partial \tilde x}{\partial p}) = 0_{n \times n}$. 
+		
+		Coefficients by $dx_j \wedge dp_i: \sum^n_{k=1} \frac{\partial \tilde x_k}{\partial x_j} \frac{\partial \tilde p_k}{\partial p_i}  - \frac{\partial \tilde x_k}{\partial p_i} \frac{\partial \tilde p_k}{ \partial x_j} = \delta_{ij} \iff 
+		(\frac{\partial \tilde x}{\partial x})^T \frac{\partial \tilde p}{\partial p} - (\frac{\partial \tilde p}{\partial x})^T \frac{\partial \tilde x}{\partial p} = I_{n \times n}
+		$
+		
+		This is is equivalent to
+		\[
+			\begin{pmatrix}
+				\frac{\partial \tilde x}{\partial x} & \frac{\partial \tilde x}{\partial p} \\
+				\frac{\partial \tilde p}{\partial x} & \frac{\partial \tilde p}{\partial p}
+			\end{pmatrix}^T \begin{pmatrix}
+				0 & I \\ -I & 0
+			\end{pmatrix} \begin{pmatrix}
+			\frac{\partial \tilde x}{\partial x} & \frac{\partial \tilde x}{\partial p} \\
+			\frac{\partial \tilde p}{\partial x} & \frac{\partial \tilde p}{\partial p}
+			\end{pmatrix} = \begin{pmatrix}
+			0 & I \\ -I & 0
+			\end{pmatrix}.
+		\]
+\end{proof}
+\begin{definition}
+	$Sp_{2n} \coloneqq \{ D \in mat_{2n \times 2n} (\mathbb R): D^TJD = J \}$ is called the symplectic group.
+\end{definition}
+
+Based on 
+\begin{itemize}
+	\item $D_1^TJD_1 = J, D_2^TJD_2 = J \implies (D_1D_2)^T J (D_1D_2) = J$ 
+	\item $\det D \neq 0: \det(D^TJD) = \det(D)\det(J)\det(D) = \det(J) \implies (\det(D))^2 = 1 \implies \det(D) = \pm1$.
+	\item $D^TJD = J \iff (D^{-1})^TJ(D^{-1}) = J$.
+\end{itemize} 
+Thus, $\mathrm{Sp}_{2n}(\mathbb R)$ is a group, indeed.
+
+Some side remarks: Classical matrix Lie groups
+\begin{gather*}
+	\mathrm{GL}_n(\mathbb R) = \{ A \in \mathrm{mat}_{n \times n}(\mathbb R) : \det(A) \neq 0 \} \\
+	O_n(\mathbb R) = \{ A \in \mathrm{mat}_{n \times n}(\mathbb R): A^T A = I \} \\
+	\mathrm{Sp}_{2n}(\mathbb R) = \{ A \in \mathrm{mat}_{2n \times 2n}(\mathbb R): A^TJA = J \}
+\end{gather*}
+The group $\mathrm{Sp}_{2n}(\mathbb R)$ preserves skew symmetric two forms.
+
+We know for othrogonal matrices if the row form an orthonormal basis so do the columns, i.e. $A^T A = I$ and $AA^T = I$. Something similar also holds for the symplectic matrices.
+
+\begin{theorem}
+	It holds: $D \in \mathrm{Sp}_{2n}(\mathbb R) \iff DJD^T = J$.
+\end{theorem}
+
+\begin{proof}
+	\begin{align*}
+		D^TJD = J \iff JD = (D^T)^{-1}J \overset{J^{-1} = -J}{\iff} D = -J(D^T)^{-1}J &\iff DJ = J(D^T)^{-1} \\ &\iff DJD^T = J.
+	\end{align*}
+\end{proof}
+
+\begin{collorary}
+	Symplectic maps preserve Poisson brackets.
+\end{collorary}
+\begin{proof}
+	For $D = d\varphi = \begin{pmatrix}
+		\frac{\partial \tilde x}{\partial x} & \frac{\partial \tilde x}{\partial p} \\
+		\frac{\partial \tilde p}{\partial x} & \frac{\partial \tilde p}{\partial p}
+	\end{pmatrix}$ the identitiy $DJD^T = J$ reads
+	\begin{align*}
+		\frac{\partial \tilde x}{\partial x}(\frac{\partial \tilde x}{\partial p})^T - \frac{\partial \tilde x}{\partial p}(\frac{\partial \tilde x}{\partial x})^T = 0
+		\iff \sum^n_{k=1}(\frac{\partial \tilde x_i}{\partial x_k} \frac{\partial \tilde x_j}{\partial p_k} - \frac{\partial \tilde x_i}{\partial p_k} \frac{\partial \tilde x_j}{\partial x_k}) = 0
+		 \\
+		\frac{\partial \tilde p}{\partial p}(\frac{\partial \tilde x}{\partial p})^T - \frac{\partial \tilde p}{\partial p}(\frac{\partial \tilde x}{\partial x})^T = 0 
+		\iff \sum^n_{k=1}(\frac{\partial \tilde p_i}{\partial x_k} \frac{\partial \tilde p_j}{\partial p_k} - \frac{\partial \tilde p_i}{\partial p_k} \frac{\partial \tilde p_j}{\partial x_k}) = 0
+		\\
+		\frac{\partial \tilde x}{\partial x}(\frac{\partial \tilde p}{\partial p})^T - \frac{\partial \tilde x}{\partial p}(\frac{\partial \tilde p}{\partial x})^T =  I 
+		\iff \sum^n_{k=1}(\frac{\partial \tilde x_i}{\partial x_k} \frac{\partial \tilde p_j}{\partial p_k} - \frac{\partial \tilde x_i}{\partial p_k} \frac{\partial \tilde p_j}{\partial x_k}) = \delta_{i,j}.
+	\end{align*}
+	This is equivalent to $\{ \tilde x_i \tilde x_j \} = 0 = \{ x_i,x_j \}, \{ \tilde p_i \tilde p_j \} = 0 = \{ p_i,p_j \}, \{ \tilde x_i \tilde p_j \} = \delta_{i,j} = \{ x_i,p_j \}$.
+\end{proof}
+
+This means that the map $\varphi: \mathbb R^{2n} \to \mathbb R^{2n}$ is a \textbf{Poisson map}. 
+\begin{definition}
+	A map $\varphi: \mathbb R^{2n} \to \mathbb R^{2n}$ is called a \textbf{Poisson map} if it preserves the Poisson brackets: in coordinates, 
+	\begin{align*}
+		\{\tilde x_i, \tilde  x_j \} = \{ x_i,x_j \} = 0 \\
+		\{\tilde p_i, \tilde  p_j \} = \{ p_i,p_j \} = 0 \\
+		\{\tilde x_i, \tilde  p_j \} = \{ x_i,p_j \} = \delta_{i,j}
+	\end{align*}
+	or intrinsically, $\{ F \circ \varphi, G \circ \varphi \} = \{ F,G \} \circ \varphi \forall F,G: \mathbb R^{2n} \to \mathbb R$. 
+\end{definition}
+ 
+ Why is coordinate formulation equivalent to the intrinsic one? Suppose that there is a coordinate system $\{y_i\}$  such that the Poisson bracket of coordinate functions is given by $\{ y_i,y_i \} = \omega_{ij} = -\omega_{ji}$. Suppose that $\varphi: y \mapsto \tilde y$ and $\{ \tilde y_i, \tilde y_j \} = \omega_{ij}$. Then the poisson bracket is $\{F,G\}  = \sum^{2n}_{i=1} \sum^{2n}_{j=1} \frac{\partial F}{\partial y_i}  \frac{\partial G}{\partial y_j} \omega_{ij}$, in our case $(\omega_{ij}) = \begin{pmatrix}
+ 0 & I \\ -I & 0
+ \end{pmatrix}$. We have
+ \[
+ 	\{ F \circ \varphi, G \circ \varphi \} = \{ F(\tilde y), G(\tilde y) \} = \sum^{2n}_{k,l = 1} \frac{\partial F(\tilde y)}{\partial y_k} \frac{G(\tilde y)}{\partial y_k} \omega_{kl} = \sum^{2n}_{k,l=1} \sum^{2n}_{i=1} \frac{\partial F(\tilde y)}{\partial \tilde y_i} \frac{\partial \tilde y_i}{\partial y_k} \sum^{2n}_{j=1} \frac{\partial G(\tilde y)}{\partial \tilde y_j} \frac{\partial \tilde y_j}{\partial y_l}\omega_{kl}
+  \]
+ 
+\end{document}

@@ -1,0 +1,70 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 1}
+\begin{proof}
+	$\implies$:
+	Sei $f$ absolut stetig. Dann gibt es für jedes $\epsilon > 0$ ein $\delta$, sodass für jedes endliche disjunkte Mengensystem $(a_i,b_i)_{i=1,...,n}$ mit Gesamtlänge $\sum b_i-a_i$ kleiner $\delta$ gilt, dass auch $\sum |f(b_i) - f(a_i)| < \epsilon$. Mit der Dreiecksungleichung gilt somit auch $|\sum f(b_i) - f(a_i)| \leq \sum |f(b_i) - f(a_i)| < \epsilon$, was wir zeigen wollten.\\
+	
+	$\impliedby$: Sei $f$ eine Funktion und für jedes $\epsilon > 0$ gibt es ein $\delta$, sodass für jedes endliche disjunkte Mengensystem $(a_i,b_i)_{i=1,...,n}$ mit Gesamtlänge $\sum b_i-a_i$ kleiner $\delta$ gilt, dass auch $|\sum f(b_i) - f(a_i)| < \epsilon$ gelten muss ($\star$). \\
+	
+	Sei $\epsilon > 0$ und sei $[n] \coloneqq \{1,...,n\}$. Nach Voraussetzung existiert ein $\delta$, sodass für jedes $(a_i,b_i)_{i=1,...,n}$ mit Gesamtlänge kleiner als $\delta$ gilt: $|\sum f(b_i)-f(a_i)| < \epsilon$. Angenommen, $f$ wäre nicht absolut stetig. Dann gibt es für das $\delta$ ein endliches disjunktes Mengensystem $(\xi_i, \zeta_i)_{i=1,...,n}$ mit $\sum \zeta_i - \xi_i < \delta$, sodass $\sum |f(\zeta_i) - f(\xi_i)| \geq 2\epsilon$ (wenn das nicht so gilt, dann wählt man einfach $\epsilon$ hinreichend groß). Andererseits gilt wegen der Voraussetzung ($\star$), dass $|\sum f(\zeta_i) - f(\xi_i)| < \epsilon$. Sei $\Delta_+ \coloneqq \{ i \in [n] : f(\zeta_i) - f(\xi_i) \geq 0 \}$ und $\Delta_- \coloneqq \{ i \in [n] : f(\xi_i) - f(\zeta_i) > 0 \}$. Wegen $\sum |f(\zeta_i) - f(\xi_i)| \geq 2\epsilon$ gilt entweder $\sum_{i \in \Delta_+} |f(\zeta_i) - f(\xi)_i| = |\sum_{i \in \Delta_+} f(\zeta_i) - f(\xi)_i| \geq \epsilon$ oder $\sum_{i \in \Delta_-} |f(\zeta_i) - f(\xi_i)| = |\sum_{i \in \Delta_-} f(\zeta_i) - f(\xi_i)| \geq \epsilon$. Damit haben wir ein disjunktes endliches Mengensystem gefunden, das die Voraussetzung  ($\star$) verletzt. Widerspruch und $f$ muss absolut stetig sein.
+\end{proof}
+
+\section*{Aufgabe 2}
+
+Sei $\epsilon > 0$. Weil $f: [a,b] \to \mathbb R$ absolut stetig ist, gibt es ein $\delta > 0$, sodass für alle $(a_i,b_i)_{i \in [n]}$ mit Gesamtlänge kleiner $\delta$ gilt, dass $\sum |f(b_i)-f(a_i)| < \epsilon$. Seien nun $(c_i,d_i)_{i \in [n]}$ mit Gesamtlänge kleiner $\delta$ und seien $\xi_{i,1} = c_i < \xi_{i,2} < ... < \xi_{i,j_i} = d_i$ für alle $i \in [n]$ beliebig. Dann ist $\sum_{i=1}^n\sum_{j=1}^{j_i-1} \xi_{i,j+1} - \xi_{i,j} < \delta$ und somit gilt $\sum_{i=1}^n\sum_{j=1}^{j_i-1} |f(\xi_{i,j+1})-f(\xi_{i,j})| < \epsilon$ wegen der absoluten Stetigkeit von $f$. Nun ist das Supremum von $\sum_{j=1}^{j_i-1} |f(\xi_{i,j+1})-f(\xi_{i,j})|$ über alle möglichen Intervalle  $\xi_{i,1} = c_i < \xi_{i,1} < ... < \xi_{i,j_i} = d_i$ gleich $|F(d_i) - F(c_i)|$. Angenommen, dem wäre nicht so, dann gäbe es eine Unterteilung von $a$ bis $d_i$ mit $|(\sum_{j=1}^{j_i-1} |f(\xi_{i,j+1})-f(\xi_{i,j})|) + F(c_i) | > |F(d_i)|$, was ein Widerspruch zur Definition von $F(d_i)$ ist. Damit erhalten wir $\sum^n_{i=1} |F(d_i) - F(c_i)| \leq \epsilon$. Wir haben also ein passendes $\delta$ gefunden, da die Unterteilung der $(c_i,d_i)$ beliebig war.\\
+
+Zeige, dass $F+f$ absolut stetig ist, falls $f$ absolut stetig ist. Sei $\frac{\epsilon}{2} >0$. Dann gibt es wieder $\delta$, sodass für alle disjunkte endlichen Mengensysteme mit Gesamtlänge kleiner $\delta$ gilt, dass $\sum |f(b_i) - f(a_i)| < \epsilon$. Wie wir im Beweis vorhin gesehen haben, kann man dasselbe $\delta$ wählen, um die absolute Stetigkeit von $F$ zu zeigen. Dann gilt mit der Dreiecksungleichung, dass $$\sum |F(b_i) - F(a_i) + f(b_i) - f(a_i)| \leq \sum (|F(b_i) - F(a_i)| + |f(b_i) - f(a_i)|) < \epsilon.$$
+Dies zeigt die absolute Stetigkeit von $F+f$.\\
+
+Zeige, dass $F-f$ absolut stetig ist, falls $f$ absolut stetig ist. $-f$ ist absolut stetig, denn wir können für ein vorgegebenes $\epsilon >0$ das gleiche $\delta$ wie für $f$ wählen, sodass gilt $\sum |f(b_i) - f(a_i)| = \sum |f(a_i) - f(b_i)| < \epsilon$. Sei $\frac{\epsilon}{2} >0$. Dann gibt es wieder $\delta$, sodass für alle disjunkte endlichen Mengensysteme mit Gesamtlänge kleiner $\delta$ gilt, dass $\sum |f(a_i) - f(b_i)| < \epsilon$. Man man dasselbe $\delta$ wählen, um die absolute Stetigkeit von $F$ zu zeigen, denn das $\delta$ von $-f$ ist das gleiche wie für $f$. Dann gilt mit der Dreiecksungleichung, dass $$\sum |F(b_i) - F(a_i) + f(a_i) - f(b_i)| \leq \sum (|F(b_i) - F(a_i)| + |f(a_i) - f(b_i)|) < \epsilon.$$
+Dies zeigt die absolute Stetigkeit von $F-f$.
+
+\section*{Aufgabe 3}
+Sei $f$ absolut stetig. Sei $\epsilon > 0$. Dann gibt es ein $\delta$, sodass für alle endlichen disjunkten Mengen $(a_i,b_i)_{i \in [n]}$ mit Gesamtlänge kleiner $\delta$ gilt, dass $\sum^n_{i=1} |f(b_i) - f(a_i)| < \epsilon$. Setze $n=1$ und es ergibt sich die gleichmäßige Stetigkeit von $f$. \\
+
+Sei $f$ Lipschitz-stetig. Dann ist auch $f$ absolut stetig, denn für jedes $\epsilon > 0$ wählt man einfach $\delta = \epsilon \mathfrak L^{-1}$, wobei $\mathfrak L$ die Lipschitzkonstante ist. Es gilt dann nämlich $\sum| f(b_i) - f(a_i) | < \mathfrak L \sum b_i - a_i < \epsilon $.\\
+
+Sei $g$ Lipschitz-stetig mit Lipschitz Konstante $\mathfrak G$ und $f$ absolut stetig. Dann gibt es ein $\delta$, sodass $\sum| f(b_i) - f(a_i)| < \frac{\epsilon}{\mathfrak G}$. Nun folgt, dass $\sum |g(f(b_i)) - g(f(a_i))| \leq  \mathfrak G \sum |f(b_i) - f(a_i)| < \epsilon$ für alle disjunkten endlichen Mengen $(a_i,b_i)$ mit Gesamtlänge kleiner als $\delta$. 
+
+
+\end{document}
+ 

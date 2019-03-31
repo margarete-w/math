@@ -1,0 +1,238 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{mathpazo}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{tikz}
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Victor (405592)}
+\lhead{\textbf{Mathematical Physics I WS1819} - Jan Techter (Monday 10-12 am)}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+\section*{Exercise 1}
+\begin{enumerate}[label=(\roman*)]
+	\item Wir bestimmen das zugehörige ODE zu $\Phi^t$ und da dynamische Systeme auch über ODE definiert werden können, definiert $\Phi^t$ ein dynamisches System. Dazu bestimmen wir das Vektorfeld von $\Phi^t$. Es gilt
+	\[
+		\frac{d}{dt} \Bigg \vert_{t=0} \frac{(2x_1, 2x_2 \cos(t) + (1-x_1^2-x_2^2) \sin(t))}{1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t)}.
+	\]
+	Insbesondere gilt für die erste Komponente
+	\begin{align*}
+		\frac{d}{dt} \Bigg \vert_{t=0} \frac{2x_1}{1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t)} &= \frac{-2x_1(-(1-x_1^2-x_2^2)\sin(t) - 2x_2\cos(t))}{(1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t))^2}  \Bigg \vert_{t=0} \\
+		&= \frac{-2x_1 \cdot (-2x_2)}{4} = x_1x_2.
+	\end{align*}
+	Ebenso für die zweite Komponente
+	\begin{align*}
+		&\frac{d}{dt} \Bigg \vert_{t=0}
+		\frac{2x_2 \cos(t) + (1-x_1^2-x_2^2) \sin(t)}{1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t)}\\ 
+		&= 
+		-\frac{(2x_2 \cos(t) + (1-x_1^2-x_2^2) \sin(t))(-\sin(t)(1-x_1^2-x_2^2) - 2x_2\cos(t))}{(1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t))^2} \\
+		&+
+		\frac{(-2x_2\sin(t) + (1-x_1^2-x_2^2)\cos(t))(1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t))}{(1+x_1^2+x_2^2+(1-x_1^2-x_2^2)\cos(t)-2x_2\sin(t))^2} \Bigg \vert_{t=0} \\
+		&= \frac{-2x_2(-2x_2) + (1-x_1^2-x_2^2)2}{4} = \frac{4x_2^2+2-2x_1^2-2x_2^2}{4} = \frac{-x_1^2+1+x_2^2}{2}
+	\end{align*}
+	Wir erhalten das ODE für $\Phi^t(x_0,y_0)$:
+	\begin{align*}
+		\dot x_1 &= x_1x_2 \\
+		\dot x_2 &= \frac{x_2^2-x_1^2+1}{2} \\
+		x(0) &= (x_0,y_0)
+	\end{align*}
+	Das heißt, $\Phi^t(x_0,y_0)$ löst das oben genannte ODE und ist somit ein Flow des dynamischen Systems.
+	
+	Für  $\Psi^t$ ergibt sich
+	\[
+		\frac{d}{dt} \Bigg \vert_{t=0} (x_1+t, \frac{x_1x_2}{x_1+t}) = (1, -\frac{x_1x_2}{(t+x_1)^2}) \Bigg \vert_{t=0} = (1,- \frac{x_2}{x_1}).
+	\]
+	Wir erhalten ein ODE für $\Psi^t(x_0,y_0)$
+	\begin{align*}
+		\dot x_1 &= 1 \\
+		\dot x_2 &= - \frac{x_2}{x_1} \\
+		x(0) &= (x_0,y_0).
+	\end{align*}
+	$\Psi^t$ ist ein Flow des ODE und definiert ein dynamisches System.
+	
+	\item Die Vektorfelder wurden in (i) berechnet und lauten für $\Phi^t, \Psi^t$
+	\[
+		f(x_1, x_2) = \begin{pmatrix}
+			x_1x_2 \\
+			\frac{x_2^2-x_1^2+1}{2} \\
+		\end{pmatrix} 
+	\] sowie
+	\[
+		g(x_1,x_2) = \begin{pmatrix}
+			1 \\ -\frac{x_2}{x_1}
+		\end{pmatrix}.
+	\]
+	
+	\item Sie kommutieren, falls $\mathcal L_gf - \mathcal L_fg = 0$. 
+	\[
+		\mathcal L_gf = (\frac{\partial}{\partial x_1} - \frac{x_2}{x_1}\frac{\partial}{\partial x_2}) \begin{pmatrix}
+			x_1x_2 \\ \frac{1}{2}(x_2^2-x_1^2+1) 
+		\end{pmatrix}
+		= \begin{pmatrix}
+			x_2 - x_2 \\
+			-x_1 - \frac{x_2}{x_1}x_2
+		\end{pmatrix} = 
+		-\begin{pmatrix}
+			0 \\ \frac{x_1^2+x_2^2}{x_1}
+		\end{pmatrix}
+	\]
+	und 
+	\begin{align*}
+		\mathcal L_fg = (x_1x_2\frac{\partial}{\partial x_1} + \frac{x_2^2-x_1^2+1}{2}\frac{\partial}{\partial x_2})\begin{pmatrix}
+		1 \\
+		-\frac{x_2}{x_1}
+		\end{pmatrix} =
+		\begin{pmatrix}
+			0 \\
+			x_1x_2x_2 \frac{1}{x_1^2} +  \frac{x_2^2-x_1^2+1}{2}(-\frac{1}{x_1})
+		\end{pmatrix} &= 
+		\begin{pmatrix}
+			0 \\
+			\frac{x_2^2}{x_1} - \frac{x_2^2-x_1^2+1}{2x_1}
+		\end{pmatrix}\\ &=
+		\begin{pmatrix}
+		0 \\
+			\frac{x_2^2+x_1^2-1}{2x_1}
+		\end{pmatrix}
+	\end{align*}
+	Also 
+	\[
+	\begin{pmatrix}
+	0 \\
+	\frac{x_2^2+x_1^2-1}{2x_1}
+	\end{pmatrix} 
+		+\begin{pmatrix}
+		0 \\ \frac{x_1^2+x_2^2}{x_1}
+		\end{pmatrix} \neq 0.
+	\]
+	Sie kommutieren nicht.
+\end{enumerate}
+
+\section*{Exercise 2}
+Berechne für $i=1$:
+\begin{align*}
+	\Phi^t(x_1,x_2)_1 = \sum^\infty_{k=0}\frac{t^k}{k!}(\mathcal L_g)^k(x_1) = (1 + t(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2}))x_1 = x_1 +t(1- 0) = x_1 +t.
+\end{align*}
+Wir können bei $k = 1$ aufhören, da $(\mathcal L_g)^{i}$ für $i > 1$ gleich $0$ ist, denn 
+\[
+	(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2})(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2}) x_1 = (\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2}) 1 = 0.
+\]
+Für $i=2$ ergibt sich
+\begin{align*}
+	\Phi^t(x_1,x_2)_2 = \sum^\infty_{k=0}\frac{t^k}{k!}(\mathcal L_g)^k(x_2) =  \sum^\infty_{k=0}\frac{t^k}{k!}(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2})^k(x_2) =  \sum^\infty_{k=0}\frac{t^k}{k!}(-1)^k\frac{k!x_2}{x_1^k} = \sum^\infty_{k=0}(-1)^kt^k\frac{x_2}{x_1^k}.
+\end{align*}
+Wir müssen nur zeigen, dass $(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2})^k(x_2) = (-1)^k\frac{k!x_2}{x_1^k}$ für alle $k \in \mathbb N$. Beweis per Induktion: $k=0$ ergibt 
+\[
+	\mathrm{id}(x_2) = x_2 = (-1)^0x_2.
+\]
+Für ein beliebiges $k \in \mathbb N$ gelte die Behauptung. $k \leadsto k+1$: 
+\begin{align*}
+	(\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2})^{k+1}(x_2) = (\frac{\partial}{\partial x_1} - \frac{x_2}{x_1} \frac{\partial}{\partial x_2})(-1)^k\frac{k!x_2}{x_1^k} &= (-1)^k (-k \frac{k!x_2}{x_1^{k+1}} - \frac{x_2}{x_1}\frac{k!}{x_1^k}) \\
+	&=(-1)^{k+1} (\frac{kk!x_2}{x_1^{k+1}} + \frac{x_2k!}{x_1^{k+1}}) \\
+	&= (-1)^{k+1} (\frac{x_2k!(k+1)}{x_1^{k+1}}) \\
+	&= (-1)^{k+1} (\frac{x_2(k+1)!}{x_1^{k+1}})
+\end{align*}
+Damit ist die Behauptung für beliebige $k \in \mathbb N$ bewiesen.
+
+\section*{Exercise 3}
+\begin{enumerate}[label=(\roman*)]
+	\item ODE 1:
+	\begin{align*}
+		x'' &= -\alpha^2x \\
+		x(0) &= a, x'(0) = b, \quad a,b \in \mathbb R.
+	\end{align*}
+	ODE 2:
+	\begin{align*}
+		x'' &= \alpha^2x \\
+		x(0) &= a, x'(0) = b, \quad a,b \in \mathbb R.
+	\end{align*}
+	
+	Umgewandelt in ein ODE erster Ordnung:
+	\begin{align*}
+		x_1' &= x_2 \\
+		x_2' &= -\alpha^2x_1 \\
+		x_1(0) &=a, x_2(0) = b
+	\end{align*}
+	und
+	\begin{align*}
+		x_1' &= x_2 \\
+		x_2' &= \alpha^2x_1 \\
+		x_1(0) &=a, x_2(0) = b
+	\end{align*}
+	
+	\item Calculate the integral of motion
+	\begin{align*}
+		\frac{dx_1}{dx_2} = \frac{x_2}{-\alpha^2x_1} \iff -\alpha^2x_1dx_1 = x_2dx_2 \iff -\alpha^2\frac{1}{2}x_1^2 - \frac{1}{2}x_2^2 = C, \quad C \in \mathbb R
+	\end{align*} 
+	Define $F(x_1,x_2) \coloneqq -\frac{1}{2}(\alpha^2x_1^2+x_2^2)$. Check that this is actually an integral of motion:
+	\begin{align*}
+		\mathcal L_fF(x_1,x_2) = -\frac{1}{2}(x_2 \frac{\partial}{\partial x_1} - \alpha^2x_1 \frac{\partial}{\partial x_2})(\alpha^2x_1^2+x_2^2) = -0.5(2x_2\alpha^2x_1 - \alpha^2x_12x_2) = 0.
+	\end{align*}
+	Indeed, it is an integral of motion.
+	\[
+		\frac{dx_1}{dx_2} = \frac{x_2}{\alpha^2x_1} \iff \alpha^2x_1dx_1 = x_2dx_2 \iff \alpha^2\frac{1}{2}x_1^2 - \frac{1}{2}x_2^2 = C, \quad C \in \mathbb R
+	\]
+	Define $J(x_1,x_2) \coloneqq \frac{1}{2}(\alpha^2x_1^2-x_2^2)$. Check that this is actually an integral of motion:
+	\begin{align*}
+	\mathcal L_fJ(x_1,x_2) = \frac{1}{2}(x_2 \frac{\partial}{\partial x_1} + \alpha^2x_1 \frac{\partial}{\partial x_2})(\alpha^2x_1^2-x_2^2) = -0.5(2x_2\alpha^2x_1 - \alpha^2x_12x_2) = 0.
+	\end{align*}
+	
+	\item Fixed points are the points whose $x_2$ coordinate are zero since $\frac{dx_1}{dt} = x_2$. So it must hold $x_2 = 0$. For $F$, the fixed points are
+	\begin{align*}
+		F(x_1,0) = -0.5\alpha^2x_1^2 = C \iff \alpha^2x_1^2 = -2C \iff x_1 = \pm \frac{\sqrt{-2C}}{\alpha}, \quad C \leq 0.
+	\end{align*}
+	We have two fixed points if $C$ is not positive, otherwise no fixed points.
+	\begin{align*}
+		J(x_1,0) = 0.5(\alpha^2x_1^2) = C \iff \alpha x_1 = \pm \sqrt{2C} \iff x_1 = \pm \frac{\sqrt{2C}}{\alpha}, \quad C \geq 0.
+	\end{align*}
+	We have two fixed points if $C$ is not negative, otherwise no fixed points.
+	
+	\item For $F$, every orbit is periodic. For $J$, no periodic orbit exists except for the fixed points.
+	
+	\item For $F$, each point converges to a fixed point. If the fixed point has positive $x_1$ coordinate, then for small variations $p < x_1$, the point $p$ converges to the fixed point $x_1$. If the fixed point has negative $x_1$ coordinate, then for small variations $p > x_1$, the point $p$ converges to the fixed point $x_1$.
+	
+	For $J$, points $p=(x_1,\dot x_1)$ with $x_1 \cdot \dot x_1 \leq 0$ converge to a fixed point.
+\end{enumerate}
+\end{document}

@@ -1,0 +1,198 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 1}
+\begin{enumerate}[label=(\roman*)]
+	\item \textit{Zu zeigen:} $u$ ist gleichmäßig stetig.
+	\begin{proof}[Beweis per Widerspruch]
+		Angenommen, $u$ ist nicht gleichmäßig stetig. Dann gäbe ein $\epsilon > 0$, sodass es für jedes $n \in \mathbb N$ zwei reelle Zahlen $x_n,y_n$ gibt mit
+		\begin{align*}
+			|x_n-y_n| < \frac{1}{n} \quad (*) \quad \text{ und } |f(x_n)-f(y_n)| \geq \epsilon \quad(**).
+		\end{align*}
+		Wegen $(*)$ gilt $$\lim\limits_{n \to \infty}x_n =  \lim\limits_{n \to \infty}y_n.$$ Sei $\gamma \coloneqq \lim\limits_{n \to \infty}x_n$. Es gilt $\gamma \in \mathbb R \cup \{ \infty \}$. Falls $\gamma \in \mathbb R$, so gilt
+		\[
+			\lim_{n \to \infty}f(x_n) = f(\lim_{n \to \infty}x_n) = f(\gamma) = f(\lim_{n \to \infty}y_n) = \lim_{n \to \infty}f(y_n) \tag{$\star$}.
+		\]
+		Falls $\gamma = \infty$, so gilt
+		\[
+			\lim_{n \to \infty}f(x_n) = f(\lim_{n \to \infty}x_n) = 0 = f(\lim_{n \to \infty}y_n) = \lim_{n \to \infty}f(y_n) \tag{$\star \star$}.
+		\]
+		Aussage $(\star), (\star \star)$ stehen im Widerspruch zu $(**)$, da wegen $\lim_{n \to \infty}f(x_n) = \lim_{n \to \infty}f(y_n)$ es einen Index $N \in \mathbb N$ geben muss mit
+		\[
+			f(x_N)-f(y_N) < \epsilon.
+		\] 
+		Aber $x_N - y_N < \frac{1}{N}$ nach $(*)$. Demnach ist $u$ gleichmäßig stetig.
+	\end{proof}
+		
+		\textit{Zu zeigen:} $u$ ist beschränkt.
+		\begin{proof}
+			Wegen $\lim\limits_{x\to \pm \infty} u(x) = 0$ gibt es ein $x_0 \in \mathbb R$, sodass 
+			\[
+				\forall x \geq x_0: |u(x)| < 1 \text{ und } |u(-x)| < 1.
+			\]
+			Zudem ist $u\vert_{[-x_0,x_0]}$ beschränkt nach Satz von Heine, da $u$ stetig ist und $[-x_0,x_0]$ kompakt. Sei $M \coloneqq \sup_{x \in [-x_0,x_0]}|u|$ und insbesondere ist $M \in \mathbb R$. Dann wird u durch $\max(1, M) \in \mathbb R$ beschränkt.
+		\end{proof}
+	
+	\item \textit{Zu zeigen:} $K$ ist eine Abbildung von $X$ nach $X$.
+	\begin{proof}
+		Sei $u \in X$ beliebig
+		\begin{itemize}
+			\item Zeige, dass $Ku$ wohldefiniert ist. Es muss insbesondere $\int k(x-y)u(y)dy < \infty$ gelten, damit $k(x-y)u(y)dy$ integrierbar ist. Da $k,u \in L^1$, ist $h_x(y) \coloneqq u(y)k(x-y)$ messbar. Nun ist $u$ beschränkt durch eine Konstante $M$, wie in Aufgabe 1(i) gezeigt wurde. Wegen $\int k(y)dy < \infty$ ist $Mk$ eine Majorante von $h_x$; es gilt also
+			\[
+				|h_x| = |uk| \leq Mk \quad \text{für alle $x \in \mathbb R$}.
+			\]
+			Daher ist $|h_x|$ integrierbar (nach der majorisierten Konvergenz) und somit auch $h_x$. Insbesondere ist 
+			\begin{align}\label{kuh}
+				\forall x \in \mathbb R: (Ku)(x) \leq M \int k(x-y)dy < \infty.
+			\end{align}
+			
+			\item Zeige, dass $Ku$ stetig auf $\mathbb R$ ist. Da $(Ku)(x) = \int h_x(y)dy$ und $h_x(y)$ für alle $x \in \mathbb R$ lebesgue integrierbar ist, ist $Ku$ absolut stetig; daher auch stetig für alle $x$.
+			
+			\item Zeige, dass $(Ku)(x) \to 0$ für $x \to \pm\infty$. Aus der Analysis III Vorlesung ist bekannt: 
+			\begin{align}\label{krass}
+				k \in L^1 \implies k(y) \to 0 \quad \text{für} \quad y \to \pm \infty.
+			\end{align}
+			Nun gibt es für $k_x(y) \coloneqq k(x-y)$ eine Majorante mit $k(y)$, da 
+			\[
+				\forall x\in \mathbb R: k_x(y) = k(x-y) \implies \forall x\in \mathbb R: |k_x| \leq k.
+			\]
+			Zudem ist $\lim\limits_{y \to \pm \infty}k_x(y) = 0$ wegen \eqref{krass}. Es gilt nun mit der majorisierten Konvergenz:
+			\begin{align*}
+				\lim_{x \to \pm \infty} (Ku)(x) \overset{\text{Def.}}{=} \lim_{x \to \pm \infty} \int k(x-y)u(y) dy &\overset{\eqref{kuh}}{\leq} M \lim_{x \to \pm \infty} \int k_x(y)dy\\
+				&= M \int  \lim_{x \to \pm \infty} k_x(y)dy \\
+				&= M \int 0 dy \\
+				&= 0.
+			\end{align*}
+		\end{itemize}
+	\end{proof}
+
+	\textit{Zu zeigen:} $K$ ist linear.
+	\begin{proof}
+		Sei $v \in X$.
+		\begin{align*}
+			\forall x \in \mathbb R: (K(u+v))(x) = \int k(x-y)(u+ v)(y)dy &= \int k(x-y)u(y) dy + \int k(x-y)u(y)dy \\&= (Ku)(x) + (Kv)(x).
+		\end{align*}
+		Sei $\lambda \in \mathbb R$.
+		\begin{align*}
+			\forall x \in \mathbb R: K(\lambda u)(x) = \int k(x-y)\lambda u(y) dy = \lambda \int k(x-y)u(y)dy = \lambda (Ku)(x).
+		\end{align*}
+	\end{proof}
+
+	\textit{Zu zeigen:} $K$ ist beschränkt.
+	\begin{proof}
+		Der lineare Operator $K: X \to X$ ist beschränkt, falls
+		\[
+			\sup_{\Vert u \Vert_\infty \leq 1}\Vert Ku \Vert_{\infty} < \infty.
+		\]
+		Sei $v \in X$ mit $\Vert v \Vert_\infty \leq 1$. Damit ist $|v(x)| \leq 1$ für alle $x \in \mathbb R$. Es gilt
+		\[
+			(Kv)(x) = \int_{\mathbb R} k(x-y)v(y)dy \leq \int_{\mathbb R} k(x-y)dy = \int_{\mathbb R}k(y)dy < \infty.
+		\]
+		Wir verwenden die Translationsinvarianz des Integrals sowie $k \in L^1$. Damit ist 
+		\[
+			\sup_{\Vert u \Vert_\infty \leq 1}\Vert Ku \Vert_{\infty} \leq \int_{\mathbb R}k(y)dy < \infty.
+		\]
+	\end{proof}
+
+	\item \textit{Zu zeigen: }Für ein $f$ hat die Gleichung $u-Ku = f$ genau eine Lösung, falls $\int |k(x)|dx < 1$.
+	
+	\begin{proof}
+		Benutze den Banachschen Fixpunktsatz. Wir definieren den Operator $F: X \to X$ mit $Fu \coloneqq Ku + f$ für ein festes $f \in X$. Der lineare Operator $F$ bildet $X$ nach $X$ ab, da $K: X \to X$ wie in 1(ii) gezeigt wurde und $X$ ein Vektorraum ist, sodass $Ku+f \in X$ für jedes $u \in X$. Wir zeigen als nächstes, dass $K$ eine Kontraktion ist. Es soll also ein $J \in [0,1)$ geben mit
+		\[
+			\forall u,v \in X: \Vert Fu - Fv \Vert_{\infty} \leq J \Vert u-v \Vert_{\infty}
+		\]
+		Es gilt für alle $x \in \mathbb R$ (im folgenden bezeichne $\int$ immer $\int_{\mathbb R}$):
+		\begin{align*}
+			|(Fu-Fv)(x)| &= |\int k(x-y)u(y) + f(x)dy - \int k(x-y)v(y) - f(x)dy|\\ 
+			&= |\int k(x-y)(u-v)(y)dy| \tag*{\text{Dreiecksungleichung}}\\
+			&\leq \int |k(x-y)(u-v)(y)|dy \intertext{Es gilt: $\forall x \in \mathbb R: (u-v)(x)| \leq \Vert u-v \Vert_{\infty}$ und somit:}
+			&\leq \Vert u-v \Vert_{\infty} \int |k(x-y)|dy \tag*{Translationsinvarianz}\\
+			&= \Vert u-v \Vert_{\infty} \underbrace{\int |k(y)|dy}_{<1} \\
+		\end{align*}
+		Daraus folgt, dass $ \Vert Fu - Fv \Vert_{\infty} \leq \int |k(y)|dy \Vert u-v \Vert_{\infty}$ mit Kontraktionszahl $\int |k(y)|dy$. Der Banachsche Fixpunktsatz ist anwendbar und besagt, dass es genau ein $u$ mit $Fu=u$ gibt. Damit ergibt sich die Behauptung.
+	\end{proof}
+\end{enumerate}
+
+\section*{Aufgabe 2}
+Zeige, dass $u(x) = \alpha \int^b_a\sin(u(y))dy + f(x)$ eine Lösung $u: \mathcal C([a,b]) \to \mathcal C([a,b])$ besitzt. Verwende dazu den Satz von Leray und Schauder. Definiere die Abbildung $A$ mit
+\[
+	(Au)(x) \coloneqq \alpha \int^b_a\sin(u(y))dy + f(x), \quad x \in [a,b].
+\]
+Wir zeigen zuerst, dass $A$ eine Abbildung von $\mathcal C([a,b])$ nach $\mathcal C([a,b])$ ist. Das ist klar, da $\int^a_b: \mathcal C([a,b]) \to \mathcal C([a,b])$ ein Operator ist, der auf konstante Abbildungen in $\mathcal C([a,b])$ abbildet. Da $f \in \mathcal C([a,b])$ und $\mathcal C([a,b])$ ein Vektorraum ist, gilt: $Au \in \mathcal C([a,b])$ für alle $u \in \mathcal C([a,b])$.\\
+
+Wir zeigen weiter, dass $A$ kompakt ist; das heißt, $A$ ist stetig und bildet beschränkte Teilmengen von $\mathcal C[a,b]$ nach relativ kompakte Teilmengen von $\mathcal C([a,b])$ ab. Um die Stetigkeit von $A$ zu beweisen, muss man nur die Stetigkeit des Integrals $\int^b_a: \mathcal C([a,b]) \to \mathcal C([a,b])$ und $\sin: \mathcal C([a,b]) \to \mathcal C([a,b])$ zeigen. Das Integral ist stetig in $\mathcal C([a,b])$, denn sei $\epsilon > 0$ und sei $(u_k)_{k \in \mathbb N} \subset \mathcal C([a,b])$ mit $u_k \to u$. Wegen $u_k \to u$ gibt es ein $K \in \mathbb N$, sodass $\Vert u_k - u \Vert_{\infty} < \epsilon$ für alle $k \geq K$. Also gilt unter Ausnutzung der Dreiecksungleichung für das Integral:
+\[
+	\forall k \geq K: \Vert \int^b_a u_k(y)dy - \int^b_a u(y) dy \Vert_{\infty} = \Vert \int^b_a u_k(y) - u(y) dy \Vert_{\infty} \overset{(\triangle)}{\leq} \int^b_a \Vert u_k(y)-u(y) \Vert_{\infty} dy < \epsilon.
+\]
+Die Abbildung $\sin$ ist stetig in $ \mathcal C([a,b])$, da $\sin$ gleichmäßig stetig in $[a,b]$ ist. Sei $\epsilon > 0$: Es gibt ein $k \geq K$, sodass jede Folge $u_k$ mit $u_k \to u$ gilt:
+\[
+	\forall k \geq K: \Vert u_k - u \Vert_{\infty} < \epsilon.
+\]
+Jedes einzelne Folgenglied $u_k$ approximiert $u$ auf $[a,b]$ einen Fehler von höchstens $\epsilon$. Also $u_k(x) \approx u(x)$ für jedes $x \in [a,b]$, bzw. $u_k(x) - \epsilon \leq u_k(x) \leq u_k(x) + \epsilon$. Wir machen das jetzt ein wenig informal: Wegen der Stetigkeit von $\sin$ ist der Approximationsfehler begrenzt durch ein $\xi \in \mathbb R$:
+\[
+	\Vert \sin(u_k(x)) - \sin(u(x)) \Vert_{\infty}  \approx \Vert \sin(u_k(x)) - \sin(u_k(x)) + \xi \Vert_{\infty} \to 0,
+\]
+falls man nur genau genug approximiert, das heißt $K$ nur genug groß wählt. Wir erhalten: Als Komposition von stetigen Funktionen ist $Au =  \alpha \int^b_a\sin(u(y))dy + f(x)$ stetig. \\
+
+Nun zeige, dass $A$ beschränkte Teilmengen von $\mathcal C([a,b])$ in relativ kompakte Teilmengen von $\mathcal C([a,b])$ überführt. Sei $\Phi \subset \mathcal C([a,b])$ und beschränkt. Das heißt, für alle $m \in \mathcal C([a,b])$ gibt es ein $r > 0$, sodass $\sup_{u \in \Phi} \Vert u-m \Vert_\infty < r$. Betrachte dann das Bild $A(\Phi) = \{ Au : u \in \Phi \}$. Wir müssen jetzt zeigen, dass $A(\Phi)$ gleichmäßig beschränkt und gleichgradig stetig ist, damit $A(\Phi)$ relativ kompakt ist.
+\begin{itemize}
+	\item $A(\Phi)$ ist gleichmäßig beschränkt, denn für die Nullabbildung $v \equiv 0$ gibt es ein $r$ mit $\sup_{u \in \Phi} \Vert u-v \Vert_\infty = \sup_{u \in \Phi} \Vert u \Vert_\infty < r$. Also ist $A(\Phi)$ relativ beschränkt.
+	
+	\item $A(\Phi)$ ist gleichgradig stetig, denn sei $\epsilon > 0$. Jedes $u \in A(\Phi)$ ist gleichmäßig stetig, da $u$ stetig auf $[a,b]$ ist. Für jedes $u$ gibt es also ein gewissen $\delta(u)$, sodass gilt:
+	\[
+		\forall x,y \in [a,b]: |x-y| < \delta(u) \implies |u(x)-u(y)| < \epsilon.
+	\]
+	Definiere $\delta \coloneqq \inf_{u \in A(\Phi)} \delta(u)$. Es bleibt noch zu zeigen, dass $\delta > 0$. Angenommen, es wäre $\delta = 0$. Dann gäbe es eine Folge von $(u_k)_{k \in \mathbb N}$ mit $\delta(u_k) \to 0$ für $k \to \infty$. Sei $l \coloneqq \lim_{k \to \infty}u_k$. Da $\mathcal C([a,b])$ abgeschlossen ist, wäre $l \in \mathcal C([a,b])$, aber $l$ ist nicht beschränkt in $[a,b]$! Widerspruch. Also ist $\delta > 0$ und es gilt
+	\[
+		\forall u \in A(\Phi), \forall x,y \in [a,b]: \vert x-y \vert < \delta \implies |u(x)-u(y)| < \epsilon.
+	\]
+\end{itemize}
+$A$ ist eine kompakte Abbildung.\\
+
+Sei $0 \leq t < 1$. Betrachte eine Lösung $u$ für
+\begin{align*}
+	\forall x \in [a,b]: u(x) = t\alpha \int^b_a \sin u(y) dy +tf(x) \leq t\alpha\int^b_a 1dy+ tf(x) \leq t\alpha\Big((b-a)+f(x)\Big).
+\end{align*}
+Nun ist $f$ auf $[a,b]$ beschränkt durch ein $M \in \mathbb R$, da $f \in \mathcal C([a,b])$. Also gilt für jede Lösung $u$ die Abschätzung:
+\[
+	\forall x\in [a,b]: u(x) \leq t\alpha\Big((b-a)+M \Big).
+\]
+Setze $r \coloneqq \alpha\Big((b-a)+M \Big)$. Dann gilt für jede Lösung $u$ der Gleichung $u = tAu$ mit $t \in [0,1)$, dass $\Vert u \Vert_{\infty} \leq r$. Also besitzt  $u = Au$ eine Lösung, was zu zeigen war.
+\end{document}

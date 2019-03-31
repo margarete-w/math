@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{tikz}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Victor (405592)}
+\lhead{\textbf{MP I UE04} - Jan Techter (Monday 10-12 am)}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Exercise 1}
+We have
+\[
+	f(x_1,x_2) = \begin{pmatrix}x_1x_2 \\ x_2^2\end{pmatrix}
+	g(x_1,x_2) = \begin{pmatrix}x_1 \\ 0\end{pmatrix}
+	h(x_1,x_2) = \begin{pmatrix}x_2 \\ 0\end{pmatrix}
+\]
+with $v_1 = \sum f_i \frac{\partial}{\partial x_i}, v_2 = \sum g_i \frac{\partial}{\partial x_i}, v_3 = \sum h_i \frac{\partial}{\partial x_i}$.\\
+
+Now we calculate the Lie brackets:
+\begin{align*}
+	[v_1,v_2] = (x_1x_2 \frac{\partial}{\partial x_1} + x_2^2\frac{\partial}{\partial x_2}) x_1\frac{\partial}{\partial x_1} - (x_1\frac{\partial}{\partial x_1})(x_1x_2\frac{\partial}{\partial x_1} + x_2^2\frac{\partial}{\partial x_2}) = x_1x_2\frac{\partial}{\partial x_1} - x_1x_2\frac{\partial}{\partial x_1} = 0.
+\end{align*}
+$\Phi^t$ and $\Psi^s$ commute due to $	[v_1,v_2] \neq 0$.
+\begin{align*}
+	[v_1,v_3] = (x_1x_2 \frac{\partial}{\partial x_1} + x_2^2\frac{\partial}{\partial x_2})x_2\frac{\partial}{\partial x_1} - (x_2\frac{\partial}{\partial x_1})(x_1x_2\frac{\partial}{\partial x_1} + x_2\frac{\partial}{\partial x_2}) = 0 + x_2^2\frac{\partial}{\partial x_1} - x_2^2 \frac{\partial}{\partial x_1} - 0 = 0.
+\end{align*}
+$\Phi^s$ and $\Theta^w$ commute.
+\begin{align*}
+[v_2,v_3] = (x_1 \frac{\partial}{\partial x_1})x_2\frac{\partial}{\partial x_1} - (x_2\frac{\partial}{\partial x_1})x_1\frac{\partial}{\partial x_1} = -x_2 \frac{\partial}{\partial x_1} \neq 0.
+\end{align*}
+$\Psi^s$ and $\Theta^w$ do not commute.
+
+
+\section*{Exercise 2}
+Characteristic equation:
+\[
+	\lambda^2-4\lambda + 2\alpha = 0.
+\]
+Solution is $\lambda_{1,2} = 2 \pm \sqrt{4-2\alpha}$. 
+\begin{itemize}
+	\item For $\alpha \leq 2$ we obtain the solution
+	\[
+	x(t) = c_1 e^{\lambda_1 t} + c_2 e^{\lambda_2 t}, \quad c_1,c_2 \in \mathbb R.
+	\]
+	We know that $x(0) = 0$, so $c_1 = -c_2$. Additionally, $x(\pi) = 0$ which means
+	\[
+	c_1 e^{\lambda_1 \pi} - c_1 e^{\lambda_2 \pi} = 0 \implies e^{\lambda_1 \pi} = e^{\lambda_2 \pi}.
+	\]
+	That is false since $\lambda_1 \neq \lambda_2$ for $\alpha < 2$. For $\alpha = 2$, we obtain the trivial solution $x\equiv0$. So for $\alpha \leq 2$, there exists only the trivial solution.
+	
+	\item For $\alpha > 2$, let $\beta \coloneqq -(2-\alpha)$. So we get $\lambda_{1,2} = 2 \pm i\sqrt{2\beta}$ with $\beta > 0$. One solution for the ODE is 
+	\[
+		x(t) = ce^{2t}(\cos(t\sqrt{2\beta}) + i \sin(t \sqrt{2\beta})).
+	\]
+	The general, real solution for the ODE is
+	\[
+		x(t) = c_1 e^{2t}\cos(t\sqrt{2\beta}) + c_2 e^{2t}\sin(t\sqrt{2\beta}), \quad c_1, c_2 \in \mathbb R.
+	\]
+	For $x(0) = 0$ we get $c_1 = 0$. For $x(\pi) =0$ we get
+	\[
+		x(\pi) = \underbrace{c_2e^{2\pi}}_{\neq 0}\sin(\pi \sqrt{2\beta}) = 0, \quad c_2 \neq 0.
+	\]
+	This means that $\sqrt{2\beta} \in \mathbb N$. This is the case if
+	\[
+		\sqrt2 \sqrt{\alpha -2} = z \iff 2(\alpha-2) = z^2 \iff \alpha = \frac{z^2}{2}+2, \quad z \in \mathbb N
+	\]
+	So for $\alpha > 2$ and $\alpha = \frac{z^2}{2}+2, z \in \mathbb N$ there exists a non trivial solution.
+\end{itemize}
+
+\section*{Exercise 3}
+\begin{enumerate}[label=(\roman *)]
+	\item The zeros of $f(x) = (x+\alpha)^2(x^2-\alpha)$ are the fixed points. Fixed points only exist for $\alpha \geq 0$ since $(x^2-\alpha) = 0$ for $x = \pm \sqrt{\alpha}$.
+	
+	\item We see that the positive fixed is not stable since small perturbations move away from the fixed point. The negative fixed point is stable. If $x$ is positive and smaller than the positive fixed point, it approaches the negative fixed point.
+	\begin{center}
+		\adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_1_0.png}
+	\end{center}
+\end{enumerate}
+
+\end{document}

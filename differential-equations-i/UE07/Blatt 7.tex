@@ -1,0 +1,67 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+
+\usepackage[
+  %showframe,% Seitenlayout anzeigen
+  left=3cm,
+  right=2cm,
+  top=2.5cm,
+  bottom=2cm,
+  %includeheadfoot
+]{geometry}
+\title{DGL I, 7. Übungsblatt}
+\author{Duc Nguyen (395220), Jan Walczak (371626)}
+\date{}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1}
+\begin{enumerate}[label=(\roman*)]
+	\item Die Folge $F$ mit $f_n(x) = \arctan(nx)$ ist auf $[0,1]$ nicht gleichgradig stetig und somit auch nicht relativ kompakt. $F$ ist nicht gleichgradig stetig, da man für $\epsilon = 1$ immer ein $n(\delta) \in \mathbb N$ für jedes $\delta > 0$ findet, sodass es ein $0 < x \leq \delta$ gibt mit
+	\begin{align}\label{las}
+		\arctan(nx) \geq \epsilon. 
+	\end{align}
+	Sei $\delta > 0$. Nun gilt aufgrund der Monotonie von $\tan$ auf $[0,1]$:
+	\[
+		\arctan(nx) \geq \epsilon \iff nx \geq \tan(\epsilon) \iff n \geq \frac{\tan(\epsilon)}{x}.
+	\]
+	Daher sei $n(\delta) \coloneqq \frac{\tan(\epsilon)}{\delta}$ und man hat mit $x = \delta$ solch ein $x$ gefunden, das \eqref{las} erfüllt. Somit ist die Folge $F$ nicht gleichgradig stetig.
+	
+	\item Die Folge $F$ mit $f_n(x) = e^{-\frac{x}{n}}$ ist auf $[0,\infty)$ gleichgradig stetig. Man zeigt dafür, dass $\frac{d}{dx}e^{-\frac{x}{n}}$ für $n=1$ und $x=0$ sein Maximum mit $1$ annimmt. Daraus folgt, dass $f_n$ lipschitz stetig mit Lipschitz Konstante $1$ für alle $n \in \mathbb N$ ist. Daher ist $F$ gleichgradig stetig.
+	
+	Es gilt nun
+	\[
+		\frac{d}{dt}e^{-\frac{x}{n}} = -\frac{e^{-\frac{x}{n}}}{n} \implies \max{|-\frac{e^{-\frac{x}{n}}}{n}|} = 1,
+	\]
+	wobei das Maximum bei $n=1$ und $x=0$ angenommen wird.
+	
+	Auch ist die Folge $F$ relativ kompakt, da sie gleichmäßig beschränkt ist mit Konstante $c=1$. Es gilt
+	\[
+		\forall n \in \mathbb N,\forall x \in \mathbb R_{\geq 0}: e^{-\frac{x}{n}} = \frac{1}{e^{\frac{x}{n}}} \leq 1, 
+	\]
+	da $e^x \geq 1$ für alle $x \geq 0$. 
+	
+	\item Auch diese Folge ist gleichgradig stetig mit der selben Argumentation wie in (ii). Es gilt nämlich
+	\[
+		\frac{d}{dt}ne^{-\frac{x}{n}} = -e^{-\frac{x}{n}} \implies \max{|-e^{-\frac{x}{n}}|} = 1,
+	\]
+	für $x=0$. Aber $F$ ist nicht relativ kompakt, da $F$ nicht gleichmäßg beschränkt ist. Für jedes $c>0$ ist nämlich $(c+1)e^{-\frac{x}{c+1}} > c$ für $x=0$.
+\end{enumerate}
+
+\end{document}

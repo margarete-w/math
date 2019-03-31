@@ -1,0 +1,159 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Proofs: Multiple Riemann integral}
+\author{Viet Duc Nguyen\\ Technical University of Berlin\\ Analysis III}
+\date{December 23, 2018}
+\maketitle
+\tableofcontents
+
+\section{One dimensional integral}
+\begin{itemize}
+	\item One may differentiate under the integral sign and the derivative is continuous.
+	\begin{proof}
+		First, we will show the following theorem: Let $f: [a,b] \times [c,d] \to \mathbb R$ be continuous and continuously partially differentiable in $[c,d]$. Consider a sequence $(y_k) \subset [c,d]$ with $y_k \to y$ and $y_k \neq y$. Then
+		\[
+			x \mapsto \frac{f(x,y_k) - f(x,y)}{y_k - y} \quad \text{uniformly converges to} \quad x \mapsto \frac{\partial}{\partial y}f(x,y).
+		\]
+		It holds
+		\[
+			\lim_{k \to \infty} \frac{\int^b_a f(x,u_k) dx - \int^b_a f(x,u) dx}{u_k - u} = \int^b_a \lim_{k \to \infty} \frac{f(x,u_k) - f(x,u)}{u_k -u}dx = \int^b_a \frac{\partial}{\partial u}f(x,u) dx.
+		\]
+		After \eqref{lena}, the integral is continuous, since $\frac{\partial}{\partial u}f(x,u)$ is continuous.
+	\end{proof}
+\end{itemize}
+
+
+\section{Multiple integral on compact cuboids}
+\begin{itemize}
+	\item If $f: [a,b] \times U \to \mathbb R$ is continuous, then
+	 \begin{align}\label{lena}
+		(u_1,...,u_n) \mapsto \int_b^{a}f(x,u_1,...,u_n) dx \text{ is continuous}
+	\end{align}
+	\begin{proof}
+		First, we need a theorem that states: Let $f: [a,b] \times U \to \mathbb R$ be continuous. Consider a sequence $(u_k) \subset U$ with $u_k \to u$. It holds:
+		\begin{align}\label{auto}
+			x \mapsto f(x,u_k) \quad \text{ uniformly converges for $k \to \infty$ to } \quad  x \mapsto f(x,u).
+		\end{align}
+		To show that $F(u_1,...,u_n) =  \int_b^{a}f(x,u_1,...,u_n) dx$ is continuous, we will prove for any sequence $(u_k) \subset U$ with $u_k \to u$ that $\lim_{k\to \infty}F(u_k) = F(u)$. It holds
+		\[
+			\lim_{k \to \infty} F(u_k) = \lim_{k \to \infty} \int^{a}_b f(x,u_k)dx \overset{(*)}{=} \int^{a}_b \lim_{k \to \infty} f(x,u_k)dx = \int^{a}_b f(x,u)dx = F(u).
+		\]
+		In the step $(*)$, we used that $f(x,u_k)$ uniformly converges to $f(x,u)$ due to \eqref{auto}. Therefore, we can exchange limit and integral.
+	\end{proof}
+
+	\item \textbf{Theorem of Fubini:} For any continuous function $f: [a,b] \times [c,d] \to \mathbb R$, it holds:
+	\[
+		\int^d_c\left(\int^b_a f(x,y) dx\right) dy = \int^b_a\left(\int^d_c f(x,y) dx\right) dy.
+	\]
+	\begin{proof}
+		Consider the derivative of $y \mapsto  \int^b_a\left(\int^y_c f(x,u) du\right) dx$. It is
+		\[
+			\int^b_a \left(\frac{d}{dy} \int^y_c f(x,y)dy\right)dx = \int^b_a f(x,y) dx.
+		\]
+		Now, we will immediately see the result
+		\[
+				\int^d_c\left(\int^b_a f(x,y) dx\right) dy = \int^d_c  \frac{d}{dy} \left( \int^b_a \left( \int^y_c f(x,y)dy\right)dx \right) dy = \int^b_a \left( \int^d_c f(x,y)dy\right)dx
+		\]
+		Theorems we used to show the proofs: $\int f$ is continuous $\implies$ the double integral is well defined and one may differentiate under the integral sign.
+	\end{proof}
+
+	\begin{proof}
+		Alternatively, the permutation is given by an orthogonal matrix $A$. Then $\int f(Ax) dx = \int f(x)dx$.
+	\end{proof}
+\end{itemize}
+
+\section{Linear, monotonic and translation-invariant functionals} 
+\begin{itemize}
+	\item Let $f_k \to f$ uniformly and $f_k,f \in \mathcal C_c(\mathbb R^d)$. The support of all $f_k$ is contained in a compact cuboid $Q$. Then $J(f_k) \to J(f)$.
+	
+	\begin{proof}
+		There is continuous $\Phi: \mathbb R^d \to [0,1]$ with $\Phi|_{Q} = 1$ and compact support $Q$. Then $-\Vert f_k - f\Vert \Phi \leq  f_k - f \leq \Vert f_k - f\Vert \Phi$ due to $\mathrm{supp}(f_k - f) \subset Q$. Applying the functional yields due to monotocity of $J$
+		\[
+			J(-\Vert f_k - f\Vert \Phi) \leq J(f_k - f)\leq J(\Vert f_k - f\Vert \Phi).
+		\] 
+		Here we need that there exists such a $\Phi$ that is continuous and compact. We need it here otherwise we cannot apply the functional on the term $\Vert f_k - f\Vert $ since it is not compact. We use linearity:
+		\[
+					-\Vert f_k - f\Vert J(\Phi) \leq J(f_k) - J(f)\leq \Vert f_k - f\Vert J(\Phi) \iff |J(f_k) - J(f)| \leq  \Vert f_k - f\Vert J(\Phi).
+		\]
+		Thus $J(f_k) \to J$ since $ \Vert f_k - f\Vert \to 0$.
+	\end{proof}
+
+	\item Every functional on $\mathcal C_c(\mathbb R^d)$ that is linear, monotonic and translation-invariant is unique up to a constant.
+	
+	\begin{proof}
+		Let $c \coloneqq J(\Psi)$, It holds $J(\Psi_{2^{-n}}) = c I(\Psi_{2^{-n}})$. We approximate $f$ by $f_n = \sum f(k2^{-n})\theta_{k2^{-n}}\Psi_{2^{-n}}$. Since it is translation-invariant and linear, it follows $J(f_n) = cI(f_n)$. All $f_n, f$ are contained in a compact cuboid $Q$. Additionally, $f_n \to f$ uniformly. Thus, $J(f) = cI(f)$.
+	\end{proof}
+\end{itemize}
+
+\section{Integration by substitution}
+\begin{itemize}
+	\item $\int_{\mathbb R^d} f(Ax) dx = \int_{\mathbb R^d} f(x)dx$ if $A$ is orthogonal.
+	
+	\begin{proof}
+		There exists $c$ such that $\int f(Ax)dx = c \int f(x)dx$ because $\int \circ A$ is a linear, monotonic and translation-invariant functional. Then $f_0(x) = (1-\Vert x \Vert )_+$ implies $c = 1$ because $A$ is orthogonal.
+	\end{proof}
+\end{itemize}
+
+\section{Volumes} 
+\begin{itemize}
+	\item 
+\end{itemize}
+
+\end{document}

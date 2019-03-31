@@ -1,0 +1,182 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{405592 Victor, 395220 Duc}
+\lhead{\textbf{MP I}, Jan Techter (Mon 10-12)}
+\cfoot{Page \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Exercise 9.1}
+\begin{enumerate}[label=(\alph*)]
+	\item The Lagrange function is given by $\mathcal L(y,y') = \frac{1}{\sqrt{2g}}\sqrt{\frac{1+y'^2}{y}}$. The Euler-Lagrange equation is defined as $E\mathcal L = 0$, and $E\mathcal L$ is $\frac{\partial \mathcal L}{\partial y} - \frac{d}{dx}\left( \frac{\partial \mathcal L}{\partial y'} \right)$. First, we calculate $\frac{\partial \mathcal L}{\partial y}$ and we get
+	\[
+		\frac{\partial \mathcal L}{\partial y} = \frac{\partial}{\partial y}\frac{1}{\sqrt{2g}}\sqrt{\frac{1+y'^2}{y}} = \frac{1}{2\sqrt{2g}}\sqrt{\frac{y}{1+y'^2}} \cdot \left(-\frac{1+y'^2}{y^2}\right) 
+		= -\frac{1}{2\sqrt{2g}} \sqrt{\frac{1+y'^2}{y^3}} \overset{g=0.5}{=}-\frac{1}{2} \sqrt{\frac{1+y'^2}{y^3}}
+	\]
+	For $\frac{\partial \mathcal L}{\partial y'}$ we calculate
+	\[
+		\frac{\partial \mathcal L}{\partial y'} = \frac{\partial}{\partial \dot y}\frac{1}{\sqrt{2g}}\sqrt{\frac{1+y'^2}{y}} = \frac{1}{2\sqrt{2g}}\sqrt{\frac{y}{1+y'^2}}\frac{2y'}{y} = \frac{1}{\sqrt{2g} \sqrt y} \frac{y'}{\sqrt{1+y'^2}} \overset{g=0.5}{=} \frac{1}{\sqrt y} \frac{y'}{\sqrt{1+y'^2}}.
+	\]
+	Let's derive the last term with respect to $x$. This will be fun!
+	\begin{align*}
+		\frac{d}{dx}\frac{y'}{\sqrt{y(1+y'^2)}} = \frac{y''\sqrt{y(1+y'^2)} - \frac{y'(y' + y'^3 + 2yy'y'')}{2\sqrt{y(1+y'^2)}}}{y(1+y'^2)} &= \frac{\frac{2y''y(1+y'^2) - y'^2 - y'^4 - 2yy'^2y''}{2\sqrt{y(1+y'^2)}}}{y(1+y'^2)} \\
+		&= \frac{2yy''(1+y'^2) - y'^2 - y'^4 - 2yy'^2y''}{2\sqrt{y^3(1+y'^2)^3}}
+	\end{align*}
+	Substitute everything in $E\mathcal L = 0$ yields the equation
+	\begin{align*}
+		-\frac{1}{2} \sqrt{\frac{1+y'^2}{y^3}} &= \frac{2yy''(1+y'^2) - y'^2 - y'^4 - 2yy'^2y''}{2\sqrt{y^3(1+y'^2)^3}} \\
+		&\Downarrow \text{Multiply by $2\sqrt{y^3}$}\\
+		-(1+y'^2) &= \frac{2yy''(1+y'^2) - y'^2 - y'^4 - 2yy'^2y''}{\sqrt{(1+y'^2)^3}} \\
+		&\Downarrow \text{Multiply by $\sqrt{(1+y'^2)^3}$}\\
+		-(1+y'^2)^2 &= 2yy''(1+y'^2) - y'^2 - y'^4 - 2yy'^2y'' \\
+		&\Downarrow \\
+		-1-2y'^2-y'^4 &= 2yy'' + 2yy'^2y'' - y'^2 - y'^4 - 2yy'^2y'' \\
+		&\Downarrow \\
+		-1-2y'^2 &= 2yy'' - y'^2  \\
+		&\Downarrow \\
+		0 &= y'^2 + 2yy'' + 1
+	\end{align*}
+	The \textbf{Euler Lagrange equation} is therefore $0 = y'^2 + 2yy'' + 1$.
+	
+	
+	\item We multiply the Euler Lagrange equation by $y'$ and obtain $0=y'^3 + 2yy'y'' + y'$. If we derive $y(1+y'^2)$, we see that $\frac{d}{dx}y(1+y'^2) = y'(1+y'^2) + 2yy'y'' = y' + y'^3  + 2yy'y''$. The derivation of $y(1+y'^2)$ is the right hand side of the Euler Lagrange equation. Thus we obtain
+	\[
+		\frac{d}{dx} y(1+y'^2) = 0 \iff y(1+y'^2) = c, \quad c \in \mathbb R.
+	\]
+	Transforming the equation yields
+	\[
+		y' = \sqrt{\frac{c-y}{y}}
+	\]
+	With separation of variables we get
+	\[
+		\frac{d}{dx}y = \sqrt{\frac{c-y}{y}} \implies \sqrt{\frac{y}{c-y}} dy = dx \implies \int \sqrt{\frac{y}{c-y}}dy = x
+	\]
+	
+	\item Substitute $y \coloneqq c \sin^2\varphi$. Then $dy = 2c\sin\varphi \cos\varphi d\varphi$. We obtain
+	\begin{align*}
+		x = \int \sqrt{\frac{c\sin^2\varphi}{c (1- \sin^2 \varphi)}} 2c\sin\varphi \cos\varphi d\varphi = \int \frac{\sin \varphi}{\cos\varphi}2c\sin\varphi \cos\varphi d\varphi = 2c\int \sin^2\varphi d\varphi. 
+	\end{align*}
+	Since $\sin^2 \varphi = \frac{1}{2}(1-\cos 2\varphi)$ we get
+	\[
+		x(\varphi) = c \int 1-\cos2\varphi d\varphi = c(\varphi - \frac{1}{2} \sin2\varphi) + d, \quad d \in \mathbb R
+	\]
+	and 
+	\[
+		y(\varphi) = c \sin^2(\varphi) = c(\frac{1}{2} - \frac{1}{2}\cos2\varphi)
+	\]
+	Since $y(\varphi) = 0$ and $x(\varphi) = 0$, it follows that $d = 0$. The parametrised curve $\gamma$, which minimises $T$,  is given by
+	\[
+		\varphi \mapsto \begin{pmatrix}
+			c(\varphi - \frac{1}{2}\sin 2\varphi) \\
+			c(\frac{1}{2} - \frac{1}{2}\cos 2\varphi)
+		\end{pmatrix}.
+	\]
+	The constant $c$ is chosen such that $(a,b)$ lies on the graph of $\gamma$.
+\end{enumerate}
+
+
+\section*{Exercise 9.2}
+\begin{enumerate}[label=(\alph*)]
+	\item $A(x)_{i,j}$ denotes the $i,j$-entry of the matrix $A(x)$. $$\mathcal L(x,\dot x) = \frac{1}{2}\langle \dot x, A(x)\dot x \rangle - U(x) = \frac{1}{2}\sum^n_{i,j = 1}A(x)_{i,j} \dot x_i \dot x_j - U(x).$$
+	The Euler Lagrange equation is $E\mathcal L_i = \frac{\partial \mathcal L}{\partial x_i} - \frac{d}{dt}(\frac{\partial L}{\partial \dot x_i}) = 0$ for all $i = 1,...,n$. First, we compute $ \frac{\partial \mathcal L}{\partial x_i}$.
+	\begin{align*}
+		\frac{\partial \mathcal L}{\partial x_i} = \frac{1}{2} \sum^n_{h,j=1} \left(\frac{\partial}{\partial x_i} A(x)\right)_{h,j} \dot x_h \dot x_j - \frac{\partial U}{\partial x_i}.
+	\end{align*}
+	Next,
+	\begin{align*}
+		\frac{\partial \mathcal L}{\partial \dot x_i} = \frac{1}{2} \sum^n_{j=1} A(x)_{i,j} \dot x_j.
+	\end{align*}
+	Thus,
+	\begin{align*}
+		\frac{d}{dt}\frac{\partial \mathcal L}{\partial \dot x_i} = \frac{d}{dt}\frac{1}{2} \sum^n_{j=1} A(x)_{i,j} \dot x_j = \frac{1}{2}\sum^n_{j=1}[\left(\frac{d}{dt}A(x)\right)_{i,j} \dot x_j + A(x)_{i,j} \ddot x_j].
+	\end{align*}
+	Finally, the Euler Lagrange equation is
+	\[
+		 \sum^n_{h,j=1} \left(\frac{\partial}{\partial x_i} A(x)\right)_{h,j} \dot x_h \dot x_j - \frac{\partial U}{\partial x_i} = \sum^n_{j=1}[\left(\frac{d}{dt}A(x)\right)_{i,j} \dot x_j + A(x)_{i,j} \ddot x_j].
+	\]
+	
+	\item From the lecture we know that $\tilde E(x,\dot x) = \sum^n_{i=1} \dot x_i \frac{\partial \mathcal L}{\partial \dot x_i} - \mathcal L(x,\dot x)$ is a conserved quantitiy. We show that $ \tilde E(x,\dot x) = \sum^n_{i=1} \dot x_i \frac{\partial L}{\partial \dot x_i} - \mathcal L(x,\dot x) = 0.5\langle \dot x, A(x) \dot x \rangle + U(x) = E(x, \dot x)$. Thus, $E(x, \dot x)$ is a conserved quantity.
+	\begin{align*}
+		\tilde E(x, \dot x) = \sum^n_{i=1} \dot x_i \frac{\partial L}{\partial \dot x_i} - \mathcal L(x,\dot x) &= \underbrace{\sum^n_{i=1}\dot x_i(\sum^n_{j=1}A(x)_{ij} \dot x_j)}_{=\langle \dot x, A(x) \dot x\rangle} - 0.5 \langle \dot x, A(x) \dot x \rangle + U(x) \\
+		&= \langle \dot x, A(x) \dot x\rangle- 0.5 \langle \dot x, A(x) \dot x \rangle + U(x) \\
+		&= \frac{1}{2} \langle \dot x, A(x) \dot x\rangle + U(x) \\
+		&= E(x, \dot x).
+	\end{align*}
+	
+	\item We must show that $\langle \dot x, \Delta_{\dot x} \mathcal L(x, \dot x) \rangle - \mathcal L(x, \dot x) = E(x, \dot x)$. For the gradient it holds
+	\begin{align*}
+		\Delta_{\dot x}\mathcal L &= \frac{1}{2} \Delta_{\dot x}\left(\sum_{i,j=1}^n A(x)_{i,j} \dot x_i \dot x_j - U(x)\right)
+		&= \frac{1}{2} \Delta_{\dot x}\sum_{i,j=1}^n A(x)_{i,j} \dot x_i \dot x_j
+		&= \frac{1}{2}\begin{pmatrix}
+			\sum^n_{j=1} A(x)_{1,j} \dot x_j \\
+			\vdots \\
+			\sum^n_{j=1} A(x)_{n,j} \dot x_j
+		\end{pmatrix}.
+	\end{align*}
+	So it follows that
+	\begin{align*}
+		\langle \dot x, \Delta_{\dot x}\mathcal L(x, \dot x) \rangle = \frac{1}{2}(\sum^n_{j=1} A(x)_{1,j} \dot x_j \dot x_1 + \sum^n_{j=1} A(x)_{2,j} \dot x_j \dot x_2 +  ... + \sum^n_{j=1} A(x)_{n,j} \dot x_j \dot x_n) &= \frac{1}{2} \sum^n_{i,j = 1} A(x)_{i,j} \dot x_i \dot x_j \\
+		&= \frac{1}{2}\langle \dot x, A(x) \dot x \rangle.
+	\end{align*}
+	We obtain $\frac{1}{2}\langle \dot x, A(x) \dot x \rangle - \mathcal L(x, \dot x)$. Now the steps are the same as in 9.2(b) to show the equivalence.
+\end{enumerate}
+
+\section*{Exercise 9.3}
+\begin{enumerate}[label=(\alph*)]
+	\item Find the extrema of $\varphi(\gamma) = \int^T_0 \dot q^2(t) dt$ for $\gamma = \{ (t,q(t)) : 0 \leq t \leq T \}$. Use the Euler Lagrange equation. $\mathcal L(q,\dot q) = \dot q^2 $.
+	\[
+		\frac{\partial \mathcal L}{\partial q} - \frac{d}{dt}(\frac{\partial \mathcal L}{\partial \dot q}) = 0 \iff - \frac{d}{dt}(2\dot q) = 0 \iff 2\ddot q = 0.
+	\]
+	Thus, $q(t) = mt + n$ for $m,n \in \mathbb R$. We have the constraints $q(0) = 0 \implies n=0$ and $q(T) = a = mT \implies m = \frac{a}{T}$. The solution curve $\gamma_0$ is given by
+	\[
+		q_0(t) \coloneqq \frac{a}{T}t.
+	\]
+	It is a minimum, for we will show that $\varphi(\gamma_0 + h) - \varphi(\gamma_0) \geq 0$ for all curves $h$ with $h(0) = h(T) = 0$. It holds
+	\[
+		\varphi(\gamma_0) = \int^T_{0} \frac{a^2}{T^2}dt = \frac{a}{T}
+	\]
+	and 
+	\[
+		\varphi(\gamma_0 + h) = \int^T_0 (\frac{a}{T} + h'(t))^2 dt = \int^T_0 \frac{a^2}{T^2} + 2\frac{a}{T}h'(t) + (h'(t))^2 dt = \frac{a}{T} + 2\frac{a}{T}(h(T)- h(0)) + \int^T_0 (h'(t))^2dt.
+	\]
+	If we calculate the difference, we get
+	\[
+		\varphi(\gamma_0 + h) - \varphi(\gamma_0) =  2\frac{a}{T}(\underbrace{h(T)- h(0)}_{=0}) + \underbrace{\int^T_0 (h'(t))^2dt}_{\geq 0} \geq 0.
+	\]
+	Thus, $\gamma_0$ is a minimum.
+\end{enumerate}
+
+
+\end{document}

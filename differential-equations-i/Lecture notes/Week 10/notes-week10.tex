@@ -1,0 +1,413 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Differential Equations I (Week 10) }
+\author{ Lecture by Hans-Christian Kreusler \\ 17th December - 21th December 2018 \\ Technical University Berlin}
+\date{ Notes written by Viet Duc Nguyen}
+\maketitle
+\tableofcontents
+
+
+\section{Lecture on 20th December 2018}
+These notes were written in the class \emph{Differential Equations I}, which is an undergraduate course at the Technical University of Berlin. The lecture was held by Hans-Christian Kreusler. These notes are not endorsed by the lecturers, and all mistakes were certainly made by me.
+
+\subsection*{Fundamental Theorem of Calculus for Lebesgue Integrals}
+Today's lecture is all about the fundamental theorem of calculus. The theorem should be known for real valued functions: Let $f: [a,b] \to \mathbb R$ be continuous, then $F$ with
+\[
+	F(x) = F(x_0) + \int^x_{x_0}f(t)dt
+\]
+is differentiable, and it holds
+\[
+	F'(x) = f(x), \quad \forall x \in [a,b].
+\]
+Note that the integral $\int f(t)dt$ exists because $f$ is continuous. However, if $f$ is not continuous, we cannot apply this thereom. Yet, there exists functions which have an antiderivative and are not continuous. 
+
+We will introduce a more generalised version of the fundamental theorem of calculus which applies for Lebesgue integrals and just requires absolute continuity.
+
+\begin{theorem}[Fundamental theorem of calculus]
+	Let $f:[a,b] \to \mathbb R$ be continuous and monotonically increasing. Then, the following statements are equivalent:
+	\begin{enumerate}
+		\item $f$ is absolutely continuous,
+		\item $f$ maps null sets onto null sets,
+		\item $f$ is differentiable almost everywhere, $f'$ is integrable, and it holds
+		\[
+			f(x) = f(a) + \int^x_{a}f'(t)dt.
+		\]
+	\end{enumerate}
+\end{theorem} 
+
+\begin{proof}
+	First, we will show that 
+	\[
+		f \text{ is absolutely continuous } \implies f \text{ maps null sets onto null sets.}
+	\]
+	Let $\mathcal H$ be the $\sigma-$algebra. Let $f$ be absolutely continuous and let $A \in \mathcal H$ be a null set with $\lambda(A) = 0$. W.l.o.g. $A \subset (a,c)$.
+	
+	Let $\epsilon > 0$ and $\delta$ chosen as defined by the absolute contuinity of $f$.
+\end{proof}
+
+\section{Lecture on 21th December 2018}
+
+\subsection*{Differential Equations after Carathéodory}
+Today, we want to introduce a new notion of solution for initial value problems. This notion is based on the theory of Carathéodory and requires weaker conditions. We will see that a solution need not be differentiable everywhere, instead the solution must only be absolutely continuous, which is a weaker condition. As usual, consider the initial value problem given by
+\begin{align}\label{anfang}
+	\begin{cases}
+		u'(t) = f(t,u(t)) \\ u(t_0) = u_0
+	\end{cases} 
+\end{align}
+where $f: [0,T] \times \overline{B(u_0, r)} \to \mathbb R^d$ and $u_0 \in \mathbb R^d$. 
+
+\begin{definition*}
+	A function $u: [0,T] \to \mathbb R^d$ is a called a \textbf{solution} of the equation \eqref{anfang} if 
+	\begin{itemize}
+		\item $u$ solves the differential equation almost everywhere,
+		\item $u$ suffices the initial value constraint,
+		\item and $u$ is absolutely continuous.
+	\end{itemize}
+\end{definition*}
+
+\begin{definition}
+	Eine absolut stetige Funktion $[0.T] \to \mathbb R^d$ die das AWP \[
+	\begin{cases}
+	u'(t) = f(t,u(t)) \\u(t_0) = u_0
+	\end{cases}
+	\]
+	fast überall löst, d.h. $u$ erfüllt die DGL fast überall und $u$ erfüllt die AB, heißt Lösung Sinne von Carathédoroy.
+\end{definition}
+
+\begin{remark}
+	Geht auch für $\dim X = \infty \leadsto $ Bochner-Integral (DGL III). Im mehrdimensionalen nimmt man das Integral komponentenweise.
+\end{remark}
+
+\begin{definition}
+	Eine Funktion $f:[0,T] \times \overline{B(u_0,t)} \mapsto \mathbb R^d$ erfüllt die Carathéodory-Bedingung, falls 
+	\begin{enumerate}[label=(\arabic*)]
+		\item Für alle $v \in \bar B(u_0, t), i=1,...,d$ ist $t \mapsto f_i(t,v)$ messbar auf $[0,T]$;
+		\item Für fast alle $t \in [0,T]$, alle $i=1,...,d$ ist $v \mapsto f_i(t,v)$ stetig auf $\bar B(u_0,t)$.
+	\end{enumerate}
+\end{definition}
+\begin{remark}
+	Ersetzt die Stetigkeitsbedingung.
+\end{remark}
+
+\begin{definition}
+	Eine Funktion $f$ erfüllt eine Majoranten-Bedingung, falls es eine inteUnktion $m: [0,T] \to \mathbb R$ mit 
+	\[
+	|f_(t,v)| \leq m(t), \quad \text{für alle $v \in \bar B(u_0,r), i = 1,...,d$ und fast alle $t \in [0,T]$.}
+	\]
+\end{definition}
+\begin{remark}
+	Ersetzt die Beschränktheitsbedingung.
+\end{remark}
+
+Der Integrand sollte integrierbar sein. Dafür brauchen wir das folgende Lemma.
+
+\begin{lemma}
+	\begin{enumerate}
+		\item Erfüllt $f$ die Carathéodory Bedingiung, so bildet der zugehäroge Nemyzki-Operator messbare Funktionen auf messbare Funktionen ab.
+		
+		\item Erfüllt $f$ zusätzlich eine Majoranten-Bedingung, so bildet der Nemyzki-Operator messbare Funktionen auf integrierbare Funktionen ab.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $u: [0,T] \to \mathbb R^d$ messbar. Wir zeigen, dass $t \mapsto f_i(t,u(t)), i = 1,...,d$ messbar ist. Sei $(u_n)$ eine Folge einfacher Funktionen mit $u_n \to u$ fast überall.
+		\[
+		u_n = \sum^{N_n}_{i=1} v_i^{(n)} \chi_{A_i^{(n)}}, \quad \text{wobei $A_i^{(n)} \cap A_j^{(n)} = \emptyset, i \neq j, \bigcup_{i=1}^{N_n}A_i^{(n)} = [0,T], v_i \in \mathbb R^d$.}
+		\] 
+		Die Abbildung $t \mapsto f_i(t,u(t))$ ist messbar:
+		\[
+		f_i(t,u_n(t)) 
+		= f_i(t, \sum^{N_n}_{i = 1}v_i^{(n)} \chi_{A_i^{(n)}}(t)) 
+		\overset{(*)}{=} \sum^{N_n}_{i=1}f_i(t,v_i^{(n)})\chi_{A_i^{(n)}}(t)
+		\]
+		$(*)$ es gilt $t \in A_{\tau}: f_i(t,u_n(t)) = f_i(t,v_{\tau}).$ Da $A_i$ messbar ist und $f$ die Carathéodory-Bedingung erfüllt, sind alle Summanden messbar. Es gilt $f_i(\cdot, u_n) \to f_i(\cdot, u)$ fast überall: Es gelte $u_n(t) \to u(t)$. Da $f$ die Carathéodory Bedingung erfüllt, folgt die Stetigkeit im zweiten Argument:
+		\[
+		f_i(t,u_n(t)) \to f_i(t,u(t)).
+		\]
+		
+		Somit ist $f(\cdot, u)$ als gast überall punktweise Grenzwert einer Folge messbarer Funktionen messbar.
+		
+		\item Wegen $f$ messbar existiert $\int^T_{0}|f_i(t,u(t))| dt$. Also $\int^T_{0}|f_i(t,u(t))| dt \leq \int^T_0 m(t)dt < \infty.$ 
+	\end{enumerate}
+\end{proof}
+
+\begin{remark}
+	Es sind äquivalent (falls $f$ die Carathßeodory Bedingung und Majoranten Bedingung erfüllt):
+	\begin{enumerate}
+		\item $u$ ist absolut stetig und eine Carathéodory Lösung des AWP.
+		\item $u$ ist stetig und löst 
+		\[
+		u(t) = \int^t_0 f(s,u(s)) ds + u_0 \quad \text{für fast alle $t \in I, I$ ist kompakt.}
+		\]
+		
+		\item ($u$ ist integrierbar und $			u(t) = \int^t_0 f(s,u(s)) ds + u_0 \quad \text{für fast alle $t \in I$.}$)
+		
+		\item ()$u$ ist messbar und $			u(t) = \int^t_0 f(s,u(s)) ds + u_0 \quad \text{für fast alle $t \in I$.}$)
+	\end{enumerate}
+\end{remark}
+
+\begin{proof}
+	$(1) \implies (2)$: Da $u'(t) = f(t,u(t))$ fast überall gilt und $f(\cdot,u)$ integrierbar ist, folgt dies wieder durch Integration. $(2) \implies (3) \implies (4)$ easy. $(4) \implies (1)$, ist $u$ messbar , so ist wieder $f(\cdot, u)$ integrierbar und die Behauptung folgt aus dem Hauptsatz für absolut stetige Funktionen.
+\end{proof}
+
+\begin{theorem}[lokale Lösbarkeit, Carathéodory, 1918]
+	Es sei $f: [0,T] \times \bar B(u_0,r) \to \mathbb R^d, u_0 \in \mathbb R^d, t_0 \in [0,T]$. Falls $f$ eine Carathéodory Bedingung und Majorantenbedingung, so besitzt das AWP
+	\[
+	\begin{cases}
+	u'(t) = f(t,u(t)) \\ u(t_0) = u_0
+	\end{cases}
+	\]
+	mindestends eine Lösung im SInne von Carathéodory auf dem Intervall $I = [0,T] \cap [t_0 - a, t_0 + a]$, wobei $a$ so gewählt ist, dass $\int_I m(t)dt \leq r$.
+\end{theorem}
+
+\begin{remark}
+	Falls $f$ beschränkt ist, das heißt $m \equiv M > 0$ gewählt werden kann, so kann $a= \frac{r}{2M}$ gewählt werden.
+\end{remark}
+
+\begin{proof}
+	sd
+\end{proof}
+
+\section{Big Tutorial on 19th December 2018}
+
+
+\subsection*{Differential equations after Carathéodory}
+Our goal in this tutorial is to weaken the notion of solution for a differential equation. Consider the ODE of the form
+\begin{align}\label{star}
+\begin{cases}
+u'(t) = f'(t,u(t)) \\
+u(t_0) = u_0
+\end{cases}
+\tag{$\star$}
+\end{align}
+with $f: J \times D \to \mathbb R^d, (t,u) \mapsto f(t,u)$ and $J\subset \mathbb R, D \subset \mathbb R^d$. We shall say that $u(t): J \to D$ is a \emph{solution after Carathéodory} if
+\begin{itemize}
+	\item $u$ is absolute continuous on $J$ (notation: $u \in \mathrm{AC}(J, D)$),
+	\item $u$ solves the ODE \eqref{star} almost everywhere,
+	\item and $u$ satisfies the initial values.
+\end{itemize}
+In comparision, the ``classical'' notion of solution requires that $u$ is differentiable on $J$, and that $u$ solves the ODE everywhere, i.e. on entire $J$.
+\begin{align*}
+\text{$u$ is absolute continuous} \quad &\text{vs} \quad \text{$u$ is differentiable on $J$} \\
+\text{$u$ solves the ODE almost everywhere} \quad &\text{vs} \quad \text{$u$ solves the ODE everywhere}
+\end{align*}
+As we see, the requirements have been fairly weakened. This means, even if we cannot find classical solutions, we can still hope for a solution after Carathéodory. For instance, all theorems we have known so far do not apply for an ODE $u'(t) = f(t,u(t))$ if $f$ is not continuous in some way. However, we learn a new theorem that asserts the existence of a solution even if $f$ is \emph{not} continuous!
+
+Before we move on, we will refresh some notions, in particular the notion of \emph{absolute continuity}.
+
+\begin{definition}[Absolute continuity]
+	A function $u: J \to \mathbb R^d$ is \emph{absolutely continuous} if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for every finite family of pairwise disjoint intervalls $\{ (a_i,b_i) \subset J \}_{i = 1,...,n}$ with total length $\sum^n_{i=1}|b_i-a_i| < \delta$ holds:
+	\[
+	\sum^n_{i=1} \Vert u(b_i) - u(a_i) \Vert < \epsilon.
+	\]
+\end{definition}
+
+We see that every function $u$ that is uniformly continuous is also absolutely continuous.
+\[
+\text{Lipschitz-continuous $\implies$ absolutely continuous $\implies$ uniformly continuous $\implies$ continuous}.
+\]
+Moreover, $f$ being absolutely continuous is equivalent to $f$ having a derivative $f'$ almost everywhere, $f'$ being Lebesgue integrable and
+\[
+\forall x \in [a,b]: f(x) = f(a) +  \int^x_a f'(t) dt.
+\]
+
+
+
+\subsection*{Local existence of solutions}
+\begin{definition}[Carathéodory condition]
+	A function $f$ suffices the \emph{Carathéodory condition} if for all $i=1,...,d$ holds:
+	\begin{itemize}
+		\item $t \mapsto f_i(t,u)$ is measurable on $J$ for all $u \in D$ ($u$ is fixed);
+		\item $u \mapsto f_i(t,u)$ is continuous on $D$ for almost all $t \in J$ ($t$ is fixed).
+	\end{itemize}
+\end{definition}
+
+\begin{definition}[Majorant condition]\label{majorant}
+	A function suffices the \emph{majorant condition} if there exists a Lebesgue integrable function $m: J \to \mathbb R$ such that for all $i=1,...,n$ holds
+	\[
+	\forall (t,v) \in J \times D: |f_i(t,v)| \leq m(t)
+	\]
+\end{definition}
+
+In the lecture, we will see that if $f$ satisfies the Carathéodory and majorant condition and $u$ is measurable, then the map $t \mapsto f(t,u(t))$ is measurable, as well. Moreover, if $u$ is integrable, then $t \mapsto f(t,u(t))$ is integrable, too.
+
+We use the two conditions to state a theorem that yields the existence of solutions by a more general case.
+
+\begin{theorem}[Local existence of solutions after Carathéodory, 1918]
+	Let $X = \mathbb R^d, t \in [0,T]$. Let $f: [0,T] \times \overline{B(u_0,r)} \to \mathbb R^d$ be a function that suffices the Carathéodory and majorant condition (with majorant $m \in L^1([0,T])$). Then, the integral equation 
+	\[
+	u(t) = u_0 + \int^t_{t_0}f(s,u(s)) ds, \quad u_0 \in X
+	\] 
+	has at least one solution $u$ after Carathéodory on the interval $I_a \coloneqq [t_0-a,t_0+a] \cap [0,T]$. The solution $u: I_a \to \overline{B(u_0,r)}$ is absolutely continuous. 
+\end{theorem}
+
+How must we chose $a > 0$ for the interval $I_a$? Chose it as follows
+\[
+\max_{t \in I_a} |\int^t_{t_0}m(s) ds| \leq r.
+\]
+
+\begin{proof}
+	Analogue to the proof of Peano by the Schauder fixed-point theorem.
+\end{proof}
+
+\begin{example}
+	Consider the IVP
+	\[
+	\begin{cases}
+	u'(t) = \chi_{\mathbb R \setminus \mathbb Q}(t) \\
+	u(0) = 0
+	\end{cases}
+	\]
+	with $t \in I = [0,1]$ and $u(t) \in  D= \mathbb R$. So, $f (t,u) = \chi_{\mathbb R \setminus \mathbb Q}(t)$ (note that $f$ is independent of $u$). In case, $\chi_A(t)$ is the characteristic function which gives $1$ if $t \in A$ and otherwise $0$. We check that the Carathéodory and majorant conditions hold:
+	\begin{itemize}
+		\item $t \mapsto f(t,u) = \chi_{\mathbb R \setminus \mathbb Q}(t)$ is measurable since $\chi$ is a simple function and simple functions are measurable.
+		
+		\item $u \mapsto f(t,u) = \chi_{\mathbb R \setminus \mathbb Q}(t)$ is constant and therefore continuous on $D$. 
+		
+		\item $f$ suffices the majorant condition due to $|f(t,u)| \leq 1 \in L^1([0,1])$ for all $(t,u) \in I \times D$.
+	\end{itemize}
+	After the theorem of the local existence of solutions, a solution after Carathéodory exists for the IVP. Note that no classical solution exists since the derivatie $u'$ is nowhere continuous. A solution after Carathéodory is $u(t) = t$. This solution is absolutely continuous and solves the ODE almost everywhere, i.e. it holds $u' = 1 = \chi_{\mathbb R \setminus \mathbb Q}$ almost everywhere.
+\end{example}
+
+\begin{example}
+	Consider the IVP
+	\[
+	\begin{cases}
+	0 \quad &\text{if $u(t) = 0, t= 0$} \\
+	\frac{t^2u(t)^2}{t^4+u(t)^4} & \text{otherwise} \\
+	u(t_0) = u_0
+	\end{cases}
+	\]
+	with $(t_0,u_0) \in [-1,1] \times \mathbb R = I \times D$. We see that $f = \begin{cases}
+	0, \quad & \text{if $t=u=0$} \\
+	\frac{t^2u^2}{t^4+u^4} & \text{otherwise}
+	\end{cases}$.
+	\begin{itemize}
+		\item $t \mapsto f(t,u)$ is measurable and $u \mapsto f(t,u)$ is continuous. Thus, the Carathéodory condition holds.
+		
+		\item The majorant conditions holds, too: $|f(t,u)| \leq \frac{t^2u^2}{t^4+u^4} \leq \frac{\frac{1}{2}(t^4+u^4)}{t^4+u^4} = \frac{1}{2} \in L^1([-1,1])$.
+	\end{itemize}
+	Therefore, the IVP has at least one solution after Carathéodory. Note that $f$ is not continuous on $[-1,1] \times \mathbb R$, for instance chose $t=u$ and let $t \to 0$; $f(t,t) \to \frac{1}{2} \neq 0$.
+\end{example}
+
+
+
+\subsection*{Local unicity of solutions}
+The theorem of Carathéodory does not give any information about the uniqueness of a solution. However, if $f$ additionally suffices a general local Lipschitz-continuity condition, the uniqueness of solutions can indeed be guaranteed! The following theorem will state this.
+
+\begin{theorem}[Local uniqueness of solutions]
+	Let $f: [0,T] \times D \to \mathbb R^d$ with $D \subset \mathbb R^d$ be open such that $f$ suffices the Carathéodory and majorant condition. If $f$ additionally satisfies the general local Lipschitz continuous condition, i.e. for every compact set $K \subset D$ it holds that
+	\[
+	\exists l_K \in L^1([0,T]), \forall u,v \in K, \forall t \in [0,T]: \Vert f(t,u) - f(t,v) \Vert \leq l_k(t) \Vert u-v \Vert,
+	\]
+	then there exists \underline{exactly one} solution.
+\end{theorem}
+\begin{proof}
+	Let $\alpha, \beta > 0$ such that the ball around $(t_0, u_0)$ with radius $(\alpha, \beta)$ is a subset of $[0,T] \times D$:
+	\[
+	B(\alpha, \beta) = \{ (t,u) : |t-t_0| \leq \alpha, |u-u_0| \leq \beta \} \subset [0,T] \times D.
+	\]
+	Let $I_{\alpha} \coloneqq [t_0-\alpha, t_0 + \alpha]$ and let
+	\begin{align}\label{dota}
+	M(t) \coloneqq \int^t_{t_0}m(s)ds.
+	\end{align}
+	Chose $\bar \alpha, \bar \beta$ such that $0 \leq \bar \alpha \leq \alpha$ and $0 \leq \bar \beta \leq \beta$ with
+	\begin{align}\label{sterne}
+	M(t) \leq \bar \beta, \quad \forall t \in I_{\bar \alpha}.
+	\end{align}
+	Let $\Omega = \{ \Phi \in \mathcal C(I_{\alpha}, D) \, | \, \Phi(t_0) = u_0, \forall t \in I_{\bar \alpha} :|\Phi(t)-u_0| \leq \bar \beta \}$. The set $\Omega$ is closed, non-empty, bounded and convex in $\mathcal C(I_{\alpha}, D)$. For $\Phi \in \Omega$, define $T\Phi$ as
+	\[
+	(T\Phi)(t) \coloneqq u_0  + \int^t_{t_0}f(s, \Phi(s))ds.
+	\]
+	We need to check that $f$ is integrable, otherwise $T\Phi$ is not well defined. The map $s \mapsto f(s, \Phi(s))$ is Lebesgue integrable on $I_{\alpha}$ because $f$ suffices the Carathéodory and majorant condition (see remark of the Definition \ref{majorant}). Therefore, we obtain that $T$ is a function that maps continuous functions from $\mathcal C(I_{\alpha},\mathbb R^d)$ to $\mathcal C(I_{\alpha}, \mathbb R^d)$.
+	
+	Now, we want to prove that $T$ is a contraction on $\Omega$. So, $T$ must be a map from $\Omega$ to $\Omega$:
+	\[
+	\Vert (T\Phi)(t) - u_0 \Vert \leq |\int^t_{t_0}f(s, \Phi(s)) ds| \leq \int^t_{t_0}m(s) ds \overset{\eqref{dota}}{=} M(t) \overset{\eqref{sterne}}{\leq} \bar \beta, \quad \forall t \in I_{\bar \alpha}.
+	\]
+	To prove the contraction property: Let $\Phi, \Psi \in \Omega$. It holds
+	\begin{align}\label{krass}
+	\Vert (T\Phi)(t) - (T\Psi)(t) \Vert &= \Vert \int^t_{t_0} f(s,\Phi(s))  - f(s,\Psi(s))ds \Vert \nonumber \\
+	&\overset{(\triangle)}{\leq} \int^t_{t_0} \Vert f(s, \Phi(s)) - f(s,\Psi(s)) \Vert ds.
+	\end{align}
+	Now, we use the general Lipschitz continuity property of $f$: since $K \coloneqq \overline{B(u_0,r)}$ is a compact set, there exists a Lebesgue integrable function $l_K \in L^1[0,T]$ such that
+	\begin{align}\label{salat}
+	\Vert f(t,v) - f(t,w) \Vert \leq l_K(t) \Vert v-w \Vert, \quad \forall t \in I_{\alpha}, \forall v,w \in K.
+	\end{align}
+	Then, we adjust $\bar \alpha$ for a second time such that
+	\[
+	\exists \xi \in [0,1), \forall t \in I_{\bar \alpha}: \int^t_{t_0}l_K(s) ds \leq \xi.
+	\]
+	Using \eqref{krass} and \eqref{salat} yields
+	\[
+	\forall t \in I_{\bar \alpha}: \Vert (T\Phi)(t) - (T\Psi)(t) \Vert \leq \underbrace{ \int^t_{t_0} l_K(s) ds}_{\leq \xi}\Vert \Phi - \Psi \Vert_{\infty}  \leq \xi \Vert \Phi - \Psi \Vert_{\infty}.
+	\]
+	Finally, $T$ is contraction operating on $\Omega$ and from the Banach fixed-point theorem follows the existence of an unique solution $u$ with $Tu = u$. The fixed point $u$ has the following properties:
+	\begin{equation*}
+	u: I_{\bar \alpha} \to \mathbb R^d \text{ with } u(t_0) = u_0 \quad \text{and} \quad u(t) = u_0 + \int^t_{t_0}f(s,u(s)) ds, \quad u \in AC(I_{\bar \alpha}, \mathbb R^d) \footnote{$AC(A,B)$ is the vector space of all absolutely continuous functions $u: A \to B$}.
+	\end{equation*} 
+	Thus, $u$ is the unique solution after Carathéodory.
+\end{proof}
+
+\subsection*{Summary}
+We extended our notion of solutions by functions which are ``just'' absolutely continuous. This allows us to state the existence of solutions even if $f$ is not continuous; hereof $f$ only needs to suffice the Carathéodory and majorant condition. In addition, if $f$ is even general lipschitz continuous, the solution after Carathéodory is unique.
+
+\end{document}

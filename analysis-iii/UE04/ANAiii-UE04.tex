@@ -1,0 +1,151 @@
+\documentclass[a4paper,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{kpfonts}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{395220 (Duc), 391511 (Sofia)}
+\lhead{\textbf{Analysis III UE04}, Benedikt Di 10-12}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 13}
+\begin{enumerate}[label=(\roman*)]
+	\item Zeige, dass $g(t) \in\mathcal C_c(\mathbb R)$. Einerseits ist $g$ stetig für alle $t \neq |1|$, denn die Exponentialfunktion und die Nullfunktion sind stetige Funktionen. Wir müssen nur die Stetigkeit in $t=1, t=-1$ überprüfen. Dazu schauen wir uns die Grenzwerte an und überprüfen, ob sie gegen die Funktionswerte konvergieren:
+	\begin{align*}
+		\lim_{t \nearrow 1} \exp(-\frac{1}{1-t^2}) &= \lim_{t \nearrow 1} \frac{1}{\underbrace{\exp(\frac{1}{1-t^2})}_{\to \infty}} = 0 = \lim_{t \searrow 1}g(t) = g(1), \\
+		\lim_{t \searrow -1} \exp(-\frac{1}{1-t^2}) &= \lim_{t \searrow -1} \frac{1}{\underbrace{\exp(\frac{1}{1-t^2})}_{\to \infty}} = 0 = \lim_{t \nearrow -1}g(t) = g(-1).
+	\end{align*}
+	Nun schauen wir uns die Nullstellen von $g$ an. Da die Exponentialfunktion keine Nullstellen besitzt, ist $g(t) \neq 0$ genau dann, wenn $t < |1|$. Der Träger lautet demnach
+	\[
+		\mathrm{supp}(g) = [-1;1].
+	\]
+	Der Träger ist beschränkt und abgeschlossen. Da wir uns im $\mathbb R$ befinden, ist der Träger von $g$ nach Satz von Heine-Borel kompakt. Damit liegt $g(t)$ in $\mathcal C_c(\mathbb R)$.
+	
+	Als nächstes zeigen wir, dass $g$ glatt ist. Hierfür wird ein Hilfssatz bewiesen, der besagt, dass $\exp(\frac{p(x)}{q(x)})$ glatt ist für alle $x \notin J \coloneqq \{ t : q(t) = 0 \}$, wobei $p,q$ ganzrationale Funktionen in $\mathbb R$ sind. Wir machen einen kurzen Induktionsbeweis über $n$, um zu zeigen, dass $\frac{d^n}{dx^n}\exp(\frac{p(x)}{q(x)})$ für alle $n \in \mathbb N, x \notin J$ existiert. Für $n=1$ erhalten wir mit der Quotientenregel $\frac{d}{dx}\exp(\frac{p(x)}{q(x)}) = \frac{p'q-pq'}{q^2}\exp(\frac{p(x)}{q(x)})$ für $x \notin J$. Insbesondere ist $\frac{p'q-pq'}{q^2}$ eine gebrochenrationale Funktion. Wir nehmen an, dass $\frac{d^n}{dx^n}\exp(\frac{p(x)}{q(x)}) = \frac{r(x)}{q(x)^{2n}}\exp(\frac{p(x)}{q(x)})$ für eine ganzrationale Funktion $r(x)$ gilt. Wir führen jetzt den Induktionsschritt $n \leadsto n+1$ aus:
+	\begin{align*}
+		\frac{d^{n+1}}{dx^{n+1}} \exp(\frac{p(x)}{q(x)}) &= \frac{d}{dx}\frac{r(x)}{q(x)^{2n}}\exp(\frac{p(x)}{q(x)}) \\
+		&= \frac{r(x)}{q(x)^{2n}}\frac{p'q-pq'}{q^2}\exp(\frac{p(x)}{q(x)}) + \frac{r'(x)q(x)^{2n} - r(x)2nq(x)^{2n-1}}{q(x)^{2n+1}}\exp(\frac{p(x)}{q(x)}) \\
+		&= \frac{\overbrace{r(x)(p'q-pq') + r'(x)q(x)^{2n} - r(x)2nq(x)^{2n-1}q(x)^{2n+1}}^{\coloneqq \tilde r(x)}}{q(x)^{2n+1}}\exp(\frac{p(x)}{q(x)}) \\
+		&= \frac{\tilde r(x)}{q(x)^{2n+1}}\exp(\frac{p(x)}{q(x)}). \quad  \forall x \notin J.
+	\end{align*}
+	Dabei ist $\tilde r(x)$ eine ganzrationale Funktion, da der Raum der Polynome ein reeller Vektorraum ist (Summe und Produkt von Polynomen ergeben wieder Polynome). Damit ist $\exp(\frac{p(x)}{q(x)})$ glatt und $g(t)$ ist glatt für $t < |1|$. Für $t>|1|$ ist $\frac{d^n}{dt^n}g(t) = 0$.
+	
+	Für $t = 1$ betrachten wir den Grenzwert $\lim_{t \to 1} \frac{d^{n+1}}{dx^{n+1}} \exp(-\frac{1}{1-t^2})$ und schauen, ob dieser gegen null konvergiert. Wir wissen aus dem vorhin bewiesenen Hilfssatz, dass
+	\[
+		\frac{d^{n}}{dx^{n}} \exp(-\frac{1}{1-t^2}) =  \frac{r(x)}{(1-t^2)^{2n}}\exp(-\frac{1}{1-t^2})
+	\]
+	für ein Polynom $r(x)$. Nun gilt 
+	\[
+		 \lim_{t \nearrow 1} \underbrace{\frac{r(x)}{(1-t^2)^{2n}}}_{\to \infty}\underbrace{\exp(-\frac{1}{1-t^2})}_{\to 0} = \lim_{t \nearrow 1} \frac{r(x)}{(1-t^2)^{2n}\exp{\frac{1}{1-t^2}} } = \lim_{t \nearrow 1} \frac{\overbrace{r(x)}^{\to c \in \mathbb R}}{\underbrace{\frac{\exp{\frac{1}{1-t^2}}}{\frac{1}{(1-t^2)^{2n}}}}_{\to \infty}} = 0,
+	\]
+	wie man durch mehrmalige Anwendung von l'Hospital zeigt (intuitive Erklärung: die Exponentialfunktion wächst schneller gegen unendlich als ein Polynom). Ebenso für $t = -1$:
+	\[
+		\lim_{t \searrow -1}\frac{d^{n}}{dx^{n}} \exp(-\frac{1}{1-t^2}) = \lim_{t \searrow -1} \frac{r(x)}{(1-t^2)^{2n}}\exp(-\frac{1}{1-t^2}) = 0.
+	\]
+	Damit ist $g$ überall unendlich oft differenzierbar.
+	
+	\item Betrachte $\varphi(t) \coloneqq g(\frac{t-x}{\alpha})$. Es gilt $\varphi(t) \neq 0 \iff |t| < x+\alpha$. Sei 
+	\begin{align*}
+		\psi(t) \coloneqq \begin{cases}
+			g(\frac{\alpha}{2}\frac{1}{t-x}), \quad& t \neq x, \\
+			0 \quad &\text{sonst}.
+		\end{cases}
+	\end{align*}
+	Es gilt: $\psi(t) = 0 \iff |t| < x+\frac{\alpha}{2}$, denn für $|t| < x+\frac{\alpha}{2}$ ist $\frac{\alpha}{2}\frac{1}{t-x} < \frac{\alpha}{2}\frac{1}{x+\frac{\alpha}{2}-x} = 1$. Betrachte die Funktion
+	\[
+		F(t) = \frac{\varphi(t)}{\varphi(t)+\psi(t)}.
+	\]
+	Für $|t_0| < x+\frac{\alpha}{2}$ ergibt sich
+	\[
+		F(t_0) = \frac{\varphi(t_0)}{\varphi(t_0)+\underbrace{\psi(t_0)}_{=0}} =  \frac{\varphi(t_0)}{\varphi(t_0)} = 1
+	\]
+	und für $|t_0| \geq x+\alpha$ ergibt sich
+		\[
+		F(t_0) = \frac{\varphi(t_0)}{\varphi(t_0)+\psi(t_0)} =  \frac{0}{0+\psi(t_0)} = 0.
+	\]
+	Für $t_0 \in [x+\frac{\alpha}{2}, x+ \alpha)$ ergibt sich wegen $\varphi(t_0), \psi(t_0) > 0$:
+	\[
+		F(t_0) = \frac{\varphi(t_0)}{\varphi(t_0)+\psi(t_0)}  > 0.
+	\]
+	Wir haben eine Funktion, die außerhalb von $[x-\alpha, x+\alpha]$ gleich null ist und innerhalb von $[x-\frac{\alpha}{2}, x+\frac{\alpha}{2}]$ gleich Eins ist. $F$ ist glatt, da $F$ sich aus Funktionen $g$ zusammensetzt und die Funktionen $g$ glatt sind.
+\end{enumerate}
+\section*{Aufgabe 14}
+\begin{enumerate}
+	\item Zeige, dass $J$ ein $\mathcal C^1$-Diffeomorphismus ist. Das heißt, $J$ ist stetig differenzierbar und auch die Umkehrabbildung $J^{-1}$ ist stetig differenzierbar. Um die Differenzierbarkeit von $J$ zu beweisen, betrachten wir alle partiellen Ableitungen und zeige deren Stetigkeit (Satz 129, Analysis II, Ferus). Die Funktionalmatrix von $J$ lautet
+	\[
+		D_{(u,v)}J =
+		\begin{pmatrix}
+			1-v & -u \\ v & u
+		\end{pmatrix}.
+	\]
+	Alle partiellen Ableitungen von $J$ sind konstante Abbildungen und somit stetig, denn konstante Abbildungen sind stetig. Damit ist $J$ differenzierbar und die Funktionalmatrix $D_{(u,v)}J$ ist tatsächlich die Ableitung von $J$. 
+	
+	Nun zeigen wir die Stetigkeit von $D_{(u,v)}J$. Dies lässt sich einfach zeigen: $D_{(u,v)}J$ existiert auf ganz $\mathbb R^2$. Damit ist es eine lineare Abbildung $D_{(u,v)}J : \mathbb R^2 \to L(\mathbb R^2, \mathbb R^2)$. Nach Satz 98 aus dem Analysis II Skript von Ferus ist jede lineare Abbildung $F: V \to W$ mit $\dim V < \infty$ stetig. Damit ist $D_{(u,v)}J$ stetig auf $\mathbb R^2$ und damit auch auf $(0,\infty) \times (0,1)$. $J$ ist folglich einmal stetig differenzierbar.
+	
+	Als nächstes zeigen wir, dass $J$ invertierbar ist, indem wir die inverse Matrix von $D_{(u,v)}J$ mit der Cramer'schen Regel berechnen und den Umkehrsatz (Satz 164, Analysis II, Ferus) anwenden.
+	\[
+		(D_{(u,v)}J)^{-1} = \frac{1}{(1-v)u +uv} \begin{pmatrix} 
+			u & u \\ -v & 1-v
+		\end{pmatrix} = \frac{1}{u}\begin{pmatrix} 
+		u & u \\ -v & 1-v
+		\end{pmatrix}
+	\]
+	Dabei existiert das Inverse von $D_{(u,v)}f$ nur für $u \neq 0$. Der Umkehrsatz besagt, dass $J$ bei $u \neq 0$ lokal invertierbar ist (es existiert also $J^{-1}$ für $u \neq 0$) und die Umkehrabbildung von $J$ sogar stetig differenzierbar ist. Damit existiert auf $(0,\infty) \times \mathbb R^2$ die Abbildung $J^{-1}$ und diese ist dort auch stetig differenzierbar.
+	
+	Wir erhalten: $J$ ist ein $\mathcal C^1$-Diffeomorphismus.
+	
+	\item Betrachte die Funktion $F: (0,\infty)^2 \to \mathbb (0,\infty), (x,y) \mapsto x^{p-1}e^{-x}y^{q-1}e^{-y}$. $F$ ist auf dem ganzen Definitionsbereich \emph{echt positiv}, da $x,y > 0$ und $e^{\alpha} > 0, \forall \alpha \in \mathbb R$. Zudem ist $F$ \emph{stetig auf $(0,\infty)^2$}, da $F$ das Produkt zweier stetiger Funktionen ist: $F(x,y) = X(x) \cdot Y(y)$ mit $X(x) = x^{p-1}e^{-x}$ und $Y(y) = y^{q-1}e^{-y}$. 
+	
+	Wir betrachten das Integral $\int_VF(x,y)d(x,y)$ mit $V \coloneqq (0,\infty)^2$. Also
+	\begin{align}
+		\label{schwubbel}
+		\int_0^{\infty} \int_0^{\infty} x^{p-1}e^{-x}y^{q-1}e^{-y}dx dy = 	\int_0^{\infty} x^{p-1}e^{-x}dx \int_0^{\infty}y^{q-1}e^{-y} dy = \Gamma(p) \Gamma(q), \quad \forall p,q \in (0, \infty).
+	\end{align}
+	Da $F$ echt positiv und auch stetig auf $V$ ist, können wir den Transformationssatz für stetige Funktionen (Korollar 1.2.10) auf das obige Integral anwenden mit Transformation $J: (0,\infty) \times (0,1) \to V$, wobei $J$ eine $\mathcal C^1$-Funktion ist (wie gezeigt wurde). Sei $U \coloneqq (0,\infty) \times (0,1)$. Es gilt also
+	\begin{align*}
+		\int_VF(x,y)d(x,y) &= \int_{U}F(J(x,y)) |\det D_{(x,y)}J|d(x,y)\\
+		&= \int_0^1 \int_0^{\infty} (x(1-y))^{p-1}e^{-x(1-y)}(xy)^{q-1}e^{-xy} | \det \begin{pmatrix}
+			1-y & -x \\ y & x
+		\end{pmatrix}|dx dy \\
+		&=  \int_0^1 \int_0^{\infty} x^{p+q-2}(1-y)^{p-1}e^{-x}y^{q-1} x \; dxdy \\
+		&= \int_0^1 \int_0^{\infty} e^{-x}x^{p+q-1}(1-y)^{p-1}y^{q-1} dxdy \\
+		&= \int_0^1 (1-y)^{p-1}y^{q-1} dy \int_0^{\infty}e^{-x}x^{p+q-1} dx \\
+		&= \left(\int_0^1 (1-y)^{p-1}y^{q-1} dy\right) \Gamma(p+q), \quad \forall p,q \in (0, \infty). \tag{2} \label{kranz}
+	\end{align*}
+	Insgesamt erhalten wir für $p,q > 0$:
+	\[
+			\int_VF(x,y)d(x,y) \overset{\eqref{schwubbel}}{=} \Gamma(p) \Gamma(q) \overset{\eqref{kranz}}{=} \left(\int_0^1 (1-y)^{p-1}y^{q-1} dy\right) \Gamma(p+q) \iff \int_0^1 (1-y)^{p-1}y^{q-1} dy = \frac{\Gamma(p) \Gamma(q)}{\Gamma(p+q)}.
+	\]
+\end{enumerate}
+	
+\end{document}

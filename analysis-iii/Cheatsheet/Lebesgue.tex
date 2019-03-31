@@ -1,0 +1,294 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Cheat sheet: Lebesgue theory}
+\author{Viet Duc Nguyen\\ Technical University of Berlin\\ Analysis III}
+\date{December 21, 2018}
+\maketitle
+\tableofcontents
+
+\setcounter{section}{-1}
+\section{Preface}
+A concise overview of the Lebesgue theory for the Analysis III class at the Technical University in the winter term of 2018. Bullet points with a $(\star)$ mean that a proof exists on the auxiliary proof sheet. This sheet is primarily written for me as a learning guide but may be useful for others. Feel free to use it.
+
+\section{Measure}
+\begin{itemize}
+	\item Consider $\mathbb R^2$, theorems and examples can easily extended to $\mathbb R^d$. Let $\mathcal R$ be the set that contains all rectangles
+	\item A \textbf{measure} $\lambda$ is a function that maps elementary sets to real values, i.e. $$\lambda: \mathcal R \to [0,\infty]$$
+	\item Let $R_i$ be pairwise disjoint intervals and $A = \bigcup_{n \in \mathbb N} R_i$:
+	\[
+		\lambda (A) \coloneqq \sum_{n \in \mathbb N}R_i.
+	\]
+	\item The general properties of a measure are: $\lambda: \mathcal F \to [0,\infty]$ must map sets from a $\sigma-$algebra to real values including infinity.
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\lambda(\emptyset) = 0$,
+		\item $\lambda$ is countably additive.
+	\end{enumerate}
+
+	\item Some propositions for the measure $\lambda$:
+		\begin{enumerate}[label=(\arabic*)]
+			\item Let $A,B \subset \mathcal F$. $A \subset B \implies \lambda(A) \leq \lambda (B)$ (monotocity)
+			\item $A_n \subset A_{n+1} \implies \lambda(\bigcup A_n) = \lim_{n \to \infty}\lambda(A_n)$ (continuous from below)
+			\item $A_n \supset A_{n+1}, \lambda(A_1) < \infty \implies \lambda(\bigcap A_n) = \lim_{n \to \infty}\lambda(A_n)$ (continuous from above)
+		\end{enumerate}
+		
+	\item Multiplies of measures and sums of measures are measures.
+	
+	\item A measure only operates on \emph{measurable} sets, i.e. $\lambda(A)$ is defined only for $A \in \mathcal F$ (we will later say, $A$ is measurable if $A \in \mathcal F$).
+\end{itemize}
+
+
+\section{Outer measure}
+\textbf{Motivation:} How can we measure more sets? Until now, we can only measure sets that are the union of rectangles. We introduce a more powerful measure but as it turns out, it \emph{cannot} act on the entire power set of $\mathbb R^2$ without preserving the countably additivity. \\
+
+\begin{itemize}
+	\item The \textbf{outer measure} $\lambda^*: \mathcal P(\mathbb R^2) \to [0,\infty]$ is defined as 
+	\[
+		\lambda^*(A) = \inf\{ \sum_{n\in \mathbb N} \lambda(R_n) : R_n \in \mathcal R, A \subset \bigcup R_n \}.
+	\]
+	Note that the outer measure is defined for \emph{every} subset $A \subset \mathbb R^2$.
+	
+	\item $\lambda^*(\emptyset) = 0$ and $\lambda$ is only countably \emph{sub}additive. The outer measure is \emph{not} countably additive! 
+	
+	\item A subset $A \subset \mathbb R^2$ is \textbf{Lebesgue measurable} if
+	\[
+		\forall E \subset \mathbb R^2: m^*(A) = m^*(A \cap E) + m^*(A \setminus E)
+	\]
+	or if 
+	\[
+		\forall \epsilon>0, \exists B \in \mathcal E: m^*(A \Delta B) \leq \epsilon.
+	\]
+	\item Let $\mathcal M_{Leb}$ be the set of all Lebesgue measurable sets of $\mathbb R^2$
+	\item Define the \textbf{Lebesgue measure} as 
+	\[
+		\lambda: \mathcal M_{Leb} \to [0,\infty], A \mapsto \lambda^*(A).
+	\]
+	Note that the Lebesgue measure is the same map as the outer measure whose domain is restricted on the Lebesgue measurable sets.
+	
+	\item $\lambda$ is countably additive!
+	\item $A \subset \mathbb R^2$ is a \textbf{null set} if $\lambda^*(A) = 0$.
+\end{itemize}
+
+\section{Measurable sets}
+\begin{itemize}
+	\item Every null set is measurable
+	\item Every interval/ rectangle is Lebesgue measurable
+	\item $\mathcal M_{\mathrm{Leb}}$ is closed under countable unions, countable intersections and complement.
+	\item All open subsets, and all closed subsets of $\mathbb R^2$ are Lebesgue measurable.
+	\item A property is said to hold \textbf{almost everywhere} if there exists a null set that contains all element for which the property does not hold true. Let $E$ be the subset where the property does not hold. Then, the property holds almost everywhere if $E \subset N$ for a null set $N$.
+	
+	Note: it is not required that $E$ is measurable.
+\end{itemize}
+
+\section{Measure spaces}
+\begin{itemize}
+	\item Let $\Omega$ be any set. $\mathcal F \subset \mathcal P(\Omega)$ is a \textbf{$\mathbf{\sigma-}$algebra} if
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\emptyset \in \mathcal F$ 
+		\item $E \in \mathcal F \implies E^c \in \mathcal F$ 
+		\item $\forall n \in \mathbb N: E_n \in \mathcal F \implies \bigcup_{n \in \mathbb N} E_n \in \mathcal F$
+	\end{enumerate}
+	\item $\forall n \in \mathbb N: E_n \in \mathcal F \implies \bigcap_{n \in \mathbb N} E_i \in \mathcal F$
+	\item The tupel $(\Omega, \mathcal F)$, where $\mathcal F$ is a $\sigma-$algebra is called \textbf{measure space}. Any set $A \in \mathcal F$ is called $\mathbf{\mathcal F}-$\textbf{measurable}.
+	\item $(\mathbb R, \mathcal M_{\mathrm{Leb}})$ is a measure space. $ \mathcal M_{\mathrm{Leb}}$ is a $\sigma-$algebra. Any set $A \in  \mathcal M_{\mathrm{Leb}}$ is called lebesgue measurable.
+\end{itemize}
+
+\section{Borel $\sigma-$algebra}
+\begin{itemize}
+	\item For every $\mathcal B \subset \mathcal P(\Omega)$, there exists a \emph{unique} $\sigma-$algebra $\mathcal F_{\mathcal B}$ that is generated by $\mathcal B$ in a sense that 
+	\begin{enumerate}
+		\item $\mathcal B \subset \mathcal F_{\mathcal B}$
+		\item if $\mathcal F$ is a $\sigma-$algebra and contains $\mathcal B$, then $\mathcal F_{\mathcal B} \subset \mathcal F$
+	\end{enumerate}
+	$\mathcal F_{\mathcal B}$ is the smallest $\sigma-$algebra that contains $\mathcal B$.
+	
+	\item The \textbf{Borel} $\sigma-$\textbf{algebra}, denoted by $\mathcal M_{\mathrm{Bor}}$, is the smallest $\sigma-$algebra that contains \underline{all open sets} in $\mathbb R$. In other words, $\mathcal M_{\mathrm{Bor}}$ is the $\sigma-$algebra generated by the open sets of $\mathbb R$. A \textbf{Borel set} is a set $B \in \mathcal M_{\mathrm{Bor}}$.
+	
+	\item Here are some other equivalent definitions of the Borel $\sigma-$algebra:
+	\begin{itemize}
+		\item $\mathcal M_{\mathrm{Bor}} = \sigma(\{ (a,b) : -\infty \leq a < b \leq \infty \})$... the smallest $\sigma$-algebra containing \underline{all open intervals}
+		\item $\mathcal M_{\mathrm{Bor}} = \sigma(\{ [a,b] : -\infty < a < b < \infty \})$... the smallest $\sigma$-algebra containing \underline{all closed intervals}
+		\item the smallest $\sigma$-algebra containing \underline{all intervals}
+		\item the smallest $\sigma$-algebra containing \underline{intervals of the form $(a, \infty), (-\infty, a)$}
+		\item the smallest $\sigma$-algebra containing \underline{intervals of the form $[a, \infty), (-\infty, a]$}
+	\end{itemize}
+
+	\item Loosely speaken, the Borel $\sigma-$algebra contains subsets that can be obtained from intervals through countable union, intersection or complement operations.
+	
+	 \textit{``However this has to be treated with caution, because it is not necessarily possible to obtain a given Borel set by performing the countable number of steps in a single sequence.'' (Lecture notes, Prof. Charles Batty)} 
+	 
+	 The Borel $\sigma-$algebra includes
+	 \begin{itemize}
+	 	\item  all open, closed and compact sets
+	 	\item all intervals $(a,b), [a,b], (a,b], [a,b)$ and $(a, \infty), (-\infty,a), [a, \infty), (-\infty,a]$
+	 	\item all countable sets
+	 	\item all sets of single points
+	 \end{itemize}
+ 
+ 	\item Due to the definition of $\sigma-$algebra, the countable unio and intersection, complement and difference of Borel sets are Borel sets, too
+ 	
+ 	\item $\mathcal M_{\mathrm{Bor}}$ is smaller than $\mathcal M_{\mathrm{Leb}}$. There are two possible ways to describe the relation between these two sets:
+ 	\[
+ 		\mathcal M_{\mathrm{Leb}} = \{ B \setminus N :  B \in \mathcal M_{\mathrm{Bor}}, N \text{ null} \} = \{ B \cup N :  B \in \mathcal M_{\mathrm{Bor}}, N \text{ null} \}.
+ 	\]
+ 	We see from these formulae that $\mathcal M_{\mathrm{Bor}} \subset \mathcal M_{\mathrm{Leb}}$, as we can set $N = \emptyset$. This characterisation of the Lebesgue measurable sets follows from the next statement
+ 		
+ 	\item For every $E \in \mathcal M_{\mathrm{Leb}}$, there exists $A,B \in \mathcal M_{\mathrm{Bor}}$ such that $A \subset E \subset B$ and $B \setminus A$ is a null set (and  so are $E \setminus A$ and $B \setminus E$)
+ 	
+ 	\item We can generalise Borel sets to any topological room $\Omega$: the Borel $\sigma$-algebra is the $\sigma$-algebra generated by the open sets of the topological room $\Omega$.
+\end{itemize}
+
+\section{Borel measurable functions}
+We know what it means if a set is measurable. Now, we will see what it means when a function is measurable. It builds on the concept of measurable sets. \\
+
+\begin{itemize}
+	\item Let $(\Omega, \mathcal F)$ be a measurable space. A function $f: \Omega \to \mathbb R$ is \textbf{$\mathcal F$-measurable} (also denoted by \textbf{Borel measurable}) if $$f^{-1}(I) \in \mathcal F \quad \text{for each interval $I \subset \mathbb R$}. $$
+	In words, the preimage of each interval under $f$ is measurable.
+	
+	\item $f$ is $\mathcal F$-measurbale if and only if $f^{-1}(G) \in \mathcal F$ for every $G \in \mathcal M_{\mathrm{Bor}}$ or for every open sets, closed intervals, ...
+	
+	 Alternative definition: $f$ is $\mathcal F$-measurbale if and only if
+	\[
+	f^{-1}(\mathcal M_{\mathrm{Bor}}) \subset \mathcal F.
+	\]
+	
+	\item $f$ is $\mathcal F$-measurable if 
+	\[
+		\forall t \in \mathbb R: \{ f \leq t \} \in F.
+	\]
+	
+	\item Any continuous function between measure spaces $(\Omega, \mathcal M_{\mathrm{Bor}})$ and $(\Omega', \mathcal M'_{\mathrm{Bor}})$ is Borel measurable. This follows from the fact that the preimage of open sets under a continuous function is open. Recall that $\mathcal M_{\mathrm{Bor}}$ is the $\sigma$-algebra generated by the open sets of $\Omega$.
+	 
+	\item Until now, we have never used the notion of measure to define measurability of functions!
+\end{itemize}
+
+\section{Measurable and Lebesgue measurable functions}
+Borel measurable functions are special in a way that they map the measure space $(\Omega, \mathcal F)$ to $(\mathbb R, \mathcal M_{\mathrm{Bor}})$. We will introduce a more general notion by allowing functions that map  the measure space $(\Omega, \mathcal F)$ to any measure space $(\Omega', \mathcal F')$.\\
+
+\begin{itemize}
+	\item Let $(\Omega, \mathcal F)$ and $(\Omega', \mathcal F')$ be measure spaces. $f$ is called \textbf{$\mathcal F\text{-}\mathcal F'$-measurable} or just \textbf{measurable} if
+	\[
+		\forall A \in F': f^{-1}(A) \in \mathcal F.
+	\]
+	
+	\item Borel measurable functions ($\mathcal F$-measurable functions) are $\mathcal F$-$\mathcal M_{\mathrm{Bor}}$-measurable functions.
+	
+	\item $\mathcal M_{\mathrm{Leb}}$-measurable functions are called \textbf{Lebesgue measurable} or $\mathcal M_{\mathrm{Leb}}$-$\mathcal M_{\mathrm{Bor}}$-measurable. In words: $f$ is Lebesgue measurable if the preimage of every real intervall is Lebesgue measurable.
+	
+	\item Lebesgue measurable functions are a \emph{special type} of Borel measurable functions:
+	\[
+		\text{Lebesgue measurable function } \implies \text{ Borel measurable function.}
+	\]
+	
+	\item $\mathcal F$-$\overline{\mathcal M_{\mathrm{Bor}}}$-measurable functions are called \textbf{measurable numerical} functions. $\overline{\mathcal M_{\mathrm{Bor}}}$ is the $\sigma$-algebra that is generated by $\mathcal M_{\mathrm{Bor}}$, $\{ \infty \}$ and $\{ -\infty \}$.
+\end{itemize}
+
+\section{Properties of measurable functions}
+As noted before, measurable functions refer to $\mathcal F$-$\mathcal F'$- measurable functions. If a function $f$ operates in the real numbers, i.e. $f: \Omega \to \mathbb R$ (where $\Omega$ is any set), we say $f$ is measurable if it is Borel measurable. \\
+
+\begin{itemize}
+	\item Let's characterise some measurable functions. The following functions are measurable:
+		\begin{itemize}
+			\item constant functions
+			\item consider the measure space $(\Omega, \mathcal F)$. The indicator function (or characteristic function) $\chi_A: \Omega \to \mathbb R$ is measurable if and only if $A \subset \Omega$ is a measurable set, i.e. $A \in \mathcal F$.
+			\item continuous functions $f: \mathbb R \to \mathbb R$
+			\item monotone functions $f: \mathbb R \to \mathbb R$
+			\item functions that are continuous almost everywhere
+			\item if $f = g$ almost everywhere  and $f$ is Lebesgue measurable, then $g$ is Lebesgue measurable
+			\item $f_1 \circ f_2$ is measurable if $f_1,f_2$ are measurable
+			\item $f+g$ and $fg$ are measurable for $f,g: \Omega \to \mathbb R$ measurable real functions $(\star)$
+			\item $\frac{f}{g}$ is measurable if $g(t) \neq 0$ for all $t \in \Omega$, and $f,g$ are measurable
+			\item $\sup_{n \in \mathbb N} f_n$, $\inf_{n \in \mathbb N} f_n$, $\lim\sup f_n$ and  $\lim \inf f_n$ are measurable, where $(f_n)_{n \in \mathbb N}$ is a sequence of measurable functions $f_n: \Omega \to \mathbb R$; note that the supremum is taken pointwise: $(\sup f_n)(x) = \sup\limits_{n \geq 1}\{ f_n(x) \}$ for a fixed $x$; similarly $\inf$ $(\star)$
+			\item $\max \{f,g\}$, $f^+=\max\{f,0\}$, $f^-=\max(-f,0)$ and $|f|$ are measurable $(\star)$
+		\end{itemize}
+	
+	\item The existnence of a non-measurable functions is equivalent to the existence of a non-measurable set. 
+	
+	\item \textbf{Fact of life:} ALL FUNCTIONS $f : \mathbb R \to \mathbb R$ THAT CAN BE EXPLICITLY DEFINED ARE LEBESGUE MEASURABLE.
+	
+	\textit{``[...] a non-measurable function involves some non-explicit choice process. Priestley compares the existence of non-measurable functions to the existence of yetis.'' (Lecture notes 2018, Prof. Charles Batty)}
+\end{itemize}
+
+\section{Simple functions}
+The genereal notion of a simple function is as follows: Every measurable function that takes finitely many real values is called a simple function. We will use a (seemingly) more specific definition.
+
+\begin{itemize}
+	\item A simple function $\phi$ is linear combination of characteristic functions on measurable sets.
+	\[
+		\phi = \sum^n_{i=1} \alpha_i \chi_{A_i} \quad \alpha_i \in \mathbb R, A_i \in \mathcal F \text{ for all $i =1,...,n$}.
+	\]
+	
+	\item Let $f: \Omega \to [0, \infty]$ be measurable. There exists an increasing sequence $(\phi_n)$ of non-negative simple functions $\phi_n$ such that
+	\[
+		\lim_{n \to \infty}\phi_n(x) = f(x) \quad \text{for all $x \in \Omega$}.
+	\]
+	Note that the limit is a pointwise limit and $f$ is a non-negative, numerical measurable function (it may take $\infty$). 
+	
+	There are a lot of ways to construct such $(\phi_n)$. For instance:
+	\[
+		\phi_n = \sum^{n2^n}_{k=1}(k-1)2^{-n}\chi_{\{ (k-1)2^{-n} \leq f < k2^{-n} \}} + n\chi_{\{ f \geq n \}}
+	\]
+	or 
+	\[
+		\phi_n = \sum^{2^{2n}}_{k=1}(k-1)2^{-n}\chi_{\{ (k-1)2^{-n} \leq f <k2^{-n} \}} + 2^n\chi_{\{ f \geq 2^n \}}.
+	\]
+	For the latter, we see that $\phi_n \leq \phi_{n+1}$, $\phi_n(x) \leq f$, $f(x) - \phi_n(x)< 2^{-n}$ for all sufficiently large $n$ and fixed $x$, and $\phi_n(x) = 2^n$ for all $n \in \mathbb N$ if $f(x) = \infty$. Thus, $\phi_n$ converges pointwise to $f$ for all $x \in \Omega$.
+\end{itemize}
+
+\end{document}

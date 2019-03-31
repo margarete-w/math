@@ -1,0 +1,244 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+
+\usepackage[
+  %showframe,% Seitenlayout anzeigen
+  left=3cm,
+  right=2cm,
+  top=2.5cm,
+  bottom=2cm,
+  %includeheadfoot
+]{geometry}
+\title{DGL I, 6. Übungsblatt}
+\author{Duc Nguyen (395220), Jan Walczak (371626)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Aufgabe 1}
+Gegeben ist das Anfangswertproblem
+\begin{equation*}
+	\begin{cases}
+		u'(t) + Au(t) = 0, \ t\in\mathbb{R}\\
+		u(0) = u_0,
+	\end{cases}
+\end{equation*}
+wobei
+\begin{equation*}
+	A = \begin{pmatrix}
+		-1 & -1 & -1\\
+		-2 & -1 & 1\\
+		0 & 1 & -1
+	\end{pmatrix}
+	\quad \text{und} \quad
+	u_0 = \begin{pmatrix}
+	1\\1\\0
+	\end{pmatrix}.
+\end{equation*}
+Wir bestimmen zunächst die Eigenwerte der Matrix $A$.
+\begin{eqnarray*}
+	\det(A-\lambda I) &=& \det\begin{pmatrix}
+		-1-\lambda & -1 & -1\\
+		-2 & -1-\lambda & 1\\
+		0 & 1 & -1-\lambda
+	\end{pmatrix}\\
+	&=& (-1-\lambda)^3 +2-(-1-\lambda) - 2(-1-\lambda)\\
+	&=& -\lambda^3 -3\lambda^2 +4 \stackrel{!}{=} 0
+\end{eqnarray*}
+Durch Hinsehen finden wir den ersten Eigenwert $\lambda_1 = 1$ und erhalten nach Polynomdivision die quadratische Gleichung
+\begin{equation*}
+	-\lambda^2-4\lambda-4 = 0,
+\end{equation*}
+aus welcher die Eigenwerte $\lambda_{2,3} = -2$ folgen.\\
+Im nächsten Schritt bestimmen wir die Haupträume der zugehörigen Eigenwerte.
+\begin{eqnarray*}
+% 1
+	\ker(A- 1\lambda) &=& \{
+	\begin{pmatrix}
+		x\\y\\z
+	\end{pmatrix} \in\mathbb{R} \ | \
+	\begin{pmatrix}
+	-2 & -1 & -1\\
+	-2 & -2 & 1\\
+	0 & 1 & -2
+	\end{pmatrix} \begin{pmatrix}
+		x\\y\\z
+	\end{pmatrix}
+	= \begin{pmatrix}
+	0\\0\\0
+	\end{pmatrix} \}\\
+	&=& span(\begin{pmatrix}
+		-3\\4\\2
+	\end{pmatrix})\\
+% 2
+		\ker(A+2\lambda)^2 &=& \{
+	\begin{pmatrix}
+		x\\y\\z
+	\end{pmatrix} \in\mathbb{R} \ | \
+	\begin{pmatrix}
+	3 & -3 & -3\\
+	-4 & 4 & 4\\
+	-2 & 2 & 2
+	\end{pmatrix} \begin{pmatrix}
+		x\\y\\z
+	\end{pmatrix}
+	= \begin{pmatrix}
+	0\\0\\0
+	\end{pmatrix} \}\\
+	&=& span(\begin{pmatrix}
+		1\\1\\0
+	\end{pmatrix},
+	\begin{pmatrix}
+		1\\0\\1
+	\end{pmatrix})\\
+\end{eqnarray*}
+Nun nutzen wir einen Satz aus der Vorlesung zur Darstellung der Lösung $u$ bei nicht diagonalisierbarem $A$.
+\begin{equation*}
+	u_j(t) = \sum_{\nu = 0}^{\nu_j -1} \frac{1}{\nu !} \left(-(t-t_0)\right)^{\nu} e^{-\lambda_j (t-t_0)} \left(A-\lambda_j I\right)^{\nu} z_j,
+\end{equation*}
+wobei $\nu_j$ die algebraische Vielfachheit des Eigenwertes $\lambda_j$ bezeichnet und $z_j \in \ker(A-\lambda_j)^{\nu_j}$. Damit erhalten wir die Lösungen
+\begin{eqnarray*}
+	u_1(t) &=& e^{-t} \begin{pmatrix}-3\\4\\2\end{pmatrix}\\
+	u_2(t) &=& e^{2t} \begin{pmatrix}1\\1\\0\end{pmatrix} - t e^{2t} \begin{pmatrix}0\\-1\\1\end{pmatrix}\\
+	u_3(t) &=& e^{2t} \begin{pmatrix}1\\0\\1\end{pmatrix} - t e^{2t} \begin{pmatrix}0\\-1\\1\end{pmatrix}
+\end{eqnarray*}
+und somit die allgemeine Lösung
+\begin{equation*}
+ u(t) = \sum_{i=1}^3 c_i u_i(t)
+\end{equation*}
+mit noch zu bestimmenden Koeffizienten $c_i$. Diese erhalten wir mithilfe der Anfangsbedingung.
+\begin{equation*}
+ u(0) = c_1 \begin{pmatrix}-3\\4\\2\end{pmatrix} + c_2 \begin{pmatrix}1\\1\\0\end{pmatrix} + c_3 \begin{pmatrix}1\\0\\1\end{pmatrix} \stackrel{!}{=} \begin{pmatrix}1\\1\\0\end{pmatrix}
+\end{equation*}
+Lösen des LGS ergibt $c_1 = 0 = c_3$ und $c_2 = 1$. Somit wird das AWP durch
+\begin{equation*}
+	u(t) = e^{2t} \begin{pmatrix}1\\1\\0\end{pmatrix} - t e^{2t} \begin{pmatrix}0\\-1\\1\end{pmatrix}
+\end{equation*}
+gelöst.
+
+
+\section*{Aufgabe 2}
+Sei $X=\mathbb{R}^n$ und $A\in\mathcal{L}(X)$. Wir betrachten die DGL
+\begin{equation*}
+	u'(t) + Au(t) = f(t), \quad t>0,
+\end{equation*}
+wobei $f$ eine stetige Funktion ist, die nicht schneller als exponentiell wächst, d.h. es gibt Konstanten $M>0$ , $t_0 >0$ und $a>0$, so dass
+\begin{equation}\label{kofu}
+	|f(t)| \leq M e^{a t}, \ \text{ für } t \geq t_0.
+\end{equation}
+\underline{Zu zeigen:} Keine Lösung $u$ dieser DGL wächst schneller als exponentiell, d.h. es gibt Konstanten $K>0$ und $b>0$, so dass
+\begin{equation*}
+	|u(t)| \leq K e^{b t}, \ \text{ für } t \geq t_0.
+\end{equation*}
+\begin{proof}
+	Sei $u$ eine Lösung von $\dot u(t) + Au(t) = f(t)$. Für $-A$ gibt es ein $c >0$, sodass $|-Ax| \leq c|x|$ für alle $x \in \mathbb R^n$, da $A$ konstant und somit beschränkt ist. Für die Lösung $u$ gilt, dass $\dot u(t) = -Au(t)+f(t)$. Integration ergibt $u(t) = \int^t_{t_0}-Au(\tau)+f(\tau)d\tau$. Wir normieren und erhalten für alle $t \geq t_0$:
+	\begin{align*}
+		|u(t)| = |\int^t_{t_0}-Au(\tau)+f(\tau)d\tau| \leq \int^t_{t_0}|-Au(\tau)|+|f(\tau)|d\tau &\overset{\eqref{kofu}}{\leq} \int^t_{t_0}(|-Au(\tau)|+Me^{a\tau})d\tau \\
+		&= \frac{M}{a}e^{at} + \mathrm{const} + c \int^t_{t_0} |u(\tau)| d\tau.
+	\end{align*}
+	Das Lemma von Gronwall besagt für $\alpha(t) > 0$ für alle $t \in \mathbb R$ und $\beta > 0$:
+	\[
+		w(t) \leq \alpha(t) + \beta \int^t_{t_0}w(\tau)d\tau \implies w(t) \leq \alpha(t) + \beta \int^t_{t_0}\alpha(\tau)\exp(\beta(t-\tau))d\tau.
+	\]
+	Da $ \frac{M}{a}e^{at} + \mathrm{const} > 0$ (sonst wähle $M$ und $a$, sodass $ \frac{M}{a}e^{at} > - \mathrm{const}$) und $c > 0$ gilt, erhalten wir
+	\begin{align*}
+		|u(t)| \leq \frac{M}{a}e^{at} + \mathrm{const} + c \int^t_{t_0} (\frac{M}{a}e^{a\tau} + \mathrm{const})e^{c(t-\tau)}d\tau = \frac{M}{a}e^{at} + \mathrm{const}+\frac{cM}{a(a-c)}(e^{at+ct-ct}-e^{at_0+ct-ct_0}) \\ 
+		- \frac{c \cdot \mathrm{const}}{c}(e^{ct-ct} + e^{c(t-t_0)}).
+	\end{align*}
+	Wir erhalten
+	\begin{align*}
+		|u(t)| \leq \frac{M}{a}e^{at}+\frac{cM}{a(a-c)}(e^{at}-\mathrm{const}\cdot e^{ct})
+		- \mathrm{const}\cdot( e^{ct} + 1) \leq \frac{M(a-c)+cM}{a(a-c)}e^{at} = \frac{M}{a-c}e^{at}.
+	\end{align*}
+	Dies zeigt die Behauptung für alle $t\geq t_0$.
+\end{proof}
+
+\section*{Aufgabe 3}
+Wir betrachten das AWP
+\begin{equation}
+	\begin{cases}
+	u'(t) + Au(t) = 0, \quad t\in [0,1]\\
+	u(0) = u_0
+	\end{cases}
+\end{equation}
+in $X=\mathcal{C}([a,b])$ mit $(Av)(x) := \int_0^1 (\xi - x) v(\xi) d\xi$ für $v \in X$.	\\
+\underline{Zu zeigen:} Der zugehörige Lösungsoperator ist gegeben durch
+\begin{equation}
+	S(t) = \exp(-tA) = id - \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A + 12 \left( 1 - \cos\left(\frac{t}{\sqrt{12}}\right) \right) A^2.
+\end{equation}
+\underline{Beweis:} Wir zeigen zunächst, dass $S(t)$ die Anfangsbedingung erfüllt:
+\begin{equation}
+	S(0)u_0 = (id + 0 + 0) u_0 = id \ u_0 = u_0.
+\end{equation}
+Nun zeigen wir, dass $S(t)$ auch die DGL löst. Dazu berechnen wir als erstes die Ableitung des Lösungsoperators
+\begin{eqnarray}
+	S'(t) &=& -\sqrt{12} \frac{1}{\sqrt{12}} \cos\left(\frac{t}{\sqrt{12}}\right) A + 12 \frac{1}{\sqrt{12}} \sin\left(\frac{t}{\sqrt{12}}\right) A^2\\
+	&=& \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A^2 - \cos\left(\frac{t}{\sqrt{12}}\right) A
+\end{eqnarray}
+Diese können wir in die DGL einsetzen und erhalten
+\begin{eqnarray}
+	S'(t)u_0 +AS(t)u_0 &=& \left( \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A^2 - \cos\left(\frac{t}{\sqrt{12}}\right) A \right) u_0 \\
+	&& + A \left( id - \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A + 12 \left( 1 - \cos\left(\frac{t}{\sqrt{12}}\right) \right) A^2 \right) u_0\\
+	&=& \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A^2 u_0 - \cos\left(\frac{t}{\sqrt{12}}\right) A u_0 + A u_0\\&& - \sqrt{12} \sin\left(\frac{t}{\sqrt{12}}\right) A^2 u_0 + 12 A^3 u_0 - 12 \cos\left(\frac{t}{\sqrt{12}}\right) A^3 u_0\\
+	&=& \left(12 - 12 \cos\left(\frac{t}{\sqrt{12}}\right) \right) A^3 u_0 + \left( 1 - \cos\left(\frac{t}{\sqrt{12}}\right) \right) A u_0\\
+	&=& 12 \left( 1 - \cos\left(\frac{t}{\sqrt{12}}\right) \right) A^3 u_0 + \left( 1 - \cos\left(\frac{t}{\sqrt{12}}\right) \right) A u_0
+\end{eqnarray}
+Wir müssen also nur noch zeigen, dass
+\begin{equation}
+	12 A^3 u_0 = - A u_0
+\end{equation}
+gilt. Dann folgt mit obiger Rechnung direkt
+\begin{equation}
+	S'(t) u_0 + A S(t) u_0 = 0.
+\end{equation}
+%TODO 
+
+
+\section*{Aufgabe 4}
+Wir betrachten zu gegebenem $(t_0, u_0) \in [0,T] \times X$ die lineare Aufgabe
+\begin{equation}
+	\begin{cases}
+	u'(t) + Au(t) = 0, \quad t\in [0,T]\\
+	u(t_0) = u_0
+	\end{cases}
+\end{equation}
+mit $X = l^1$ und einer unendlichen Matrix $A = (a_{ij})_{i,j = 1,...,\infty}$.
+\begin{enumerate}[(i)]
+\item Welche Bedingung muss an $A$ gestellt werden, damit $A$ wieder in $l^1$ abbildet und mithin die Aufgabe lösbar ist? Dazu betrachten wir für ein beliebiges $x\in l^1$
+\begin{eqnarray}
+	||Ax||_{l^1} &=& || \left( \sum_{i=1}^{\infty} a_{1i}x_i, \sum_{i=1}^{\infty} a_{2i}x_i, ... \right) ||_{l^1}\\
+	&=& \sum_{n=1}^{\infty} | \sum_{i=1}^{\infty} a_{ni}x_i |\\
+	&\leq & \sum_{n=1}^{\infty} \sum_{i=1}^{\infty} |a_{ni}| \ |x_i |\\
+	&\leq & \sup_{n\in\mathbb{N}} \sum_{i=1}^{\infty} |a_{ni}| \ |x_i |\\
+	&\leq & ||A||_{\infty} ||x||_{l^1}.
+\end{eqnarray}
+Da die Norm von $x$ bereits endlich ist, muss auch die Norm von $A$ endlich sein. Somit müssen wir fordern, dass $A$ beschränkt ist.\\
+Ein Beispiel für eine solche Matrix $A$ ist eine Matrix, die Folgen aus $l^1$ als Zeileneinträge hat.
+
+\item Es gelte $\sup_{i=1,...,\infty} \sum_{j=1}^{\infty} |a_{ij}| < \infty$. Ist das AWP im Raum 
+\begin{equation}
+X = l^{\infty} := \{v = (v_i)_{i=1,...,\infty} | \ \sup_{i=1,...,\infty} |v_i| \leq \infty  \}
+\end{equation}
+lösbar?\\
+Prüfen zunächst, ob $A$ unter der gegebenen Voraussetzung wieder nach $l^{\infty}$ abbildet. Sei dazu $x\in l^{\infty}$ beliebig. Dann gilt
+\begin{eqnarray}
+	||Ax||_{l^{\infty}} &=& \sup_{n\in\mathbb{N}} | \sum_{i=1}^{\infty} a_{ni} x_i|\\
+	&\leq & \sup_{n\in\mathbb{N}} \sum_{i=1}^{\infty} |a_{ni}| \ |x_i|\\
+	&\stackrel{x\in l^{\infty}}{\leq}& \sup_{n\in\mathbb{N}} \sum_{i=1}^{\infty} |a_{ni}| \ ||x||_{l^{\infty}} < \infty.
+\end{eqnarray}
+Zudem ist $A$ wie in (i) beschränkt. Da $t_0 \in [0,T]$ und $u_0\in l^{\infty}$, ist nach Vorlesung das AWP lösbar.
+
+\item %TODO
+\end{enumerate}
+
+
+\end{document}

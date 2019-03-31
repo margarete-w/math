@@ -1,0 +1,61 @@
+\documentclass[a4paper,fontsize=8pt,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{kpfonts}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 3}
+\begin{proof}
+Wir zeigen, dass (1) $\int^1_0u^2(x,0)dx = \int^1_0u_0^2(x)dx$ und dass (2) $\frac{d}{dt}\int^1_0u^2(x,t)dx \leq 0, \forall t \geq 0$, d.h. $\int^1_0u^2(x,t)dx$ ist monoton fallend und wir erhalten
+\[
+	\int^1_0u^2(x,t)dx \overset{(2)}{\leq} \int^1_0u^2(x,0)dx \overset{(1)}{=} \int^1_0u^2(x,0)dx, \quad \forall t > 0.
+\]
+Um Behauptung (1) zu zeigen, verwenden wir $u(x,0) = u_0(x)$:
+\[
+	\int^1_0u^2(x,0)dx = \int^1_0u_0^2(x)dx.
+\]
+Um Behauptung (2) zu zeigen, betrachten wir $\frac{d}{dt}E$ und verwenden im zweiten Schritt die Ketten- und Produktregel der Differentialrechnung, um die Ableitung zu bestimmen:
+\begin{align*}
+	\frac{d}{dt} \frac{1}{2} \int^1_0 u^2(x,t) dx 
+	= \frac{1}{2} \int^1_0 \frac{d}{dt}u^2(x,t)dx 
+	= \frac{1}{2} \int^1_0 2u(x,t)\underbrace{u_t(x,t)}_{=u_{xx}(x,t)}dx
+	&= \int^1_0 u(x,t)u_{xx}(x,t) dx \\
+	&= \underbrace{[u_x(x,t) u(x,t)]^1_0}_{=0, \text{ für }u(x,0)=u(x,1)=0} - \int^1_0 u^2_x(x,t)dt \\
+	&= - \int^1_0 \underbrace{u^2_x(x,t)}_{\geq 0}dt \leq 0.
+\end{align*}
+Da $E(t) = \frac{1}{2}\int^1_0u^2(x,t)dx$ und $\frac{d}{dt}E(t) \leq 0$, folgt auch dass $\int^1_0u^2(x,t)dx$ monoton fallend ist. Damit ist Behauptung (2) gezeigt.
+\end{proof}
+\end{document}

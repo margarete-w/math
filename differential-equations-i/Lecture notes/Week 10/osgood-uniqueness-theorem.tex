@@ -1,0 +1,90 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Differential Equations I (Week 10) }
+\author{ Lecture by Hans-Christian Kreusler \\ 17th December - 21th December 2018 \\ Technical University Berlin}
+\date{ Notes written by Viet Duc Nguyen}
+\maketitle
+
+\section*{Appendix: Osgood's Uniqueness Theorem}
+Consider the following initial value problem stated as
+\begin{align}\label{krass}
+\begin{cases}
+u'(t) = f(t,u(t)) \\ u(0) = u_0
+\end{cases}
+\end{align}
+with $U \subset \mathbb R^d$ open and $f: [0,T] \times U \to \mathbb R^d \text{ and } u_0 \in \mathbb R^d$. We know that there exists a unique solution if the Cauchy-Lipschitz condition is satisfied. However, Osgood could prove that there exists a weaker condition that asserts the uniqueness of a solution for a local neighbourhood around $0$. For that, we need to define when functions	 satisfy the \emph{Osgood condition}. 
+
+\begin{definition}
+	A function $\omega: [0, \infty) \to [0,\infty)$ is said to satisfy \textbf{Osgood's condition} if $\omega(0) = 0$, $\omega(z) > 0$ for all $z > 0$ and for any $\delta > 0$ it holds
+	\[
+	\lim_{\epsilon \searrow 0} \int^{\delta}_{\epsilon} \frac{1}{\omega(r)}dr = \infty.
+	\]
+\end{definition}
+
+\begin{theorem}
+	Let $U \subset \mathbb R^d$ be open. Let $f: [0,T] \times U \to \mathbb R^d$ be continuous and let $\omega: [0,\infty) \to [0,\infty)$ satisfy Osgood's condition. If 
+	\[
+	|f(t,v) - f(t,u)| \leq \omega(|v-u|) \quad \forall t \in [0,T], \forall u,v \in U
+	\]
+	then for any $u_0 \in U$ there is a $\delta > 0$ for which there exists a unique solution $u: [0,\delta] \to U$ of the initial value problem defined in \eqref{krass}.
+\end{theorem}
+
+
+\end{document}

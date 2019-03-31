@@ -1,0 +1,228 @@
+\documentclass[9pt]{extarticle}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{kpfonts}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626), Dimitra (376172)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+	
+\section*{Aufgabe 1}
+\begin{enumerate}[label=(\roman*)]
+	\item Wir haben das Anfangswertproblem
+	\begin{align*}
+		\begin{cases} 
+			u'(t) &= \frac{1}{t}(u^2(t)-u(t)) \\
+			u(1)&= \frac{1}{2}
+		\end{cases}
+	\end{align*}
+	Methode: Trennung der Variable
+	\begin{align*}
+		\int^t_1 \frac{1}{s} \, ds = \int^t_1 \frac{u'(s)}{u^2(s)-u(s)}ds \overset{u\coloneqq u(t)}{\implies}
+		\ln|t| = \int^{u(t)}_{u(1) = \frac{1}{2}} \frac{du}{u^2-u} =  \int^{u(t)}_{\frac{1}{2}} \left(\frac{1}{u-1}-\frac{1}{u}\right)du = \ln|u-1| - \ln|u| \bigg \rvert^{u(t)}_{\frac{1}{2}}.
+	\end{align*}
+	Damit ergibt sich
+	\[
+		\ln t = \ln|u(t)-1|-\ln|u(t)| - \ln0.5 + \ln0.5 = \ln(|1-\frac{1}{u(t)}|) \implies t = |1-\frac{1}{u(t)}|.
+	\]
+	Falls $1-\frac{1}{u(t)}>0$:
+	\[
+		t = 1-\frac{1}{u(t)} \iff u(t)t  - u(t) = -1 \iff u(t) = -\frac{1}{t-1}.
+	\]
+	Dies stellt keine Lösung da, weil bei $t = 1$ die Funktion nicht definiert ist. Falls $1-\frac{1}{u(t)}<0$:
+	\[
+		t = \frac{1}{u(t)} - 1 \iff u(t)t +u(t)= 1 \iff u(t) = \frac{1}{t+1}.
+	\]
+	Dies ist eine Lösung, da $u(1) = \frac{1}{2}$. Wir schauen jetzt, auf welchem Bereich die Lösung existiert. Es gilt $1-\frac{1}{u(t)}<0 \iff u(t) = \frac{1}{t+1}  < 0$. Das ist genau dann der Fall, falls $t<-1$. Somit ist $\varphi: (-\infty, -1) \to \mathbb R, t \mapsto \frac{1}{t+1}$ eine Lösung.
+	
+	\item Betrachte die lineare Differentialgleichung mit nichtkonstanten Koeffizienten
+	\[
+		\begin{cases} 
+		u'(t) - \frac{2}{t}u(t) &= 2t^3 \\
+		u(1)&= 1
+		\end{cases}
+	\]
+	Sei $a(t) \coloneqq -2t^{-1}$ und $g(t) \coloneqq 2t^3$. Eine allgemeine, homogene Lösung findet man mit
+	\[
+		u_{allg,hom}(t) = c\exp(-\int^t_1 -2s^{-1}ds) = c \exp(2\ln|t|) = ct^2, \quad c \in \mathbb R.
+	\]
+	Eine partikuläre Lösung des inhomogenen Problems ergibt sich durch
+	\[
+		u_{part} = \int^t_1 \exp(-\int^t_s -2t^{-1} dr) 2s^3 ds = \int^t_1 \exp(2\ln|\frac{t}{s}|) 2s^3ds = 2t^2\int^t_1 s \, ds = t^2(t^2-1).
+	\]
+	Löse das Anfangswertproblem mit dem Superpositionsprinzip $\varphi = u_{part} + u_{allg,hom}$
+	\[
+		\varphi(1) = 1^2(1^2-1) + c1^2 = 1 \implies c=1.
+	\]
+	Also ist $\varphi(t) \coloneqq t^4$ eine Lösung.
+\end{enumerate}	
+
+
+\section*{Aufgabe 2}
+\begin{enumerate}[label=(\roman*)]
+	\item Betrachte die Differentialgleichung
+	\begin{align*}
+		\begin{cases} 
+			u'(t) - \frac{1}{t} &= \ln(t) \\
+			u(1)&= 2
+		\end{cases}
+	\end{align*}
+	Es gilt $t > 0$ wegen der rechten Seite der Gleichung ($\ln(t)$ ist nur für positive $t$ definiert).Eine homogene Lösung der linearen Differentialgleichung ergibt sich mit
+	\[
+		u_{hom} = \exp(\int^t_1 s^{-1} ds) = \exp(\ln{|t|}) = |t|.
+	\]
+	Wegen $t>0$ ist $u_{hom} = t$. Wir finden eine partikuläre Lösung mit
+	\[
+		u_{part} = \int^t_1 \exp(\int^t_s \frac{dr}{r})\ln(s) ds = |t| \int^t_1 \frac{ln(s)}{|s|} ds.
+	\]
+	Produktintegration und umstellen ergibt für alle $t>0$:
+	\[
+		\int^t_1\ln(s) \frac{1}{s} ds = \ln^2(t) - \ln^2(1) - \int^{t}_1 \ln(s) \frac{1}{s} ds \implies  	\int^t_1\ln(s) \frac{1}{s} ds = \frac{1}{2}\ln^2(|t|).
+	\]
+	Damit
+	\[
+		u_{part} = \frac{1}{2}|t|\ln^2(|t|).
+	\]
+	Löse das AWP:
+	\[
+		u(1) = c \cdot |1| + \frac{1}{2}\cdot|1|\cdot\ln^2(1) = 2 \implies c= 2.
+	\]
+	Also ist $\varphi: (0, \infty) \to \mathbb R, t \mapsto 2t + \frac{1}{2}t\ln^2(t)$ eine Lösung. Das maximale Existenzintervall ist $ (0, \infty)$.
+	
+	\item Löse die Differentialgleichung
+	\begin{align*}
+		\begin{cases} 
+		u'(t) - \sin(t) u(t) &= \exp(t-\cos t) \\
+		u(0)&= 1
+		\end{cases}
+	\end{align*}
+	Homogene Lösungen:
+	\[
+		u_{hom}(t) = c \exp(\int^t_0 \sin(s) ds) = c \exp(1-\cos(t)) = \tilde c \exp(-\cos(t)), \quad c, \tilde c \in \mathbb R.
+	\]
+	Partikuläre Lösung:
+	\begin{align*}
+		u_p(t) = \int^t_0 \exp(\int^t_s \sin(r) dr) \exp(s-\cos(s)) ds &= \int^t_0 \exp(-\cos r \bigg \rvert^t_s)\exp(s-\cos(s)) ds \\
+		&= \int^t_0 \exp(\cos(s) - \cos(t) + s - \cos(s)) ds \\
+		&= \exp(-\cos(t))\int^t_0 \exp(s) ds \\
+		&= \exp(-\cos t) [\exp(t) - 1].
+	\end{align*}
+	Anfangswertproblem:
+	\[
+		u(0) = \tilde c \exp(-1) + \exp(-1)(\exp(0) - 1) = \tilde c \exp(-1) = 1 \implies \tilde c = \exp(1) = e.
+	\]
+	Die Lösung lautet
+	\[
+		u(t) = \exp(1-\cos(t)) + \exp(-\cos(t)) [\exp(t) - 1] = \exp(-\cos t) (\exp(t) + \exp(1) - 1).
+	\]
+	Das maximale Existenzintervall ist $\mathbb R$.
+\end{enumerate}
+
+\section*{Aufgabe 3}
+Die lineare Differentialgleichung mit konstanten Koeffizienten lautet
+\[
+	u'''(t)+u''(t)-8u'(t)-12u(t) = \underbrace{5(10t-1)\exp(3t) - 104 \cos(2t)}_{\coloneqq g(t)}.
+\]
+Das charakteristische Polynom lautet $\lambda^3+\lambda^2-8\lambda-12 = (\lambda-3)(\lambda+2)^2$. Der homogene Lösungsraum hat die Form:
+\[
+	u_{hom} = c_1\exp(3t) +c_2\exp(-2t) + c_3t\exp(-2t), \quad c_1,c_2,c_3 \in \mathbb R.
+\]
+DIe Summanden sind linear unabhängig, wie in der Vorlesung gezeigt wurde. Variation der Konstante. Wir suchen zu bestimmende Funktionen $c_1(t), c_2(t), c_3(t)$. Bestimme die Wronski Matrix:
+\[
+	W(t) = \begin{pmatrix}
+		\exp(3t) & \exp(-2t) & t\exp(-2t) \\
+		3\exp(3t) & -2\exp(-2t) & \exp(-2t)(1-2t) \\
+		9 \exp(3t) & 4\exp(-2t) & 4\exp(-2t)(t-1)
+	\end{pmatrix}.
+\]
+Also 
+\[
+	W(t) \cdot \begin{pmatrix}
+		c_1'(t) \\ c_2'(t) \\ c_3'(t)
+	\end{pmatrix} = \begin{pmatrix}
+		0 \\ 0 \\
+		g(t).
+	\end{pmatrix} \implies  \begin{pmatrix}
+	c_1'(t) \\ c_2'(t) \\ c_3'(t)
+	\end{pmatrix} = W^{-1}(t) \begin{pmatrix}
+	0 \\ 0 \\
+	g(t).
+	\end{pmatrix}.
+\]
+Berechne die Inverse der Wronski Matrix:
+\[
+	\frac{1}{25}
+	\begin{pmatrix}
+		4 e^{-3 t} & 4 e^{-3 t} & e^{-3 t} \\
+		-3 (10 e^{2 t} t - 7 e^{2 t}) & -5 e^{2 t} t - 4 e^{2 t)} & 5 e^{2 t} t - e^{2 t} \\
+		30 e^{2 t} & 5 e^{2 t} & -5 e^{2 t}
+	\end{pmatrix}
+\]
+Also
+\[
+	\begin{pmatrix}
+	c_1'(t) \\ c_2'(t) \\ c_3'(t)
+	\end{pmatrix} = \frac{1}{25}
+	\begin{pmatrix}
+		e^{-3t}g(t) \\ (5e^{2t}t-e^{2t})g(t) \\ -5e^{2t}g(t)
+	\end{pmatrix}
+\]
+Wir erhalten
+\begin{align*}
+	c_1'(t) &= \frac{1}{25} e^{-3t}(5(10t-1)e^{3t} - 104 \cos(2t)) = \frac{1}{25}(50t-5 - 104e^{-3t}\cos(2t)) \\
+	c_1(t) &= \frac{1}{25} \left(25t^2 -5t - 104\int e^{-3t}cos(2t) dt\right) = \frac{1}{25} \left(25 t^2 - 5 t + 8 e^{-3 t} (3 cos(2 t) - 2 sin(2 t)) \right) \\
+	c_2(t) &= \frac{1}{25}e^{2t}\left( e^{3t}(50t^2-35t+8)+(91-130t)\sin(2t)-26(5t-1)\cos(2t) \right) \\
+	c_3'(t) &= -\frac{1}{5}e^{2t}\left( 5(10t-1)e^{3t} - 104\cos(2t) \right) \\
+	c_3(t) &= e^{5t}\left( \frac{3}{5} -2t \right) + \frac{26}{5}e^{2t}\sin(2t) + \frac{26}{5}e^{2t}\cos(2t) 
+\end{align*}
+Die Lösung lautet
+\begin{align*}
+	u(t) &= c_1(t)e^{3t} + c_2(t)e^{-2t} + c_3(t)te^{-2t}.
+\end{align*}
+
+\end{document}

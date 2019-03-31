@@ -1,0 +1,242 @@
+\documentclass[a4paper,fontsize=8pt,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{395220 (Duc), (Jan)}
+\lhead{\textbf{DGL I}}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 2}
+$\mathcal C^1([a,b], X)$ ist ein Vektorraum. Bleibt zu zeigen, dass jede Cauchy Folge $(f_k)_{k \in \mathbb N}$ in $\mathcal C^1([a,b], X)$ konvergiert. 
+\begin{enumerate}
+	\item Sei also $(f_k)_{k \in \mathbb N}$ eine Cauchy Folge. Das heißt, für jedes $\epsilon > 0$ gibt es ein $k(\epsilon) > 0$, sodass für alle $k,l \geq k(\epsilon)$ gilt:
+	\begin{align}\label{ironman}
+		\max_{t \in [a,b]} (\Vert f_k(t)- f_l(t) \Vert + \Vert f'_k(t) - f'_l(t) \Vert) < \epsilon.
+	\end{align}
+	Beachte, dass wegen der Kompaktheit von $[a,b]$ und der Stetigkeit von $f$ sowie $f'$ die obige Metrik wohldefiniert ist. Das heißt, es gibt tatsächlich ein $\xi \in [a,b]$, sodass 
+	\begin{align}\label{noob}
+		\Vert f_k(\xi)- f_l(\xi) \Vert + \Vert f'_k(\xi) - f'_l(\xi) \Vert \text{ ist maximal und kleiner $\epsilon$}.
+	\end{align}
+	
+	\item Betrachte für ein \emph{festes} $t \in [a,b]$ die Folge $(x_k(t))_{k \in \mathbb N}$ in $X$ mit
+	\begin{align*}
+	x_k(t) \coloneqq f_k(t).
+	\end{align*}
+	Definiere eine Funktion $x: [a,b] \to X$ mit
+	\begin{align*}
+		x(t) \coloneqq \lim_{k\to \infty}x_k(t).
+	\end{align*}
+	Wir zeigen, dass $x$ wohldefiniert ist für jedes $t \in [a,b]$. Dazu 
+	sei $t_0 \in [a,b]$ beliebig. Wegen \eqref{ironman} gibt es für beliebige $\epsilon > 0$ ein Index $k(\epsilon) > 0$, sodass für alle $k,l \geq k(\epsilon)$ gilt
+	\[
+		||x_k(t_0) - x_l(t_0)|| \leq \max_{t \in [a,b]} (\Vert f_k(t)- f_l(t) \Vert + \Vert f'_k(t) - f'_l(t) \Vert) < \epsilon
+	\]
+	Das bedeutet also, dass $x_n(t_0)$ eine Cauchy Folge in $X$ ist und wegen der Vollständigkeit von $X$ konvergiert $x_n(t_0)$ gegen ein $x^{*}(t) \in X$ für $n \to \infty$. Also
+	\[
+		x(t) = \lim_{k \to \infty} x_k(t) = x^{*}(t) \in X, \quad \forall t \in [a,b].
+	\]
+	
+	\item Wir differenzieren nun $x(t)$. Dazu zeigen wir, dass der gewöhnliche Ableitungsoperator stetig ist. Es soll also gelten, dass
+	\begin{align}\label{lena}
+		\frac{d}{dt}x(t) = \lim_{k \to \infty} \frac{d}{dt}x_k(t) .
+	\end{align}
+	Wir wissen, dass der Operator $\frac{d}{dt}$ linear ist. Nun sind lineare Abbildungen sind genau dann stetig, wenn sie auch beschränkt sind. Beschränktheit heißt, dass die lineare Abbildung beschränkte Mengen auf beschränkte Mengen abbildet. Dies wollen wir zeigen. Sei $A \subset C^1([a,b], X)$ eine beschränkte Menge.
+	\begin{align*}
+		\frac{d}{dt}A = \{ \frac{d}{dt}f : f \in A \}.
+	\end{align*}
+	Da $f$ stetig differenzierbar ist, ist auch $\frac{d}{dt}f$ stetig und somit ist $\frac{d}{dt}A$ beschränkt auf dem kompakten Intervall $[a,b]$. Also ist $\frac{d}{dt}$ stetig.
+	
+	\item Im letzten Schritt zeigen wir, dass $f_k \to x$ für $k \to \infty$. Sei $\epsilon > 0$ beliebig. Wir suchen ein $N \in \mathbb N$, sodass für alle $n \geq N$ gilt:
+	\begin{align*}
+		\max_{t \in [a,b]} (\Vert f_n(t) - x(t) \Vert + \Vert f'_n(t) - \frac{d}{dt}x(t)\Vert ) < \epsilon
+	\end{align*}
+	Aus \eqref{noob} folgt, dass es ein $m_1 \in \mathbb N$ und $\xi \in [a,b]$ gibt, sodass für alle $k,l \geq m_1$ gilt:
+	\begin{align*}
+			\Vert f_k(t)- f_l(t) \Vert + \Vert f'_k(t) - f'_l(t)\Vert \leq \Vert f_k(\xi)- f_l(\xi) \Vert + \Vert f'_k(\xi) - f'_l(\xi) \Vert \quad \forall t \in [a,b].
+	\end{align*}
+	Da $f_k(\xi) \to x(\xi)$ für $k \to \infty$, gibt es auch ein $m_2 \in \mathbb N$, sodass $\Vert f_k(\xi) - x(\xi)\Vert < \frac{\epsilon}{4}$ für alle $k \geq m_2$. Wegen \eqref{lena} gibt es auch ein $m_3 \in \mathbb N$, sodass $\Vert f'_k(\xi) - x'(\xi)\Vert < \frac{\epsilon}{4}$. Sei $m \coloneqq \max(m_1,m_2,m_3)$. Dann gilt für alle $k,l \geq m$ und $\forall t \in [a,b]$:
+	\begin{align*}
+			\Vert f_k(t)- f_l(t) \Vert + \Vert f'_k(t) - f'_l(t)\Vert &\leq \Vert f_k(\xi)- f_l(\xi) \Vert + \Vert f'_k(\xi) - f'_l(\xi) \Vert \\
+			&= \Vert f_k(\xi)- x(\xi) + x(\xi) - f_l(\xi) \Vert + \Vert f'_k(\xi) - x(\xi) + x(\xi) - f'_l(\xi) \Vert  \\
+			&\leq \Vert f_k(\xi) - x(\xi) \Vert + \Vert f_l(\xi) - x(\xi) \Vert + \Vert f'_k(\xi) - x'(\xi)\Vert + \Vert f'_l(\xi) - x'(\xi)\Vert \\
+			&< \frac{\epsilon}{4} + \frac{\epsilon}{4}  + \frac{\epsilon}{4} + \frac{\epsilon}{4}= \epsilon.
+	\end{align*}
+\end{enumerate}
+
+
+\section*{Aufgabe 3}
+Sei $\epsilon > 0$ und bezeichne $\Vert \cdot \Vert$ die Norm in $X$. Wir wollen zeigen, dass es ein $N \in \mathbb N$ gibt, sodass für alle $n \geq N$ gilt:
+\begin{align}\label{brit}
+	\sup_{t \in [a,b]}\Vert u_n(t) - u(t) \Vert < \epsilon.
+\end{align}
+Wir wissen, $u$ ist stetig auf dem kompakten Intervall $[a,b]$. Also ist $u$ gleichmäßig stetig. Daher gibt es ein $\delta > 0$, sodass für alle $t_1,t_2 \in [a,b]$ mit $\vert t_1 - t_2 \vert < \delta$ gilt
+\[
+	\Vert u(t_1) - u(t_2) \Vert < \epsilon.
+\]
+Wir wählen $N$ so geschickt, sodass $\frac{b-a}{2^N} < \delta$ gilt. Behauptung: Für jedes $t \in [a,b]$ ist $$\Vert u_n(t) - u(t) \Vert < \epsilon.$$ Da die Zerlegung $[t_{k-1}^{(n)}, t_k^{(n)})$ ganz $[a,b]$ überdeckt, gibt es ein $\tilde k \in \{1,...,2^n\}$, sodass $t \in [t_{\tilde k-1}^{(n)}, t_{\tilde k}^{(n)})$. Das heißt,
+\[
+	u_n(t) = u(t_{k-1}^{(n)}).
+\]
+Nun ist $t - t_{k-1}^{(n)} < \delta$ und damit ist $\Vert u_n(t) - u(t) \Vert  = \Vert u(t_{k-1}^{(n)}) - u(t) \Vert < \epsilon$ nach \eqref{brit}. Falls $t = b$, so ist $u_n(b) = u(t_{2^n-1}^{(n)})$ und $t-t_{2^n-1}^{(n)} < \delta$ und die Behauptung gilt wegen \eqref{brit}. \\
+
+Zum Schluss müssen wir noch zeigen, dass $\Vert u_m(t) - u(t) \Vert < \epsilon, \forall t \in [a,b]$ für alle $m > n$ (für $n$ haben wir es gezeigt). Das ist aber klar, denn für beliebige $t \in [a,b]$ gilt: $t \in [t_{\tilde k-1}^{(m)}, t_{\tilde k}^{(m)})$ für ein $k = 1,...,2m$ und $t_{\tilde k-1}^{(m)} - t_{\tilde k}^{(m)} < t_{\tilde k-1}^{(n)} - t_{\tilde k}^{(n)} < \delta$ und wir können wieder die gleichmäßige Stetigkeit verwenden.
+
+\section*{Aufgabe 4}
+Seien zwei Zerlegungen $Z_1^{(n)}: a= x_0 < ... < x_n = b$ und $Z_2^{(m)}: a = y_0 < ... < y_m = b$ von $[a,b]$ gegeben. Seien $\alpha_0^{(n)},...,\alpha_{n-1}^{(n)} \in X$, sodass $\alpha_j^{(n)} = u(t)$ für $t \in [x^{(n)}_{j},x^{(n)}_{j+1})$ und$ \beta_0^{(m)},...,\beta_{m-1}^{(m)} \in X$, sodass $\beta_j^{(m)} = u(t)$ für $t \in [y_{j}^{(m)},y_{j+1}^{(m)})$. Wir haben zwei Fälle:
+
+\begin{enumerate}
+	\item Jeder Punkt $x_j^{(n)}$ für $j=0,...,n$ ist auch in $Z_2^{(m)}$ für ein $m$ enthalten. Das heißt, es gibt $i_0,...,i_n \in \{0,...,m\}$ und $i_0 = 0, i_n = m$, sodass $x_j^{(n)} = y_{i_j}^{(m)}$. Also folgt
+	\[
+		x_{j-1}^{(n)} = y_{i_{j-1}}^{(m)} < y_{i_{j-1} + 1}^{(m)} <...< y_{i_{j}}^{(m)} = x_{j}^{(n)} \quad \text{und} \quad \alpha_j ^{(n)}\approx \beta_l^{(m)} \text{ für } l = i_{j-1},...,i_j-1.
+	\]
+	Den Fehler $\xi_n \coloneqq |\alpha_j^{(n)} - \beta_l^{(m)}|$ kann man aufgrund der gleichmäßigen Stetigkeit von $u$ für jedes $m$ abschätzen und zeigen, dass $\xi_n n$ für $n \to \infty$ gegen $0$ geht. Somit ist für hinreichend große $n,m$: 
+	\begin{align*}
+		\lim_{m \to \infty} \sum_{l=0}^{m-1} \beta_l (y_l - y_{l-1}) \leq \sum_{j=0}^{n} \sum_{l = i_{j-1}}^{i_{j}-1} \alpha_j(y_l-y_{l-1}) + n\xi = \sum_{j=0}^n \alpha_j(x_j-x_{j-1})
+	\end{align*}
+	Also $\sum_{l=0}^{m-1} \beta_l (y_l - y_{l-1}) \to  \sum_{j=0}^n \alpha_j(x_j-x_{j-1})$ für $n \to \infty$, was die Unabhängigkeit der Zerlegung zeigt.
+	
+	... die technischen Details fehlen für $\xi_n \to 0$. 
+ 
+	\item $Z_1^{(n)}$ und $Z_2^{(m)}$ sind nicht identisch. Wir betrachten die gemeinsame Zerlegung $G = g_0,...,g_{n+m}$ und $g_i \in \{ x_0,...,x_m,y_0,...y_m \}$ für alle $i=1,...,m$ mit $g_0 < g_1 < ... < g_{n+m}$. Wir wenden Fall 1 auf $Z_1, Z_2$ und $G$ an und erhalten
+	\[
+		\mathrm Int_{Z_1}(u) = \mathrm Int_{G}(u) = \mathrm Int_{Z_1}(u).
+	\]
+\end{enumerate}
+
+%Seien zwei Zerlegungen $Z_1: a= x_0 < ... < x_n = b$ und $Z_2: a = y_0 < ... < y_m = b$ von $[a,b]$ gegeben. Seien $\alpha_0,...,\alpha_{n-1} \in X$, sodass $\alpha_j = u(t)$ für $t \in [x_{j},x_{j+1})$ und $\beta_0,...,\beta_{m-1} \in X$, sodass $\beta_j = u(t)$ für $t \in [y_{j},y_{j+1})$. Wir haben zwei Fälle:
+
+%\begin{enumerate}
+%	\item Jeder Punkt $x_j$ für $j=0,...,n$ ist auch in $Z_2$ enthalten. Das heißt, es gibt $i_0,...,i_n \in \{0,...,m\}$ und $i_0 = 0, i_n = m$, sodass $x_j = y_{i_j}$. Also folgt
+%	\[
+%		x_{j-1} = y_{i_{j-1}} < y_{i_{j-1} + 1} <...< y_{i_{j}} = x_{j} \quad \text{und} \quad \alpha_j = \beta_l \text{ für } l = i_{j-1},...,i_j-1.
+%	\]
+%	Seien $\mathrm Int_{Z_1}(u), \mathrm Int_{Z_2}(u)$ die Integrale mit den verschiedenen Zerlegungen $Z_1, Z_2$. Es gilt
+%	\begin{align*}
+%		\mathrm Int_{Z_1}(u) = \lim_{m \to \infty} \sum_{l=0}^{m-1} \beta_l (y_l - y_{l-1}) = \sum_{j=0}^{n} \sum_{l = i_{j-1}}^{i_{j}-1} \alpha_j(y_l-y_{l-1}) = \sum_{j=0}^n \alpha_j(x_j-x_{j-1}) = \mathrm Int_{Z_2}(u)
+%	\end{align*}
+%	Der Werte der Integrale sind identisch.
+	
+%	\item $Z_1$ und $Z_2$ sind identisch. Wir betrachten die gemeinsame Zerlegung $G = g_0,...,g_{n+m}$ und $g_i \in \{ x_0,...,x_m,y_0,...y_m \}$ für alle $i=1,...,m$ mit $g_0 < g_1 < ... < g_{n+m}$. Wir wenden Fall 1 auf $Z_1, Z_2$ und $G$ an und erhalten
+%	\[
+%		\mathrm Int_{Z_1}(u) = \mathrm Int_{G}(u) = \mathrm Int_{Z_1}(u).
+%	\]
+%\end{enumerate}
+
+
+%Seien zwei Zerlegungsfolgen gegeben mit $Z_1: a= x_0 < ... < x_n = b$ und $Z_2: a = y_0 < ... < y_m = b$. Seien $\alpha_0,...,\alpha_{n-1} \in X$, sodass $\alpha_j = u(t)$ für $t \in [x_{j},x_{j+1})$ und $\beta_0,...,\beta_{m-1} \in X$, sodass $\beta_j = u(t)$ für $t \in [y_{j},y_{j+1})$. Dann definieren $x(t) \coloneqq \alpha_j$ für $t \in [x_{j},x_{j+1})$ und $y(t) = \beta_j$ für $t \in [y_{j},y_{j+1})$ Treppenfunktionen. Aufgrund der Stetigkeit von $u$ konvergieren $x^{(k)},y^{(k)}$ gegen $u$ im Sinne von
+%\[
+%	\lim_{k \to \infty} \sup_{a \leq t \leq b}\Vert u(t) - x^{(k)}(t) \Vert = 0 \land \lim_{k \to \infty} \sup_{a \leq t \leq b}\Vert u(t) - y^{(k)}(t) \Vert = 0,
+%\]
+%wobei $x^{(k)}$ und $y^{(k)}$ diejenige Treppefunktion ist, die das Intervall $[a,b]$ in $k$ Teilen $a= x_0 < ... < x_k = b$ bzw. $a = y_0 < ... < y_k = b$ zerlegt. Wir definieren eine neue Folge $z^{(2k)} \coloneqq x^{(k)}$ und $z^{(2k+1)} \coloneqq y^{(k)}$. $z^{(k)}$ ist eine Cauchyfolge und konvergiert daher wegen der Vollständigkeit von $X$. Daher konvergiert auch jede Teilfolge gegen den selben Grenzwert! Daher ist das Integral unabhängig von der Zerlegung.
+
+\section*{Aufgabe 5}
+\subsection*{Satz von Mazur}
+Sei X ein Banach-Raum und $A \in X$ eine relativ kompakte Menge. Dann ist auch die konvexe Hülle $co(A)$ von $A$ relativ kompakt.
+
+\subsection*{Literaturquellen}
+\begin{itemize}
+	\item \textbf{Nelson Dunford, Jacob T. Schwartz: Linear Operators, Part 1: General Theory.}\\
+	\textit{John Wiley \& Sons Inc., 1958, ISBN 0-470-22605-6, S.416}
+	\item \textbf{Lothar Collatz: Funktionalanalysis und numerische Mathematik.}\\
+	\textit{Springer-Verlag Berlin Heidelberg, 1964, ISBN 978-3-642-95029-2, S. 352}
+	\item \textbf{Michael Růžička: Nichtlineare Funktionalanalysis. Eine Einführung.}\\
+	\textit{Springer-Verlag Berlin Heidelberg, 2004, ISBN 978-3-540-20066-6, S. 27}
+\end{itemize}
+
+\subsection*{Hilfsmittel}
+Wir orientieren uns an der Beweisführung von Michael Růžička und nutzen die folgenden Definitionen und den folgenden Satz für den Beweis des Satzes von Mazur:
+
+\paragraph*{Definition 1:}
+Ein $\varepsilon$-Netz für eine Teilmenge $M$ eines metrischen Raums $X$ ist eine endliche Überdeckung aus Kugeln mit Radius $\varepsilon$. Also existieren $x_i \in X$, $i = 1,...,n$, sodass
+\begin{equation}
+M \subset \bigcup_{i=1}^n B(x_i, \varepsilon).
+\end{equation}
+
+\paragraph*{Definition 2:}
+Eine Teilmenge $M$ eines metrischen Raumes $(X,d)$ heißt totalbeschränkt (oder auch präkompakt), wenn es zu jedem $\varepsilon > 0$ eine endliche Menge von Punkten $x_{1},\ldots ,x_{n}\in M$ (ein $\varepsilon$-Netz) gibt, so dass gilt: 
+\begin{equation}
+M\subseteq \bigcup _{k=1}^{n}\{x\in X:d(x,x_{k})<\varepsilon \}.
+\end{equation}
+
+\paragraph*{Satz 1:}
+Eine Teilmenge eines vollständigen metrischen Raumes ist genau dann total beschränkt, wenn sie relativ kompakt ist.
+
+\subsection*{Beweis des Satzes}
+Wir zeigen, dass $co(A)$ total beschränkt und somit nach Satz 1 relativ kompakt ist. Dazu werden wir ein $\varepsilon$-Netz konstruieren, sodass $co(A)$ in diesem enthalten ist.\\
+Sei also $A \subset X$ eine relativ kompakte Teilmenge. Nach Satz 1 ist $A$ also total beschränkt. Somit existiert nach Definition 2 ein $\frac{\varepsilon}{2}$-Netz, sodass $x_1, ..., x_n \in A$ existieren, sodass für alle $y \in A$ gilt:
+\begin{equation}
+\forall \ y \in A \ \exists \ i \in \{1,...,n\} :  d(y, x_i) < \frac{\varepsilon}{2}.
+\end{equation}
+Mithilfe des Auswahlaxioms können wir nun folgende Funktion definieren
+\begin{equation}
+f:A\to \{1,...,n\}, \ f(y) = i,
+\end{equation}
+wobei $i$ der kleinste Index sei, für den $d(y, x_i) < \frac{\varepsilon}{2}$ gilt.\\
+Nun betrachten wir die konvexe Hülle $co(A)$. Für jedes $y\in co(A)$ können wir nun folgende Konvexkombination finden:
+\begin{equation}
+y = \sum_{i = 1}^m \lambda_i y_i,
+\end{equation}
+wobei $m = m(y) \in \mathbb{N}$, $y_i \in A$, $\lambda_i \in [0,1]$, $i = 1,...,m$ und $\sum_{i=1}^m \lambda_i = 1$. Mit (4) und (5) erhalten wir nun:
+\begin{eqnarray}
+||y - \sum_{i=1}^m \lambda_i x_{f(y_i)} || &=& ||\sum_{i=1}^m \lambda_i (y_i - x_{f(y_i)} ) || \\
+&\leq & \sum_{i=1}^m \lambda_i ||y_i - x_{f(y_i)}|| \\
+&\stackrel{(3)}{\leq} & \sum_{i=1}^m \lambda_i \frac{\varepsilon}{2} \\
+&\stackrel{\sum \lambda_i = 1}{=} & \frac{\varepsilon}{2}.
+\end{eqnarray}
+Da nun $\sum_{i=1}^m \lambda_i x_{f(y_i)}$ als Konvexkombination Element der konvexen Hülle $K:= co(x_1,...,x_n)$ ist, haben wir also gezeigt
+\begin{equation}
+co(A) \subset \bigcup_{x \in K} B(x,\frac{\varepsilon}{2}).
+\end{equation}
+Wir müssen also nur noch zeigen, dass dies auch für endlich viele $x \in K$ gilt, damit wir eine endliche Überdeckung von $co(A)$ erhalten. Dazu betrachten wir die Funktion
+\begin{equation}
+\Psi: [0,1]^n \to X, \ (\lambda_1, ... \lambda_n) \mapsto \sum_{i=1}^n\lambda_i x_i.
+\end{equation}
+Diese ist stetig (Analysis II). Betrachten wir das Bild der Menge 
+\begin{equation}
+B = \{(\lambda_1, ... \lambda_n) \in [0,1]^n | \sum_{i=1}^n \lambda_i = 1 \},
+\end{equation}
+so gilt offensichtlich
+\begin{equation}
+\Psi(B) = K.
+\end{equation}
+Da die Menge $B$ kompakt und die Funktion $\Psi$ stetig ist, ist auch $K$ kompakt. Also existiert zu jeder offenen Überdeckung von $K$ eine endliche Teilüberdeckung, d.h. wir finden endlich viele $k_j \in K$, sodass
+\begin{equation}
+co(A) \subset \bigcup_{j=1}^N B(k_j,\frac{\varepsilon}{2}).
+\end{equation}
+Somit besitzt $co(A)$ ein endliches $\varepsilon$-Netz, ist daher nach Definition 2 total beschränkt und nach Satz 1 relativ kompakt.
+\begin{flushright}
+	$\square$
+\end{flushright}
+	
+\end{document}

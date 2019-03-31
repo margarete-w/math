@@ -1,0 +1,135 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{
+	left=28mm,
+	right=28mm,
+	bottom=25mm,
+	top=25mm,
+}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+
+\begin{document}
+	
+	\section*{Aufgabe 11.1}
+	\subsection*{Zweite Teilaufgabe}
+	\textbf{Zu zeigen: } Sei $t_0 \in [0,T) \subset \mathbb R_+ \cup \{ \infty \}$, $a,b \in L^{\infty}(0,t_0)$ und $\lambda \in L^1(0,t_0)$ mit $\lambda(t) \geq 0$ fast überall in $t \in (0,t_0)$. Falls für fast alle $t \in (0,t_0)$ folgendes gilt: 
+	\begin{align}\label{maus}
+		a(t) \leq b(t) + \int^t_{t_0} \lambda(s) a(s) ds,
+	\end{align}
+	so folgt für fast alle $t \in (0,t_0)$, dass
+	\[
+		a(t) \leq b(t) + \int^t_{t_0} e^{\Lambda(t) - \Lambda(s)} \lambda(s) b(s) ds.
+	\]
+	
+	\begin{proof}
+		Wir führen dies auf den Lemma von Gronwall für $t > t_0$ zurück. Die Idee ist eine Substitution der Form $z = t_0 - t$. Da $t \in (0,t_0)$, gilt auch $z \in (0,t_0)$. Durch Einsetzen von $t = t_0 - z$ in \eqref{maus},  erhält man
+		\begin{align*}
+			a(t) &\leq b(t) + \int^{t_0 -z}_{t_0} \lambda (s) a(s)ds\\ &= b(t) - \int^{t_0}_{t_0-z} \lambda (s) a(s)ds \\ &= b(t) - (\int^{t_0}_{0} \lambda (s) a(s)ds -  \int^{t_0-z}_{0} \lambda (s) a(s)ds) \\
+			&= \underbrace{b(t) - \int^{t_0}_{0} \lambda (s) a(s)ds}_{ \coloneqq \tilde b(t)} +  \int^{t}_{0} \lambda (s) a(s)ds.
+		\end{align*}
+		Diese Abschätzung ist also äquivalent zu \eqref{maus}. Es gilt $\tilde b \in L^{\infty}(0,t_0)$, da $ \int^{t_0}_{0} \lambda (s) a(s)ds$ nur eine Konstante ist und $b$ bereits in $ L^{\infty}(0,t_0)$ ist. Wir können hierauf den Lemma von Gronwall für $t > t_0$ anwenden. Das Lemma besagt: 
+		
+		\begin{lemma}
+			Sei $u_0 \in [0,U) \subset \mathbb R_+ \cup \{ \infty \}$, $a,b \in L^{\infty}(u_0,U)$ und $\lambda \in L^1(u_0,U)$ mit $\lambda(u) \geq 0$ fast überall in $u \in (u_0,U)$. Falls für fast alle $u \in (u_0,U)$ folgendes gilt: 
+			\begin{align}
+			a(u) \leq b(u) + \int^u_{u_0} \lambda(s) a(s) ds,
+			\end{align}
+			so folgt für fast alle $u \in (u_0,U)$, dass
+			\[
+			a(u) \leq b(u) + \int^u_{u_0} e^{\Lambda(u) - \Lambda(s)} \lambda(s) b(s) ds.
+			\]
+		\end{lemma}
+		
+		Um das Lemma anzuwenden, setzen wir $u_0 = 0$ und $U = t_0$ und somit folgt für fast alle $t \in (0,t_0)$, dass
+		\[
+			a(t) \leq \tilde b(t) + \int^t_0 e^{\Lambda(t) - \Lambda(s)} \lambda(s) \tilde b(s) ds = b(t) - \int^{t_0}_{0} \lambda (s) a(s)ds + \int^t_0 e^{\Lambda(t) - \Lambda(s)} \lambda(s) b(s) ds.
+		\]
+		Wir vereinfachen den Term auf der rechten Seite und erhalten
+		\begin{align*}
+			a(t) &\leq  b(t) - (\int^{t_0}_0 \lambda(s)a(s) ds + \int^0_t e^{\Lambda(t) - \Lambda(s)} \lambda(s) b(s) ds) \\
+			&= b(t) + 
+		\end{align*}
+	\end{proof}
+
+\section*{Aufgabe 2}
+\subsection*{Erste Teilaufgabe}
+Wir wissen unter diesen Voraussetzungen, dass es auf jeden Fall globale Lösung $u: [0,T] \to X$ gibt mit $u(t_0) = u_0$ und $v: [0,T] \to X$ mit $v(t_0) = v_0$ aufgrund von Picard Lindelöf. O.B.d.A. sei $t_0 > t$. Mit dem Haupsatz der Differential- und Integralrechnung erhalten wir die Abschätzung
+\[
+	||v(t) - u(t) ||  \leq ||v_0 - u_0 || + \int^{t_0}_t ||f(s,v(s)) - f(s,u(s))|| ds.
+\]
+Mit der Lipschitz-Bedingung erhalten wir
+\[
+	||v(t) - u(t) || \leq ||v_0 - u_0 ||  + L \int^{t_0}_t ||v(s) -u(s)|| ds.
+\]
+Mit dem Lemma von Gronwall aus der VL und dem Lemma von Gronwall aus Aufgabe 1ii erhalten wir, dass für alle $t \in [0,T]$ gilt
+\[
+	||u(t) -v(t)||\leq e^{L (t_0 -t)} ||u_0 -v_0||.
+\]
+Da $0\leq t_0 \leq T$ gilt nun
+\[
+	||u(t) -v(t)||\leq e^{L T} ||u_0 -v_0||.
+\]
+
+
+\subsection*{Zweite Teilaufgabe}
+Für $f$ und $g$ gibt es nach dem Satz von Picard-Lindelöf zwei globale Lösungen $u$ und $v$ mit dem selben Anfangswert $u(t_0) = v(t_0)$. O.b.d.A. sei $t_0 > t$. Wie in der ersten Teilaufgabe erhalten wir die Abschätzung 
+\[
+		||v(t) - u(t) ||  \leq ||v_0 - u_0 || + \int^{t_0}_t ||f(s,v(s)) - f(s,u(s))|| ds = \int^{t_0}_t ||f(s,v(s)) - f(s,u(s))|| ds.
+\]
+Nun folgt,
+\[
+||v(t) - u(t) ||  \leq \int^{t_0}_t ||f(s,v(s)) - f(s,u(s))|| ds + \underbrace{\int^{t_0}_t ||f(s,v(s)) - g(s,v(s))|| ds}_{\geq 0}.
+\]
+Mit der Lipschitz-Bedingung erhalten wir 
+\[
+	||v(t) - u(t) || \leq L_f \int^{t_0}_t ||v(s)-u(s)|| ds + \sup_{(s,\alpha) \in [0,T] \times X}(||f(s, \alpha) - g(s, \alpha) ||) \cdot  (t_0 - t).
+\]
+Ganz analog erhalten wir eine Abschätzung für $g$ mit
+\[
+||v(t) - u(t) || \leq L_g \int^{t_0}_t ||v(s)-u(s)|| ds + \sup_{(s,\alpha) \in [0,T] \times X}(||f(s, \alpha) - g(s, \alpha) ||) \cdot  (t_0 - t).
+\]
+Sei $L$ das Minimum von $L_g$ und $L_f$. So ist dann
+\[
+	||v(t) - u(t) || \leq L \int^{t_0}_t ||v(s)-u(s)|| ds + \sup_{(s,\alpha) \in [0,T] \times X}(||f(s, \alpha) - g(s, \alpha) ||) \cdot  (t_0 - t).
+\]
+Mit dem Lemma von Gronwall folgt dann
+\[
+		||v(t) - u(t) || \leq e^{L(t_0 - t)} \sup_{(s,\alpha) \in [0,T] \times X}(||f(s, \alpha) - g(s, \alpha) ||) \cdot  (t_0 - t) \leq e^{LT} \sup_{(s,\alpha) \in [0,T] \times X}(||f(s, \alpha) - g(s, \alpha) ||) \cdot  T.
+\] 
+\end{document}

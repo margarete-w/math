@@ -1,0 +1,103 @@
+\documentclass[a4paper,fontsize=8pt,DIV=1]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathpazo}
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{395220 (Viet Duc Nguyen), 391511 (Sofia Faltenbacher)}
+\lhead{\textbf{Analysis III} Benedikt Di 10-12}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 7}
+\begin{enumerate}[label=(\roman*)]
+	\item Seien $X,Y$ topologische Räume, $E$ ein normierter Raum mit Norm $\Vert \cdot \Vert$ und $f: X \times Y \to E$ stetig. Die Stetigkeit von $f$ bedeutet für beliebige Punkte $(p_x,p_y) \in X \times Y$: 
+	\begin{align}\label{lol}
+		\forall \text{ Umgebung $W$ von $f(p_x,p_y)$}, \exists  \text{ Umgebung $T$ von $(p_x,p_y)$}: f(T) \subset W
+	\end{align}
+	Sei $K \subset Y$ kompakt, $r > 0$ und $x \in X$. Wir suchen $U, V$, wie in der Aufgabe angegeben.
+	
+	Sei $y \in K$. Betrachte die Menge 
+	\[
+		U_r(f(x,y)) \coloneqq \{ q \in E :  \Vert q - f(x,y) \Vert < \frac{r}{2} \},
+	\]
+	wobei diese Menge eine Umgebung um $f(x,y)$ darstellt ($U_r$ ist ein $\epsilon$-Ball mit $\epsilon = r$ und somit per Definition eine Umgebung im metrischen Raum $E$). Da $U_r(f(x,y))$ eine Umgebung von $f(x,y)$ ist und $f$ stetig in $(x,y)$ ist, können wir \eqref{lol} anwenden. Es gibt also eine Umgebung $T_{y}$ von $(x,y)$, sodass
+	\[
+		f(T_{y}) \subset U_r(f(x,y)).
+	\]
+	Da $T_y$ eine Umgebung von $(x,y)$ ist, gibt es eine offene Umgebung $O_y \subset T_y$ mit $(x,y) \in O_y$. Für sie gilt wegen $f(O_{y}) \subset f(T_{y})$:
+	\begin{align}\label{manno}
+		f(O_{y}) \subset U_r(f(x,y)).
+	\end{align}
+	Bezeichne $\pi_1$ die Projektion der ersten Koordinate und $\pi_2$ die der zweiten Koordinate. Also für alle $(x,y) \in X \times Y$:
+	\[
+		\pi_1(x,y) \coloneqq x, \quad \pi_2(x,y)\coloneqq y.
+	\]
+	Sei $\Pi_y \coloneqq \pi_2(O_y)$. Die Menge $\Pi_y$ ist offen, da $O_y$ offen ist. Sei
+	\[
+		\tilde V \coloneqq \bigcup_{y \in K}\Pi_y.
+	\]
+	Als Vereinigung von beliebig vielen offenen Mengen $\Pi_y$ ist $\tilde V$ auch offen und $\tilde V$ überdeckt $K$. Denn sei $k \in K$. Dann ist $(x,k) \in O_y$ und somit $k \in \Pi_y \subset \tilde V$. Wegen der Kompaktheit von $K$ finden wir für die offene Überdeckung $\tilde V$ eine endliche Teilüberdeckung von $K$, die wir als unser $V$ definieren. Das heißt, es gibt eine \emph{endliche} Menge $Q \subset K$, sodass
+	\[
+		V \coloneqq (\bigcup_{y \in Q}\Pi_y) \supset K.
+	\]
+	Nun wählen wir das $X$ als
+	\[
+		U \coloneqq \bigcap_{y \in Q} \pi_1(O_y).
+	\]
+	Insbesondere ist $U$ offen, denn der Schnitt ist aufgrund der endlichen Menge $Q$ ein Schnitt über endliche Mengen.
+	
+	Seien nun $(u,v) \in U \times V$. Das heißt, $(u,v) \in O_\gamma$ für ein $\gamma \in K$. Nach \eqref{manno} gilt
+	\begin{align} \label{fritz}
+		f(u,v) \in U_r(f(x,\gamma)) = \Vert f(u,v) - f(x,\gamma) \Vert < \frac{r}{2}.
+	\end{align}
+	Andererseits ist auch $(x,v) \in O_{\gamma}$ und damit
+	\begin{align} \label{tom}
+		\Vert f(x,v) - f(x, \gamma) \Vert = \Vert f(x, \gamma) - f(x,v) \Vert < \frac{r}{2}.
+	\end{align}
+	Addition von \eqref{fritz} und \eqref{tom} sowie Dreiecksungleichung ergibt 
+	\[
+		 \Vert f(u,v) - f(x,v) \Vert \leq \Vert f(u,v) - f(x,\gamma) \Vert + \Vert f(x, \gamma) - f(x,v) \Vert < r.
+	\]
+
+\end{enumerate}
+	
+\section*{Aufgabe 8}
+Die Funktion $f$ ist stetig, da das Produkt von endlich vielen stetigen Funktionen wieder stetig ist. Der Träger von $f$ ist $\Gamma \coloneqq \Pi_{i=1}^d \mathrm{supp}(\varphi_i)$, denn sei $x=(x_1,...,x_d) \in \Gamma$. Dann ist $f(x) = \varphi_1(x_1) \cdot ... \cdot \varphi_d(x_d) \neq 0$, da $x_i \in \mathrm{supp}(\varphi_i)$ für alle $i=1,...,d$ und somit $\varphi_i(x_i) \neq 0$. Falls $f(y_1,...,y_d) = 0$, so sind die $\varphi(y_i) \neq 0$ für alle $i = 1,...,d$. Also $(y_1,...,y_d) \in \Gamma$. Da wir uns in $\mathbb R$ befinden, sind die kompakten einzelnen Träger von $\varphi_{i}$ für $i=1,...,d$ abgeschlossen und beschränkte Intervalle. Aus Analysis 2 wissen wir, dass der Quader $\Gamma = \Pi_{i=1}^d \mathrm{supp}(\varphi_i)$ kompakt ist. Also ist der Träger tatsächlich kompakt. Wir können daher über den Quader $\Gamma$ integrieren:
+\begin{align*}
+	\int_{\mathbb R^d}f(x)dx  &= \int_{\mathrm{supp}(\varphi_d)}...\int_{\mathrm{supp}(\varphi_i)} \varphi_1(x_1) \cdot ... \cdot \varphi_d(x_d) dx_1 ... dx_d \\
+	&=  \int_{\mathrm{supp}(\varphi_d)}\varphi_d(x_d)dx_d \cdot ... \cdot \int_{\mathrm{supp}(\varphi_1)}\varphi_1(x_1)dx_1 \\
+	&= \Pi \int_{\mathbb R}\varphi_i(x_i)dx_i.
+\end{align*}
+Wir können die Integrale auseinanderziehen, da die Integrale sozusagen entkoppelt sind und nur von einer Veränderlichen abhängig sind.
+
+\end{document}

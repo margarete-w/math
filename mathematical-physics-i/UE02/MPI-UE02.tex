@@ -1,0 +1,308 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{mathpazo}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Victor (405592)}
+\lhead{\textbf{Mathematical Physics I WS1819} - Jan Techter (Mo 10-12 am)}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+\section*{Exercise 2.1}
+\begin{enumerate}[label=(\roman*)]
+	\item Let $x_1,x_2$ denote the position of the masses relative to the quilibrium position. Let $F_1, F_2$ be the spring force on $m_1,m_2$ respectively. The forces are described by the Hooke law:
+	\begin{align*}
+		F_1 &= \underbrace{-kx_1}_{\text{left spring}} + \underbrace{\frac{k}{3}(x_2-x_1)}_{\text{center srping}} \\
+		F_2 &= \underbrace{-kx_2 }_{\text{right spring}}+ \underbrace{\frac{k}{3}(x_1-x_2)}_{\text{center spring}}
+	\end{align*}
+	Newton's second law of motion is $F = ma = m \ddot x$. Applying this law gives the following system of differential equations:
+	\begin{align*}
+		\begin{cases}
+			m\ddot x_1 = - \frac{4}{3}kx_1+\frac{k}{3}x_2 \\
+			m\ddot x_2 = \frac{k}{3}x_1 - \frac{4}{3}kx_2 
+		\end{cases}
+	\end{align*}
+	We write that system in matrix form:
+	\begin{align}\label{linux}
+		\begin{pmatrix}
+			\ddot x_1 \\ \ddot x_2
+		\end{pmatrix}
+		=
+		-\frac{k}{3m}\begin{pmatrix}
+		4 & -1 \\ -1 & 4
+		\end{pmatrix} \begin{pmatrix}
+		x_1 \\ x_2
+		\end{pmatrix}
+	\end{align}
+	We call this the coupled system.
+	
+	\item We introduce a new vector $$\begin{pmatrix}
+	\tilde x_1 \\ \tilde x_2
+	\end{pmatrix} \coloneqq \begin{pmatrix}
+		x_1+x_2 \\ x_1 - x_2
+	\end{pmatrix} = \underbrace{\begin{pmatrix}
+		1 & 1 \\ 1 & -1
+	\end{pmatrix}}_{\coloneqq T} \begin{pmatrix}
+	x_1 \\ x_2
+	\end{pmatrix}$$
+	Calculate $T^{-1}$ by Cramer's rule:
+	\[
+		T^{-1} = -\frac{1}{2} \begin{pmatrix}
+		-1 & -1 \\ -1 & 1
+		\end{pmatrix}.
+	\]
+	Hence,
+	\begin{align}\label{mac}
+		\begin{pmatrix}
+		x_1 \\ x_2
+		\end{pmatrix} = -\frac{1}{2} \begin{pmatrix}
+		-1 & -1 \\ -1 & 1
+		\end{pmatrix} \begin{pmatrix}
+			\tilde x_1 \\ \tilde x_2
+		\end{pmatrix} = \frac{1}{2}\begin{pmatrix}
+			\tilde x_1 + \tilde x_2 \\ \tilde x_1 - \tilde x_2
+		\end{pmatrix}.
+	\end{align}
+	Substitute \eqref{linux} into \eqref{mac} yields
+	\[
+		\frac{1}{2} \begin{pmatrix}
+			\ddot{\tilde{x_1}} + \ddot{\tilde{x_2}} \\ \ddot{\tilde{x_1}} -\ddot{\tilde{x_2}}
+		\end{pmatrix} = -\frac{k}{3m}\begin{pmatrix}
+		4 & -1 \\ -1 & 4
+		\end{pmatrix} \cdot (-\frac{1}{2}) \begin{pmatrix}
+		-1 & -1 \\ -1 & 1
+		\end{pmatrix} \begin{pmatrix}
+			\tilde x_1 \\ \tilde x_2
+		\end{pmatrix} = \frac{k}{6m}\begin{pmatrix}
+			-3 & -5 \\ -3 & 5
+		\end{pmatrix}\begin{pmatrix}
+		\tilde x_1 \\ \tilde x_2
+		\end{pmatrix}.
+	\]
+	We obtain the equations:
+	\begin{align}
+		\frac{1}{2}(\ddot{\tilde{x_1}} + \ddot{\tilde{x_2}}) &= \frac{k}{6m}(-3\tilde x_1 - 5 \tilde x_2), \label{a} \\
+		\frac{1}{2}(\ddot{\tilde{x_1}} - \ddot{\tilde{x_2}}) &= \frac{k}{6m}(-3\tilde x_1 + 5 \tilde x_2) \label{b}
+	\end{align}
+	Now $\eqref{a}+\eqref{b}$ and $\eqref{a}-\eqref{b}$ results in
+	\begin{align*}
+		\ddot{\tilde{x_1}} = -\frac{k}{m} \tilde x_1, \quad 
+		\ddot{\tilde{x_2}}= -\frac{5k}{3m} \tilde x_2 
+	\end{align*}
+	We have got the uncoupled differential equation:
+	\begin{align*}
+		\begin{pmatrix}
+			\ddot{\tilde{x_1}} \\ \ddot{\tilde{x_2}}
+		\end{pmatrix} = \begin{pmatrix}
+			-\frac{k}{m} \tilde x_1 \\ -\frac{5k}{3m} \tilde x_2 
+		\end{pmatrix}.
+	\end{align*}
+	This is a linear differential equation with constant coefficients. \underline{Calculate $\tilde x_1$:} So we get a solution $u$ by $u(t) = e^{\lambda t}$.
+	\begin{align*}
+			\ddot{\tilde{x_1}} + \frac{k}{m}\tilde x_1 = 0 \implies \lambda^2 + \frac{k}{m} = 0 \implies \lambda^2_{1,2} = \pm i \sqrt{\frac{k}{m}} \implies u(t) = e^{\pm it \sqrt{\frac{k}{m}}}.
+ 	\end{align*}
+ 	Let's obtain the real solution. Consider $u(t) = e^{ it \sqrt{\frac{k}{m}}}$ (we ignore the negative solution):
+ 	\[
+ 		u(t) = e^{ it \sqrt{\frac{k}{m}}} = \cos{(\sqrt{\frac{k}{m}}t)} + i\sin{(\sqrt{\frac{k}{m}}t)}.
+ 	\]
+ 	We get the real solutions $u_1, u_2$ by taking the real and imaginary part of $u$:
+ 	\[
+ 		u_1(t) =  \cos{(\sqrt{\frac{k}{m}}t)}, \quad u_2(t) = \sin{(\sqrt{\frac{k}{m}}t)}
+ 	\]
+ 	General solution of the differential equation is
+ 	\[
+ 		u_{gen}(t) = c_1 \cos{(\sqrt{\frac{k}{m}}t)} + c_2 \sin{(\sqrt{\frac{k}{m}}t)}, \quad c_1, c_2 \in \mathbb R.
+ 	\]
+ 	Now, solve the IVP with $u_{gen}(0) = a$ and $\dot u_{gen}(0) = c$. So
+ 	\[
+ 		a = c_1 \cos(0) + c_2\sin(0) \implies c_1 = a.
+ 	\]
+ 	and $\dot u_{gen}(t) = -c_1\sqrt{\frac{k}{m}} \sin{(\sqrt{\frac{k}{m}}t)} + c_2\sqrt{\frac{k}{m}}\cos(\sqrt{\frac{k}{m}} t)$. Thus 
+ 	\[
+ 		c = -c_1 \sin0 \sqrt{\frac{k}{m}} + c_2\sqrt{\frac{k}{m}}\cos0 = c_2 \sqrt{\frac{k}{m}} \implies c_2 = c\sqrt{\frac{m}{k}}.
+ 	\]
+ 	The particular solution is
+ 	\[
+ 		u_{1,part}(t) = a  \cos{(\sqrt{\frac{k}{m}}t)} + c\sqrt{\frac{m}{k}} \sin{(\sqrt{\frac{k}{m}}t)}
+ 	\]
+ 	 \underline{Calculate $\tilde x_2$:} Same approach as above. We obtain the characteristic polynomial:
+ 	 \[
+ 	 	\lambda^2 + \frac{5k}{3m} = 0 \implies \lambda_{1,2} = \pm i \sqrt{\frac{5k}{3m}}.
+ 	 \]
+ 	 We get the general solution
+ 	 \[
+ 	 	u_{gen}(t) = d_1 \cos{(\sqrt{\frac{5k}{3m}}t)} + d_2 \sin{(\sqrt{\frac{5k}{3m}}t)}, \quad d_1, d_2 \in \mathbb R.
+ 	 \]
+ 	 Now, consider $u_{gen}(0) = b$ and $\dot u_{gen}(0) = d$. We get
+ 	 \begin{align*}
+	 	 b &= d_1 \cos(0) = d_1 \\
+	 	 d &= -d_1 \sin(0) \sqrt{\frac{5k}{3m}} + d_2 \cos(0) \sqrt{\frac{5k}{3m}} \implies d_2 = d\sqrt{\frac{3m}{5k}}.
+ 	 \end{align*}
+ 	 Thus,
+ 	 \[
+ 	 	 u_{2,part}(t) = b  \cos{(\sqrt{\frac{5k}{3m}}t)} + d\sqrt{\frac{3m}{5k}} \sin{(\sqrt{\frac{5k}{3m}}t}).
+ 	 \]
+ 	 Overall, the solution ist
+ 	 \begin{align}
+	 	 \begin{pmatrix}
+		 	 \tilde x_1 \\ \tilde x_2
+	 	 \end{pmatrix} =\begin{pmatrix}
+	 	 a  \cos{(\sqrt{\frac{k}{m}}t)} + c\sqrt{\frac{m}{k}} \sin{(\sqrt{\frac{k}{m}}t)} \\
+	 	 b  \cos{(\sqrt{\frac{5k}{3m}}t)} + d\sqrt{\frac{3m}{5k}} \sin{(\sqrt{\frac{5k}{3m}}t})
+	 	 \end{pmatrix}.
+ 	 \end{align}
+ 	 
+ 	 \item By \eqref{mac}, we know that
+ 	 \begin{align*}
+	 	 x_1(t) &= \frac{1}{2}\Big(a  \cos{(\sqrt{\frac{k}{m}}t)} + c\sqrt{\frac{m}{k}} \sin{(\sqrt{\frac{k}{m}}t)}  + b  \cos{(\sqrt{\frac{5k}{3m}}t)} + d\sqrt{\frac{3m}{5k}} \sin{(\sqrt{\frac{5k}{3m}}t})\Big) \\
+	 	 &=\frac{1}{2}\Big(a  \cos{(\sqrt{\frac{k}{m}}t)} + b  \cos{(\sqrt{\frac{5k}{3m}}t)} + \sqrt{\frac{m}{k}} [c\sin{(\sqrt{\frac{k}{m}}t)}   + d\sqrt{\frac{3}{5}} \sin{(\sqrt{\frac{5k}{3m}}t})]\Big) \\
+	 	 x_2(t) &= \frac{1}{2}\Big(a  \cos{(\sqrt{\frac{k}{m}}t)} + c\sqrt{\frac{m}{k}} \sin{(\sqrt{\frac{k}{m}}t)}  - b  \cos{(\sqrt{\frac{5k}{3m}}t)} - d\sqrt{\frac{3m}{5k}} \sin{(\sqrt{\frac{5k}{3m}}t})\Big) \\
+	 	 &= \frac{1}{2}\Big(a  \cos{(\sqrt{\frac{k}{m}}t)} - b  \cos{(\sqrt{\frac{5k}{3m}}t)} + \sqrt{\frac{m}{k}} [c\sin{(\sqrt{\frac{k}{m}}t)}   - d\sqrt{\frac{3}{5}} \sin{(\sqrt{\frac{5k}{3m}}t})]\Big) \\
+	 	 \dot x_1(t) &= \frac{1}{2}\Big(-a\sqrt{\frac{k}{m}}  \sin{(\sqrt{\frac{k}{m}}t)} - b\sqrt{\frac{5k}{3m}}  \sin{(\sqrt{\frac{5k}{3m}}t)} + c\cos{(\sqrt{\frac{k}{m}}t)}   + d \cos{(\sqrt{\frac{5k}{3m}}t})]\Big) \\
+	 	 \dot x_2(t) &= \frac{1}{2}\Big(-a\sqrt{\frac{k}{m}}  \sin{(\sqrt{\frac{k}{m}}t)} + b\sqrt{\frac{5k}{3m}}  \sin{(\sqrt{\frac{5k}{3m}}t)} + c\cos{(\sqrt{\frac{k}{m}}t)}   - d \cos{(\sqrt{\frac{5k}{3m}}t})]\Big)
+ 	 \end{align*}
+ 	 The global flow $\Phi$ is defined as follows:
+ 	 \[
+ 	 	\Phi_t: \mathbb R \times \mathbb R^4 \to \mathbb R^4, (t,\begin{pmatrix}
+ 	 	a \\ b \\ c \\ d 
+ 	 	\end{pmatrix}) \mapsto \begin{pmatrix}
+ 	 	x_1(t) \\ x_2(t) \\ \dot x_1(t) \\ \dot x_2(t)
+ 	 	\end{pmatrix}
+ 	 \]
+\end{enumerate}
+
+\section*{Exercise 2.2}
+\begin{enumerate}[label=(\roman*)]
+	\item First, we show that $\Phi_0(x,y,z) = (x,y,z)$ for all $(x,y,z) \in \mathbb R^3$. 
+	\[
+		\Phi_0(x,y,z) = (x+0, y, e^{0}z) = (x,y,z).
+	\]
+	Next, we show that $\Phi_{s+t}(x,y,z) = \Phi_s(x,y,z) \circ \Phi_t(x,y,z)$. 
+	\begin{align*}
+		\Phi_{s+t}(x,y,z) &= (x+2(s+t)y, y, e^{-(s+t)x - (s+t)^2y}z), \\
+		\Phi_t(x,y,z) &= (x+2ty,y,e^{-tx-t^2y}z) \\
+		\Phi_s(x+2ty, y, e^{-tx-t^2y}z) &= (x+2ty+2sy, y, e^{-s(x+2ty)-s^2y}e^{-tx-t^2y}z) \\
+		&= (x+2(s+t)y, y, e^{-s(x+2ty)-s^2y -tx-t^2y}z)  \\
+		&= (x+2(s+t)y, y, e^{-sx-tx-2ty-s^2y-t^2y}z) \\
+		&= (x+2(s+t)y, y, e^{-(s+t)x - (s+t)^2y}z)
+	\end{align*}
+	Indeed, $	\Phi_{s+t}(x,y,z)  = 	\Phi_s(\Phi_t(x,y,z))$.
+	
+	\item We know that $\dot x = f(x) \iff \frac{d}{dt}\Big\vert_{t=0}\Phi_t(x) = f(x)$. 
+	\[
+		\frac{d}{dt} \vert_{t=0}\Phi_t(x,y,z) = (2y,0,e^{-tx-t^2y}z(-x-2ty))\vert_{t=0} = (2y, 0,-xz) = f(x,y,z). 
+	\]
+	Therefore, the vector field is $ f(x,y,z) = (2y, 0,-xz)$.
+	
+	\item The corresponding IVP for $\Phi_t(x_0,y_0,z_0)$ is
+	\[
+		\begin{cases}
+			\dot x = 2y, \\
+			\dot y = 0, \\
+			\dot z = -xz \\
+			x(0) = x_0, y(0) = y_0, z(0) = z_0
+		\end{cases}
+	\] 
+\end{enumerate}
+
+\section*{Exercise 2.3}
+\begin{enumerate}[label=(\roman*)]
+	\item Let $\Gamma \coloneqq \{(x,y) \in \mathbb R^2 : x \neq \alpha^{-1}\}$. We want to show that $\Phi(\Gamma) \subset \Gamma$. Let $p = (x,y) \in \Gamma$. First, we show that for $\Phi(p) = (\tilde x, \tilde y)$ it yields $\tilde x \neq \alpha^{-1}$. We know that
+	\[
+		\tilde x = \frac{x}{\alpha x - 1}.
+	\]
+	It yields: $\tilde x =  \frac{x}{\alpha x - 1} = \frac{1}{\alpha}$ iff $x = 1$ but then it follows that $\tilde x = \frac{1}{\alpha-1}$ which is not equal to $\frac{1}{\alpha}$. 
+	
+	Now we show that $\tilde y \in \mathbb R$ which is indeed true for $\tilde y = \frac{y+\alpha x(x-y)}{\alpha x - 1}, x \neq \frac{1}{\alpha}$. Therefore, $\Phi(p) \in \Gamma$.
+	
+	\item Let $\mathcal O(x,y)$ be an orbit and let $(x_0,y_0) \in \mathcal O(x,y)$. Let $f(x) \coloneqq \frac{x}{\alpha x-1}$ and $g(x,y) \coloneqq \frac{y+\alpha x(x-y)}{\alpha x -1}$. Then $\Phi(x,y) = (f(x), g(x,y))$. We want to show that $f(f(x)) = x$ and therefore
+	\[
+		f(x) = f(f(f(x))).
+	\]
+	\begin{proof} Show that $f(f(x)) = x, \forall x \in \mathbb R \setminus \{ \alpha^{-1} \}$.
+		\[
+				f(x) = \frac{x}{\alpha x-1} \implies f(f(x)) = f(\frac{x}{\alpha x-1}) = \frac{\frac{x}{\alpha x-1}}{\alpha \frac{x}{\alpha x -1} - 1} = \frac{\frac{x}{\alpha x-1}}{ \frac{\alpha x - \alpha x + 1}{\alpha x -1} } = \frac{\frac{x}{\alpha x-1}}{ \frac{1}{\alpha x -1} }  =  x.
+		\]
+ 	\end{proof}
+ 	Now, we want to show that $g(f(x), g(x,y)) = y$. Be prepared...
+ 	\begin{proof}
+ 		\begin{align*}
+ 			g(\frac{x}{\alpha x -1}) &= \frac{\frac{y+\alpha x (x-y)}{\alpha x -1} + \frac{\alpha x}{\alpha x -1}(\frac{x-y-\alpha x (x-y)}{\alpha x -1})}{\alpha \frac{x}{\alpha x -1} - 1}\\
+ 			 &= \frac{\frac{y+\alpha x (x-y)}{\alpha x -1} + \frac{\alpha x}{\alpha x -1}(\frac{x-y-\alpha x (x-y)}{\alpha x -1})}{\frac{1}{\alpha x -1}} \\
+ 			&= y + \alpha x (x-y) + \alpha x (\frac{x-y-\alpha x (x-y)}{\alpha x-1}) \\
+ 			&= \frac{(\alpha x -1)(y + \alpha x (x-y)) + \alpha x^2- \alpha xy - \alpha^2x^2(x-y)}{\alpha x-1} \\
+ 			&= \frac{\alpha xy + \alpha^2x^2(x-y) -y - \alpha x(x-y) + \alpha x^2- \alpha xy - \alpha^2x^2(x-y)}{\alpha x-1} \\ 
+ 			&= \frac{\alpha x^2 - \alpha x (x-y) -y}{\alpha x -1} \\
+ 			&= \frac{\alpha xy -y }{\alpha x -1} \\
+ 			&= \frac{y (\alpha x-1)}{\alpha x -1}\\
+ 			&= y.
+ 		\end{align*}
+ 	\end{proof}
+ 	So we have 
+ 	\[
+ 		\Phi^3(x,y) = \Phi(\Phi^2(x,y)) = \Phi(\Phi(f(x), g(x,y))) = \Phi(f(f(x)), g(f(x), g(x,y)) =  \Phi(x,y).
+ 	\]
+ 	Each orbit is periodic and the period is three.
+ 	
+ \subsection*{Exercise 2.4}
+ Let $p \in \mathcal O(x_0), p \neq x_0$. We know that $\Phi^T(x_0) = x_0$. Due to $p \in \mathcal O(x_0)$, there exists $L < T$ such that $\Phi^L(x_0) = p$. So we get
+ \[
+ 	\Phi^T(x_0) = \Phi^{T-L}(\underbrace{\Phi^L(x_0)}_{= p}) = x_0.
+ \]
+ Applying $\Phi^L$ on both sides yields
+ \[
+ 	\Phi^L(\Phi^{T-L}(p)) = \Phi^L(x_0) \iff \Phi^T(p) = p.
+ \]
+ Assume $\Phi^{\tilde T}(p) = p$ for $\tilde T < T$. There is a $\tilde L < \tilde T$ such that $\Phi^{\tilde L}(p) = x_0$ since $p \in \mathcal O(x_0)$. Now
+ \[
+ 	p = \Phi^{\tilde T-\tilde L}(\Phi^{\tilde L}(p)) = \Phi^{\tilde T- \tilde L}(x_0)
+ \]
+ but applying $\Phi^{\tilde{L}}$ results in
+ \[
+ 	x_0 = \Phi^{\tilde L} (p) = \Phi^{\tilde L}(\Phi^{\tilde T - \tilde L}(x_0)) = \Phi^{\tilde T}(x_0).
+ \]
+ Contradiction: $T$ is the smallest $T$ such that $\Phi^{T}(x_0) = x_0$ but we have found a $\tilde T< T$ with such property. Therefore, $\tilde T< T$ with $\Phi^{\tilde T}(p) = p$ cannot exist and $T$ is the period.
+\end{enumerate}
+
+\end{document}

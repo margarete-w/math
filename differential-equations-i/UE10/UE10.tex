@@ -1,0 +1,114 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{
+	left=28mm,
+	right=28mm,
+	bottom=25mm,
+	top=25mm,
+}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Duc (395220), Jan (371626)}
+\lhead{\textbf{DGL I WS1819} - Freitag 8:00 - 10:00}
+\cfoot{Seite \thepage}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+
+\begin{document}
+	
+\section*{Aufgabe 10.1}
+\textbf{Existenz: }Da $f$ einer Carathéodory Bedingung genügt und eine Majorante existiert, wissen wir, dass es eine lokale Lösung im Sinne von Carathéodory gibt. 
+	
+\textbf{Eindeutigkeit:} Für ein hinreichend kleines Intervall $[0, \tilde t]$ und eine Umgebung $U \subset \mathbb R$ gelte nun
+\begin{equation}\label{boss}
+	|f(t,v) - f(t,w)| \leq l(t)\omega(|v-w|) \quad \forall t \in [0, \tilde t], \forall v,w \in U.
+\end{equation}
+Betrachte zwei Lösungen $u_1, u_2$ des Anfangswertproblems
+\[
+	\begin{cases}
+		u'(t) = f(t,u(t)) \\ u(0) = 0
+	\end{cases}.
+\]
+Wir wollen zeigen, dass $u_1 = u_2$ gilt. Dazu führen wir einen Widerspruchsbeweis. Wir nehmen also an, es gebe ein $t_0$, sodass $u_1(t_0) \neq u_2(t_0)$. Dann gilt für die Differenzfunktion $u \coloneqq u_2 - u_1$, dass $u(t_0) \neq 0$. Definiere $U(v) \coloneqq \int^v_{c} \frac{1}{\omega(\tau)} d\tau$ mit einem beliebigen $c \in U \setminus \{ 0 \}$ für alle $v \in U$. Wir betrachten als nächstes die Komposition von $U$ und $u$, das heißt
+\[
+	U(u(t)) = \int^{u(t)}_{c} \frac{1}{\omega(\tau)}d\tau, \qquad \forall t \in [0, \tilde t].
+\]
+Als nächstes leiten wir $U(u(t))$ nach $t$ ab und wir erhalten
+\begin{align*}
+	\frac{dU}{dt}(u(t)) = \frac{dU}{dv}\Big \vert_{v = u(t)} \frac{du}{dt}(t) &= \frac{1}{\omega(u(t))} \cdot  \frac{d}{dt}[u_2(t)-u_1(t)] \\
+	&\Downarrow \text{$u_1'(t) = f(t,u_1(t))$ und $u_2'(t) = f(t,u_2(t))$ fast überall} \\
+	&=\frac{1}{\omega(u(t))} \cdot [f(t,u_1(t))-f(t,u_2(t))] \\
+	&\Downarrow \text{wegen Abschätzung \eqref{boss}} \\
+	&\leq \frac{1}{\omega(u(t))}  \omega(|u_1(t) - u_2(t)|)  \cdot l(t)\\
+	&= l(t).
+\end{align*}
+Nun integrieren wir die gerade gewonnene Abschätzung und erhalten
+\[
+	U(u(t_0)) - U(u(t')) \leq \int^{t_0}_{t'} l(\tau) d\tau < \infty \qquad \forall t' \text{ mit } 0<t' < t_0.
+\]
+Beachte, dass $l$ integrierbar ist auf $(0,\tilde t)$. Damit ist insbesondere auch $\int^{t_0}_0 l(\tau) d\tau$ endlich! Der Widerspruch ist derfolgende: lassen wir $t'$ gegen null laufen, so konvergiert $u(t')$ gegen $0$ aufgrund der Anfangswertbedingung, d.h. $u(0) = u_2(0) - u_1(0) = 0-0 = 0$. Damit gilt
+\[
+	\lim_{t' \to 0} U(u(t_0)) - U(u(t')) = \lim_{\xi \to 0}\int^{u(t_0)}_{\xi} \frac{1}{\omega(\tau)}d\tau = \infty.
+\]
+Widerspruch, denn wir haben gerade erst bewiesen, dass $\lim\limits_{t' \to 0}U(u(t_0)) - U(u(t')) < \infty$. Damit kann es kein $t_0$ geben mit $u(t_0) \neq 0$. Beachte, dass wir die Annahme $u(t_0) \neq 0$ für den Widerspruchsbeweis im letzten Schritt beim Integral brauchten, denn das Integral
+$
+	 \lim\limits_{\xi \to 0}\int^{u(t_0)}_{\xi} \frac{1}{\omega(\tau)}d\tau
+$
+kann durchaus null werden, falls $u(t_0) = 0$ ist. Dies beendet den Beweis.
+		
+\section*{Aufgabe 10.2}
+\begin{enumerate}[label=(\roman*)]
+	\item Mit dem Satz von Peano erhalten wir eine lokale Lösung, denn $f$ ist stetig. Um zu überprüfen, ob es eine globale Lösung gibt, verfolgen wir den Ansatz der Trennung der Veränderlichen.
+	\[
+		\frac{d}{dt}u = -u^2 \cos^2(u) \implies t  = \int^u_{u_0} \frac{1}{-s^2 \cos^2(s)}ds + \mathrm{const} \leq \int^{u}_{u_0} \frac{1}{-\cos^2(s)}.
+	\]
+	Das Integral $\int^{u}_{u_0} \frac{1}{-\cos^2(s)}$ ist aber nur für $\frac{\pi}{2} < u < \frac{3}{2}\pi$ definiert. Das heißt, es kann keinen Blowup geben, da $u$ durch $\frac{3}{2}\pi$ und $\frac{\pi}{2}$ von oben und unten beschränkt ist. Es gibt also eine globale Lösung.
+\end{enumerate}	
+
+\section*{Aufgabe 10.3}
+\textbf{Zu zeigen:} Es gibt genau eine maximal fortgesetzte Lösung auf $[0,T]$ für das angegebene Anfangswertproblem.
+
+\textbf{Existenz einer maximal fortgestetzten Lösung:} Um die Existenz einer maximal fortgesetzten Lösung $u: [0,T] \to \mathbb R^d$ zu zeigen, müssen wir beweisen, dass es für jede kompakte Menge $K \subset \mathbb R^d$ eine Lebesgue-integrierbare Funktion $m: [0,T] \to \mathbb R$ gibt mit, sodass für alle $t \in [0,T]$ und alle $v \in K$ die Abschätzung $\Vert f(t,v) \Vert \leq m(t)$ gilt. Falls dies gilt, dann gibt es nach der Vorlesung eine maximal fortgesetzte Lösung.
+
+Sei also irgendeine kompakte Menge $K$ gegeben. Seien $v \in K$ und $t \in [0,T]$ beliebig. Wir machen folgende Abschätzung:
+ $$\Vert f(t,v) \Vert = \Vert f(t,v) - f(t,0) + f(t,0)\Vert \leq  \Vert f(t,v) - f(t,0) \Vert + \Vert f(t,0)\Vert \leq l(t)\Vert v-0 \Vert + l (t).$$
+ Dann haben wir für die Menge $K$ eine Majorante $m$ gefunden mit $m(t) \coloneqq l(t)(1+ \sup_{v \in K}\Vert v \Vert)$. Die Majorante ist wohldefiniert, da das Supremum über eine kompakte Menge genommen wird. Die Majorante ist auch Lebesgue-integrierbar, da $m$ das Produkt zweier Lebesgue-integrierbarer Funktionen ist: $l$ ist eine Lebesgue-integrierbare Funktion nach Voraussetzung und Konstanten sind Lebesgue-integrierbar. 
+
+\textbf{Eindeutigkeit:} Wir sehen, dass $f$ die verallgemeinerte Lipschitzbedingung erfüllt. Deswegen ist die maximal fortgesetzte Lösung eindeutig (nach der Vorlesung).
+
+\textbf{Globales Existenzintervall:} Sei also $(\alpha, \beta) \subset [0,T]$ das maximale Existenzintervall für eine Lösung $u$. Wir wollen zeigen, dass $\alpha = 0$ und $\beta = T$. Die Beweisidee ist, dass es keinen Blowup geben kann, da die Steigung von $u$ für jede echte Teilmenge von $[0,T]$ durch einen Faktor von $l(t)$ beschränkt ist. Damit es einen Blowup gibt, muss jedoch die Steigung von $u$ unendlich werden, wenn $u$ gegen $\beta$ läuft.
+
+ Angenommen, es gelte $\beta<T$. Dann gibt es ein kompaktes Intervall $K \supset (\alpha,\beta)$, sodass $$\Vert f(t,u(t)) \Vert \leq l(t) [1+ \sup\limits_{v \in K} \Vert v \Vert] < \infty \quad \text{wegen $l(t) < \infty$}$$ für alle $t \in (\alpha, \beta)$. Dann ist aber für ein beliebiges $a \in (\alpha, \beta)$: $$\lim_{t \to \beta} \Vert u(t) \Vert \leq (l(t) + \sup\limits_{v \in K} \Vert v \Vert) (\beta - a) + \Vert u(a)\Vert < \infty.$$ Es gibt also keinen Blowup und somit ist das Existenzintervall ganz $[0,T]$. $u$ ist ist also eine globale Lösung.
+
+\end{document}
+ 

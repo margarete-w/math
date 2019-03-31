@@ -1,0 +1,87 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Existence and Uniqueness Theorem of Picard-Lindelöf}
+\author{ Written by Viet Duc Nguyen}
+\maketitle
+
+
+Given an initial value problem
+\begin{align}\label{IVP}
+	\begin{cases}
+		u'(t) = f(t, u(t)) \\ u(t_0) = u_0
+	\end{cases}
+\end{align}
+we are interested whether a solution exists and how many there are. Luckily, the theorem of Picard-Lindelöf asserts the existence and uniqueness of solutions under specific conditions. In the following document, we will present different versions of Lindelöf's theorem, each theorem requires weaker conditions. We start with the one which opposes the strictest conditions: the global version of Picard-Lindelöf's theorem.
+
+A central notion is the Lipschitz-continuity. The different versions of Lindelöf's theorem state different level
+\begin{definition}
+	We will say that $f: [0,T] \times \overline{B_r(u_0)}$ is \textbf{Lipschitz-continuous} if there exists a constant $L \geq 0$ such that
+	\[
+	\Vert f(t,v) f(t,u) \Vert \leq L \Vert v-u \Vert \quad \forall t \in [0,T], \forall u,v \in  \overline{B_r(u_0)}.
+	\]
+\end{definition}
+
+\begin{theorem}[Theorem of Picard-Lindelöf - Global Version]
+	Let $f: [0,T] \times X \to X$ be continuous and be Lipschitz-continuous. For any initial values $t_0 \in [0,T]$ and $u_0 \in X$, the initial value problem \eqref{IVP} has a unique solution $u \in C^1([0,T], X)$ on the entire interval $[0,T]$.
+\end{theorem}
+
+
+
+\end{document}

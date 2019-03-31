@@ -1,0 +1,192 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm,amsmath,amssymb,mathtools}
+
+\usepackage{mathpazo}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{mathabx} % orthogonal direct sum sign
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{wasysym} %lightning symbol
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+\newcommand{\R}{\mathbb{R}}
+
+\def\doubleunderline#1{\underline{\underline{#1}}}
+
+% roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+
+
+\newtheorem*{theorem}{Theorem}
+
+\newtheoremstyle{named}{}{}{\itshape}{}{\bfseries}{.}{.5em}{\thmnote{#3}#1}
+\theoremstyle{named}
+\newtheorem*{namedtheorem}{}
+
+
+
+
+% Style
+\geometry{
+	left= 24mm,
+	right= 24mm,
+	bottom=32mm,
+	top= 32mm
+}
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Nguyen (395220)}
+\lhead{\textbf{Mathematical Physics I WS1819} - Jan Techter (Monday 10-12 am)}
+\cfoot{Page \thepage}
+
+
+\setlength\parindent{0pt}
+\linespread{1.25}
+
+\begin{document}
+	
+	\section*{Exercise 1}
+	\begin{enumerate}[label=(\roman*)]
+		\item Idea: Show that $\gamma(x) \coloneqq |x|^{\frac{p}{q}}$ is Lipschitz continuous for $p > q$. 
+		\begin{proof}
+			Let $p > q$ and $c \coloneqq \frac{p}{q} > 1$. For a given $x_0 \in \mathbb R$ we must provide a neighborhood $U_{\epsilon}(x_0)$ and a constant $L >0$ such that the Lipschitz property holds. Let $\epsilon \coloneqq 1$. Since it holds $\gamma(x) = \gamma(-x)$ for all $x \in \mathbb R$,  it follows that for $x \neq 0$ and $c>1$:
+			\begin{align}
+			\gamma'(x) \coloneqq \frac{d}{dx}|x|^{c} = |cx^{c-1}| \cdot \frac{x}{|x|}.
+			\end{align}
+			We see that $\gamma'$ is bounded on every $A \subsetneq \mathbb R \setminus \{0\}$ because of $c-1 > 0$. Therefore, choose $L$ as 
+			\[
+			L \coloneqq \max_{u \in U_1(x_0) \setminus\{0\}} |\gamma'(u)|.
+			\]
+			
+			Let $u_1, u_2 \in U_1(x_0)$ with $u_1 \cdot u_2 > 0$. Using the \emph{Mean Value Theorem} we show that
+			\[
+			\frac{\Vert |u_1|^c -|u_2|^c \Vert}{|u_1-u_2|} = |\gamma'(\xi)| \leq L, \quad \xi \in (u_1,u_2)
+			\]
+			and therefore
+			\[
+			\Vert |u_1|^c -|u_2|^c \Vert \leq L|u_1-u_2|.
+			\]
+			
+			Let $u_1, u_2 \in U_1(x_0)$ with $u_1 \cdot u_2 < 0$.  Without loss of generality, let $|u_2| > |u_1|$. Using triangle inequality, it holds: 
+			\[
+			|u_1-u_2| = |u_1| + |u_2| \geq |u_1 + u_2|.
+			\]
+			Again, we know that $\gamma(x) = \gamma(-x)$ and thus
+			\[
+			\frac{\Vert |u_1|^c -|u_2|^c \Vert}{|u_1-u_2|} \leq \frac{\Vert |u_1|^c -|-u_2|^c \Vert}{|u_1-(-u_2)|} = \frac{\Vert |u_1|^c -|u_2|^c \Vert}{|u_1+u_2|} = |\gamma'(\xi)| \leq L, \quad \xi \in (u_1, -u_2).
+			\]
+			
+			Let $u_1, u_2 \in U_1(x_0)$ with $u_1 \cdot u_2 = 0$ and w.l.o.g. $u_2 \neq 0$ (if $u_1 = u_2 = 0$, the Lipschitz inequality is obiously true). Here we need $c>1$. 
+			\[
+			\frac{\Vert |u_1|^c -|u_2|^c \Vert}{|u_1-u_2|} = \frac{ |u_1|^c }{|u_1|} = |u_1|^{c-1} \leq |cu_1^{c-1}| \leq L.
+			\]
+			We showed that $\gamma$ is Lipschitz continuous and after Picard Lindelöf, a unique solution exists.
+		\end{proof}
+		
+		
+		\item Let $p < q$. Using seperation of variables results in
+		\begin{gather*}
+		\int \frac{1}{x^{\frac{p}{q}}}dx = t \implies (1-\frac{p}{q})^{-1}x^{1-\frac{p}{q}} + c = t \implies x^{1-\frac{p}{q}} = (t-c)(\frac{q-p}{q}) \\ \implies x(t) = ((t-c)\frac{q-p}{q})^{\frac{q}{q-p}}, \quad c \in \mathbb R.
+		\end{gather*}
+		A solution of the IVP is found for $c=0$.  Now let for all $k>0$:
+		\[
+		x_k(t) \coloneqq \begin{cases}0, \quad &\text{if $t < k$} \\
+		\left((t-k)\frac{q-p}{q} \right)^{\frac{q}{q-p}}\quad &\text{if $t \geq k$} 
+		\end{cases}
+		\]
+		It holds that $x_k(0)=0$ and $x_k$ is a solution for each $k \in \mathbb R$.
+		
+		\item If $p=q$, we get the absolute value function. This function ist Lipschitz continuous (by using the reverse triangle inequality):
+		\[
+		\Vert |x| - |y| \Vert \leq L |x-y|, \quad \forall x,y \in \mathbb R.
+		\]
+		After Lindelöf, a unique solution exists. The solution ist $\varphi = 0.$
+	\end{enumerate}
+	
+	\section*{Exercise 2}
+	\begin{proof}
+		If $\epsilon = 0$, we have the differential equation
+		\[
+		x' = |x|^{\frac{1}{2}}.
+		\]
+		As shown in exercise 1, there are infinite number of solutions for the IVP.
+		\\
+		
+		For $\epsilon  > 0$, we will calculate the derivative of $\gamma(x) \coloneqq \frac{x^2}{x^2+\epsilon}\sqrt{|x|}$ for $x \in \mathbb R$. If the derivative is bounded for any $A \subsetneq \mathbb R$, $\gamma$ is Lipschitz continuous and hence a unique solution exists.
+		\\
+		
+		For $x \neq 0$ we can easily calculate the derivative
+		\[
+		\frac{d}{dx}\sqrt{|x|} = \frac{1}{2\sqrt{|x|}}\cdot \frac{x}{|x|} = \frac{x}{2\sqrt{|x|^3}}, \quad \frac{d}{dx}\frac{x^2}{x^2+\epsilon} = \frac{2x(x^2+\epsilon)-x^2\cdot 2x}{(x^2+\epsilon)^2} = \frac{2x\epsilon}{(x^2+\epsilon)^2}
+		\]
+		and with the aid of the product rule, it follows
+		\[
+		\frac{d}{dx} \frac{x^2}{x^2+\epsilon}\sqrt{|x|} = \frac{x^2}{x^2+\epsilon}\frac{x}{2\sqrt{|x|^3}} + \frac{2x\epsilon}{(x^2+\epsilon)^2} \sqrt{|x|} = \frac{x^3(x^2+\epsilon) + 2x\epsilon\sqrt{|x|}2\sqrt{|x|^3}}{2(x^2+\epsilon)^2\sqrt{|x|^3}} = \underbrace{\frac{x^5 + x^3\epsilon + 4\epsilon x|x|^2}{2(x^2+\epsilon)^2\sqrt{|x|^3}}}_{=\frac{x^5 + 5x^3\epsilon}{2(x^2+\epsilon)^2\sqrt{|x|^3}}}.
+		\]
+		Now, consider the differential quotient at $x=0$:
+		\[
+		\lim_{h \searrow 0} \frac{\gamma(0+h)-\gamma(0)}{h} = \lim_{h \searrow 0} \frac{h\sqrt{|h|}}{h^2+\epsilon} = \frac{0}{\epsilon} = 0 = \lim_{h \nearrow 0} \frac{h\sqrt{|h|}}{h^2+\epsilon}  = \lim_{h \nearrow 0}\frac{\gamma(0+h)-\gamma(0)}{h}.
+		\]
+		Therefore
+		\[
+		\gamma'(x) = \begin{cases}
+		\frac{x^5 + 5x^3\epsilon}{2(x^2+\epsilon)^2\sqrt{|x|^3}}, \quad & \text{if } x \neq 0 \\
+		0, \quad &\text{if } x =0.
+		\end{cases}
+		\]
+		We see that $\gamma'$ is indeed bounded on any $A \subsetneq \mathbb R$. Therefore, $\gamma$ is Lipschitz continuous and a unique solution exists.
+	\end{proof}
+	
+	\section*{Exercise 3}
+	Let $y^{(0)} \coloneqq 1$ and $P_y(t) \coloneqq x_0 + \int^t_{t_0} s+ y(s) ds$. Applying this on our IVP yields:
+	\begin{align*}
+	y^{(1)}(t) = P_{y^{(0)}}(t) &= 1 + \int^t_0 s + y^{(0)}(s) ds = 1 + \int^t_0 s + 1 ds = 1 + t + \frac{1}{2}t^2 \\
+	y^{(2)}(t) = P_{y^{(1)}}(t) &= 1 + \int^t_0 s + y^{(1)}(s) ds = 1 + \int^t_0 1 + 2s + \frac{1}{2}s^2 ds = 1 + t + t^2 + \frac{1}{6}t^3 \\
+	y^{(3)}(t) = P_{y^{(2)}}(t) &= 1 + \int^t_0 s  1 + 2s + s^2 + \frac{1}{6}s^3 ds = 1 + t + t^2 + \frac{1}{3}t^3 + \frac{1}{24}t^4 \\
+	y^{(n)}(t) = P_{y^{(n-1)}}(t) &= -1 - t + 2\sum^{n-1}_{i=0}\frac{t^i}{i!} + \frac{t^n}{n!}  \tag{$\star$} \label{lol}
+	\end{align*}
+	
+	Verify that \eqref{lol} is true for $n>0$ by induction. For $n=1$, we have $ y^{(0)}(t) = 1 = -1 + 2 + 1$. 
+	
+	Consider: $n \leadsto n+1$. Assume that $y^{(n)}(t) = -1 - t + 2\sum^{n-1}_{i=0}\frac{t^i}{i!} + \frac{t^n}{n!} $ is true for some $n > 0$.
+	\begin{align*}
+	y^{(n+1)}(t) = P_{y^{(n)}}(t) = 1 + \int^t_0 s + y^{(n)}(s)ds &= 1 + \int^t_0 \left( s -1 - s + 2\sum^{n-1}_{i=0}\frac{s^i}{i!} + \frac{s^n}{n!} \right)ds \\
+	&= 1 - t + 2\sum^{n-1}_{i=0}(\frac{1}{(i+1)!}t^{i+1}) + \frac{t^{n+1}}{(n+1)!} \\
+	&= 1 - t + 2\sum^{n}_{i=1}\frac{1}{i!}t^{i} + \frac{t^{n+1}}{(n+1)!} \\
+	&= -1 - t + 2\sum^{n}_{i=0}\frac{1}{i!}t^{i} + \frac{t^{n+1}}{(n+1)!}.
+	\end{align*}
+	By mathematical induction, the assumption is true for all $n>0$.
+	
+	Now, let's find a solution $\varphi$ for the IVP. If we let $n \to \infty$, we get the solution 
+	\[
+	\varphi(t) = \lim_{n \to \infty} y^{(n)}(t) = \lim_{n \to \infty} -1 - t + 2\sum^{n-1}_{i=0}\frac{t^i}{i!} + \underbrace{\frac{t^n}{n!}}_{\to 0} =  -1 - t +2 \lim_{n \to \infty} \sum^{n}_{i=0}\frac{t^i}{i!} = -1 - t +2\exp t.
+	\]
+	
+	\section*{Exercise 4}
+	\begin{enumerate}[label=(\roman*)]
+		\item $x^3-x$ is Lipschitz continuous for its derivative $3x^2-1$ is bounded for any $A \subsetneq \mathbb R$. Therefore, after Picard Lindelöf a unique solution exists for the IVP.
+		
+		\item We have the ODE $\dot x = x^3-x$. Hence, seperation of the variables results in
+		\[
+		t = \int^{x}_{x_0=0.5}\frac{ds}{s^3-s} \leq \int^{x}_{0.5}\frac{ds}{s^2} = -\frac{1}{x} + 2 .
+		\]
+		If $t$ goes to infinity, it must hold that $-\frac{1}{x} + 2$ goes to infinity. This is only the case if $x \to 0$. Therefore, if $\phi(t)$ is a solution, it follows
+		\[
+		\lim_{t \to \infty}\phi(t) = 0.
+		\]
+	\end{enumerate}
+\end{document}

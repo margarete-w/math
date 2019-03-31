@@ -1,0 +1,169 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{satz}{Satz}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{362307 (Marcel), 395220 (Duc), 391511 (Sofia)}
+\lhead{\textbf{Analysis III UE05}, Benedikt Di 10-12}
+\cfoot{Seite \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Aufgabe 16}
+\begin{enumerate}[label=(\roman*)]
+	\item Zu zeigen: $[\cdot , \cdot]$ ist bilinear. 
+	\begin{proof}
+	Sei $U \subset \mathbb R^n$ offen und seien $R,S,T \in \mathrm{LDer}(\mathcal C^{\infty}(U))$.
+	\begin{align*}
+		[R+S, T] = (R+S) \circ T - T \circ (R+S) &= (R + S)(T) - \underbrace{T(R+S)}_{=T(R) + T(S)} \\
+		&= R(T) + S(T) - T(R) - T(S)  \\
+		&= R(T) - T(R) + S(T) - T(S) \\
+		&= [R,T] + [S,T].
+	\end{align*}
+	Wir haben insbesondere die Linearität von $T$ ausgenutzt. Für die Lineaarität in der zweiten Komponente ähnlich:
+	\begin{align*}
+		[R, S+T] = R \circ (S+T) - (S+T) \circ R &= R(S+T) - (S+T)(R) \\
+		&= R(S) + R(T) - S(R) - T(R)  \\
+		&= R(S) - S(R) + R(T) - T(R) \\
+		&= [R,S] + [R,T].
+	\end{align*}
+	Sei $\lambda, \mu \in \mathbb R$ und $R,S \in  \mathrm{LDer}(\mathcal C^{\infty}(U))$.
+	\begin{align*}
+		[\lambda R,\mu S] = (\lambda R)(\mu S) + (\mu S)(\lambda R) &= \mu (\lambda R)(S) + \lambda (\mu S)(R)\\
+		 &= \mu \lambda R(S) + \lambda \mu S(R) \\
+		 &= \lambda \mu [R,S].
+ 	\end{align*}
+ 	Auch hier wird wieder die Linearität von $R,S$ verwendet ($R(\lambda S) = \lambda R(S)$).
+ 	\end{proof}
+ 	Sei $L \in \mathrm{LDer}(\mathcal C^{\infty}(U))$. Zu zeigen: $[L,L] = 0$.
+	\begin{proof}
+		\begin{align*}
+			[L,L] = L \circ L - L \circ L = 0.
+		\end{align*}
+	\end{proof}
+
+	\item \begin{proof}Seien $R,S,T \in \mathrm{LDer}(\mathcal C^{\infty}(U))$ mit $U \subset \mathbb R^n$ offen. An mehreren Stellen verwenden wir wieder die Linearität von $R,S,T$. Zum Beispiel: $R \circ (S + T) = R \circ S + R \circ T$.
+	\begin{align*}
+		 & \quad [[R,S], T] + [[S,T], R] + [[T,R], S] \\
+		&= [RS-SR, T] + [ST - TS, R] + [TR - RT, S] \\
+		&= (RS-SR)(T) - T(RS-SR) + (ST-TS)R - R(ST-TS) + (TR-RT)S - S(TR-RT) \\
+		&= RST - SRT - TRS + TSR + STR - TSR - RST + RTS + TRS - RTS - STR + SRT \\
+		&= RST - RST - SRT + SRT - TRS + TRS + TSR - TSR + STR - STR + RTS - RTS \\
+		&= 0.
+	\end{align*}
+	\end{proof}
+\end{enumerate}
+	
+	
+\section*{Aufgabe 18}
+\begin{enumerate}[label=(\roman*)]
+	\item Für ein festes $v = \frac{\pi}{16}, \frac{2\pi}{16}, \frac{3\pi}{16},...,\pi $ ergibt sich mit $u \in [-2,2]$:
+	\begin{center}
+		\adjustimage{max size={0.5\linewidth}{0.5\paperheight}}{output_1_0.png}
+	\end{center}
+	Für ein festes $u =  \frac{\pi}{16}, \frac{2\pi}{16}, \frac{3\pi}{16},...,\pi $ ergibt sich mit $v \in [-\pi,\pi]$:
+	\begin{center}
+		\adjustimage{max size={0.5\linewidth}{0.5\paperheight}}{output_2_0.png}
+	\end{center}
+	Wir erhalten Hyperbeln und Ellipsen. Die Plots wurden mit SageMath erstellt und den entsprechenden Code findet man unter \href{https://git.io/fpWyk}{https://git.io/fpWyk}.  
+	
+	\item Wir benutzen das Injektivitätskriterium aus Analysis II. Dazu berechnen wir $D_{(u,v)}\Phi$:
+	\[
+		D_{(u,v)}\Phi = \begin{pmatrix}
+			\sinh(u) \cos(v) &  -\cosh(u)\sin(v) \\
+			\cosh(u) \sin(v) & \sinh(u) \cos(v)
+		\end{pmatrix}
+	\]
+	Wir suchen den maximalen Bereich $(x,y) \in \mathbb R^2 \setminus \{ 0 \}$, sodass $(x,y)D_{(u,v)}\Phi \begin{pmatrix}x \\ y \end{pmatrix} > 0$.
+	\begin{align*}
+			(x,y)\begin{pmatrix}
+				\sinh(u) \cos(v) &  -\cosh(u)\sin(v) \\
+				\cosh(u) \sin(v) & \sinh(u) \cos(v)
+			\end{pmatrix} \begin{pmatrix}x \\ y \end{pmatrix} &=
+			(x,y) \begin{pmatrix}
+				x(\sinh(u)\cos(v)) -y(\cosh(u) \sin(v)) \\
+				x(\cosh(u)\sin(v))+y(\sinh(u)\cos(v))
+			\end{pmatrix}\\
+			&= x^2(\sinh(u)\cos(v)) + y^2(\sinh(u)\cos(v)) \\
+			&= \underbrace{(x^2+y^2)}_{> 0}(\sinh(u)\cos(v)).
+	\end{align*}
+	Der Term $\sinh(u)\cos(v) = 0$, falls $u = 0$ oder $v = \frac{\pi}{2} + k\pi, k \in \mathbb Z$. 
+	
+	Nun ist $\sinh(u) > 0$ für alle $u > 0$ bzw. $\sinh(u) < 0$ für alle $u < 0$. Damit $\sinh(u)\cos(v) > 0$ gilt, muss $\cos(v) > 0$ für $ u > 0$ sein oder $\cos(v) < 0$ für $u < 0$. Für $v \in (-\frac{\pi}{2}, \frac{\pi}{2})$ ist $\cos(v) > 0$. Das heißt, ein Intervall für das $\Phi$ injektiv ist, wäre
+	\[
+		(u,v) \in (0, \infty) \times (-\frac{\pi}{2}, \frac{\pi}{2}).
+	\]
+	Ebenso ist $\Phi$ auf $(0, \infty) \times (\frac{\pi}{2}, \pi)$ sowie $(0, \infty) \times (-\pi,\frac{\pi}{2})$ injektiv, da $D_{(u,v)}\Phi <0$ nach Injektivitätskriterium (Aussage gilt ebenso für negativ definite Matrizen). Die Bilder dieser drei Intervalle sind disjunkt wie man anhand der Skizzen sieht (wir dürfen ja Skizzen verwenden). Das heißt, $\Phi$ ist maximal injektiv auf $(0, \infty) \times (-\pi, \pi)$.
+	\begin{center}
+		\adjustimage{max size={0.5\linewidth}{0.5\paperheight}}{output_9_0.png}
+	\end{center}
+	Blau: $(-0.5\pi, 0.5\pi)$, Orange: $(0.5\pi, \pi)$, Rot: $(-\pi, -0.5\pi)$. 
+	
+	Es gilt $\Phi((0, \infty) \times (-\pi, \pi)) = \mathbb R^2$.
+	
+	Nach dem Umkehrsatz ist $\Phi$ dort auf $(0, \infty) \times (-\pi, \pi)$ invertierbar, denn $D_{(u,v)}\Phi$ ist invertierbar und stetig. Die Determinante beträgt
+	\[
+		(\sinh(u)\cos(v))^2 + (\sin(v)\cosh(u))^2.
+	\]
+	Sie ist gleich $0$ nur für $\sinh(u)\cos(v) = 0$ und somit nur für $u=0$ oder $v = 0.5\pi + k\pi, k \in \mathbb Z$ und wenn $\sin(v)\cosh(u)=0$ und somit nur für $v = k\pi, k \in \mathbb Z$. Also ist $\det D_{(u,v)}\Phi \neq 0$ für $u \neq 0$. Da $\Phi$ auf $(0, \infty) \times (-\pi, \pi)$ injektiv ist, gilt nach dem Umkehrsatz, dass die Inverse von $\Phi$ stetig differenzierbar ist.
+	
+	\item Wir benutzen die Formel (1.4.3) im Skript von König. Dazu sei 
+	\begin{align*}
+		G = ( D_{(u,v)}\Phi)^T  D_{(u,v)}\Phi &= \begin{pmatrix}
+		\sinh(u) \cos(v) & \cosh(u) \sin(v) \\  -\cosh(u)\sin(v) &
+		 \sinh(u) \cos(v)
+		\end{pmatrix} \begin{pmatrix}
+		\sinh(u) \cos(v) &  -\cosh(u)\sin(v) \\
+		\cosh(u) \sin(v) & \sinh(u) \cos(v)
+		\end{pmatrix} \\
+		&= \begin{pmatrix}
+			\cosh^2(u) \sin^2(v) + \cos^2(v) \sinh^2(u) & 0 \\
+			0 & \cosh^2(u) \sin^2(v) + \cos^2(v) \sinh^2(u)
+		\end{pmatrix} \\
+		&= \cosh^2(u) \sin^2(v) + \cos^2(v) \sinh^2(u)  \begin{pmatrix}
+		1 & 0 \\ 0 & 1
+	\end{pmatrix} .
+	\end{align*}
+	Also
+	\[
+		G^{-1} = \frac{1}{\cosh^2(u) \sin^2(v) + \cos^2(v) \sinh^2(u)} \begin{pmatrix}
+		1 & 0 \\ 0 & 1
+		\end{pmatrix} .
+	\]
+	Nun ist $\Gamma \coloneqq \sqrt{\det G} = \cosh^2(u) \sin^2(v) + \cos^2(v) \sinh^2(u)$. Also ist
+	\begin{align*}
+		\Delta^{\Phi} =  \frac{1}{\Gamma}\frac{\partial}{\partial u}\frac{1}{\Gamma} \Gamma \frac{\partial}{\partial u} + \frac{1}{\Gamma}\frac{\partial}{\partial v}\frac{1}{\Gamma}\Gamma \frac{\partial}{\partial v} = \frac{1}{\Gamma} \frac{\partial^2}{\partial u^2} + \frac{1}{\Gamma} \frac{\partial^2}{\partial v^2} = \frac{1}{\Gamma}(\frac{\partial^2}{\partial u^2} + \frac{\partial^2}{\partial v^2}) = \frac{1}{\Gamma}\Delta.
+	\end{align*}
+\end{enumerate}
+
+\end{document}

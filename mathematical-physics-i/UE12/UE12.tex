@@ -1,0 +1,116 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{fancyhdr} % Kopfzeile
+\usepackage{accents}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{ulem}
+\usepackage{adjustbox} % Used to constrain images to a maximum size 
+\usepackage{hyperref}
+
+% benutzerdefinierte Kommandos
+\newcommand{\crown}[1]{\overset{\symking}{#1}}
+\newcommand{\xcrown}[1]{\accentset{\symking}{#1}}
+
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{zz}{Zu zeigen}
+\newtheorem*{formel}{Formel}
+
+
+
+% Kopfzeile
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{405592 Victor, 405661 Pantelis, 395220 Duc}
+\lhead{\textbf{MP I}, Jan Techter (Mon 10-12)}
+\cfoot{Page \thepage}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\section*{Exercise 12.1}
+\begin{enumerate}[label=(\roman*)]
+	\item Given $f(q,p) = \begin{pmatrix}
+		p^{\alpha}q^{\beta} \\ -p^{\alpha + 1} q^{\delta}
+	\end{pmatrix}$
+	we need to find $\alpha, \beta, \delta \in \mathbb R$ such that $f$ is a Hamiltonian vector field. We use a theorem from the lecture which states that
+	\begin{theorem}
+		Let $f: \mathbb R^{2n} \to \mathbb R^{2n}$ be a continuous differentiable vector field. It is a Hamiltonian vector field if and only if $\frac{\partial f}{\partial x} \in \mathfrak{Sp}_{2n}$.
+	\end{theorem}
+	$\mathfrak{Sp}_{2n}$ is the symplectic Lie algebra, i.e. matrices $D$ that satisfy $JD^TJ = D$. If we have $2 \times 2$ matrices, then $JD^TJ = D$ is the same as 
+	\[
+		\begin{pmatrix}
+			0 & 1 \\ -1 & 0
+		\end{pmatrix} \begin{pmatrix}
+			a & c \\ b & d
+		\end{pmatrix} \begin{pmatrix}
+		0 & 1 \\ -1 & 0
+		\end{pmatrix}  = \begin{pmatrix}
+		a & b \\ c & d
+		\end{pmatrix}. 
+	\]
+	Thus we get
+	\[
+		\begin{pmatrix}
+		0 & 1 \\ -1 & 0
+		\end{pmatrix} \begin{pmatrix}
+			-c & a \\ -d & b
+		\end{pmatrix} = \begin{pmatrix}
+		a & b \\ c & d
+		\end{pmatrix}. 
+	\]
+	Therefore,
+	\[
+		\begin{pmatrix}
+		-d & b \\ c & -a
+		\end{pmatrix} = \begin{pmatrix}
+		a & b \\ c & d
+		\end{pmatrix}.
+	\]
+	So, $-a = d \iff 0 = a+d \iff \mathrm{tr}A = 0$. In the end, we must show that $\mathrm{tr}(\frac{\partial f}{\partial x}) = 0$.
+	
+	First, let's compute the Jacobi matrix
+	\[
+		\frac{\partial f}{\partial(q,p)} = \begin{pmatrix}
+			\beta p^{\alpha} q^{\beta -1} & \alpha p^{\alpha -1}q^{\beta} \\
+			- \delta p^{\alpha +1} q^{\delta -1}& -(\alpha +1)p^{\alpha}q^{\delta}
+		\end{pmatrix}.
+	\]
+	The trace is then given by $\beta p^{\alpha} q^{\beta -1} -(\alpha +1)p^{\alpha}q^{\delta}$, which should equal to zero for all $p,q \in \mathbb R$. If $p = 0$ or $q = 0$, the trace is trivially zero for all $\alpha, \beta, \delta$. So, assume $p \neq 0$ and $q \neq 0$. We must find $\alpha, \beta, \delta$ such that $\beta p^{\alpha} q^{\beta -1} = (\alpha +1)p^{\alpha}q^{\delta}$. We divide by $p^{\alpha} \neq 0$, and obtain
+	\[
+		\beta q^{\beta -1} = (\alpha +1)q^{\delta} \implies \alpha = \beta q^{\beta - 1 - \delta} - 1, \qquad q^{\delta} \neq 0.
+	\]
+	Now, if $\alpha = \beta q^{\beta - 1 - \delta} - 1$ should hold for fixed $\alpha, \beta, \delta$ and for all $p,q \in \mathbb R$, then $q^{\beta - 1 - \delta}$ must evaluate to a constant for all $q$, which is only the case if $\beta - 1 - \delta$ equals zero. Hence, we get for any $\delta \in \mathbb R$
+	\[
+		\beta = 1 + \delta.
+	\]
+	And then,
+	\[
+		\alpha = \delta.
+	\]
+	The Hamiltonian vector field has the form
+	\[
+		f_{Ham}(q,p) =  \begin{pmatrix}
+		p^{\delta}q^{1+ \delta} \\ -p^{\delta + 1} q^{\delta}
+		\end{pmatrix}.
+	\]
+	
+	\item The Hamilton function can be obtained by integrating $f_{Ham}$ with respect to $p$ and $q$. Both yield the same result
+	\[
+		H(q,p) = \frac{1}{\delta + 1}p^{\delta + 1}q^{\delta + 1} + \mathrm{const}.
+	\]
+\end{enumerate}
+
+
+\end{document}

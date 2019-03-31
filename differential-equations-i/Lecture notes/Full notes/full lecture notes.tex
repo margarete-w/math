@@ -1,0 +1,321 @@
+\documentclass[a4paper]{book}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+
+
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts, mathtools}
+\usepackage{graphics}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+
+
+\theoremstyle{plain}
+\newtheorem{satz}{Satz}
+\newtheorem{behauptung}{Behauptung}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{surfacecor}{Corollary 1}
+\newtheorem*{frage}{Frage}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem*{altdef}{Alternative Definition}
+\newtheorem{bsp}{Beispiel}
+\newtheorem*{bem}{Bemerkungen} 
+
+
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\R}{\mathbb R}
+\newcommand{\vbreak}{\vspace{8mm}}
+
+% Notizbox
+\setlength{\marginparsep}{16mm}
+\setlength{\marginparwidth}{28mm}
+
+
+
+\begin{document}
+
+\title{Differentialgleichungen I}
+\author{Viet Duc Nguyen}
+
+
+\begin{titlepage}
+	\centering
+	\includegraphics[width=0.2\textwidth]{tub_logo.png}\par\vspace{1cm}
+	{\scshape\LARGE Technische Universit\"at Berlin \par}
+	\vspace{1cm}
+	{\scshape\Large Mitschrift zu \par}
+	\vspace{1.5cm}
+	{\Huge\bfseries Differentialgleichungen I \par}
+	\vspace{2cm}
+	{\Large\itshape gehalten von Dr. Hans-Christian Kreusler \par}
+	{\Large\itshape im Wintersemester 2018/19\par}
+	\vfill
+	
+	% Bottom of the page
+	{\large Letzte \"Anderung am \today \par}
+\end{titlepage}
+
+
+
+% Inhaltsverzeichnis
+\tableofcontents
+
+\setcounter{chapter}{-1}
+\chapter[Einführung und Klassifizierung]{Einführung und Klassifizierung von Differentialgleichungen}
+\marginpar{18.10.18}
+\textbf{Beispiele von Differentialgleichungen}
+\begin{itemize}
+	\item \textbf{SIR-Modell für Krankheitsausbildung:} $S=S(t)$ beschreibt die Personen, die sich infizieren können (\textit{susceptible individuals}), $I=I(t)$ sind die Erkrankten und $R=R(t)$ sind die Gesundeten.
+	
+	\item\textbf{Durchbiegung einer Platte:} Sei $\Omega \subset \mathbb R^2$ ein Gebiet
+	
+	\item\textbf{Navier-Strokes-Gleichung:}
+	
+\end{itemize}
+
+\vbreak
+
+\textbf{6 Problemstellungen}
+\begin{itemize}
+	\item Existenz von Lösungen
+	\item Eindeutigkeit von Lösungen
+	\item Stabilität von Lösungen: Wie verhält sich das System von Gleichungen unter Veränderung von Parametern? Beispiel: Wettervorhersage, Diffusion
+	\item Qualitatives Verhalten: Regularität (wie glatt sind die Lösungen wirklich?)
+	\item Explizite Lösbarkeit
+	\item Approximierbarkeit von Lösungen
+\end{itemize}
+
+\vbreak 
+
+\textbf{Typen von Differentialgleichungen}
+\begin{itemize}
+	\item explizit vs implizit: Eine Gleichung der Form $F(x,u(x),u'(x),...) = 0$ nennt man \emph{implizit}. Kann man eine Gleichung nach der höchsten Ableitung von $u$ auflösen, so nennt man sie \emph{explizit}.
+\end{itemize}
+
+
+
+\chapter[Elementare Lösungsmethoden]{Elementare Lösungsmethoden}
+\marginpar{19.10.18}
+\section{Lineare gewöhnliche Differentialgleichungen}
+
+Einige Beispiele:
+\begin{itemize}
+	\item Betrachte die Differentialgleichung:
+		\begin{align*}
+			\begin{cases}
+				u'(t) &= \lambda u(t), \quad t>t_0, \\
+				u(t_0) &= u_0.
+			\end{cases}
+		\end{align*}
+		Hier sind $t_0, u_0, \lambda \in \R$ und wir suchen eine Lösung $u:[t_0, \infty) \to \R$.
+		
+		Dann ist \emph{die} Lösung $f$ gegeben durch
+		\[
+			u(t) = e^{\lambda(t-t_0)}u_0.
+		\]
+		\underline{Gibt es noch andere Lösungen?}
+		
+	\item Schwingungen können beschrieben werden durch
+	\begin{align*}
+		\begin{cases}
+			-u''(t) +pu'(t) +qu(t) &= 0, \quad t>0, \\
+								  u(t_0) &= u_0, \\
+								 u'(t_0) &= v_0,
+		\end{cases}
+	\end{align*}
+	mit $p,q \in \R$ und $u_0,v_0 \in \R$. Löse mit dem \textbf{Exponentialansatz}. Setze dazu
+	\[
+		u(t) \coloneqq e^{\lambda t}.
+	\]
+	Wir überprüfen nun, wann $u$ die Differentialgleichung löst. Das heißt, wir suchen nach einem $\lambda$. Wir setzen $u$ in die Differentialgleichung ein und erhalten
+	\[
+		(-\lambda^2 +p\lambda +q)e^{\lambda t} = 0.
+	\]
+	Da $e^{\lambda t} \neq 0, \forall t \in \R$ ist, muss das Polynom $-\lambda^2 +p\lambda +q = 0$ sein. Wie muss also das $\lambda$ gewählt werden, damit das Polynom verschwindet? 
+	
+	\underline{1.Fall:} Es existieren für das Polynom zwei verschiedene Nullstellen $\lambda_1, \lambda_2 \in \mathbb C$. Die Lösungen lauten $$u_1(t) = e^{\lambda_1t}, \, u_2(t) = e^{\lambda_2t}$$.
+	
+	\underline{2.Fall:} Das Polynom besitzt eine doppelte Nullstelle bei $\lambda \in \R$. Die Lösungen lauten $$ u_0(t) = e^{\lambda t}, u_1(t) = te^{\lambda t}.$$
+	
+	Das Problem wurde also auf ein Nullstellenproblem zurückgeführt.
+\end{itemize}
+
+\vbreak
+
+Als nächstes befassen wir uns mit dem \textbf{Superpositionsprinzip}. Dies ist ein Konzept in der \emph{linearen Algebra} und findet Anwendung in der Lösungstheorie für lineare Differentialgleichungen. 
+
+Seien $X,Y$ Vektorräume und $A: X \to Y$ eine lineare Abbildung. Das Problem lautet:
+ $$\text{Zu einem $f \in Y$ finde ein $x \in X$, sodass $Ax = f.$}$$
+ 
+ Das Problem heißt \emph{homogen}, falls $f = 0$. Ansonsten heißt es \emph{inhomogen}.
+\vbreak
+
+\textbf{Superpositionsprinzip}
+Die Lösungsmenge eines homogenen Problems ist ein Vektorraum, insbesondere gibt es eine Basis $x_1,...,x_n$ von Lösungen, sodass jede Lösung eine Linearkombination von $x_1,...,x_n$ ist. Also $$ x=\sum^n_{i=1}c_ix_i. $$
+
+Die Lösungsmenge des inhomogenen Problems ist ein zum Lösungsraum des homogenen Problems affiner Raum, d.h. ist $x_p$ eine Lösung des inhomogenen Problems (genannt \emph{partikuläre Lösung}) und $x_{allg}$ die allgemeine Lösung des homogenen Problems, so ist die allgemeine Lösung des inhomogenen Problems gerade $$ x_{allg,inh} = x_p + x_{allg}. $$
+
+\subsection{Das homogene Problem}
+Das homogene lineare DGL $n$-ter Ordnung hat die Form
+$$ u^{(n)} + a_{n-1}u^{(n-1)} + ... + a_1u' + a_0u = 0.$$
+Beachte, dass $a_0, ..., a_{n-1}$ Funktionen sein dürfen!
+\marginpar{\emph{konstante Koeffizienten, beliebige Ordnung}}
+Der Lösungsraum ist ein $n$-dimensionaler Raum, d.h. wir suchen $n$ linear unabhängige Lösungen $u_1,...,u_n$. Sind nun \underline{$a_0,...,a_{n-1}$ konstant}, so funktioniert der Exponentialansatz
+$$ u(t) \coloneqq e^{\lambda t}, \quad \lambda \in \mathbb C. $$ 
+Die charakteristische Gleichung lautet
+$$ \lambda^n + a_{n-1}\lambda^{n-1} + ... + a_1\lambda + a_0 = 0. $$
+Ist dann $\lambda_i$ eine $\mu_i$-fache Nullstelle, so sind
+$$ t \mapsto e^{\lambda_it},  t \mapsto te^{\lambda_it}, ...,  t \mapsto t^{\mu_i-1}e^{\lambda_it}, $$
+linear unabhängige Lösungen.
+
+\vbreak
+
+\marginpar{\emph{nicht konstante Koeffizienten, erste Ordnung}}
+Betrachte nun den Fall, falls die \underline{$a_0,...,a_{n-1}$ nicht konstant} sind. Sei $n=1$.
+\begin{align*}
+	&u'(t) + a_0(t) u(t) = 0\\ 
+	\text{ bzw. } \; &u'(t) = -a_0(t)u(t).
+\end{align*}
+Dann ist für beliebige $t_0 \in \R$ 
+$$ u(t) \coloneqq \exp{\left(- \int^t_{t_0}a_0(s) ds\right)} \cdot c, \quad c \in \R $$
+eine allgemeine Lösung des Problems, denn es gilt
+\[
+	u'(t) = -a_0(t) \underbrace{\exp{\left(- \int^t_{t_0}a_0(s) ds\right)} \cdot c}_{=u(t)} = -a_0(t)u(t).
+\]	
+
+
+Betrachten wir ein zugehöriges Anfangswertproblem
+\[
+	\begin{cases}
+		u'(t) +a_0(t)u(t) = 0 \\
+		u(t_0) = u_0
+	\end{cases}
+\]
+Dann ist 
+$ u(t) \coloneqq \exp{\left(- \int^t_{t_0}a_0(s) ds\right)} \cdot u_0 $ die einzige Lösung!
+\vbreak
+
+\marginpar{\emph{nicht konstante Koeffizienten, höhere Ordnung}}
+Ist $n>1$, so kann das \textbf{Reduktionsverfahren nach d'Alembert} helfen. Wenn $u_1$ eine bereits bekannte Lösung ist, so verfolgen wir den Ansatz
+\[
+	u_2(t) \coloneqq u_1(t) \int^t_{t_0}v(s)ds
+\]
+für eine \emph{vorerst} unbekannte Funktion $v$.
+
+Wir führen das Verfahren am Beispiel einer Differentialgleichung zweiter Ordnung durch. Sei das folgende  DGL gegeben:
+\begin{align}\label{elemantary:dalembert}
+	u''(t) + p(t)u'(t) + q(t)u(t) = 0.
+\end{align}
+Wir leiten $u_2$ mit der Produktregel ab und erhalten
+\begin{align*}
+	u_2'(t) &= u_1'(t) \int^t_{t_0}v(s)ds + u_1(t)v(t) \\
+	u_2''(t) &= u_1''(t)  \int^t_{t_0}v(s)ds + u_1'(t)v(t) + u_1'(t)v(t) + u_1(t)v'(t) \\
+	&= u_1''(t)  \int^t_{t_0}v(s)ds + 2u_1'(t)v(t) + u_1(t)v'(t).
+\end{align*}
+Setze $u_2$ in das DGL \eqref{elemantary:dalembert} ein. Damit ergibt sich
+\begin{align*}
+u''(t) +p(t)u'(t) +q(t)u(t) =
+	& u_1''(t)  \int^t_{t_0}v(s)ds + 2u_1'(t)v(t) + u_1(t)v'(t) \\
+	 & \qquad+ p(t)u_1'(t) \int^t_{t_0}v(s)ds + u_1(t)v(t) \\
+	 & \qquad+ q(t)u_1(t)\int^t_{t_0}v(s)ds \\
+	= & \int^t_{t_0} v(s)ds \cdot \underbrace{\big(u_1''(t) +p(t)u_1'(t) + q(t)u_1(t)\big)}_{=0} \\
+	& \qquad +u_1(t)v'(t) + 2u_1'(t)v(t) + u_1(t)v(t) = 0.
+\end{align*}
+
+Finden wir also ein $v$, sodass $v$ das DGL erster Ordnung mit $$u_1v' + 2u_1'v + u_1v=0$$ löst, so haben wir eine weitere Lösung für unser DGL \eqref{elemantary:dalembert} gefunden.
+
+\subsection{Das inhomogene Problem}
+Die Differentialgleichung hat die Form $$u^{(n)} + a_{n-1}u^{(n-1)} + ... + a_1 u' + a_0u = f.$$
+
+\textbf{Variation der Konstanten.} Sei $u_{allg}$ die allgemeine Lösung des zugehörigen, homogenen Problems. $$u_{allg} (t) = \sum^n_{i=1} c_iu_i(t), \quad c_i \in \R$$ Wir verfolgen den Ansatz $$u_p(t) = \sum^n_{i=1}c_i(t)u_i(t)$$ für zu bestimmende $c_1,...,c_n$, um eine Lösung der inhomogenen Differentialgleichung zu erhalten.
+
+\vbreak 
+
+\underline{Im Allgemeinen ist nicht klar, ob oder wie man zu einer Lösung kommt.} Ist aber $n=1$, so haben wir
+\[
+	u'(t) + a(t)u(t) = f(t).
+\]
+
+Eine partikuläre Lösung ist gegeben durch
+\[
+	u_p(t) = \int^t_{t_0} \exp{\left(- \int^t_s a(r)dr\right)} f(s) ds.
+\]
+
+Eine allgemeine Lösung des inhomogenen Problems für $n=1$ lautet nach dem Superpositionsprinzip:
+\vbreak
+
+\begin{framed}\textbf{Formel von Duhamel}
+\[
+	u(t) = \underbrace{\exp{\left(-\int^t_{t_0}a(s)ds\right)}c}_{=u_{allg, hom}} + \underbrace{\int^t_{t_0} \exp{\left(- \int^t_s a(r)dr\right)} f(s) ds}_{=u_p}, \quad c \in \R.
+\]
+\end{framed}
+
+
+\subsection{Umschreiben in ein System 1. Ordnung}
+Betrachten wir 
+\begin{align*}\label{umschreiben:default}
+	u^{(n)} + a_{n-1}u^{(n-1)}+...+a_1u'+a_0u = f. \tag{$*$}
+\end{align*} 
+Ist $u$ eine Lösung dieser Differentialgleichung und setzen wir 
+\begin{align*}
+	v_0 &= u \\
+	 v_1 &= u'\\
+	 &...\\
+	  v_{n-1} &= u^{(n-1)}\\
+	   \bar v &= \begin{pmatrix}v_0 \\ \vdots \\ v_{n-1} \end{pmatrix},
+\end{align*}
+dann erfüllt $\bar v$ die Differentialgleichung 
+\begin{align*}
+	\underbrace{
+	\begin{pmatrix}
+		v_0 \\ \vdots \\ \vdots \\  \vdots   \\ v_{n-1}
+	\end{pmatrix}' 
+	}_{\bar v'}
+	+
+	\underbrace{
+	\begin{pmatrix}
+		0 & -1 & 0  & 0 & ... & 0 \\
+		0 &  0 & -1 & 0 & ... & 0 \\
+		 0  &  0   &  0   & \ddots & 0 &0 \\
+		 0  &   0  &   0  &      0      & \ddots & 0 \\
+		 0 & 0 & 0 & 0& 0 & -1 \\
+		a_0 & a_1 & ... & ...  & ... & a_{n-1} 
+	\end{pmatrix}
+	}_{A}
+	\underbrace{
+	\begin{pmatrix}
+	v_0 \\ \vdots \\ \vdots \\  \vdots   \\ v_{n-1}
+	\end{pmatrix}
+	}_{\bar v}
+	=
+	\underbrace{
+	\begin{pmatrix}
+	0 \\ \vdots \\ \vdots \\  0   \\ f
+	\end{pmatrix}}_{\tilde f}.
+\end{align*}
+
+In der $n$-ten Zeile steht die Differentialgleichung. $\bar v$ löst also
+\[ \label{umschreiben:first}
+	\bar v' + A\bar v = \tilde f \text{ und $\bar v$ ist $\R^n$-wertig}. \tag{$**$}
+\]
+Ist umgekehrt $\bar v$ eine Lösung von \eqref{umschreiben:first}, so löst
+\[
+	u \coloneqq v_0
+\]
+die Differentialgleichung \eqref{umschreiben:default}.
+	
+\end{document}

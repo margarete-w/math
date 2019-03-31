@@ -1,0 +1,191 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{geometry} 
+\usepackage{marvosym}
+\usepackage[toc,titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage{framed}
+\usepackage{enumitem}
+\usepackage{parskip}
+
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\thm@space@setup{%
+	\thm@preskip=5mm
+	\thm@postskip=\thm@preskip % or whatever, if you don't want them to be equal
+}
+\makeatother
+
+% bold title for optional title in theorems
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{collorary}[theorem]{Collorary}
+\newtheorem{proposition}{Proposition}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+% roman number
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+
+\begin{document}
+
+\title{Cheat sheet: Multiple Riemann integral}
+\author{Viet Duc Nguyen\\ Technical University of Berlin\\ Analysis III}
+\date{December 23, 2018}
+\maketitle
+\tableofcontents
+
+\setcounter{section}{-1}
+\section{Preface}
+A concise overview of the multiple integral theory for the Analysis III class at the Technical University in the winter term of 2018. Bullet points with a $(\star)$ mean that a proof exists on the auxiliary proof sheet. This sheet is primarily written for me as a learning guide but may be useful for others. Feel free to use it.
+
+\section{One dimensional integral}
+\begin{itemize}
+	\item Let $f: [a,b] \times U$ be continuous and continuously partially differentiable in $U \subset \mathbb R^n$. Then, 
+	\[
+		\frac{d}{d\mathbf u}\int^b_{a}f(x,\mathbf u) dx = \int^b_a \frac{d}{d\mathbf u}f(x,\mathbf u) dx
+	\]
+	This derivative is continuous.
+	
+	In words, one may differentiate under the integral sign $(\star)$.
+\end{itemize}
+
+\section{Multiple integral on compact cuboids}
+\begin{itemize}
+	\item Let $f: [a,b] \times U \to \mathbb R$ with $U \subset \mathbb R^{n}$ be continuous. Then, the function 
+	\[
+	(u_1,...,u_{n}) \mapsto \int^{a}_b f(x,u_1,...,u_n) dx
+	\] 
+	is continuous $(\star)$.
+	\item Let $Q$ be a compact cuboid $Q = [a_1,b_1] \times ... \times [a_n,b_n] \subset \mathbb R^d.$ The \textbf{integral} of a continuous function $f: Q \to \mathbb R$ on a \underline{compact cuboid} $Q$  is defined as
+	\[
+		\int_Q f(\mathbf{x})d \mathbf x = \int^{b_n}_{a_n}...\left(\int^{b_2}_{a_2}\left(\int^{b_1}_{a_1} f(x_1,...,x_n) dx_1 \right)dx_2\right)... dx_n.
+	\]
+	Such integral is also called \emph{iterated integral}. The integral is well defined due to the previous theorem; integration of a continuous function with respect to a single variable yields a continuous function which can be further integrated.
+	
+	\item \textbf{Theorem of Fubini:} Let $f: Q \to \mathbb R$ be continuous. Then, one may change the order of integration $(\star)$.
+\end{itemize}
+
+\section{Multiple integral on $\mathbb R^d$}
+We generalise the integral of a continuous functions $f$ on \underline{the whole $\mathbb R^d$ space}.
+\begin{itemize}
+	\item The \textbf{support} is defined as 
+	\[
+		\mathrm{supp} f = \overline{ \{ \mathbf x \in \mathbb R^d : f(\mathbf x) \neq 0 \}}.
+	\]
+	So, all $x$ for which $f(x) \neq 0$ is contained in the support.
+	 
+	\item The class of functions for which the integral is defined is given by the \textbf{space of continuous functions with compact support}:
+	\[
+		\mathcal C_{\mathrm c} = \{ f : f \text{ is continuous and } \mathrm{supp}f \text{ is compact} \}.
+	\]
+	In $\mathbb R^d$, one can also write 
+	\[
+		\mathcal C_{\mathrm c} = \{ f : f \text{ is continuous and } \mathrm{supp}f \text{ is bounded} \}.
+	\]
+	In words, we do only integrate those functions which are \underline{continuous on $\mathbb R^d$} and whose \underline{values are zero outside a compact cuboid}.
+	
+	\item The \textbf{integral} for $f \in \mathcal C_{\mathrm c}$ on \underline{the whole $\mathbb R^d$ space} is defined as:
+	\begin{align}\label{integral}
+		\int_{\mathbb R^d} f(\mathbf x) d\mathbf x = \int_Q f(\mathbf x)d \mathbf x,
+	\end{align}
+	where $Q$ is a compact cuboid that contains the support of $f$.
+\end{itemize}
+
+\section{Linear, monotonic and translation-invariant functionals} 
+A \emph{functional} maps a function to a real number. One example is the integral. The integral takes a function and assigns a real value to the function. \\
+
+\begin{itemize}
+	\item The integral $\int_{\mathbb R^d}: \mathcal C_{\mathrm c} \to \mathbb R$ defined in \eqref{integral} is a \emph{linear}, \emph{monotonic} and \emph{translation-invariant} functional. Translational invariance means
+	\[
+		\forall \mathbf x \in \mathbb R^d: \int \theta_{\mathbf x} f(\mathbf u) d\mathbf u = \int f(\mathbf u) d\mathbf u
+	\]
+	
+	\item Let $J$ be a linear and monotonic functional. Let $(f_n)_{n \in \mathbb N} \subset \mathcal C_c(\mathbb R^d)$ such that there is a compact cuboid $Q \supset \mathrm{supp}(f_n)$ for all $n$ and $f_n \to f \in \mathcal C_c(\mathbb R^d)$ uniformly. Then $\lim J(f_n) = J(f)$. $(\star)$ 
+	
+	\item Let $J$ be a linear and translation-invariant function in $\mathbb R^d$. It holds
+	\[
+		J(\Psi_{\frac{\epsilon}{2}}) = \frac{1}{2^d}J(\Phi_{\epsilon}).
+	\]
+	
+	\item Every function $f \in \mathcal C_c(\mathbb R^d)$ can be uniformly approximated by
+	\[
+		f - \sum_{k \in \mathbb Z^d} f(k\epsilon)\theta_{k\epsilon}\Psi_{\epsilon}.
+	\]
+	
+	\item Every linear, monotonic and translation-invariant functional is unique up to a constant $c$. For every $f \in \mathcal C_c(\mathbb R^d)$ there exists a constant $c$ such that $J(f) = cI(f)$. It even holds that there is one $c$ for all $f$ such that $J(f) = cI(f)$. This $c$ can be chosen as $c = J(\Psi)$. $(\star)$
+\end{itemize}
+
+\section{Integration by substitution} 
+\begin{itemize}
+	\item $J(Af)$ is a linear, monotonic and translation-invariant functional if $A \in \mathrm{GL}(\mathbb R^d)$.
+	
+	\item Some linear substituion (all $A$ must be invertible): 
+	\begin{itemize}
+		\item  if $A$ is orthogonal, $\int_{\mathbb R^d} f(Ax) dx = \int_{\mathbb R^d} f(x)dx$. $(\star)$
+		\item If $A = \mathrm{diag}(a_1,...,a_d)$ then $\int f(Ax) dx = \frac{1}{a_1 \cdot ... \cdot a_d}\int f(x)dx$. 
+	\end{itemize}
+\end{itemize}
+
+\section{Integral of semicontinuous functions}
+\begin{itemize}
+	\item Let $A$ be non-degenerate. Then $\int f(Ax+b)dx = \frac{1}{|\det A|}\int f(x)dx$ for every $f \in \mathcal H^{\uparrow}(\mathbb R^d) \cup \mathcal H^{\downarrow}(\mathbb R^d)$.
+	
+	\item Theorem of Fubini for semicontinuous functions. Let $f \in \mathcal H^{\uparrow}(\mathbb R^d)$. The map $(x_{k+1},...,x_d) \mapsto f(x)$ is in $\mathcal H^{\uparrow}(\mathbb R^k)$. Then 
+	\[
+		F(x_{k+1},...,x_d) \coloneqq \int_{\mathbb R^k}f(x)dx_1...dx_d.
+	\]
+	$F$ is well defined and can be integrated:
+	\[
+		\int_{\mathbb R^{d-k}} F(x_{k+1},...,x_d) dx_{k+1}...dx_d = \int_{\mathbb R^d} f(x)dx.
+	\]
+\end{itemize}
+
+\section{Volumes} 
+\begin{itemize}
+	\item The volume of a compact set $K$ is defined as $\mathrm{vol}(K) \coloneqq \int_K 1 d\mathbf x = \int_{\mathbb R^d} \mathbb \chi_{K}(\mathbf x) d\mathbf x$.
+	
+	\item $\mathrm{vol}(K_1 \times K_2) = \mathrm{vol}K_1 \cdot \mathrm{vol}K_2$
+	
+	\item $\mathrm{vol}(AK+b) =|\det A| \mathrm{vol}(K)$. Be careful, it is not $|\det A|^{-1}$. $(\star)$
+	
+	\item $\mathrm{vol}(rK) = r^d\mathrm{vol}K$. $(\star)$
+	
+	\item Cavalieri's principle: Let $K$ be compact and $$\mathrm{Vol}_d(K) = \int_{\mathbb R} \mathrm{Vol}_{d-1}K_t dt$$ and $K_t \coloneqq \{ (x_1,...,x_{d-1}) : (x_1,...,x_{d-1}, t) \in K \}$. $(\star)$
+	
+	\item Let $A \subset \mathbb R^{d-1}$ be compact and $f: A \to [0,\infty)$. The volume of $K = \{ (x,y) : x \in A, y \leq f(x) \}$  is given by $\mathrm{vol}_d(K) = \int_A f(x)dx$.
+	
+	\item The volume of a general cylinder $B \times [0,h]$ is given by $\mathrm{vol}(Z) = \mathrm{vol}(B) \cdot h$.
+	
+	\item The volume of a parallelepiped $K = \{ \sum \lambda_i a_i : \lambda_i \leq 1 \}$ is given by $\mathrm{vol}(K) = |\det A|$.
+\end{itemize}
+
+\end{document}
