@@ -1,0 +1,47 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{geometry}
+\setlength{\columnsep}{12mm}
+\geometry{
+ left=12mm,
+ right=12mm,
+ bottom=24mm,
+ top = 16mm
+}
+
+
+\begin{document}
+
+\section*{Homework 01}
+
+\subsection*{General}
+\begin{enumerate}
+	\item We show that $||A||_2 = \sqrt{\lambda_{\mathrm{max}}(A^HA)}$ for any matrix $A \in \mathbb C^{n \times m}$.
+	\begin{proof}
+		All eigenvalues of $A^HA$ are real and nonnegative. Since $A^HA$ is HPSD we can write it as $U^HA^HAU = diag(\lambda_1,...,\lambda_m) = D$. Then with $y = U^Hx$
+		\[
+			||A||_2^2 = \max_{||x|| = 1} ||Ax||_2 = \max_{||x|| = 1} \langle A^HAx,x \rangle = \max_{||Uy|| = 1} \langle A^HAUy, Uy \rangle = \max_{||y|| = 1} \langle Dy,y \rangle \leq \lambda_{\mathrm{max}}||y||^2_2
+		\]
+		We have a maximum if $x$ equals the unit eigenvector of the largest eigenvector of $A^HA$. Then $y = e_j$ with $\lambda_j$ ist the largest eigenvector. Thus, $||A||^2_2 = \lambda_{\mathrm{max}}$.
+	\end{proof}
+\end{enumerate}
+
+\subsection*{Exercise 1}
+\begin{enumerate}
+	\item Show that $A^HA = 0 \implies A = 0$. \begin{proof}
+		Let $b_{ij}$ denote the $i,j$ entry of $A^HA$. It is $b_{ii} = \sum_{k=1}^n \bar a_{ki}a_{ki} = ||a_i||^2$. This means that all columns $a_i$ must equal zero.
+	\end{proof}
+\end{enumerate}
+
+\subsection*{Exercise 2}
+
+\subsection*{Exercise 3}
+
+
+\end{document}

@@ -128,6 +128,14 @@
     \item \textbf{$\mathbf{LDL^H}$ decomposition:} Given \emph{Hermitian} $A \in \mathbb C^{n \times n}$ with $A(1:k,1:k)$ is nonsingular for all $k = 1,...,n$. We can find \emph{real, nonsingular, unique, diagonal} $D \in \mathbb R^{n \times n}$ and \emph{unique} unit lower triangular $L$ such that $A = LDL^H$.
     \item \textbf{Cholesky decomposition:} Given a HPD matrix $A \in \mathbb C^{n \times n}$ we can write it as $A = LL^H$ where $L$ is a lower, unique, triangular matrix. $L$ has positive entries on its diagonal.
     \item \textbf{Schur decomposition:} Let $A \in \mathbb C^{n \times n}$. Then $A = URU^H$ where $U$ is unitary and $R$ is upper triangular matrix.
+    \item \textbf{Spectral decompositions of normal matrices}:
+    
+    	(a) $A$ is normal iff $A$ can unitarily diagonalized, i.e. $A = UDU^H$ with $U$ is unitary and $D$ is diagonal.
+    	
+    	(b) $A$ is Hermitian iff $A$ can be unitarily diagonalized and all the eigenvalues of $A$ are real.
+    	
+    	(c) $A$ is unitary iff $A$ can unitarily diagonalized and all $|\lambda | = 1$.
+    
 	\item \textbf{Singular Value decomposition:} Let $A \in \mathbb C^{n \times m}$ with $rank(A) = r$. Then $A = U\Sigma_+ V^H$ with $U \in \mathbb C^{n \times n}$ and $V \in \mathbb C^{m \times m}$ unitary and $\Sigma_+ = diag(\sigma_1,...,\sigma_r), \sigma_1 \geq ... \geq \sigma_r > 0$, $\Sigma = \begin{pmatrix}
 			\Sigma_+ & 0 \\ 0 & 0
 	\end{pmatrix}$. Alternatively, $A = \sum^r_{i = 1} \sigma_i u_i  v_i^H$.
@@ -219,6 +227,26 @@
     \end{pmatrix} = \begin{pmatrix}
     	\lambda & x^HAYZ \\ 0 & \tilde R
     \end{pmatrix}$ which is relatively easy.
+    
+    \item 
+    \begin{enumerate}
+	    \item Let $A$ be normal. We have $A = URU^H$ by Schur decomposition and $A^HA = UR^HU^HURU^H = AA^H$ implies that $R^HR = RR^H$. Write $R = \begin{pmatrix}
+	    	R_1 & r \\ 0 & p
+	    \end{pmatrix}$. This gives
+	    \[
+	    	R^HR = \begin{pmatrix}
+	    		R_1^HR_1 & R_1^Hr \\
+	    		r^HR_1 & ||r||^2_2 + |p|^2
+	    	\end{pmatrix} = RR^H = \begin{pmatrix}
+	    		R_1R_1^H + rr^H & r \bar p \\
+	    		p r^H & |p|^2
+	    	\end{pmatrix}
+	    \]
+	    and we see that $r = 0$. Because $R$ is normal we can apply the same argument for $R_1$ inductively. Now let $A$ be unitarily diagonalizable. We want to show that $A$ is normal. $A^HA = UR^HU^HURU^{H} = U R^H R U^H = U R R^H U^H = AA^H$.
+	    
+	    \item Let $A$ be Hermitian. Then $A = UDU^H \implies A^H = A \iff UD^HU^H = UDU^H$. We see that $D^H = D$ and the eigenvalues are real. Now let $A$ be unitarily diagonalizable with real eigenvalues. Then $A = UDU^H = UD^HU^H = A^H$.
+    \end{enumerate}
+    
     \item Consider $A^HA$. It is HPSD, for $x^HA^HAx = ||Ax||^2_2 \geq 0$. Thus, it is unitarily diagonalizable: $V^H A^HAV = diag(\sigma_1^2,...,\sigma_r^2,0,...,0)$ with \underline{$r = rank(A) = rank(A^HA)$}. Partition $V = [V_1,V_2]$ and $V_1 \in \mathbb C^{m \times r}$. Then, $V_2^HA^HAV_2 = 0 \implies AV_2 = 0$. Define $U_1 = AV\Sigma^{-1}_+$ where $\Sigma_+ = diag(\sigma_1,...,\sigma_r)$. We see that it $U_1$ is unitary which means $U_1^HU_1 = \Sigma_+^{-H}V^HA^HAV\Sigma_+^{-1} = \Sigma^{-H} \Sigma_+^2 \Sigma^{-1} = I_r$. So, we find $U = [U_1,U_2]$ such that $U$ is unitary. Finally, $$U^H A V = \begin{pmatrix}
     		U_1^HAV_1 & U_1^HAV_2 \\ U_2^HAV_1 & U_2^HAV_2
     	\end{pmatrix} = \begin{pmatrix}
@@ -231,6 +259,10 @@
 \section*{General questions}
 \begin{enumerate}
 	\item Why is $rank(A) = rank(A^HA)$ for any matrix $A \in \mathbb C^{n \times m}$?
+
+	\textbf{Answer:} Show that the null spaces are equal. If $x \in N(A)$, then $Ax = 0 \implies A^HAx = 0$. Now regard $A^HAx = 0$. Multiply by $x^H$ from the left and we get $x^HA^HAx = || Ax ||^2_2 = 0$ which implies that $Ax = 0$.
+	
+	\item Schur decomposition: Let $U = [u_1,...,u_n]$. Why do $u_1,...,u_k$ build an invariant subspace for $A$? That means: $Au_k = span (u_1,...,u_k)$. Why is the first column $u_1$ a unit eigenvector of the first eigenvalue of $r_{11}$?
 \end{enumerate}
 
 \end{document}

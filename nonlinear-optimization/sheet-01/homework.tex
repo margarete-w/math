@@ -1,0 +1,329 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{cleveref}
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{1.5ex plus .2ex}
+
+    
+\usepackage{geometry}
+\setlength{\columnsep}{32mm}
+\geometry{
+ left=22mm,
+ right=22mm,
+ bottom=32mm,
+ top = 20mm
+}
+
+
+
+\newtcbtheorem[auto counter,number within=section,
+	crefname={Theorem}{Theorem}]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=8pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=8pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\section*{Problem Sheet 01}
+\subsection*{Exercise 1.2}
+\textbf{Zu zeigen:} $A$ ist positiv definit $\iff$ die lineare Abbildung $f(x) = \langle Ax,x \rangle$ ist stark positiv.
+
+Wir brauchen folgende Lemmata:
+
+\begin{lemma}{}{}
+	Sei $\langle \cdot, \cdot \rangle$ das euklidische Skalarprodukt. Für alle reelle Matrizen $A \in \mathbb R^{n \times n}$ gilt, dass $\langle Ax,x \rangle = \langle x,A^Tx \rangle$.	
+\end{lemma}
+\begin{proof}
+	Dies sieht man leicht, denn $\langle x,y \rangle = x^Ty$. Also: $\langle Ax,x \rangle = (Ax)^Tx = x^TA^Tx = \langle x,A^Tx \rangle$.
+\end{proof}
+
+\begin{lemma}{}{}
+	Sei $A \in \mathbb R^{n \times n}$ eine symmetrische, positiv definite Matrix. Dann gibt es ein $\alpha > 0$, sodass 
+	\begin{equation*}
+		\forall x \in \mathbb R^{n}: f(x) \geq \alpha ||x||^2.
+	\end{equation*}
+\end{lemma}
+
+\begin{proof}
+	Da $A \in \mathbb R^{n \times n}$ symmetrisch und positiv definit ist, gibt es eine orthogonale, reelle Matrix $U$ und eine reelle Diagonalmatrix $D = diag(\lambda_1,...,\lambda_n)$ mit $\lambda_i > 0$ für alle $i = 1,...,n$, sodass $A = UDU^T$. Daher kann man $f$ auch darstellen als $f(x) = \langle Ax,x \rangle = \langle UDU^Tx,x \rangle = \langle UDx, Ux \rangle$, wobei sich letztere Gleichheit aus Lemma 0.1 ergibt. Nun ist das Skalarprodukt invariant gegenüber orthogonale Abbildungen und daher $f(x) = \langle Dx,x \rangle$.
+	
+	Sei $\lambda^- = \min \lambda_i$ und wähle $\alpha = \lambda^- > 0$. Dann ist $(D-\alpha I)$ eine positiv semidefinite Matrix, denn es besitzt nur Eigenwerte $\lambda_i - \lambda^- \geq 0$. 
+	
+	Wir erhalten schließlich: $$\forall x \in \mathbb R^n: f(x) - \alpha ||x||^2 = \langle Dx,x\rangle - \langle \alpha x,x \rangle = \langle (D-\alpha I)x,x \rangle \geq 0,$$
+	woraus dann folgt: $f(x) \geq \alpha ||x||^2$ für alle $x \in \mathbb R^n$.
+\end{proof}
+
+\begin{lemma}{}{}
+	Sei $A \in \mathbb R^{n \times n}$ positiv definit. Dann ist der symmetrische Teil von $A$ positiv definit, d.h. $\langle \frac{1}{2}(A+A^T)x,x \rangle > 0$ für alle $x \in \mathbb R^n \setminus \{ 0 \}$.
+\end{lemma}
+\begin{proof}
+	Sei $x \in \mathbb R^n$ mit $x \neq 0$. Nach Lemma 0.1 gilt, dass $\langle \frac{1}{2}(A+A^T)x,x \rangle = \frac{1}{2}\langle Ax, x \rangle + \frac{1}{2} \langle x,Ax \rangle = \langle Ax,x \rangle > 0$. 
+\end{proof}
+
+\textbf{Eigentliche Beweis:} $\implies$: Sei $A \in \mathbb R^{n \times n}$. Wir zerlegen $A$ in $A = \frac{1}{2}(A+A^T) + \frac{1}{2}(A-A^T)$. Also:
+\begin{align*}
+		f(x) &= \langle Ax,x \rangle \\
+			 &= \langle \frac{1}{2}(A+A^T)x,x \rangle + \langle \frac{1}{2}(A-A^T)x,x \rangle\\
+			 &= \langle \frac{1}{2}(A+A^T)x,x \rangle + \frac{1}{2}(\langle Ax,x \rangle - \langle x,Ax \rangle) \\
+			 &= \langle \frac{1}{2}(A+A^T)x,x \rangle.
+\end{align*}
+Mit Lemma 0.3 ergibt sich, dass $\frac{1}{2}(A-A^T)$ positiv definit ist und mit Lemma 0.2 folgt, dass $f(x) \geq \alpha ||x||^2$, was zu zeigen war.
+
+$\impliedby$: Sei $f(x) \geq \alpha ||x||^2$ für ein $\alpha > 0$ und für alle $x \in \mathbb R.$ Da $||x|| > 0$ für alle $x \in \mathbb R^n \setminus \{ 0 \}$ und $||x|| = 0 \iff x = 0$, ist $f(x) \geq \alpha ||x||^2 > 0$ für alle $x \in \mathbb R \setminus \{ 0 \}$.
+
+
+
+\subsection*{Exercise 1.3}
+Sei $A \in \mathbb R^{n \times n}$ und $b \in \mathbb R^n$.
+
+\textbf{Zu zeigen:} $f(x) = \frac{1}{2}\langle Ax,x \rangle + \langle b,x \rangle$ ist koerzitiv.
+
+\begin{proof}
+	Sei $(x_n)_{n \in \mathbb N} \subset \mathbb R^n$ mit $||x_n|| \to \infty$ für $n \to \infty$. Für beliebiges $n$ erhalten wir
+	\[
+		f(x_n) = \langle Ax_n,x_n \rangle +\langle b,x_n \rangle \geq  \alpha || x_n || + \langle b,x_n \rangle.
+	\]
+	Bilden wir den Grenzübergang, so ist 
+	\[
+		\lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} (\alpha || x_n || + \langle b,x_n \rangle) = \lim_{n \to \infty} \alpha || x_n || = \infty.
+	\]
+\end{proof}
+
+\textbf{Zu zeigen:} $f(x) = \frac{1}{2}\langle Ax,x \rangle + \langle b,x \rangle$ besitzt ein globales Minimum.
+
+Wir beweisen das folgende Theorem.
+
+\begin{theorem}{}{}
+Sei $f: \mathbb R^n \to \mathbb R$ eine stetige und koerzitive Funktion. Dann besitzt $f$ ein globales Minimum.
+\end{theorem}
+
+\begin{proof}
+Sei $f$ koezitiv. Das heißt, es gibt ein $r > 0$, sodass für alle $x$ mit $||x|| > r$ gilt:
+\[
+	f(x) \geq f(0).
+\]
+Betrachte dann die kompakte Menge $B_r(0) = \{ x \in \mathbb R^n : || x || \leq r \}$. Wegen der Stetigkeit von $f$ nimmt $f$ auf $B_r(0)$ ein Minimum an, d.h. es gibt ein $x^* \in B_r(0)$ mit
+\[
+	\forall x \in B_r(0): f(x^*) \leq f(x)
+\]
+Insbesondere gilt auch $f(x) \geq f(0) \geq f(x^*)$ für alle $x$ mit $||x|| > r$. Damit gibt es ein globales Minimum von $f$.
+\end{proof}
+
+\textbf{Eigentliche Beweis}: Nun ist $f$ koerzitiv und stetig. Mit dem Theorem ergibt sich, dass $f$ ein globales Minimum besitzt.
+
+\subsection*{Exercise 1.4}
+\begin{theorem}{}{}
+Sei $X$ ein metrischer Raum. Sei $f: X \to \mathbb R$ eine beliebige Funktion. Wenn $epi(f)$ abgeschlossen ist, so ist $f$ unterhalbstetig.
+\end{theorem}
+\begin{proof}
+Sei $epi(f)$ abgeschlossen, sei $x \in \mathbb R^n$ beliebig und $y < f(x)$, sodass $(x,y) \notin epi(f)$. Weil $epi(f)$ abgeschlossen ist, gibt es eine Umgebung $\epsilon > 0$ und ein $\delta > 0$, sodass 
+\[
+	(B_{\epsilon}(x) \times B_{\delta}(y)) \cap epi(f) = \emptyset.
+\]
+Das bedeutet insbesondere auch
+\[
+	B_{\epsilon}(x) \times (-\infty, y - \delta) \cap epi(f) = \emptyset.
+\]
+Also gilt: $f(z) \geq y - \delta$ für alle $z \in U_{\epsilon}(x)$. Jetzt kann man ein $\tilde \delta > 0$ so wählen, dass $f(x) - \tilde \delta = y - \delta$ gilt (denn $y < f(x)$). Damit erhalten wir $f(z) \geq f(x) - \tilde \delta$ für alle $z \in U_{\epsilon}(x)$. $f$ ist damit unterhalbstetig auf ganz $X$, denn $x$ war beliebig.
+\end{proof}
+
+\begin{theorem}{theorem}{lol}
+Eine unterhalbstetige Funktion $f: X \to \mathbb R$ ($X$ ist ein metrischer Raum) nimmt auf einem Kompaktum ein globales Minimum an.
+\end{theorem}
+\begin{proof}
+Aus der Analysis Vorlesung wissen wir, dass für eine unterhalbstetige Funktion $f$ gilt:
+\[
+	\forall x \in X: \liminf_{y \to x} f(y) \geq f(x). 
+\]
+Sei $m = \inf_{x \in X}f(x)$ und sei $(x_n)_{n \in \mathbb N}$ eine Folge mit $f(x_n) \to m$. Wir wissen, dass $X$ kompakt ist. Also gibt es nach Satz von Bolzano Weierstraß eine konvergente Teilfolge von $(x_n)_{n \in \mathbb N}$, die wir mit $(y_{n})_{n \in \mathbb N}$ bezeichnen. Natürlich gilt $f(y_n) \to m$ und bezeichne $y = \lim_{n \to \infty} y_n$. Es gilt
+\[
+	f(y) \leq \liminf_{n \to \infty}f(y_n) \leq \lim_{n \to \infty} f(y_n) = m.
+\]
+Nach Definition ist $m \geq f(y)$. Also $f(y) = m$. $f$ besitzt ein globales Minimum.
+\end{proof}
+
+\textbf{zu zeigen:} Ist $f$ koerzitiv und $epi(f)$ abgeschlossen, so besitzt $f$ mindestens ein globales Minimum.
+
+\begin{proof}
+$f$ ist koerzitiv. Daher gibt es ein $r > 0$, sodass $f(0) < f(x)$ für alle $||x|| > r$. Dann sei $K = \{ x : || x || \leq r \}$. Die Menge $K$ ist kompakt. Wir verwenden das gerade bewiesene  \cref{theorem:lol} und erhalten ein globales Minimum $x^-$ auf $K$. Da aber $f(x) > f(0) \geq f(x^-)$ für alle $||x|| > r$, ist $x^-$ ein globales Minimum auf ganz $\mathbb R^d$. 
+\end{proof}
+
+\subsection*{Exercise 1.5}
+Betrachte den reellen Folgenraum $\ell^2 = \{ (x_n)_{n \in \mathbb N} : \sum_{n=1}^{\infty} |x_n|^2 < \infty \}$ mit Skalarprodukt $\langle x,y \rangle = \sum^\infty_{k=1} x_ky_k$ für $x,y \in \ell^2$ und $||\cdot|| = \sqrt{\langle \cdot,\cdot \rangle}$. $\ell^2$ ist auch vollständig und somit ein Hilbertraum.
+
+Sei $T: \ell^2 \to \ell^2, x \mapsto (\frac{1}{n}x_n)_{n \in \mathbb N}$. Der Operator $T$ ist linear, beschränkt und positiv definit, was im folgenden gezeigt wird.
+\begin{itemize}
+	\item \textbf{Linear}: Seien $x,y \in \ell^2$. Dann ist $$T(x+y) = (\frac{1}{n}(x_n + y_n))_{n \in \mathbb N} = (\frac{1}{n}x_n + \frac{1}{n}y_n)_{n \in \mathbb N} = (\frac{1}{n}x_n)_{n \in \mathbb N} + (\frac{1}{n}y_n)_{n \in \mathbb N} = Tx + Ty.$$
+
+	Sei $\lambda \in \mathbb R$ und $x \in \ell^2$. Dann ist $T\lambda x = (\frac{\lambda}{n}x_n)_{n \in \mathbb N} = \lambda (\frac{1}{n} x_n)_{n \in \mathbb N} = \lambda Tx$.
+	
+	\item \textbf{Beschränktheit}: Wir wollen zeigen, dass es ein $\alpha > 0$ gibt, sodass
+	\[
+		\forall x \in \mathbb \ell^2: ||Tx|| \leq \alpha ||x||.
+	\]
+	Es ist $||Tx||^2 = \langle Tx, Tx \rangle = \sum^\infty_{n=1} \frac{1}{n^2}x_n^2 \leq \sum^\infty_{n=1} x_n^2 = \langle x_n, x_n \rangle = ||x||^2$. Wir können also $\alpha = 1$ wählen.
+	
+	\item \textbf{Positiv definit}:  Sei $x \in \mathbb R^n \setminus \{ 0 \}$. Dann ist $\langle Tx,x \rangle = \sum^\infty_{n = 1}\frac{x_n^2}{n} > 0$.
+
+	\item Der Operator bildet von $\ell^2$ nach $\ell^2$. Sei $x \in \ell^2$ und sei $y = Tx$. Dann ist $\sum^\infty_{k=1} |y_k|^2 = \sum^\infty_{k=1} \frac{1}{k^2}|x_k|^2 \leq \sum^\infty_{k=1} |x_k|^2 < \infty$. 
+\end{itemize} 
+Sei nun für jedes $n\in \mathbb N$ die Folge $x^{(n)} \in \ell^2$ definiert mit $$x_i^{(n)} = \begin{cases}
+	1 \quad & i = n \\
+	0 & \text{sonst}
+\end{cases}$$ 
+Für jedes $n \in \mathbb N$ gilt: $$\langle Tx^{(n)},x^{(n)} \rangle = \sum^n_{k=1}\frac{1}{k}\left(x^{(n)}_k\right)^2 = \frac{1}{n}$$ 
+Es kann kein $\alpha > 0$ geben mit $\langle Tx,x \rangle \geq \alpha ||x||^2$, da $\langle Tx^{(n)},x^{(n)} \rangle \to 0$ für $n \to 0$ und $||x^{(n)}|| = 1$.
+
+\end{document}

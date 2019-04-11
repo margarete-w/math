@@ -1,0 +1,326 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+    
+\usepackage{geometry}
+\setlength{\columnsep}{32mm}
+\geometry{
+ left=22mm,
+ right=22mm,
+ bottom=32mm,
+ top = 20mm
+}
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\section{Mathematische Modellierung von Zufallsexperimenten}
+
+\subsection{Axiomatischer Aufbau der Wahrscheinlichkeitstheorie}
+Ausgangspunkt der Wahrscheinlichkeitstheorie ist die mathematische Beschreibung von \vip{Zufallsexperimenten}, das heißt zeitlich wie örtliche fest umrissene Vorgänge mit unbestimmten Ausgang.
+
+\begin{example}{}{}
+\begin{itemize}
+	\item Werfen eines Würfels oder einer Münze
+	\item Zufälliges Ziehen einer Kugel aus einer Urne
+	\item Kartenspiele
+	\item Wahlergebnis der nächsten Europawahl
+	\item Temperatur am Alexanderplatz am 11. April 2019 um 12:00 Uhr
+	\item Lebensdauer von technischen Geräten
+\end{itemize}	
+\end{example}
+
+Die Gesamtheit aller möglichen Ausgänge/ Ergebnisse eines Zufallsexperimentes heißt \vip{Ergebnisraum} oder \vip{Stichprobenraum} (letzteres wird eher in der Statistik verwendet). Dies wird mit $\Omega$ bezeichnet. Ein Element $\omega \in \Omega$ heißt \vip{Ergebnis} oder \vip{Stichprobe}. 
+
+\begin{example}{}{}
+	\begin{itemize}
+		\item einmaligen Würfeln: 
+		\[
+			\Omega = \{ 1,..., 6 \}, \quad |\Omega| = 6
+		\]
+		
+		\item zweimaligen Würfeln:
+		\[
+			\Omega = \{ (i,j) : i,j \in \{ 1,...,6 \} \} = \{1,...,6\} \times \{1,...,6 \} = \{ 1,...,6 \}^2, \quad |\Omega| = 36
+		\]
+		
+		\item Münzwurf: $\Omega = \{ \text{Kopf}, \text{ Zahl}\}$ oder $\Omega = \{ 0,1 \}$.
+		\item Anzahl der Autos am Funkturm am 11. April 2019: $\Omega = \mathbb N \cup \{ 0 \}$
+		
+		\item Temperatur in Grad Kelvin am Alexanderplatz, d.h. $\Omega = [0,\infty)$ oder realistischer $\Omega = [270, 310]$
+
+	\end{itemize}	
+\end{example}
+
+In den ersten drei Beispielen ist der Ergebnisraum \emph{endlich}, im vorletzten Beispiel \emph{abzählbar unendlich} und im letzten Beispiel \emph{kontinuierlich} (d.h. überabzählbar unendlich). (i)-(iv) nennt man \textbf{diskrete} Ergebnisräume.
+
+\vip{Ereignisse} sind Teilmengen $A \subset \Omega$. Die Gesamtheit aller Ereignisse wird mit $\mathcal P(\Omega)$ bezeichnet (Potenzmenge). Besonders hervorzuheben sind
+\begin{itemize}
+	\item das \emph{sichere Ereignis}: $\Omega$
+	\item das \emph{unmögliche Ereignis}: $\emptyset$ 
+	\item die \emph{Elementarereignisse}: $\{ \omega \}$ für $\omega \in \Omega$
+\end{itemize}
+
+\begin{example}{}{}
+\begin{enumerate}
+	\item $A = \{ 1,3,5 \} = \text{ "Augenzahl ungerade"}$
+	\item $A = \{ (5,6), (6,5), (6,6) \} = \text{ "Augensumme $>$ 10"}$
+	\item $A = \{ n : n \geq 40000\} =\text{ "ungewöhnlich hohes Verkehrsaufkommen"} $
+\end{enumerate}	
+\end{example}
+
+\textbf{Operationen auf Ereignissen}
+\begin{enumerate}
+	\item $A \cup B = A \text{ oder } B \text{ tritt ein}$
+	\item $A \cup ... \cup A_n = \bigcup_{k=1}^n A_k =$ mindestens eins der $A_k$ tritt ein
+	\item $A \cap B$ = $A$ und $B$ treten ein
+	\item $A \cap ... \cap A_n = \bigcap_{k=1}^n A_k = $ alle $A_k$ treten ein
+	\item $A^c \coloneqq \Omega \setminus A = \{ \omega : \omega \notin A \} =$ $A$ tritt \emph{nicht} ein ($\emptyset^c = \Omega, \Omega^c = \emptyset$)
+\end{enumerate}
+
+\begin{important}{}{}
+Insbesondere im Falle kontinuierlicher Mengen ist es im allgemeinen unmöglich \emph{jedem} Ereignis in konsistenter Weise Wahrscheinlichkeiten zuzuordnen (siehe Satz 1.15). Daher schränkt man sich auf \emph{kleinere} Mengensysteme ein.
+\end{important}
+
+Dies führt auf den Begriff der $\mathbf{\sigma}$\vip{-Algebra}.
+
+\begin{definition}{}{}
+	Es sei $\Omega \neq \emptyset$. Ein Mengensystem $\mathcal A \subset \mathcal P(\Omega)$ heißt $\sigma$-Algebra, falls gilt
+	\begin{itemize}
+		\item $\Omega \in \mathcal A$
+		\item $A \in \mathcal A \implies A^C = \Omega \setminus A \in \mathcal A$
+		\item $(A_n)_{n \in \mathbb N} \in \mathcal A \implies \bigcup_{n \geq 1} A_n \in \mathcal A$
+	\end{itemize}
+	Das Paar $(\Omega, \mathcal A)$ heißt \vip{messbarer Raum}. Eine Teilmenge $A \in \Omega$ heißt \vip{$\mathcal A$-messbar}, falls $A \in \mathcal A$
+\end{definition}
+
+\begin{lemma}{}{}
+Es sei $\mathcal A$ eine $\sigma$-Algebra. Dann gilt
+\begin{enumerate}
+	\item $\Omega \notin \mathcal A$
+	\item $A,B \in \mathcal A \implies A \cup B, A \cap B, A \setminus B \in \mathcal A$.
+	\item $(A_n)_{n \in \mathbb N} \in \mathcal A \implies \bigcap_{n \geq 1} A_n \in \mathcal A$
+\end{enumerate}	
+\end{lemma}
+
+\begin{proof}
+	Siehe Skript.
+\end{proof}
+
+\begin{example}{}{}
+\begin{enumerate}
+	\item $\mathcal P(\Omega)$ ist eine $\sigma$-Algebra und zwar die \emph{größtmögliche}.
+	\item $\{ \emptyset, \Omega \}$ ist $\sigma$-Algebra und zwar die kleinstmögliche, \emph{triviale} $\sigma$-Algebra.
+	\item Ist $A \subset \Omega$ ein Ereignis, so ist $\{ \emptyset, \Omega, A, A^c \}$ eine $\sigma$-Algebra und zwar die kleinste, die $A$ enthält.
+	\item \textbf{Hüllenoperator:} Ist $\mathcal C \subset \mathcal P(\Omega)$ ein beliebiges Mengensystem, so ist
+	\[
+		\sigma(\mathcal C) = \bigcap_{\substack{\mathcal A \text{ $\sigma$-Algebra auf $\Omega$} \\ \text{mit $\mathcal C \subset \mathcal A$}}} \mathcal A
+	\]
+	eine $\sigma$-Algebra (Beweis!). Sie ist die kleinste die $\mathcal C$ enthält. Sie heißt die \vip{von $\mathcal C$ erzeugte $\sigma$-Algebra}. $\sigma(\mathcal C)$ ist wohldefiniert, da der Schnitt nicht leer ist (siehe $\mathcal P(\Omega)$).
+\end{enumerate}	
+\end{example}
+
+Es gelten für den Hüllenoperator:
+\begin{enumerate}
+	\item $\mathcal C \subset \sigma(\mathcal C)$
+	\item $\mathcal C_1 \subset \mathcal C_2 \implies \sigma(\mathcal C_1) \subset \sigma(\mathcal C_2)$
+	\item $\mathcal C$ ist eine $\sigma$-Algebra genau dann, wenn $\sigma(\mathcal C) = \mathcal C$.
+\end{enumerate}
+
+\textbf{Wahrscheinlichkeiten}
+
+\textit{Nicht gottgegeben!!!} Im nächsten Schritt wollen wir für jedes messbare Ereignis $A$ eine Wahrscheinlichkeit $P(A)$ angeben zwischen $0$ und $1$. $P(A)$ soll ein Ma0 dafür sein, dass $A$ auftritt:
+\begin{itemize}
+	\item tritt $A$ niemals ein, so setzen wir $P(A) = 0$,
+	\item tritt $A$ sicher sein, so setzen wir $P(A) = 1$.
+\end{itemize}
+Zusätzlich sollte gelten: Sind $A$ und $B$ \emph{disjunkte} Ereignisse, d.h. $A \cap B = \emptyset$, so ist \begin{equation*}P (A \cup B) = P(A) + P(B) \qquad \tag{{Additivität}}.\end{equation*}
+Unmittelbare Folgerung $A_1,...,A_n$ paarweise disjunkte Ereignisse, so gilt
+\[
+	P(A_1 \cup ... \cup A_n) = P(A_1) + ... + P_(A_n).
+\]
+
+
+
+\end{document}

@@ -1,0 +1,256 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{6pt}{1.5ex plus .2ex}
+
+    
+\usepackage{geometry}
+\setlength{\columnsep}{32mm}
+\geometry{
+ left=22mm,
+ right=22mm,
+ bottom=32mm,
+ top = 20mm
+}
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=4pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\section{Geschichte}
+\begin{itemize}
+	\item Riemann 1854 
+	\item Lebesgue 1904
+	\item Kolmogorov 1933 (moderne Wahrscheinlichkeitstheorie)
+\end{itemize}
+
+\section{Aktuelles Interesse/ Beispiele}
+\begin{example}{}{}
+	$\Omega = \{ w_1, w_2, ...\}$ abzählbar oder endlich. $\mu( \{ w_i\}) \coloneqq p_i \in [0, \infty]$. Sei $A \subset \Omega: \mu (A) = \sum_{w \in A} \mu() \{w \} \in [0, \infty]$ (funktioniert da endliche/ abzählbare Mengen). \\
+	
+	Eigenschaften:
+	\begin{itemize}
+		\item $\mu (\emptyset) = 0$.
+		\item $\mu \geq 0$
+		\item $\sigma$-Additivität: $\mu(A  \dot \cup B) = \mu(A) + \mu(B)$ und $A$ und $B$ sind disjunkt. Das heißt abzählbare Vereinigung klappt.
+	\end{itemize}
+	
+	Spezialfall: $pi = 1$ (Zählmaß).
+	
+	Fixiere $x \in \Omega$. $$\mu(A) = \begin{cases}
+ 		1 , \qquad &x \in A \\
+ 		0, &\text{sonst}	
+ \end{cases}
+$$  
+\end{example}
+Genannt das Dirac Maß.\\
+
+Sei $\Omega$ diskret. Seien $\{x_1,...,x_n\}$. Das empirisches Maß: $\frac{1}{n} \sum^n_{i=1} \delta_{x_i} (\cdot)$.
+
+\subsection{Länge eines Pfades/ einer Kurve}
+Sei $\gamma: [0,1] \to (E, \varrho)$ mit Metrik $\varrho$. Sei $\pi$ eine endliche Partition von $[0,1]$ ist. Die Länge ist definiert als
+\[
+	L[\gamma] \coloneqq \sup_{\pi} \sum_{[s,t] \in \pi} \varrho(\gamma(s), \gamma(t))
+\]
+
+\subsection{Geometrie}
+Gegeben sei eine Mannigfaltigkeit $\mathcal M^n$ mit Dimension $n$. Eine nette Teilfläche von $\mathbb R^m$ mit $m \geq n$. Für eine lokale Umgebung von $x \in \mathcal M^n$ findet man eine Karte $\varphi$, sodass der betrachtete Raum $\mathbb R^n$ gleicht. Sei $\mathcal A = \varphi^{-1}(A)$. 
+
+\textbf{What is the right definition of volume (measure)?}
+Naiv: $$vol^n(\mathcal A) \coloneqq Leb^n(A).$$ Geht nicht, da nicht intrinsisch definiert (hängt von der Karte $\varphi$ ab.
+
+Besser: $$Vol^n(\mathcal A) \coloneqq \int_{A \subset \mathbb R^n} \sqrt{\det(g \circ \varphi^{-1})} dx^1...dx^n,$$ wobei $g: \mathcal M \to \{IP\}, x \mapsto g_{\vert_x}$. Genannt \textbf{Riemann'sche Volumenmaß}.
+
+
+\subsection{Hausdorff Maß}
+Sei $(E, \varrho)$ ein metrischer Raum. Bisher: $A \subset E$. Man versucht daraus ein d-dimensionales Maß zu konstruieren. $U_{i...}$ max abzählbare Überdeckung von $A$. Wir schauen uns nur Überdeckungen an mit $diam(U_i) \coloneqq \sup \{ \varrho(x,y): x,y \in U \} < \delta$, wobei $\delta > 0$ fix ist.
+\[
+	H^d_{\delta}(A) \coloneqq \inf\{ (\sum diam(U_i))^d \}
+\]
+Wir lassen $\delta$ gegen 0 laufen
+\[
+	H(A) \coloneqq \lim_{\delta \to 0} H_\delta^d (A)
+\]
+Nun ist $H^d(\text{eingeschränkt auf geeignete A})$ ein Maß. Es nennt sich das $d$-dimensionale Hausdorff-Maß. Es gibt ein Theorem, das besagt, dass für Riemann'sche Mannigfaltigkeiten $\mathcal M^n$: $H^d = Vol^d$ (bis auf eine Konstante).
+
+Leistungsstärker als das Riemannsche Volumenmaß. Man kann zum Beispiel die Koch Kurve berechnen. \\
+
+\begin{example}{}{}
+Das eindimensionale Hausdorffmaß: $H^1(\text{Koch Menge}) = \infty$. Für das zweidimensionale Maß erhält man $H^2(\text{Koch Menge}) = 0$. Was passiert, wenn $1 < d < 2$?	
+\end{example}
+
+Maße mit Gesamtmasse $1$ heißen Wahrscheinlichkeitsmaße. $\mu(\Omega) = 1 \iff \text{probability}$. $\int ... d_\mu$ heißen Erwartungswerte.
+
+Maßtheorie in $\infty-$dim: Wiener-Maß (Highlight der letzten 50 Jahre Mathemtik):
+\[
+	\Omega = C([0,1], \mathbb R^n) \qquad \text{Banachraum}
+\]
+$A \subset \Omega, \mu(A) \in [0,1]$
+
+outer boundary of planar brownian motion. Was ist die Hausdorff Dimension von solchen Objekten? $dim_H(\%) = \frac{4}{3}$ im Jahr 2000: L-S-W.
+
+2014 $\Phi^4$ measure: Quantenfeldtheorie. Hainer Fields Medaille
+
+
+
+
+
+
+
+
+\end{document}
