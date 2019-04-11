@@ -20,7 +20,7 @@ Classes that I take/ took at the Technical University of Berlin.
   * Differential Equations I
 
 ## Summer 2019
-  * Measure and Integration Theory
+  * Differentialgeometry
   * Probability Theory
-  * Nonlinear Optimization
-  * Complex Analysis or Calculus of Variations
+  * Complex Analysis 
+  * Numerical Linear Algebra II
