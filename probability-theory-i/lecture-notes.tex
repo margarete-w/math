@@ -84,9 +84,9 @@
   		leftrule=3pt,
   		arc=0pt,auto outer arc,
   		colback=white,
-  		colframe=orange,
+  		colframe=yellow,
   		colbacktitle=white,
-  		coltitle=orange,
+  		coltitle=yellow,
   		oversize,
   		enlarge top by=1mm,
   		enlarge bottom by=1mm,
@@ -94,7 +94,7 @@
     	interior hidden, 
     	before skip=12pt,
     	overlay={
-    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
   		}, 
   		frame hidden}{lemma}
   		
@@ -222,7 +222,7 @@ Die Gesamtheit aller möglichen Ausgänge/ Ergebnisse eines Zufallsexperimentes 
 		
 		\item zweimaligen Würfeln:
 		\[
-			\Omega = \{ (i,j) : i,j \in \{ 1,...,6 \} \} = \{1,...,6\} \times \{1,...,6 \} = \{ 1,...,6 \}^2, \quad |\Omega| = 36
+			\Omega = \{ (i,j) : i,j \in \{ 1,...,6 \} \} = \{1,...,6\} \times \{1,...,6 \} = \{ 1,...,6 \}^2, \quad |\Omega| = 36
 		\]
 		
 		\item Münzwurf: $\Omega = \{ \text{Kopf}, \text{ Zahl}\}$ oder $\Omega = \{ 0,1 \}$.
@@ -310,7 +310,7 @@ Es gelten für den Hüllenoperator:
 
 \textbf{Wahrscheinlichkeiten}
 
-\textit{Nicht gottgegeben!!!} Im nächsten Schritt wollen wir für jedes messbare Ereignis $A$ eine Wahrscheinlichkeit $P(A)$ angeben zwischen $0$ und $1$. $P(A)$ soll ein Ma0 dafür sein, dass $A$ auftritt:
+\textit{Nicht gottgegeben!!!} Im nächsten Schritt wollen wir für jedes messbare Ereignis $A$ eine Wahrscheinlichkeit $P(A)$ angeben zwischen $0$ und $1$. $P(A)$ soll ein Maß dafür sein, dass $A$ auftritt:
 \begin{itemize}
 	\item tritt $A$ niemals ein, so setzen wir $P(A) = 0$,
 	\item tritt $A$ sicher sein, so setzen wir $P(A) = 1$.
@@ -321,6 +321,167 @@ Unmittelbare Folgerung $A_1,...,A_n$ paarweise disjunkte Ereignisse, so gilt
 	P(A_1 \cup ... \cup A_n) = P(A_1) + ... + P_(A_n).
 \]
 
+\begin{definition}{Wahrscheinlichkeitsmaß}{}
+Sei $(\Omega, A)$ ein messbarer Raum. EIne Abbildung $P: \mathcal A \to [0,1]$ heißt \vip{Wahrscheinlichkeitsmaß} auf $\mathcal A$, falls gilt
+\begin{enumerate}
+	\item \textbf{Normiertheit}: $P(\Omega) = 1$
+	\item \textbf{$\sigma$-Additivität}: Für jede Folge $(A_n)_{n \in \mathbb N}$ paarweiser disjunkter Ereignisse in $\mathcal A$ gilt
+	\[
+		P(\bigcup_{n \geq 1}A_n) = \sum_{n \geq 1} P(A_n).
+	\]
+\end{enumerate}
+\end{definition}
 
+Die Begriffe Wahrscheinlichkeitsmaß und $\sigma$-Algebra sind absolut essentiell.
+
+\begin{lemma}{Rechenregeln für $P$}{}
+Sei $P$ ein Wahrscheinlichkeitsmaß auf $\Omega, \mathcal A$ und $A,B, A_1,A_2,... \in \mathcal A$. Dann gilt
+\begin{enumerate}
+\item $P(\emptyset) = 0$
+\item $P$ ist insbesondere \emph{endlich additiv}, d.h. für paarweise disjunkte $A_1,...,A_n$ gilt
+\[
+	P(A_1 \cup ... \cup A_n) = P(A_1) + ... + P(A_n).
+\]
+
+\item \textbf{Komplementärwahrscheinlichkeit} $P(A^c) = 1 - P(A)$
+
+\item \textbf{Monotonie} (die wichtigste Eigenschaft): $A \subset B \implies P(A) \leq P(B)$
+
+\item \textbf{Subadditivität}: $A \subset \bigcup_{n} A_n \implies P(A) \leq \sum_n P(A_n)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+	\item Betrachte die triviale Folge $A_n \coloneqq \emptyset$ für $n= 1,2,...$. Offensichtlich sind die $A_n, n \geq 1$ paarweise disjunkt. Wegen $\bigcup_n A_n = \bigcup \emptyset = \emptyset$ und aus der $\sigma$-Additivität folgt jetzt
+\[
+	P(\emptyset) = P(\bigcup_n A_n) = \sum_{n} P(\emptyset).
+\]
+Wäre $P(\emptyset) > 0$, so würde $\sum P(\emptyset)$ divergieren. Also $P(\emptyset) \in [0,1] \implies P(\emptyset) = 0$.
+
+\item Setze $A_k \coloneqq \emptyset$ für $k \geq n + 1$ und wir erhalten somit eine Folge paarweiser disjunkter Ereignisse $(A_k)_{k \geq 1}$ mit $\bigcup_{k \geq 1}A_k = A_1 \cup ... \cup A_n \implies P(A_1 \cup ... \cup A_n) = P(\bigcup_{k \geq 1}A_k) = \sum_{k \geq 1}P(A_k) = P(A_1) + ... + P(A_n)$,  denn $P(A_k) = P(\emptyset) = 0$ für $k \geq n+1$.
+
+\item Sei $A \in \mathcal A$. Dann sind $A,A^c$ paarweise disjunkt und $A \cup A^c = \Omega$. Damit $1 = P(\Omega) = P(A \dot \cup A^c) = P(A) + P(A^c) \implies P(A^c) = 1 - P(A)$. Der Vereinigungsoperator $\dot \cup$ bedeutet, dass man zwei disjunkte Mengen vereinigt.
+
+\item $A \subset B$, d.h. $B = A \dot \cup B \setminus A \implies P(B) = P(A) + \underbrace{P(B \setminus A)}_{\geq 0} \geq P(A)$.
+
+
+\item Definiere induktiv $B_1 \coloneqq A_1, B_2 = A_2 \setminus A_1 = A_2 \setminus B_1$. Also definiere einfach für alle $n \geq 2$: $B_n \coloneqq A_n \setminus (A_1 \cup ... \cup A_{n-1})$. Dann sind die $B_n$ paarweise disjunkte Ereignisse und $B_1 \cup ... \cup B_n = A_1 \cup ... \cup A_n$ für alle $n \in \mathbb N$. Damit
+\[
+	P(\bigcup_n A_n) = P(\bigcup_n B_n) = \sum_n P(B_n) \leq \sum_n P(A_n)
+\]
+und ist $A \subset \bigcup_n A_n \implies P(A) \leq P(\bigcup_n A_n) \leq \sum_n P(A_n)$.
+\end{enumerate}
+\end{proof}
+
+\begin{definition}{Wahrscheinlichkeitsraum}{}
+Es sei $\Omega \neq \emptyset$, $\mathcal A$ eine $\sigma$-Algebra in $\Omega$ und $P$ ein Wahrscheinlichkeitsmaß auf $\mathcal A$. Dann heißt das Tripel $(\Omega, \mathcal A, P)$ ein \vip{Wahrscheinlichkeitsraum}.
+\end{definition}
+
+
+\begin{theorem}{Einschluss-Ausschluss-Prinzip, Formel von Sylvester}{}
+Es sei $(\Omega, \mathcal A, P$ ein Wahrscheinlichkeitsraum. Dann gilt für beliebige $A_1,...A_n \in \mathcal A$:
+\begin{align*}
+	P(A_1 \cup ... \cup A_n) &= \sum_{\emptyset \neq I \subset \{ 1,...,n\}}(-1)^{|I| - 1} \cdot P(\bigcap_{i \in I} A_i) \\
+	&= \sum^n_{j=1}(-1)^{j-1} \sum_{1 \leq i_1 < i_2 < ... < i_j \leq n} P(A_{i_1} \cap A_{i_2} \cap ... \cap A_{i_j}),
+\end{align*}
+\end{theorem}
+
+\textbf{Spezialfälle}
+\begin{align*}
+	P(A \cup B) &= P(A) + P(B) - P(A \cap B) \\
+	P(A \cup B \cup C) &= P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C).
+\end{align*}
+
+\begin{proof}
+Induktion nach $n$: Induktionsanfang $n = 1$. Für $n = 2$: Es gilt $A_1 \cup A_2 = A_1 \dot \cup (A_2 \setminus A_1) \implies P(A_1 \cup A_2) = P(A_1) + P(A_2 \setminus A_1)$ und $A_2 = (A_2 \setminus A_1) \dot \cup (A_2 \cap A_1) \implies P(A_2) = P(A_2 \setminus A_1) + P(A_2 \setminus A_1)$. Damit folgt
+\begin{align}\label{1:lukas}
+	P(A_1 \cup A_2) = P(A_1) + P(A_2 \setminus A_1) = P(A_1) + P(A_2) - P(A_1 \cap A_2).
+\end{align}
+
+Induktionsschluss: $n \leadsto n+1$ Wende \eqref{1:lukas} auf $A_1 \cup ... \cup A_n$ und $A_{n+1}$ an. Wir erhalten
+\begin{align}\label{1: lol}
+	P(A_1 \cup ... \cup A_{n+1}) &= P(A_1 \cup ... \cup A_n) + P(A_{n+1}) + P(A_{n+1}) + P((A_1 \cup ... \cup A_n) \cap A_{n+1}) \\
+	&= P(A_1 \cup ... \cup A_n) + P(A_{n+1}) + P(A_{n+1}) + P((A_1 \cap A_{n+1}) \cup ... \cup (A_n \cap A_{n+1}))
+\end{align}
+Nach Induktionsannahme gilt
+\[
+	P(A_1 \cup ... \cup A_n) = \sum_{\emptyset \neq I \subset \{ 1,..., n \} } (-1)^{|I| - 1} P(\bigcup_{i \in I} A_i)
+\]
+
+und $P((A_1 \cap A_{n+1}) \cup ... \cup (A_n \cap A_{n+1})) = \sum_{\emptyset \neq I \subset \{ 1,..., n \}} (-1)^{|I| - 1} P(\bigcap_{i \in I} (A_i \cap A_{n+1})) = \sum_{\emptyset \neq I \subset \{ 1,..., n \}} (-1)^{|I| - 1} P(\bigcap_{i \in I \cup \{ n+1\}}A_1)$.
+
+Einsetzen in \eqref{1:lol} ergibt:
+\[
+	P(A_1 \cup ... \cup A_{n+1}) = \sum_{\emptyset \neq I \subset \{ 1,..., n\}} (-1)^{|I| - 1} P(\bigcap_{i \in I} A_i) + P(A_{n+1}) - \sum_{\emptyset \neq I \subset \{ 1,..., n \}} (-1)^{|I| - 1} P(\bigcap_{i \in I \cup \{ n+1 \}} A_i) = ...
+\]
+und wir sind fertig.
+\end{proof}
+
+\begin{example}{}{}
+Wie groß ist die Wahrscheinlichkeit bei 10-maligen Würfeln nicht alle 6 Augenzahlen zu würfeln?
+\end{example}
+
+$E_i \coloneqq i$ kommt in den 10 Würfen nicht vor, $i = 1,..., 6$
+
+Gesuchte Wahrscheinlichkeit: $P(E_1 \cup ... \cup E_6)$
+
+Es gilt: $P(E_1 \cap ... \cap E_i) = \frac{(6-i)^{10}}{6^{10}}$. Allgemeiner $P(\bigcap_{i \in I} E_i) = \frac{(6- |I|)^{10}}{6^{10}}$.
+
+Das heißt
+\begin{align*}
+	P(E_1 \cup ... \cup E_6) = \sum^6_{j=1} (-1)^{j-1} \sum_{1 \leq i_1 < .. < i_j \leq 6} \frac{(6-j)^{10}}{6^{10}} = \sum^6_{j=1} (-1)^{j-1} \binom{6}{j} \frac{(6-j)^{10}}{6^{10}}
+\end{align*}
+
+\begin{theorem}{}{}
+Es sei $(\Omega, \mathcal A, P)$ ein Wahrscheinlichkeitsraum, $(A_n)_n$ eine Folge von Ereignissen in $\mathcal A$. Dann gilt
+\begin{enumerate}
+\item $A_n \uparrow A$, d.h. $A_1 \subset A_2 \subset ... $ und $\bigcup_n A_n = A$, so folgt
+\begin{align*}
+	\lim_{n \to \infty}P(A_n) = P(A) \tag{Stetigkeit von unten}
+\end{align*}
+
+\item $A_n \downarrow A$, d.h. $A_1 \supset A_2 \supset ...$ und $\bigcap_n A_n = A$, so folgt
+\begin{align*}
+	\lim_{n \to \infty} P(A_n) = P(A) \tag{\text{Stetigkeit von oben}}
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Ohne Beweis.
+\end{proof}
+
+
+\subsection{Diskrete Wahrscheinlichkeitsräume}
+Ist $\Omega$ diskret, so ist Teilmenge $A \subset \Omega$ abzählbar. Also
+\[
+	A = \{ w_1, w_2, ... \} \quad \text{ und damit } \quad A = \bigcup_{n} \{ w_n \}
+\]
+
+Ist $\mathcal A$ eine $\sigma$-Algebra in $\Omega$  mit $\{ w \} \in \mathcal A, \forall w \in \Omega$ und $P$ ein Wahrscheinlichkeitsmaß auf $(\Omega, \mathcal A)$, so folgt
+\[
+	P(A) = \sum_n P(\{ w_n \}) = \sum_{w \in A} P(\{ w \})
+\]
+d.h. $P$ ist eindeutig bestimmt durch die Wahrscheinlichkeiten $p(w) \coloneqq P(\{ w \})$. $p$ definiert eine Funktion $p: \Omega \to [0,1]$ heißt \vip{Zähldichte}, d.h. eine Funktion $p: \Omega \to [0,1]$ mit $\sum_{w \in \Omega} p(w) = 1$. Ist umgekehrt $p$ eine Zähldichte, so definiert
+\begin{align}\label{1.2:las}
+	P(A) \coloneqq \sum_{w \in A}p(w), \quad A \in \mathcal P(\Omega)
+\end{align}
+ein Wahrscheinlichkeitsmaß auf \emph{ganz} $P(\Omega).$
+
+\begin{important}{}{}
+Im diskreten Fall ist $\mathcal P(\Omega)$ die natürliche $\sigma$-Algebra und daher ersetzt man im diskreten Falle $(\Omega, \mathcal P(\Omega), P)$ einfach durch $(\Omega, p)$ (siehe Satz 1.10 im Skript).
+\end{important}
+
+Satz 1.10 besagt also, dass für diskrete Ergebnisräume durch \eqref{1.2:las} eine 1-1 Beziehung zwischen Zähldichten und Wahrscheinlichkeitsmaßen auf $P(\Omega)$ gegeben ist.
+
+\begin{example}{n-maliges Werfen einer fairen Münze}{}
+Sei $\Omega = \{ (i_1,...,i_n) : i_j \in \{ 0,1 \}, 1 \leq j \leq n \}, |\Omega| = 2^n$. Damit $p(w) = \frac{1}{|\Omega|} = \frac{1}{2^n}$.
+
+Für $k \in \{ 1,..., n \}$ gilt dann beispielsweise:
+\begin{align*}
+P(\text{im k-ten Münzwurf "Kopf" werfen}) = \frac{|\{ (i_1,...,i_{k-1}, 1 , i_{k+1}, ..., i_n) : i_j = 0,1 \}|}{|\Omega|} = \frac{2^{n-1}}{2^n} = \frac{1}{2}
+\end{align*}
+\end{example}
 
 \end{document}
