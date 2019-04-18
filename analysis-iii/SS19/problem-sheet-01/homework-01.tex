@@ -1,4 +1,4 @@
-\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+\documentclass[a4paper]{article}
 
 \usepackage{fontspec}
 \setmainfont[Ligatures=TeX]{Georgia}
@@ -42,15 +42,6 @@
 \titlespacing*{\section} {0pt}{0pt}{16pt}
 \titlespacing*{\subsection} {0pt}{12pt}{8pt}
 
-    
-\usepackage{geometry}
-\setlength{\columnsep}{32mm}
-\geometry{
- left=22mm,
- right=22mm,
- bottom=32mm,
- top = 20mm
-}
 
 
 \newtcbtheorem[auto counter,number within=section]{theorem}%
@@ -195,6 +186,7 @@
 
 \begin{document}
 \section*{Analysis Problem Sheet 01}
+\textit{Duc (395220), Moritz Bichlmeyer (392374)}
 
 \subsection*{Exercise 1}
 \textbf{Zeige:} Das Gleichungssystem besitzt eine Lösung $(x,y,z,u,v)$ der Form $g: V \to W, (x,y,z) \mapsto (u,v)$ mit $g(2,0,1) = (1,0)$, offene Umgebungen $V \subset \mathbb R^3$ und $W \subset \mathbb R^2$.
@@ -364,7 +356,7 @@ Als nächstes zeigen wir, dass $D_\mathbf{x}f$ injektiv ist. Dafür muss $D_\mat
 \textbf{Zeige:} Für $p = 1$ ist $S_p$ keine Untermannigfaltigkeit.
 
 \begin{proof}
-sadsad
+Siehe handschriftlich beschriebenes Blatt.
 \end{proof}
 
 
@@ -435,20 +427,5 @@ Die Lösungsmenge des Gleichungssystems lautet demnach
 
 \hline 
 
-\textbf{Art der Extrema:} Wir untersuchen die geänderte Hesse-Matrix $H(\lambda, x,y)$.
-\[
-	H(\lambda, x,y) = \begin{pmatrix}
-		0 & 2x + y & 2y + x \\
-		 2x + y & 2 + 2 \lambda & \lambda \\
-		 2y +x & \lambda & 2 + 2\lambda
-	\end{pmatrix}
-\]
-Wir setzen die kritischen Punkte ein:
-\[
-	H(-\frac{1}{\sqrt 6}, \frac{1}{\sqrt 3},\frac{1}{\sqrt 3}) = \begin{pmatrix}
-		0 & 3\sqrt 3 & 3 \sqrt 3 \\
-		 3\sqrt 3 & \frac{6-\sqrt 6}{3} & -\frac{1}{\sqrt 6} \\
-		 3\sqrt 3 & -\frac{1}{\sqrt 6} & \frac{6-\sqrt 6}{3}
-	\end{pmatrix}
-\]
+\textbf{Art der Extrema:} Siehe handschriftlich beschriebenes Blatt.
 \end{document}
