@@ -1,0 +1,239 @@
+\documentclass[a4paper, landscape,twocolumn,fontsize=9pt]{scrartcl}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+    
+\usepackage{geometry}
+\setlength{\columnsep}{32mm}
+\geometry{
+ left=22mm,
+ right=22mm,
+ bottom=32mm,
+ top = 20mm
+}
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\section{Optimization problems}
+\subsection{Existence of solutions}
+
+Let $f: D \subset \mathbb R^n \to \mathbb R$ be smooth (that means continuous). The problem is stated as
+\begin{align*}
+	\min_{x\in \Omega} f(x), \qquad \Omega \subset \mathbb R^n.
+\end{align*}
+
+\begin{theorem}{Weierstraß}{}
+If $f: D \subset \mathbb R^n \to \mathbb R$ is continuous and $\Omega \subset D$ is compact then $f$ attains its $\sup$ and $\inf$.
+\end{theorem}
+
+\begin{definition}{Sub-level set}{}
+$f: D \subset \mathbb R^n \to \mathbb R$ then
+\[
+	\mathcal N(f, \alpha) = \{ x \in D : f(x) \leq a \}
+\]
+is called a sub-level set.
+\end{definition}
+
+...
+
+\textbf{Young's inequality:} $0 \leq (\sqrt{\delta} a - \frac{1}{2\sqrt \delta}b)^2 = \delta a^2 + \frac{1}{4\delta}b^2 - ab \implies ab \leq \delta a^2 + \frac{1}{4\delta}b^2$.
+
+So
+\[
+	\frac{1}{2} x^THx + b^Tx \geq \frac{\alpha}{2}|x|^2 - |b^Tx] \overset{\delta = \frac{\alpha}{4}}{\geq} \frac{\alpha}{2}|x|^2 - \frac{\alpha}{4}|x|^2 - \frac{1}{\alpha}|b|^2 = \frac{\alpha}{4}|x|^2 + c \to \infty.
+\]
+
+\begin{example}{}{}
+$e^x$ and $x^4$ are strictly convex .
+\end{example}
+
+
+
+
+
+
+
+
+
+\end{document}

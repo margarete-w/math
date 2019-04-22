@@ -1,0 +1,325 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{[Georgia.ttf]}
+\setmainfont[
+    ItalicFont={[Georgia Italic.ttf]},
+    BoldItalicFont={[Georgia Bold Italic.ttf]},
+    BoldFont={[Georgia Bold.ttf]}
+]{[Georgia.ttf]}
+\setsansfont{[SF-Pro-Display-Bold.otf]}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+
+%\usepackage{geometry}
+%\setlength{\columnsep}{32mm}
+%\geometry{
+% left=22mm,
+% right=22mm,
+% bottom=32mm,
+% top = 20mm
+%}
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+  		
+\newtcbtheorem[]{issue}%
+  {To prove}{
+        theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{issue}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\section*{Problem Sheet 01}
+\textit{Viet Duc Nguyen (564743), Lukas Weißhaupt (), Jacky ()}
+
+
+\hline 
+
+\subsection*{Exercise 1}
+\begin{issue}{}{}
+$(X,d_1) \text{ and } (X,d_2) \text{ are equivalent } \iff \text{ the convergent sequences concide}$
+\end{issue}
+\begin{proof}
+$\implies$ Let $(X,d_1)$ and $(X,d_2)$ be equivalent metric spaces. Let $(x_n)_{n \in \mathbb N}$ be any convergent sequence in $(X,d_1)$, i.e. $x_n \to x \in X$ in $(X,d_1)$.
+
+\textbf{Goal:} We will show that $(x_n)_n$ converges in $(X,d_2)$, i.e. $x_n \to x$ in $(X,d_2)$.
+
+Let $\epsilon > 0$. Due to the equivalence of $U_1$ and $U_2$, we find $r > 0$ such that $U_1(x,r) \subset U_2(x,\epsilon)$. Then, choose $N \in \mathbb N$ such that $x_n \in U_1(x, r)$ for all $n \geq N$; finding such $N$ is possible since $(x_n)_n$ is convergent in $(X,d)$ after the assumption. Thus, it follows that $x_n \in U_2(x, \epsilon)$ for all $n \geq N$. Per definition, $(x_n)_n$ converges in $(X,d_2)$. Same argument applies to show that $(x_n)_n$ converges in $(X,d_1)$ if  $(x_n)_n$ is convergent in $(X,d_2)$.
+
+$\impliedby$ Assume that the convergent sequences in $(X,d_1)$ and $(X,d_2)$ are the same. We will prove the equivalence of the metric spaces by contradiction.
+
+\textbf{Goal:} We will construct a sequence $(x_n)_n$ that converges in $(X,d_1)$ but not in $(X,d_2)$ if we assume that the metric spaces are \emph{not} equivalent. 
+
+Let $(X,d_1)$ and $(X,d_2)$ be not equivalent. Hence, there is a $x\in X$ and $\epsilon > 0$ such that for all $r > 0$ it holds: $U_1(x,r) \not \subset U_2(x, \epsilon)$ or $U_2(x,r) \not \subset U_1(x, \epsilon)$. Consider the first case (the proof for the other case is identical). Thus, there exists $x_r$ for each $r > 0$ such that $d_1(x_r,x) < r$ and $d_2(x_r,x) \geq \epsilon$. Construct the sequence $(y_n)_n$ with $y_n \coloneqq x_{\frac{1}{n}}$. Finally, $y_n \to x$ in $(X,d_1)$ but $y_n \not \to x$ in $(X,d_2)$. Contradiction, for the sequences in both metric spaces conincide per assumption. The metric spaces must be therefore equivalent.
+\end{proof}
+
+\hline
+
+
+\begin{issue}{}{}
+Show that $\delta(x,y) = \frac{d(x,y)}{1+d(x,y)}$ is a metric for a metric space $(X,d)$.
+\end{issue}
+
+\begin{proof}
+Let $x,y,z \in X$. $\delta$ is zero if and only if the numerator is zero. The numerator is $d(x,y)$; thus, $\delta(x,y) = 0 \iff d(x,y) = 0 \iff x = y$. The \vip{symmetry} follows from the {symmetry} of $d$. Observe that $\delta(x,y) = \frac{d(x,y)}{1+d(x,y)} = \frac{d(y,x)}{1+d(y,x)} = \delta(y,x)$. Concerning the \vip{triangle inequality}: 
+\begin{align*}
+    \delta(x,z) \leq \frac{d(x,z)}{1+d(x,z)} \overset{(*)}{\leq} \frac{d(x,y) + d(y,z)}{1+d(x,y) + d(y,z)} &\leq \frac{d(x,y)}{1+d(x,y)} + \frac{d(y,z)}{1 + d(y,z)} \\
+    &= \delta(x,y) + \delta(y,z),
+\end{align*}
+where $(*)$ follows from the monotony of $x \mapsto \frac{x}{1+x}$ (remains to be shown). $\delta$ is therefore a norm.
+\end{proof}
+
+\hline
+
+\begin{lemma}{}{}
+$f(x) = \frac{x}{1+x}$ is monotonically increasing.
+\end{lemma}
+
+\begin{proof}
+The derivative reads $\frac{1}{(1+x)^2}$. Since the derivative is strictly positive and $f$ is continuous, $f$ is monotonically increasing.
+\end{proof}
+
+\hline
+
+\begin{issue}{}{}
+Show that $(X,d)$ and $(X,\delta)$ are equivalent metric spaces.
+\end{issue}
+
+\begin{proof}
+To show the claim we prove that the convergent sequences coincide. Let $(x_n)_n$ be a convergent sequence in $(X,d)$ with limit $x \in X$. The convergence of $(x_n)_n$ in $(X, \delta)$ follows from $\delta(x,y) = \frac{d(x,y)}{\underbrace{1+d(x,y)}_{\geq 1}} \leq d(x,y)$ for all $x,y \in X$. Thus, for any $\epsilon > 0$ we will find a number $N \in \mathbb N$ (due to the convergence of $(x_n)_n$ in $(X,d)$) such that 
+\[
+	\forall n \geq N: \delta(x_n,x) \leq d(x_n,y) < \epsilon,
+\]
+which implies the convergence of $(x_n)_n$ in $(X, \delta)$.
+
+Consider a convergent sequence $(x_n)_n$ in $(X,\delta)$ with limit $x \in X$. We want to prove that $(x_n)_n$ also converges to the same limit $x$ in $(X,d)$. Again, take any arbitrary positive $\epsilon$, and we need to find a number $N \in \mathbb N$ such that $d(x_n,x) < \epsilon$ for all $n \geq N$. 
+
+Define $f: X \to \mathbb R, u \mapsto \frac{u}{1+u}$. This function is continuous \emph{(make sure this is clear to you!!!!!!)}, and injective (due to the strict monotonicity as stated in the previous lemma). We know that $f(\d(x_n,x)) \to 0$ from the convergence of $(x_n)_n$ in $(X,\delta)$. Observe that $f(u) = 0 \iff u = 0$. By injectivity and monotonicity of $f$, we deduct
+\[
+	f(u_n) \to 0 \implies u_n \to 0, \quad \forall (u_n)_n \subset X.
+\]
+Thus, $d(x_n,x) \to 0$ impliying the convergence of $(x_n)_n$ in $(X,d)$.
+\end{proof}
+
+\hline
+
+\hline
+
+\textbf{Rate us on Moses!} 
+
+Help us improving our service. We believe in our zero tolerance policy to only deliver high quality and finished content. Our quality testing ensures the best tutor experience possible. Every typeset is chosen \vip{carefully} and formulas are \vip{handcrafted} by top notch mathematicians with \vip{2+ years experience}. However, if you have got any criticisms, we would like to hear from you! Write us an email: ...
+
+Sincerely,
+
+The community manager of Team 42.
+
+\hline
+
+\hline
+
+
+
+\subsection*{Aufgabe 2}
+
+
+\subsection*{Aufgabe 3}
+jndainsdkjsandjksnakjdsnjkdnakj
+
+\subsection*{Aufgabe 4}
+jndainsdkjsandjksnakjdsnjkdnakj
+
+\end{document}

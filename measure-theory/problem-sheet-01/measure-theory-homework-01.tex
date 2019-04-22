@@ -13,6 +13,7 @@
 \usepackage{titlesec}
 \usepackage{titling}
 \usepackage{enumitem}   
+\usepackage{hyperref}
 
 
 \definecolor{grey}{rgb}{0.5,0.5,0.5}
@@ -220,7 +221,7 @@
 \begin{document}
 
 \section*{Problem Sheet 01}
-\textit{Viet Duc Nguyen (564743)}
+\textit{Viet Duc Nguyen (395220)}
 
 
 \hline 
@@ -251,6 +252,142 @@ Next we want to show that the integral over a manifold is independent of the cha
 	&= \int_U f(\varphi(y)) \sqrt{\det g(y)} dy.
 \end{align*}
 \end{proof}
+
+\subsection*{Exercise 2}
+To show: Let $U \subset \mathbb R^d$ and $f \in C^0(U)$, $u \in C^2(U)$. For every $\varphi \in C^\infty_c(U)$ it holds
+\[
+	\int_U u\Delta\varphi dx = \int_U f \varphi  dx
+\]
+iff $\Delta u = f$.
+\begin{proof}
+First, notice that for $f \in C^2(U)$ and $g \in C^2_c(U)$:
+\[
+	\int_U D_i^2fg dx = - \int_U D_ifD_ig dx = \int_U f D_i^2g dx
+\]
+Summing over $i$ yields
+\[
+	\int_U \Delta fg dx = - \int_U \langle \nabla f, \nabla g \rangle dx = \int_U f \Delta g dx.
+\]
+Let $\delta u = f$, then
+\[
+	\int_U u \Delta \varphi dx = \int_U \Delta u \varphi dx = \int_U f\varphi dx.
+\]
+Now, let $\int_U u \Delta \varphi dx = \int_U f\varphi dx$. We know that
+\[
+	\int_U u \Delta \varphi dx = \int_U \Delta u \varphi dx = \int_U f\varphi dx
+\]
+Thus, $\int_U (\Delta u - f) \varphi dx = 0$ for every $\varphi \in C^\infty_c(U)$. So, $\Delta u = f$ after a well known lemma. For completeness, we will state this lemma.
+
+\begin{lemma}{}{}
+Let $h \in C(U)$. If $\int_U h(x)g(x) dx = 0$ for every $g \in C^\infty_c(U)$ then $h(x) = 0$ for all $x \in U$.
+\end{lemma}
+\end{proof}
+
+\subsection*{Exercise 3}
+
+Consider the sequences
+\[
+	g_n(x) = \frac{2}{\pi} \arctan(nx)  \quad \text{and} \quad f_n(x) = \int^x_0 \sqrt{g_n(t)} dt
+\]
+\textbf{Goal:} $(f_n)_n$ is a Cauchy sequence in $(C^1_0[0,1], ||\cdot||_\nabla)$ but does not converge in this metric space.
+
+To show that $(f_n)_n$ is indeed a Cauchy sequence observe that
+\begin{align*}
+	||f_n - f_m||^2_\nabla = \int^1_0 (f_n'(x) - f_m'(x))^2 dx &\leq  \int^1_0 (f_n'(x))^2 + (f_m'(x))^2 dx \\
+	 &\leq \int^1_0 |g_n(x) - g_m(x)|dx
+\end{align*}
+
+We show that $(g_n)_n$ is a Cauchy sequence with standard norm $|\cdot|$. Let $\epsilon > 0$ and wlog $n \geq m$:
+\[
+	\forall x > \epsilon: | g_n(x) - g_m(x) | \leq | 1 - g_m(x) | \leq |1 - g_m(\epsilon)| \to 0 \quad \text{für $m \to \infty$}.
+\]
+
+Thus,
+\begin{align*}
+||f_n - f_m||^2_\nabla \leq \int^1_0 |g_n(x) - g_m(x)|dx \leq \epsilon + |1 - g_m(\epsilon)|
+\end{align*}
+
+So, $(f_n)_n$ is a Cauchy sequence with respect to $||\cdot||_\nabla$.
+
+Assume $f_n \to f \in C^1_0[0,1]$. Then, $f(0) = 0$ because $f(0) = \int^0_0 f'(x) dx = 0$ for a $f' \in C^0[0,1]$. Nun ist $f$ stetig und somit gibt es ein $\delta > 0$, sodass $f(x) < 1$ für alle $0\leq x < \delta$.
+
+\url{https://math.stackexchange.com/questions/1932023/is-c1a-b-with-the-norm-left-f-right-1-int-ab-left-ft-r/1935026?noredirect=1#comment3975378_1935026}
+
+\hline
+
+\textbf{Fail.}
+
+\begin{enumerate}
+\item 
+
+\item Consider $f_n(x) = 2\sqrt{x+\frac{1}{n}}$. It is differentiable with $f'_n(x) = \frac{1}{\sqrt{x+\frac{1}{n}}}$. Thus, $f_n \in C^1_0[0,1]$. 
+
+Let's see if this is a Cauchy sequence. Consider
+\begin{align*}
+	||f_n - f_m||^2_{\nabla} &= \int^1_0 ( \frac{1}{\sqrt{x+\frac{1}{n}}} -  \frac{1}{\sqrt{x+\frac{1}{m}}})^2 \\
+	&= \int^1_0 \frac{1}{x+\frac{1}{n}} - \frac{2}{\sqrt{(x + \frac{1}{n})(x + \frac{1}{m})}} + \frac{1}{x+\frac{1}{m}} dx \\
+	&= \int^1_0 \frac{1}{x+\frac{1}{n}} - 
+	\frac{2}{\underbrace{\sqrt{x^2 +x\frac{m+n}{mn} + \frac{1}{nm}}}_{sad}}
+	+ \frac{1}{x+\frac{1}{m}} dx \\
+	&\leq [\ln(x+\frac{1}{n})]^1_0 + [\ln(x+\frac{1}{m})]^1_0
+\end{align*}
+
+\textbf{This is no good. Overestimated too generously.}
+
+Assume that $f_n \to f$ with $f \in C^1_0[0,1]$. For every $\epsilon > 0$ we find $N \geq \mathbb N$ such that for all $n \geq N$:
+\[
+	|| f_n - f||^2_{\nabla} = \int_0^1 \left(\frac{1}{\sqrt{x+\frac{1}{n}}} - f'(x)\right )^2 dx = \int^1_0 \frac{1}{x+\frac{1}{n}} - \frac{2f'(x)}{\sqrt{x + \frac{1}{n}}} + f'(x)^2 dx < \epsilon
+\]
+Because $f'$ is continuous on $[0,1]$ we can estimate the left hand side term with
+\[
+	\int^1_0 \frac{1}{x + \frac{1}{n}} - \frac{2c}{\sqrt{x+ \frac{1}{n}}} < \epsilon,
+\]
+where $c = \inf_{x \in [0,1]} f'(x)$. Integrating then yields
+\begin{align*}
+	[\ln(x + \frac{1}{n})]^1_0 - 4c[\sqrt{x + \frac{1}{n}}]^1_0 &=\underbrace{ \ln(1 + \frac{1}{n})}_{\to 0} - \underbrace{\ln(\frac{1}{n})}_{\to - \infty} - 4c\underbrace{\sqrt{1 + \frac{1}{n}}}_{\to 1} - 4c\underbrace{\sqrt{\frac{1}{n}}}_{\to 0} \\
+\end{align*}
+As we see, increasing $n$ will lead to a value bigger than $\epsilon$. Thus, $f$ is not in $C^1_0[0,1]$.
+\item
+\end{enumerate}
+
+
+\subsection*{Exercise 4}
+
+\begin{itemize}
+\item It holds $\mu(\emptyset) = 0$. To see this, consider the sequence $A_n = \emptyset$. It holds $A_{n+1} \subset A_n$ and $\bigcap A_n = \emptyset$. Thus, $\mu(A_n) = \mu(\emptyset) \to 0$ implies $\mu(\emptyset) = 0$.
+
+\item We show the \vip{monotonicity} of $\mu$. Let $A \subset B$. We know that
+\[
+	B = (A \cap B) \dot \cup (B \setminus A).
+\]
+So, $\mu(B) = \mu(A \cap B) + \mu (B \setminus A) \geq \mu(A)$. We only needed \emph{finite additivty} and the \emph{positivity} of $\mu$ to show the monotonicity.
+
+\item Now to the $\sigma$-additivity. Let $A_i \in \mathcal A$, $A_i$ and $A_j$ be pairwise disjoint and $A = \bigcup^\infty_{i=1} A_i$. Define the sequence
+\[
+	B_n = \bigcup^\infty_{i=n}A_i.
+\]	
+It holds the following properties:
+\begin{itemize}
+\item $B_{n+1} \subset B_{n}$
+\item $\bigcap B_n = \emptyset$
+\item $B_1 = A$
+\end{itemize}
+
+From the first two properties it follows that $$\lim_{n \to \infty}\mu(B_n) = \lim_{n \to \infty} \mu(\bigcup_{i=n}^\infty A_n) = 0.$$
+
+We see that $A = B_n \dot \cup \bigcup^{n-1}_{i=1}A_i$.
+\begin{align*}
+	\mu(A) &= \mu(B_n) + \mu (\bigcup^{n-1}_{i=1}A_i), \quad \forall n \in \mathbb N\\
+	&\Downarrow \text{limit} \\
+	&= \lim_{n \to \infty} \mu(B_n) +  \mu (\bigcup^{n}_{i=1}A_i) \\
+	&= \lim_{n \to \infty} \mu (\bigcup^{n}_{i=1}A_i) \\
+	&\Downarrow \text{finite additivity} \\
+	&= \lim_{n \to \infty} \sum^n_{i=1}\mu(A_i)\\
+	&= \sum^\infty_{i=1}\mu(A_i) < \infty \quad \text{due to monotonicity}
+\end{align*}
+
+\end{itemize}
+
 
 
 \end{document}
