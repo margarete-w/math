@@ -1,0 +1,379 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+\section*{Analysis III Problem Sheet 02}
+\textit{Duc (395220), Moritz Bichlmeyer (392374)}
+
+\subsection*{Exercise 2}
+Consider the following IVP
+\begin{align*}
+\begin{cases}
+	x'' + 2ax' + bx = 0 \\
+	x(0) = c, \; x'(0) = 0
+\end{cases}
+\end{align*}
+Formulate it as a system of linear differential equations:
+\[
+	\begin{pmatrix}
+		0 & 1 \\
+		-b & -2a
+	\end{pmatrix} \begin{pmatrix}
+		x_0 \\ x_1
+	\end{pmatrix} = \begin{pmatrix}
+		x' \\ x''
+	\end{pmatrix}.
+\]
+The eigenvalues read
+\[
+	\det \begin{pmatrix}
+		-\lambda & 1 \\
+		-b & -2a-\lambda
+	\end{pmatrix} = \lambda(2a + \lambda) + b = 0 \implies \lambda_{1,2} = -a \pm \sqrt{a^2 - b}
+\]
+\textbf{Case:} $a^2 > b$. The eigenvectors are given by
+\[
+	\begin{pmatrix}
+		a + \sqrt{a^2 - b} & 1 \\
+		-b & -a + \sqrt{a^2 - b}
+	\end{pmatrix} \begin{pmatrix}
+		x \\ y
+	\end{pmatrix} = 0 \text{ and } \begin{pmatrix}
+		a - \sqrt{a^2 - b} & 1 \\
+		-b & -a - \sqrt{a^2 - b}
+	\end{pmatrix} \begin{pmatrix}
+		x \\ y
+	\end{pmatrix} = 0.
+\]
+Let $b \neq 0$. For $\lambda = -a + \sqrt{a^2 - b}$ we get
+\[
+	\mathbf v = \begin{pmatrix}
+		- \frac{a + \sqrt{a^2-b}}{b} \\ 1
+	\end{pmatrix}
+\]
+and for $\lambda = -a - \sqrt{a^2 - b}$ we obtain
+\[
+	\mathbf v = \begin{pmatrix}
+		- \frac{a - \sqrt{a^2-b}}{b} \\ 1
+	\end{pmatrix}.
+\]
+The system of solutions is
+\[
+	\mathbf x(t) =  \underbrace{\exp((-a + \sqrt{a^2 - b})t) \begin{pmatrix}
+		- \frac{a + \sqrt{a^2-b}}{b} \\ 1
+	\end{pmatrix}}_{=\varphi_1(t)} + \underbrace{\exp((-a - \sqrt{a^2 - b})t) \begin{pmatrix}
+		- \frac{a - \sqrt{a^2-b}}{b} \\ 1
+	\end{pmatrix}}_{= \varphi_2(t)}
+\]
+Find coefficients $\alpha$ and $\beta$ such that $\alpha \varphi_1 + \beta \varphi_2$ solves the IVP. From $x'(0) = 0$ it follows that $\alpha = -\beta$. With $x(0) = c$ we get
+\[
+	- \alpha \frac{a + \sqrt{a^2-b}}{b} - \beta \frac{a - \sqrt{a^2-b}}{b} = c.
+\]
+Solving the system yields
+\[
+	\alpha = - \frac{bc}{2 \sqrt{a^2-b}}, \quad \beta = \frac{bc}{2\sqrt{a^2-b}}
+\]
+So, the final solution of the linearised IVP is
+\[
+	\mathbf x(t) =  - \frac{bc}{2 \sqrt{a^2-b}} \varphi_1(t) + \frac{bc}{2\sqrt{a^2-b}} \varphi_2(t).
+\]
+and we get the solution for the original IVP by inspecting the first component of $\mathbf x(t)$.
+
+Let $b = 0$. The eigenvalues are $\lambda_1 = 0$ and $\lambda_2 = -2a$, and the corresponding eigenvectors are $\mathbf v_1 = \begin{pmatrix}
+	1 \\ 0
+\end{pmatrix}$ and $\mathbf v_2 = \begin{pmatrix}
+	-\frac{1}{2a} \\ 1
+\end{pmatrix}$. So for the fundamental system
+\[
+	\mathbf x(t) =\alpha \begin{pmatrix}
+	1 \\ 0
+	\end{pmatrix} + \beta \exp(-2at) \begin{pmatrix}
+		-\frac{1}{2a} \\ 1
+	\end{pmatrix}
+\]
+From $x'(0) = 0$ we see that $\beta = 0$. Thus, $\alpha = c$ so that $x(0) = c$. The solution of the original IVP is given by
+\[
+	x(t) = c.
+\]
+
+\textbf{Case:} $a^2 = b$. Because the characteristic polynomial has a double root in $\lambda$ we get the fundamental system for the original IVP:
+\[
+	x(t) = \alpha  \exp(-at) + t \beta  \exp(-at)
+\] 
+and the derivative $$x'(t) = -a \alpha \exp(-at) -at\beta \exp(-at) + \beta \exp(-at)$$
+$x'(0) = 0 \implies- \alpha a + \beta = 0$ and $x(0) = c \implies \alpha = c$. So, $\beta = ac$. We get the solution
+\[
+	x(t) = c \exp(-at) +act \exp(-at) = c \exp(-at)(1+at).
+\]
+
+\textbf{Case:} $a^2 < b$.
+
+\subsection*{Exercise 3}
+Let $f: \mathbb R \times \mathbb R^2, (t,x,y) \mapsto (y, -x)$. We see that $f$ is locally Lipschitz-continuous since it is partial differentiable w.r.t $x$ and $y$. After Picard-Lindelof there exists a unique solution of the IVP
+\[
+	\begin{pmatrix}\dot x \\ \dot y\end{pmatrix} = f(t,x,y), \quad x(0) = a, \; y(0) = b,
+\]
+ which can be obtained by the iteration $$\mathbf x_0 \equiv \begin{pmatrix}a\\b\end{pmatrix} \quad \text{and} \quad \mathbf x_i(t) = \mathbf x_0 + \int^t_0 f(s, \mathbf x_{i-1}(s)) ds.$$ We will calculate the first iterations so that we get a feeling how the solution might look:
+\[
+ 	\mathbf x_1(t) = \begin{pmatrix}a\\b\end{pmatrix} + \int^t_0  \begin{pmatrix}b\\-a\end{pmatrix} dx =  \begin{pmatrix}a\\b\end{pmatrix} + [ \begin{pmatrix}bs\\-as\end{pmatrix}]^t_0 =  \begin{pmatrix}a+bt\\b-at\end{pmatrix}
+\]
+ and
+ \begin{align*}
+ 	\mathbf x_2(t) =  \begin{pmatrix}a\\b\end{pmatrix} + \int^t_0  \begin{pmatrix}b-as\\ -a-bs \end{pmatrix} ds &=  \begin{pmatrix}a\\b\end{pmatrix} + [ \begin{pmatrix}bs- \frac{1}{2}as^2\\-as-\frac{1}{2}bs^2\end{pmatrix}]^t_0 \\&=   \begin{pmatrix}a+bt- \frac{1}{2}at^2\\b-at-\frac{1}{2}bt^2\end{pmatrix}
+ \end{align*}
+ 
+\textbf{Claim}: 
+ \[
+ 	\mathbf x_{2n}(t) = \begin{pmatrix}\sum^n_{j=0} (-1)^j \frac{1}{(2j)!}at^{2j} + \sum^n_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} \\
+ 	\sum^n_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j} + \sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1})
+ 	\end{pmatrix},
+ \]
+  \[
+ 	\mathbf x_{2n+1}(t) = \begin{pmatrix}\sum^{n+1}_{j=0} (-1)^j \frac{1}{(2j)!}at^{2j} + \sum^n_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} \\
+ 	\sum^{n+1}_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j} + \sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1})
+ 	\end{pmatrix}
+ \]
+ for all $n \in \mathbb N$.
+ This converges to $ \begin{pmatrix}
+ 		a\cos(t) + b\sin(t) \\ b\cos(t) - a \sin(t)
+ 	\end{pmatrix}$.
+ 
+ \begin{proof}
+ By induction. We showed it for $n = 0$. Assume the claim is true for $2n \in \mathbb N$. We want to show that the claim also holds for $2n+1$.
+\begin{align*}
+	\mathbf x_{2n+1}(t) &= \begin{pmatrix}a\\b\end{pmatrix} + \int^t_0 f(s,\mathbf x_{2n}(s))ds \\
+	&= \begin{pmatrix}
+	a \\ b
+\end{pmatrix}	 + \int^t_0 \begin{pmatrix}
+\sum^n_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j} + \sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1}) \\
+-\sum^n_{j=0} (-1)^j \frac{1}{(2j)!}at^{2j} - \sum^n_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1}
+ 	\end{pmatrix} dx \\
+ 	&= \begin{pmatrix}
+	a \\ b
+\end{pmatrix} +
+\begin{pmatrix}
+	\sum^n_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} + \sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+2)!}at^{2j+2}) \\
+	-\sum^n_{j=0} (-1)^j \frac{1}{(2j+1)!}at^{2j+1} - \sum^n_{j=0} (-1)^j \frac{1}{(2j+2)!}bt^{2j+2}
+\end{pmatrix} \\
+	&= \begin{pmatrix}
+	\sum^{n+1}_{j=0} (-1)^{j} \frac{1}{(2j)!}at^{2j} + \sum^{n}_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} \\
+	\sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1} + \sum^{n+1}_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j}
+	\end{pmatrix}
+\end{align*}
+Assume the claim is true for $2n-1 \in \mathbb N$. We want to show that the claim also holds for $2n$.
+\begin{align*}
+	\mathbf x_{2n}(t) &= \begin{pmatrix}a\\b\end{pmatrix} + \int^t_0 f(s,\mathbf x_{2n-1}(s))ds \\
+	&= \begin{pmatrix}
+	a \\ b
+\end{pmatrix}	 + \int^t_0 
+\begin{pmatrix}
+		\sum^{n}_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j} + \sum^{n-1}_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1}) \\
+		-\sum^{n}_{j=0} (-1)^j \frac{1}{(2j)!}at^{2j} - \sum^{n-1}_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} 
+ 	\end{pmatrix} dx \\
+ &= \begin{pmatrix}
+	a \\ b
+\end{pmatrix} +
+\begin{pmatrix}
+		\sum^{n}_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} + \sum^{n-1}_{j=0} (-1)^{j+1} \frac{1}{(2j+2)!}at^{2j+2}) \\
+		-\sum^{n}_{j=0} (-1)^j \frac{1}{(2j+1)!}at^{2j+1} - \sum^{n-1}_{j=0} (-1)^j \frac{1}{(2j+2)!}bt^{2j+2} 
+\end{pmatrix} \\
+&= \begin{pmatrix}
+		\sum^{n}_{j=0} (-1)^{j} \frac{1}{(2j)!}at^{2j} + \sum^{n}_{j=0} (-1)^j \frac{1}{(2j+1)!}bt^{2j+1} \\
+		\sum^n_{j=0} (-1)^{j+1} \frac{1}{(2j+1)!}at^{2j+1} + \sum^{n}_{j=0} (-1)^j \frac{1}{(2j)!}bt^{2j}
+\end{pmatrix}
+\end{align*}
+Due to the principle of induction the claim holds for all natural $n$. 
+ \end{proof}
+ 
+The solution of the IVP is given by
+\[
+	\mathbf x(t) = \begin{pmatrix}x(t)\\ y(t) \end{pmatrix}= \begin{pmatrix}
+ 		a\cos(t) + b\sin(t) \\ b\cos(t) - a \sin(t)
+ 	\end{pmatrix},
+\]
+for it is the fixed point of the Picard iteration.
+
+\end{document}
