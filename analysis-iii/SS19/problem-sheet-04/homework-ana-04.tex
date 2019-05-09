@@ -1,0 +1,241 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+\section*{Analysis III Problem Sheet 04}
+\textit{Viet Duc Nguyen (395220), Moritz Bichlmeyer (392374)}
+
+\noindent\textit{Tutor: Fabian - Donnerstag 12-14 Uhr}
+
+
+\subsection*{Exercise 2}
+\begin{enumerate}[label=(\roman*)]
+	\item Seien $A_k \in \mathcal A$ Nullmengen in einem Maßraum $(\Omega, \mathcal A, \mu)$. Dann ist $\bigcup_{k \in \mathbb N} A_k$ auch eine Nullmenge. Wir wissen, es gilt, dass $\mu(A_k) = 0$ für alle $k \in \mathbb N$. Auch ist $\bigcup A_k \in \mathcal A$ wegen der Abgeschlossenheit gegenüber der Vereinigung. Mit der Subadditivität folgt, dass $0 \leq \mu(\bigcup A_k) \leq \sum \mu(A_k) \leq 0$. Daher $\mu(\bigcup A_k) = 0$. Somit ist $\bigcup A_k$ eine Nullmenge.
+	
+	\item Sei $N \in \mathcal A_k$ eine Nullmenge bzgl. des Lebesguemaßes. Wir wollen zeigen, dass $\mathbb R^n \setminus N$ dicht in $\mathbb R^n$ liegt. Sei dazu $x \in \mathbb R^n$. 
+	
+	Falls $x \notin N$ so ist $x \in \mathbb R^n \setminus N$. Also gilt für jedes $\epsilon > 0$, dass $U_{\epsilon}(x) \cap \mathbb R^n \setminus N \neq \emptyset$ wegen $x \in U_{\epsilon}(x)$ und $x \in \mathbb R^n \setminus N$.
+	
+	Falls $x \in N$, so ist $x \notin \mathbb R^n \setminus N$. Wir machen einen Widerspruchsbeweis. Angenommen, es gäbe ein $\epsilon > 0$, sodass $U_{\epsilon}(x) \cap \mathbb R^n \setminus N = \emptyset$. Also $U_\epsilon(x) \subset N$.
+	
+	 \textbf{Behauptung:} Dann muss für jede elementargeometrische Menge $E \subset \mathbb R^n$ mit $U_{\epsilon}(x)  \subset E$ gelten, dass $\lambda(E) > 0$. 
+	 
+	 Dazu betrachte ein Quadrat $Q \subset U_{\epsilon}(x)$ mit Länge $\frac{\epsilon}{2}$. Dieses Quadrat hat ein Maß $\lambda(Q) = \frac{\epsilon^2}{4} > 0$. Nun gilt aufgrund der Subadditivität von $\lambda$, dass $\lambda(E) \geq \lambda(Q) = \frac{\epsilon^2}{4} > 0$. 
+	 
+	 Für jede Überdeckung $\bigcup U_i \supset N$, wobei $U_i$ elementargeometrisch sind, muss dann auch $U_\epsilon(x) \subset \bigcup U_i$ gelten. Dann ist wegen der Subadditivität $$\sum \lambda(U_i) \geq \lambda(Q) = \frac{\epsilon^2}{4} > 0.$$ Somit ist das äußere Maß $\lambda^*(N) > 0$. Widerspruch, denn $N$ ist eine Nullmenge. Also liegt $\mathbb R^n \setminus N$ dicht in $\mathbb R^n$.
+	 
+	 \item Wir zeigen, dass $G_f(i) \coloneqq \{ (x,f(x)) : x \in [i, i+1]^d \}$ eine Nullmenge in $\mathbb R^{d+1}$ bzgl. des Lebesguemaßes ist. Wie in (a) gezeigt, ist dann auch
+	 \[
+	 	\bigcup_{i \in \mathbb N}( G_f(i) \cup G_f(-i)) = G_f
+	 \]
+	 als abzählbare Vereinigung von Nullmengen wieder eine Nullmenge.
+	 
+	 Sei $i \in \mathbb Z$ beliebig. $f$ ist als stetige Funktion auf dem Kompaktum $A \coloneqq [i, i+1]^d$ gleichmäßig stetig. Sei $\epsilon > 0$. Also gibt es ein $\delta(\epsilon) > 0$, sodass für alle $x,y \in A$ mit $||x-y|| < \delta(\epsilon)$ gilt, dass
+	 \[
+	 	|f(x)-f(y)| < \epsilon.
+	 \]
+Wir unterteilen das Intervall $[i,i+1]^d$ so in paarweise disjunkte Quader $(J_n)_{n = 1,...,m}$, sodass $$\forall n \in \{1,...,m\}: J_n \subset [i,i+1]^d, \quad \bigcup_{n=1}^m J_n = [i,i+1]^d$$ und $$\forall n \in \{1,...,m\}: \lambda(J_n) \leq \delta(\epsilon).$$ Betrachte die Familie von Quadern $(R_n)_{n = 1,...,m}$ mit $R_n = J_n \times U_{2\epsilon}(f(x))$ für ein beliebiges $x \in J_n$. Dann gilt also, dass
+\[
+	\lambda(\bigcup^m_{n=1} R_n) \leq \sum^m_{n=1}\lambda(R_n) = 2\epsilon \sum_{n=1}^m |J_n| = 2\epsilon.
+\]
+Wir haben also eine elementargeometrische Überdeckung von $G_f(i)$ gefunden, sodass das Maß der Überdeckung beliebig klein werden kann. Also ist $G_f(i)$ eine Nullmenge, da $\inf\{ \sum \lambda(R_i) : \bigcup R_n \supset G_f(i), R_n \in \mathcal R \} \leq 2\epsilon$ für alle $\epsilon > 0$.
+
+\end{enumerate}
+
+
+\subsection*{Exercise 3}
+Sei $n \geq 2$. $M_1$ ist Lebesgue-messbar, denn die Menge $M_1$ ist abgeschlossen. Somit ist es eine Borelmenge und alle Borelmengen sind Lebesgue-messbar. Man sieht ganz leicht, dass $M_1$ abgeschlossen ist, da für jedes $x = (x_1,...,x_n)$ mit $x_i \neq x_j$ für irgendein $i \neq j$ gilt, dass $U_\epsilon(x) \cap M_1 = \emptyset$, indem man $\epsilon = \frac{d}{2}$ wählt, wobei $d > 0$ der Abstand von $x \notin M_1$ zur Geraden $M_1$ ist. 
+
+$M_1$ ist eine Nullmenge, da $M_1$ eine Teilmenge des Graphen von $h: \mathbb R^{n-1} \to \mathbb R, (x_1,...,x_{n-1}) \mapsto x_1$  in  $\mathbb R^n$ aufgefasst werden kann. Mit Aufgabe 2(iii) ergibt sich, dass der Graph von $h$ eine Nullmenge ist und da jede Teilmenge einer Nullmenge in einem vollständigen Maßraum wieder eine Nullmenge ist, ergibt sich dann die Behauptung, denn das Lebesguemaß ist vollständig.
+
+Hier sind wir unsicher: Falls $x=(x_1,...,x_n) \in M_2$ mit $x_1 \in \mathbb Q$, so sind alle anderen Komponenten $x_j, j \geq 2$ ebenfalls rational. Ansonsten wäre nämlich $x_1 - x_j \notin Q$. Das heißt, $\mathbb Q^n \cap [0,1]^n \subset M_2$. $\mathbb Q^n$ ist Lebesgue-messbar, denn $\mathbb Q^n$ ist abzählbar. 
+
+ Falls $x=(x_1,...,x_n) \in M_2$ mit $x_1 \in \mathbb R$, so ist $x_j = \lambda x_1$ für alle $\lambda \in \mathbb Q$, da ansonsten $x_1 - x_j \notin \mathbb Q$. Das heißt, $$L = \{ ( x, \lambda_1 x,..., \lambda_{n-1}x )  : x \in \mathbb R \setminus \mathbb Q, \lambda_i \in \mathbb Q \} \cap [0,1]^n \subset M_2.$$
+Wir sehen, dass $L$ eine Borelmenge ist, da $$L = ([0,1]^n \setminus ((\mathbb R \setminus \mathbb Q) \times \mathbb Q^{n-1})) \cap (\mathbb R \setminus \mathbb Q \times \mathbb R^{n-1}).$$ Somit ist $L$ messbar. Nun ist $$\Gamma = (\mathbb R \setminus \mathbb Q) \times \mathbb Q^{n-1}$$ eine Nullmenge bzgl des vollständigen Lebesguemaßes, da $$\Gamma \subset \bigcup_{x \in \mathbb Q} \mathbb R^{n-1}\times \{ x\}$$ und $\mathbb R^{n-1}\times \{ x\}$ ist eine Nullmenge, wie wir im Tutorium gezeigt haben. Also ist $L \cup \Gamma = [0,1]^n \cap ((\mathbb R \setminus \mathbb Q) \times \mathbb R^{n-1})$. Die Menge $(\mathbb R \setminus \mathbb Q) \times \mathbb R^{n-1}$, welche eine Borelmenge ist, liegt dicht in $\mathbb R^n$. Es hat also das Lebesguemaß $$\lambda([0,1]^n \cap (\mathbb R \setminus \mathbb Q) \times \mathbb R^{n-1}) = 1,$$ da das Lebesguemaß die Vervollständigung des Lebesgue-Borelmaßes ist. Also $\lambda(L) = 1$, da $\Gamma$ eine Nullmenge ist.
+ 
+ Insgesamt ist $M_2$ als Vereinigung zweier messbarer Mengen $$M_2 = (\mathbb Q^n \cap [0,1]^n )\cup L$$ wieder messbar, denn der Raum der messbaren Mengen ist eine $\sigma$-Algebra. Damit $\lambda(M_2) = 1$.
+\end{document}
