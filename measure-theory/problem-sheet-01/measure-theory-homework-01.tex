@@ -386,6 +386,32 @@ We see that $A = B_n \dot \cup \bigcup^{n-1}_{i=1}A_i$.
 	&= \sum^\infty_{i=1}\mu(A_i) < \infty \quad \text{due to monotonicity}
 \end{align*}
 
+\subsection*{Exercise 5}
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{To show:} $\mathcal F^\mu$ is a $\sigma$-algebra.
+
+\begin{proof}
+\begin{itemize}
+\item $\Omega = \Omega \cup \emptyset$ and $\Omega \in \mathcal F$. Thus, $\Omega \in \mathcal F^\mu$.
+
+\item Next, let $B \in \mathcal F^\mu$. We want to show that $B^c \in \mathcal F^\mu$. We can write 
+\[
+	B = F \cup A \subset F \cup N \implies B^c = F^c \cap A^c \supset F^c \cap N^c, \quad F \in \mathcal F, A \in \mathcal N, A \subset N .
+\]
+\emph{Goal}: Write $B^c = \tilde F \cup \tilde A$ with $\tilde F \in \mathcal F$ and $\tilde A \in \mathcal  N$.
+
+Let $N = A \dot \cup X$ for a subset $X \subset \Omega$. So $N^c = A^c \cap X^c$. 
+\begin{align*}
+	B^c \supset F^c \cap N^c = F^c \cap A^c \cap X^c \implies B^c &= F^c \cap A^c \cap X^c \cup (F^c \cap A^c \setminus X^c) \\
+	&= F^c \cap \underbrace{A^c \cap X^c}_{(A \cup X)^c = N^c} \cup \underbrace{(F^c \cap A^c \cap X)}_{= \tilde A}
+\end{align*}
+
+\item Let $B_1,B_2,... \in F^\mu$. We want to show that $B = \bigcup B_i \in F^\mu$. Every $B_i$ can be written as $B_i = F_i \cup A_i$ with $N_i \supset A_i$ and $\mu(N_i) = 0$. So, $$B = \underbrace{\bigcup F_i}_{\in \mathcal F} \cup \underbrace{\bigcup A_i}_{\in \mathcal N}$$
+
+\end{itemize}
+\end{proof}
+\end{enumerate}
+
 \end{itemize}
 
 

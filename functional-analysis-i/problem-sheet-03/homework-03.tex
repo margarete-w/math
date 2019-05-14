@@ -1,0 +1,299 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{[Georgia.ttf]}
+\setmainfont[
+    ItalicFont={[GeorgiaItalic.ttf]},
+    BoldItalicFont={[GeorgiaBoldItalic.ttf]},
+    BoldFont={[GeorgiaBold.ttf]}
+]{[Georgia.ttf]}
+\setsansfont[
+    BoldFont={[SF-Pro-Display-Bold.otf]}
+]{[SF-Pro-Display-Bold.otf]}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.8,0.8,0.8}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+\definecolor{green}{rgb}{0.235,0.702,0.443}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+\newcommand{\R}{\mathbb{R}} % Reelle Zahlen
+\newcommand{\N}{\mathbb{N}} % Natürliche Zahlen
+\newcommand{\Z}{\mathbb{Z}} % Ganze Zahlen
+\newcommand{\C}{\mathbb{C}} % Komplexe Zahlen
+\newcommand{\Q}{\mathbb{Q}} % Rationale Zahlen
+\DeclareMathOperator{\spn}{span}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\bfseries}{\thesection}{}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries}{\thesubsection}{}{}
+
+\titleformat{\subsubsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{8pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+\linespread{1.3}
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+  		
+\newtcbtheorem[]{issue}%
+  {To prove}{
+        theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{issue}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+\subsection*{Exercise 2}
+
+% https://pastebin.com/DYJ5qKZ1
+% here goes the exercise
+
+\subsubsection*{Sketch of proof}
+
+We basically want to prove when equality holds in the Minkowski inequality. For that we reduce the Minkowski inequality to Hoelder's inequality. What we are doing next is just the proof of Minkowski inequality backwards and replacing appropriate inequalities with equalitites by using the given assumptions.
+
+\subsubsection*{Proof}
+
+Let $p > 1$ and $p \neq \infty$. Let $(x_n)_{n \in \mathbb N}, (y_n)_{n \in \mathbb N} \in \ell_p$ with $||(x_n)|| = || (y_n) || = 1$ and $||(x_n) + (y_n)|| = 2$. Define $z_k \coloneqq |x_k + y_k|$. It follows that
+\[
+    ||(x_n)|| + || (y_n)|| = ||(x_n) + (y_n) || = ||(z_n)||.
+\]
+Thus for all $m \in \mathbb N$ it holds
+\begin{align}\label{dasistdochscheiße}
+    (\sum^m_{k=0} |z_k|^p)^{\frac{1}{p}} = (\sum^m_{k=0} |x_k|^p)^{\frac{1}{p}} + (\sum^m_{k=0} |y_k|^p)^{\frac{1}{p}}.
+\end{align}
+Since $p$ is fixed, chose $q$ such that $\frac{1}{p}+\frac{1}{q} = 1$. We that $\frac{1}{p} = 1 - \frac{1}{q}$. So, $$(\sum^m_{k=0} |z_k|^p)^{\frac{1}{p}} = (\sum^m_{k=0} |z_k|^p)^{1 - \frac{1}{q}} = \frac{\sum^m_{k=0} |z_k|^p}{(\sum^m_{k=0} |z_k|^p)^{\frac{1}{q}}}.$$
+From this equation, we can multiply \eqref{dasistdochscheiße} with $(\sum^m_{k=0} |z_k|^p)^{\frac{1}{q}}$ on both sides, and we obtain
+\[
+    \sum^m_{k=0} |z_k|^p = (\sum^m_{k=0} |x_k|^p)^{\frac{1}{p}}(\sum^m_{k=0} |z_k|^p)^{\frac{1}{q}} + (\sum^m_{k=0} |y_k|^p)^{\frac{1}{p}}(\sum^m_{k=0} |z_k|^p)^{\frac{1}{q}}
+\]
+Now, observe that $p = q(p-1)$. Hence, we can also write  former equation as 
+\begin{align}
+    \sum^m_{k=0} |z_k|^p &= (\sum^m_{k=0} |x_k|^p)^{\frac{1}{p}}(\sum^m_{k=0} |z_k|^{ q(p-1)})^{\frac{1}{q}}
+    + (\sum^m_{k=0} |y_k|^p)^{\frac{1}{p}}(\sum^m_{k=0} |z_k|^{ q(p-1)})^{\frac{1}{q}} \nonumber \\
+    &= [(\sum^m_{k=0} |x_k|^p)^{\frac{1}{p}} + (\sum^m_{k=0} |y_k|^p)^{\frac{1}{p}}](\sum^m_{k=0} |z_k|^{ q(p-1)})^{\frac{1}{q}} \label{kuh}
+\end{align}
+We also know that
+\begin{align}\label{jaar}
+    \sum^\infty_{k=0} |z_k|^p = \sum^\infty_{k=0}|z_k||z_k|^{p-1} = \sum^\infty_{k=0}|x_k+y_k||z_k|^{p-1}. 
+\end{align}
+By triangular inequality we note that
+\begin{align}\label{paper}
+\sum^m_{k=0}|z_k|^p \overset{\eqref{jaar}}{\leq} \sum^{\infty}_{k=0}(|x_k|+|y_k|) \cdot |z_k|^{p-1}.
+\end{align}
+On the other hand, we can use Hoelder's inequality on \eqref{kuh} to obtain
+\begin{align}
+    \sum^{\infty}_{k=0}|x_k| |z_k|^{p-1} + \sum^{\infty}_{k=0}|y_k| |z_k|^{p-1} &\leq [(\sum^m_{k=0} |x_k|^p)^{\frac{1}{p}} + (\sum^m_{k=0} |y_k|^p)^{\frac{1}{p}}](\sum^m_{k=0} |z_k|^{ q(p-1)})^{\frac{1}{q}} \nonumber \\
+    &= \sum^\infty_{k=0}|z_k|^p \label{stein}
+\end{align}
+Using \eqref{paper} and \eqref{stein} we find a lower and upper bound for $\sum^\infty_{k=0}|z_k|^p$:
+\[
+    \sum^{\infty}_{k=0}|x_k||z_k|^{p-1}+\sum^{\infty}_{k=0}|y_k||z_k|^{p-1}  \leq \sum^\infty_{k=0}|z_k|^p  \leq \sum^{\infty}_{k=0}|x_k||z_k|^{p-1}+\sum^{\infty}_{k=0}|y_k||z_k|^{p-1}.
+\]
+Putting two and two together and we get
+\begin{align}\label{pika}
+   \sum^{\infty}_{k=0}(|x_k|+|y_k|)|z_k|^{p-1}  =  \sum^\infty_{k=0}|z_k|^p
+    \overset{\eqref{jaar}}{=}\sum^\infty_{k=0}|x_k+y_k||z_k|^{p-1}
+\end{align}
+
+\begin{lemma}{}{}
+Let $(a_n),(b_n)$ be convergent sequences in $\mathbb C$. If $\sum^\infty_{j=0}|a_j| + |b_j| = \sum^\infty_{j=0}|a_j+b_j|$ then $|a_j| + |b_j| = |a_j + b_j|$ for all $j \in \mathbb N$.
+\end{lemma}
+\begin{proof}
+Let $(a_n),(b_n)$ be convergent sequences in $\mathbb C$ with $$\sum^\infty_{j=0}|a_j| + |b_j| = \sum^\infty_{j=0}|a_j+b_j|.$$ For all $n \in \mathbb N$ it holds
+\[
+    |a_0| + |b_0| + ... + |a_n| + |b_n| \leq |a_0+b_0| + ... + |a_n+b_n| \leq |a_0| + |b_0| + ... + |a_n| + |b_n|.
+\]  
+Assume that there exists $j \in \{ 1,...,n \}$ such that $|a_j+b_j| \neq |a_j| + |b_j|$ Thus, it must follow by triangluar inequality $|a_j+b_j| < |a_j| + |b_j|$. So, we get
+\[
+    |a_j| + |b_j| - |a_j + b_j| + \sum^n_{k \in \{ 1,...,n\} \setminus \{j \}} |a_k| + |b_k| \leq \sum^n_{k \in \{ 1,...,n\} \setminus \{j \}} |a_k + b_k|, 
+\]
+which implies that $\sum^n_{k \in \{ 1,...,n\} \setminus \{j \}} < \sum^n_{k \in \{ 1,...,n\} \setminus \{j \}} |a_k + b_k|$. \emph{Contradiction!} Thus, there cannot be such $j$ and $|a_j| + |b_j| = |a_j+b_j|$ for all $j \in \{1,...,n\}$. For $n \in \mathbb N$ was arbitrary it holds for all $j \in \mathbb N$ that
+\[
+    |a_j| + |b_j| = |a_j+b_j|.
+\]
+\end{proof}
+
+\subsubsection*{Using the hint}
+We apply the Lemma 0.1 on \eqref{pika}, and we get $$|x_k| + |y_k| = |x_k + y_k|, \qquad \forall k \in \mathbb N$$
+Let $k \in \mathbb N$. Using the second hint given on the exercise sheet, we get two cases:
+
+\begin{enumerate}[label=(\arabic*)]
+\item Either it holds: $x_k = \alpha y_k$ for $\alpha > 0$, and since $||(y_k)|| = \alpha ||(x_k)|| = 1$ it follows $\alpha = 1$. So $x_k = y_k$.
+
+\item Consider sequences $(x_k),(y_k) \in \ell_p$ with $||(x_k)||=||(y_k)|| = 1$ and $x_k = 0$ or $y_k = 0$ for an index $k \in \mathbb N$. W.l.o.g. let $x_k = 0$. For now we assume that there is exactly one member $x_i$, namely $x_k$, which is zero, i.e. we assume that $y_i \neq 0$ and $x_i \neq 0$ \textit{(the proof can be easily generalized to the case if $x_i = 0$ for more than one $i \in \mathbb N$)}. Due to case (1) it holds $x_i = y_i$ for all $i \neq k$. We want to prove the contraposition of 
+\[
+    \frac{||(x_k)+(y_k)||}{2} = 1  \implies (x_k) = (y_k).
+\]
+Assume $(x_k) \neq (y_k)$. Thus, there must exist an index $l \in \mathbb N$ such that $x_l \neq y_l$. Because of $x_i = y_i$ for all $i \neq k$ we have $x_k = 0$ and $y_k \neq 0$. Additionally, there must exist an index $j \neq k$ such that $x_j \neq 0$ and $y_j = 0$ due to $||(x_k)||=||(y_k)|| = 1$ and $|x_i| = |y_i|$ for all $i \neq k$.
+
+It holds
+\begin{align*}
+    \frac{(\sum_{i \in \mathbb N} |x_i+y_i|^p)}{2} &= \frac{1}{2}(\sum^\infty_{i \neq k, i \neq j} |x_i+y_i|^p + |x_j|^p + |y_k|^p) \\
+    &\Downarrow \textit{due to $|x_k|+|y_k| = |x_k+y_k|$ for all $k \in \mathbb N$} \\
+    &= \frac{1}{2}(\sum^\infty_{i \neq k, i \neq j} (|x_i|+|y_i|)^p + |x_j|^p + |y_k|^p) \\
+    &\Downarrow \textit{due to $x_i \neq 0$ and $y_i \neq 0$ for all $i \in \mathbb N \setminus \{ j,k \} $} \\
+    &> \frac{1}{2}(\sum^\infty_{i \neq k, i \neq j} |x_i|^p+|y_i|^p + |x_j|^p + |y_k|^p) \\
+    &= \frac{1}{2}(\sum^\infty_{i \in \mathbb N} |x_i|^p+\sum^\infty_{i \in \mathbb N}|y_i|^p) = 1.
+\end{align*}
+Thus by contraposition it holds that $x_k = y_k = 0$.
+\end{enumerate}
+
+\subsubsection*{Conclusion}
+Finally, it holds
+$
+    (y_k)_{k \in \mathbb N} = (x_k)_{k \in \mathbb N}.
+$
+$\ell_p$ is strictly convex for $p \in (1, \infty)$.
+
+\subsubsection*{Counterexamples for $\ell_1$ and $\ell_\infty$}
+Consider $(x_k)_{k \in \mathbb N}, (y_k)_{k \in \mathbb N} \in \ell_1$ with
+\[
+	(x_k)_{k \in \mathbb N} = (\frac{1}{2}, \frac{1}{2}, 0,0,...) \quad \text{and} \quad (y_k)_{k \in \mathbb N} = (0, \frac{1}{2}, \frac{1}{2},0,...).
+\]
+We see that $||(x_k)|| = \sum_{k \in \mathbb N}|x_k| = 1 = \sum_{k \in \mathbb N}|y_k| = ||(y_k)||$ but $(x_k)_{k \in \mathbb N} \neq (y_k)_{k \in \mathbb N}$. So, $\ell_1$ is not strictly convex.
+
+Consider $(x_k)_{k \in \mathbb N}, (y_k)_{k \in \mathbb N} \in \ell_\infty$ with
+\[
+	(x_k)_{k \in \mathbb N} = (1,0, 0,0,...) \quad \text{and} \quad (y_k)_{k \in \mathbb N} = (0, 1, 0,0,...).
+\]
+We see that $||(x_k)|| = \sup_{k \in \mathbb N}|x_k| = 1 = \sup_{k \in \mathbb N}|y_k| = ||(y_k)||$ but $(x_k)_{k \in \mathbb N} \neq (y_k)_{k \in \mathbb N}$. So, $\ell_\infty$ is not strictly convex.
+
+\end{document}

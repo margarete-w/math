@@ -1,0 +1,230 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+\section*{Analysis III Problem Sheet 03}
+\textit{Duc (395220), Moritz Bichlmeyer (392374)}
+
+\noindent\textit{Tutor: Fabian - Donnerstag 12-14 Uhr}
+
+
+\subsection*{Exercise 1}
+\begin{enumerate}[label=(\roman*)]
+\item $\mathcal A_2' \subset \Omega_1$ ist eine $\sigma$-Algebra. 
+\begin{enumerate}
+\item $\Omega_1 \in \mathcal A_2'$, denn $\Omega_2 \in \mathcal A_2$. Dann ist $f^{-1}(\Omega_2) = \Omega_1 \in  \mathcal A_2'$ nach Definition von $\mathcal A_2'$.
+
+\item Sei $A \in \mathcal A_2'$. Dann gibt es ein $B \in \Omega_2$ mit $f(A) = B$ nach Definition von $\mathcal A_2'$. Nun ist $B^c \in \Omega_2$. Wegen $B \cup B^c = \Omega_2$, $A \cup A^c = \Omega_1$ und $f^{-1}(\Omega_2) = \Omega_1$ gilt, dass $f^{-1}(B^c) = A^c$ (beachte, dass $f$ von $\Omega_1$ nach $\Omega_2$ abbildet). Somit $A^c \in \mathcal A_2'$.
+
+\item Seien $A_i \in \mathcal A_2'$ für eine beliebige Indexmenge $I \subset \mathbb N$. Wir wollen schauen, ob $\bigcup A_i \in \mathcal A_2'$ gilt. Aus $A_i \in \mathcal A_2'$ folgt, dass es ein $B_i \in \mathcal A_2$ gibt, sodass $f(A_i) = B_i$. Nun ist auch $\bigcup B_i \in \mathcal A_2$. Somit haben wir: $f(\bigcup A_i) = \bigcup B_i \in \mathcal A_2$. Also ist $\bigcup A_i \in \mathcal A_2'$.
+\end{enumerate}
+
+$\mathcal A_1'$ ist \emph{keine} $\sigma$-Algebra. Seien zwei beliebige $\sigma$-Algebren $\mathcal A_1, \mathcal A_2$ auf $\mathbb R$ gegeben und beachte die Abbildung $\tau: \mathbb R \to \mathbb R, x \mapsto 0$. Offensichtlich ist $\mathbb R \notin f(\mathcal A_1) = \mathcal A_1' = \{ \{ 0 \} \}$. Daher kann $\mathcal A_1'$ keine $\sigma$-Algebra sein.
+
+\item Sei $\Omega_3$ eine überabzählbare Menge.
+\begin{enumerate}
+\item $\mathcal A_3$ ist ein Ring. Erstens ist $\mathcal A_3 \neq \emptyset$, da $\Omega_3$ überabzählbar ist und somit eine endliche Teilmenge besitzt. Zweitens ist die Vereinigung zweier endlicher Mengen wieder endlich. Drittens ist die Differenz zweier endlicher Mengen $A,B$ wieder endlich, wie man an $A \setminus B = A \cap B^c \subset A$ sieht. Es ist \emph{kein} $\sigma$-Ring, da die abzählbar unendliche Vereinigung endlicher Mengen $A_i$, die auch noch paarweise disjunkt sind, nicht endlich ist. Da es kein $\sigma$-Ring ist, kann es auch keine $\sigma$-Algebra sein.
+
+\item $\mathcal A_4$ ist ein $\sigma$-Ring (und somit auch ein Ring). Es gilt, dass $\mathcal A_4$ auf jeden Fall nicht leer ist, da eine überabzählbare Menge $\Omega_3$ abzählbare Teilmengen besitzen muss. Die Vereinigung zweier abzählbarer Mengen ist wieder abzählbar. Auch ist die Differenz abzählbar, da man den Schnitt wie bei (a) als Schnitt zweier Mengen darstellen kann, wobei die eine Menge abzählbar ist. Und da eine Teilmenge einer abzählbaren Menge wieder abzählbar ist, muss auch der Schnitt wieder abzählbar sein. $\mathcal A_4$ ist keine $\sigma$-Algebra, denn $\Omega_3 \notin \mathcal A_4$ wegen der Überabzählbarkeit von $\Omega_3$ nach Voraussetzung.
+
+\item $\mathcal A_5$ ist eine $\sigma$-Algebra und somit auch ein Ring bzw. ein $\sigma$-Ring. Da $\Omega_3^c = \emptyset$ und die leere Menge abzählbar ist, gilt $\Omega_3 \in \mathcal A_5$. Sei $A \in \mathcal A_5$. Falls $A$ abzählbar ist, so ist $A^c \in \mathcal A_5$, da das Komplement von $A^c$ wieder $A$ ist und $A$ ja abzählbar ist. Falls $A^c$ abzählbar ist, so folgt direkt $A^c \in \mathcal A_5$. Seien $A_i \in \mathcal A_5$. Entweder sind alle $A_i$ abzählbar. Dann ist die abzählbare Vereinigung abzählbarer Mengen wieder abzählbar und somit $\bigcup A_i \in \mathcal A_5$. Ansonsten wissen wir, dass auf jeden Fall ein $j$ gibt, sodass $A_j^c$ \emph{abzählbar} ist. Dann ist $(\bigcup A_i)^c$ als Teilmenge einer abzählbaren Menge abzählbar, denn $$(\bigcup A_i)^c = \bigcap A_i^c \subset A_j^c.$$
+Also $\bigcup A_i \in \mathcal A_5$.
+\end{enumerate}
+\end{enumerate}
+
+\iffalse
+\subsection*{Exercise 2}
+Let $\mathcal A_1$ and $\mathcal A_2$ be $\sigma$-algebras on $\Omega$ such that $\mathcal A_1 \subset \mathcal A_2$. Then, it holds $\mathcal A_1 \cup \mathcal A_2 = \mathcal A_2$. So, $\mathcal A_1 \cup \mathcal A_2$ is a $\sigma$-algebra because $\mathcal A_2$ is a $\sigma$-algebra. Analogously for $\mathcal A_2 \subset \mathcal A_1$.
+
+Let $\mathcal A_1 \cup A_2, \mathcal A_1, \mathcal A_2$ be $\sigma$-algebras. We want to show that $\mathcal A_1 \subset \mathcal A_2$ or $\mathcal A_2 \subset \mathcal A_1$. We prove this by contradiction. Assume that $\mathcal A_1 \not \subset \mathcal A_2$ and $\mathcal A_2 \not \subset \mathcal A_1$. Thus, there exist sets $X,Y$ with
+\begin{gather*}
+	X \in \mathcal A_1, X \notin \mathcal A_2, X^c \in \mathcal A_1, X^c \notin \mathcal A_2 \\
+	Y \notin \mathcal A_1, Y \in \mathcal A_2, Y^c \notin \mathcal A_1, Y^c \in \mathcal A_2 
+\end{gather*}
+We know that $X \cup Y \in \mathcal A_1 \cup \mathcal A_2$ and $X^c \cup Y^c = (X \cap Y)^c \in \mathcal A_1 \cup \mathcal A_2$. Then, $(X \cup Y) \cap (X \cap Y)^c = X \Delta Y \in \mathcal A_1 \cup \mathcal A_2$, because $\mathcal A_1 \cup \mathcal A_2$ is closed under  intersection. Regard the complement: $(X \Delta Y)^c = X \cap Y \in \mathcal A_1 \cup \mathcal A_2$ due to the closure under complement. Thus, $X \cap Y \in \mathcal A_1$ or $X \cap Y \mathcal A_2$. However, $X \cap (X \cap Y)^c = $ 
+\fi 
+\end{document}
