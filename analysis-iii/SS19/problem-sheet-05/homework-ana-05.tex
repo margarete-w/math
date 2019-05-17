@@ -1,0 +1,296 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[BoldFont="HelveticaNeue-Medium"]{Helvetica Neue}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+
+
+\newfontfamily\Menlo[Ligatures=TeX]{Menlo}
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\code}[1]{{\Menlo{\color{darkgrey}#1}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\mdseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{16pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+    	
+\newtcbtheorem[auto counter,number within=section]{example}%
+  {Beispiel}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=grey,
+  		colbacktitle=white,
+  		coltitle=grey,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,grey] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{example}
+    	
+\newtcbtheorem[auto counter,number within=section]{note}%
+  {Notiz}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=yellow,
+  		colbacktitle=white,
+  		coltitle=yellow,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,yellow] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{note}
+  		
+\newtcbtheorem[]{issue}%
+  {To prove}{
+        theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{issue}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+\section*{Analysis III Problem Sheet 05}
+\textit{Viet Duc Nguyen (395220), Moritz Bichlmeyer (392374)}
+
+\noindent\textit{Tutor: Nils - Freitag 12-14 Uhr, MA551}
+
+\subsection*{Exercise 1}
+
+\begin{enumerate}[label=(\roman*)]
+\item Sei $(\Omega, \mathcal A)$ ein messbarer Raum und $f: \Omega \to \mathbb R$ messbar. Definiere die Funktion $g: \Omega \to \mathbb R$ als
+\[
+	g(x) = \begin{cases}
+		\frac{1}{f(x)} \quad &\text{falls $f(x) \neq 0$} \\
+		0 & \text{sonst}
+	\end{cases}.
+\]
+\begin{issue}{}{}
+	$g$ ist eine messbare Funktion.
+\end{issue}
+\begin{proof}
+Dazu zeigen wir, dass $g^{-1}((c, \infty)) \in \mathcal A$ für alle $c \in \mathbb R$ gilt.
+\begin{itemize}
+\item \textbf{Fall 1:} $c \geq 0$. Dann ist 
+\begin{align*}
+g^{-1}((c, \infty)) &= \{ x: f(x) = \frac{1}{d} \text{ für ein $d \in (c,\infty)$} \} \\
+&= \{ x: f(x) \in (0, \frac{1}{c}) \}.
+\end{align*}
+Beachte, dass $c \neq 0$, sodass die Menge in der zweiten Zeile wohldefiniert ist. Daher ist $g^{-1}((c, \infty)) = f^{-1}((0, \frac{1}{c})) \in \mathcal A$.
+
+\textbf{Fall 2:} $c \leq 0$. Dann ist 
+\begin{align*}
+g^{-1}((c, \infty)) = g^{-1}((c, 0)) \cup g^{-1}((0, \infty)) \cup g^{-1}(\{0\}).
+\end{align*}
+Nun gilt $ g^{-1}(\{0\}) = f^{-1}(\{ 0 \}) \in \mathcal A$, da $f$ messbar ist. Außerdem haben wir
+\begin{align*}
+ g^{-1}((c, 0)) &=  \{ x: f(x) = \frac{1}{d} \text{ für ein $d \in (c,0)$} \} \\
+ &=  \{ x: f(x) = d \text{ für ein $d \in (-\infty, \frac{1}{c})$} \} \\
+ &= f^{-1}((-\infty, \frac{1}{d})) \in \mathcal A.
+\end{align*}
+Aus Fall 1 wissen wir, dass $ g^{-1}((0, \infty)) \in \mathcal A$. Damit ist $$g^{-1}((c, \infty)) \in \mathcal A$$ als Vereinigung messbarer Mengen in $\mathcal A$. Somit ist $g$ eine $\mathcal A$-messbare Funktion.
+\end{itemize}
+\end{proof}
+
+\item Sei $a \in \mathbb R$. Es gilt
+\[
+	(\sup_{n \in \mathbb N} f_n)^{-1}((a,\infty]) = \bigcup_{n \in \mathbb N} f_n^{-1}(a,\infty] \in \mathcal A.
+\]
+Dann ist auch $\inf_{n \in \mathbb N} f_n$ messbar, da $\inf_{n \in \mathbb N} f_n = - \sup_{n \in \mathbb N}(-f_n)$.
+
+Es gilt $$\limsup_{n \to \infty} f_n = \inf_{m \in \mathbb N} g_m$$ mit $g_m = \sup_{n \geq m}f_n$. Da $g_m$ messbar ist, ist auch $\inf_{m \in \mathbb N} g_m$ messbar und somit $\limsup_{n \to \infty} f_n$ messbar
+
+Ebenso kann man zeigen, dass $\liminf_{n \to \infty} f_n$ messbar ist, indem,
+\[
+	\liminf_{n \to \infty} f_n = \sup_{m \in \mathbb N}g_m
+\]
+mit $g_m = \inf_{n \geq m}f_n$. 
+
+Daher ist $f = \lim_{n \to \infty}f_n$ ebenfalls messbar, falls $f_n$ für alle $n \in \mathbb N$ messbar ist, da $f = \limsup_{n \to \infty}f_n = \liminf_{n \to \infty}f_n$.
+
+
+\item Sei $f: \mathbb R \to \mathbb R$ differenzierbar. 
+\begin{issue}{}{}
+$f$ ist messbar.
+\end{issue}
+\begin{proof}
+Aus der Vorlesung wissen wir, dass stetige Funktionen messbar sind \emph{(siehe Beispiel 1.44 (2) im Skript von Mehl, Kapitel 1, Maß- und Integrationstheorie)}. Da $f$ differenzierbar ist, ist $f$ insbesondere auch stetig. Daher ist $f$ messbar.
+\end{proof}
+
+\begin{issue}{}{}
+$f'$ ist messbar.
+\end{issue}
+\begin{proof}
+Es gilt
+\[
+	f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}, \qquad \forall x \in \mathbb R.
+\]
+Definiere die Funktionenfolge $f_n(x) \coloneqq \frac{f(x+\frac{1}{n}) - f(x)}{\frac{1}{n}}$ für alle $n \in \mathbb N$. Dann konvergiert $f_n \to f'$ punktweise. Insbesondere ist $f_n$ für alle $n \in \mathbb N$ messbar, da $f$ messbar ist.
+\end{proof}
+\end{enumerate}
+
+
+
+\subsection*{Exercise 2}
+\begin{enumerate}[label=(\roman*)]
+\item Sei $(\Omega, \mathcal A, \mu)$ ein vollständiger Maßraum. Seien $f$ und $g$ numerische Funktionen mit $f(x) =g(x)$ für alle $x \in \Omega \setminus N$ mit $\mu(N) = 0$.
+\begin{issue}{}{}
+$f$ ist messbar genau dann, wenn $g$ messbar ist.
+\end{issue}
+\begin{proof}
+Sei $f$ messbar. Wir wollen zeigen, dass $g$ messbar ist. Sei $X \in \mathcal A$. Wir müssen zeigen, dass $g^{-1}(X) \in \mathcal A$.
+
+Schreibe die Menge $g^{-1}(X)$ als
+\[
+	g^{-1}(X) = \underbrace{\{ x \in \Omega : g(x) \in X, f(x) = g(x) \}}_{\coloneqq A} \cup \underbrace{\{ x \in \Omega : g(x) \in X, f(x) \neq g(x) \}}_{\coloneqq B}.
+\]
+Beachte, dass $B \subset N$ und da $\mu$ ein vollständiges Maß ist, ist $B$ als Teilmenge einer Nullmenge ebenfalls eine Nullmenge. Somit ist $B$ messbar, denn Nullmengen sind messbar. Wir erhalten also
+\[
+	B \in \mathcal A.
+\]
+Zudem ist $$A = \underbrace{f^{-1}(X)}_{\in \mathcal A} \cap \{ x \in \Omega : f(x) = g(x) \}.$$
+Wir sehen auch, dass $\{ x \in \Omega : f(x) = g(x) \} = \Omega \setminus N  \in \mathcal A$ messbar ist, da $\Omega$ und $N$ messbar sind und $\mathcal A$ unter Differenzbildung abgeschlossen ist. Damit ist $$A \in \mathcal A,$$ da $A$ als Schnitt zweier messbarer Mengen darstellbar ist.
+\end{proof}
+
+\item Nicht bearbeitet.
+\end{enumerate}
+
+\end{document}
