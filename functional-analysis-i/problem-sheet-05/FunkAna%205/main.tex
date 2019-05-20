@@ -1,0 +1,518 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{[Georgia.ttf]}
+\setmainfont[
+    ItalicFont={[GeorgiaItalic.ttf]},
+    BoldItalicFont={[GeorgiaBoldItalic.ttf]},
+    BoldFont={[GeorgiaBold.ttf]}
+]{[Georgia.ttf]}
+\setsansfont[
+    BoldFont={[SF-Pro-Display-Bold.otf]}
+]{[SF-Pro-Display-Medium.otf]}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.8,0.8,0.8}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+\definecolor{green}{rgb}{0.235,0.702,0.443}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+\newcommand{\R}{\mathbb{R}} % Reelle Zahlen
+\newcommand{\N}{\mathbb{N}} % Natürliche Zahlen
+\newcommand{\Z}{\mathbb{Z}} % Ganze Zahlen
+\newcommand{\C}{\mathbb{C}} % Komplexe Zahlen
+\newcommand{\Q}{\mathbb{Q}} % Rationale Zahlen
+\DeclareMathOperator{\spn}{span}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\bfseries}{\thesection}{}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries}{\thesubsection}{}{}
+
+\titleformat{\subsubsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{8pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+\linespread{1.3}
+
+\newtcbtheorem[auto counter,number within=section]{theorem}%
+  {Theorem}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{theorem}
+  		
+\newtcbtheorem[]{issue}%
+  {To prove}{
+        theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{issue}
+
+\newtcbtheorem[auto counter,number within=section]{lemma}%
+  {Lemma}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=0pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{lemma}
+  		
+ \newtcbtheorem[auto counter,number within=section]{definition}%
+  {Definition}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{definition}
+  		
+  		 \newtcbtheorem[]{goal}%
+  {Goal}{
+  		theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=1pt,
+  		toprule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=orange,
+  		colbacktitle=white,
+  		coltitle=orange,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,orange] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{goal}
+  		
+\newtcbtheorem[]{important}%
+  {Wichtig}{
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=pink,
+  		colbacktitle=white,
+  		coltitle=pink,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,pink] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{important}
+  		
+  		
+  		\newtcbtheorem[]{explanation}%
+  {Explanation}{
+        theorem name,
+  		fonttitle=\upshape, 
+  		fontupper=\upshape,
+  		boxrule=0pt,
+  		leftrule=3pt,
+  		arc=0pt,auto outer arc,
+  		colback=white,
+  		colframe=green,
+  		colbacktitle=white,
+  		coltitle=green,
+  		oversize,
+  		enlarge top by=1mm,
+  		enlarge bottom by=1mm,
+    	enhanced jigsaw,
+    	interior hidden, 
+    	before skip=12pt,
+    	after skip=12pt,
+    	overlay={
+    		\draw[line width=1.5pt,green] (frame.north west) -- (frame.south west);
+  		}, 
+  		frame hidden}{explanation}
+    	
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% CONTENT HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Functional Analysis Sheet 5}
+\subsection*{Featuring Diddle}
+
+\subsubsection*{TO-DO}
+\begin{itemize}
+    \item Exercise 1 [ ]
+    \item Exercise 2 [ in progress ] (Duc)
+    \item Exercise 3 [ ]
+    \item Exercise 4 [ ]
+\end{itemize}
+
+\subsubsection*{GNTM 2019: Caro packt aus - So war es mit Simone wirklich | INTERVIEW}
+
+\vip{Wichtig:} \emph{https://www.youtube.com/watch?v=o-gR9KPCVbo}
+
+\hline
+
+\subsection*{Exercise 1}
+\begin{issue}{}{}
+If $E$ is separable, then $F \coloneqq \{ x \in E: ||x|| =1 \}$ is separable.
+\end{issue}
+
+\begin{proof}
+Let $E$ be a normed space, which is separable. This means that there exists a \emph{countable dense} subset $Q \subset E$.
+
+\textbf{Claim:} $\tilde Q \coloneqq \{ \frac{x}{||x||} : x \in Q \}$ is a countable dense subset of $F$.
+
+\begin{enumerate}
+    \item \vip{Countable subset:} For all $x \in \tilde Q$ it holds $||x|| = 1$. Thus, $x \in F$.
+    
+    We know $Q$ is countable. There exists a bijection $\tau: \tilde Q \to Q$ with $$\tau(\tilde q) = \tilde q ||\tilde q||.$$ So, $\tilde Q$ is countable.
+    
+    \item \vip{Dense in $F$:} Let $x \in F$. We know that $Q$ is dense in $E$. Hence, there exists a sequence $(x_n)_{n \in \mathbb N} \subset Q$ with $x_n \neq 0$ for all $n \in \mathbb N$ such that 
+    \[
+        \lim_{n \to \infty}x_n = x.
+    \]
+    Define a new sequence $(y_n)_{n \in \mathbb N}$ with
+    \[
+        y_n \coloneqq \frac{x_n}{||x_n||} \in \tilde Q \qquad \forall n \in \mathbb N.
+    \]
+    We will see that $y_n \to x$:
+    \[
+        \lim_{n \to \infty}y_n = \lim_{n \to \infty} \frac{x_n}{||x_n||} = \frac{\lim_{n \to \infty} x_n}{\underbrace{||\lim_{n \to \infty}x_n||}_{||\cdot|| \text{ is continuous}}} = \frac{x}{\underbrace{||x||}_{= 1}} = x.
+    \]
+    So, $\tilde Q$ is dense in $F$.
+\end{enumerate}
+We have shown the claim. Therefore, $F$ is separable per definition, as we have found a countable dense subset of $F$, namely $Q$.
+\end{proof}
+
+\begin{issue}{}{}
+If $F \coloneqq \{ x \in E: ||x|| =1 \}$ is separable, then there exists a sequence $(x_n)_{n \in \mathbb N} \subset E$ such that $$\overline{\mathrm{span}((x_n)_{n \in \mathbb N})} = E.$$
+\end{issue}
+\begin{proof}
+Let $F = \{ x \in E: ||x|| =1 \}$ be separable. Hence, we find a countable subset $Q \subset F$, that is dense in $F$ where $Q$ is of the Form $Q = (x_n)_{n\in\mathbb N}\subset E$ and $||x_n|| = 1$ for all $n\in\mathbb N$. Let now $x\in E$ be arbitrary. We want to find a sequence $(y_n)_{n\in\N}$ in $Q$ with $y_n\to x$ for $n\to\infty$ and every $y_n$ a finite linear combination of our $(x_n)$
+
+Note that in any case where $x\neq 0$ (for $x=0$ everything is clear) we know $\frac{x}{||x||} = 1$. Thus, $\frac{x}{||x||}\in F$ so by assumption we can find a sequence $(\tilde y_n)_{n\in \N} \subset Q $ with $\tilde y_n \overset{n\to\infty}{\longrightarrow} \frac{x}{||x||}$ and . This of course means 
+\[
+    \lim_{n\to\infty} \tilde y_n = \frac{x}{||x||} \iff ||x||\lim_{n\to\infty}\tilde y_n = \lim_{n\to\infty} ||x||\tilde y_n = x.
+\]
+Since for all natural numbers $n$ we can find an $i_n\in\N$ with $y_n = x_{i_n}$ and hence we know that $||x||y_n \in\ \mathrm{span}((x_n)_n)$ and that means
+\[
+    x \in \overline{ \mathrm{span} ((x_n)_n) } \implies E = \overline{\mathrm{span}((x_n)_n)}
+\]
+
+
+
+\pagebreak
+\emph{To show:} $\overline{\mathrm{span}((x_n)_{n \in \mathbb N})} \subset E$. Let $x \in\overline{\mathrm{span}((x_n)_{n \in \mathbb N})}$.
+
+We know that $\C_{\Q} := \{z = a+ib : a,b\in\Q\}$ is countable and dense in $\C$. Thus, $\mathrm{span}_{\Q} := \left\{x \in E\ | \ \exists m_x\in \N: x = \sum_{i=1}^{m_x}\lambda_i x_{\tau_x(i)}\in \mathrm{span}((x_n)_n) \text{ and } \lambda_i \in \C_{\Q}\right\}$ - where $\tau_x$ is some permutation of $\N$ - is also dense in $\mathrm{span}((x_n)_n)$
+
+Now we can see that
+\begin{align*}
+    \mathrm{span}_\Q &= \bigcup_{m\in\N} \left\{x = \sum_{i=1}^{m}\lambda_i x_{\tau_x(i)} \in E \ | \ \lambda_i \in \C_\Q \text{ for all } i\in\{1,...,m\} \right\}\\
+    &= \bigcup_{m\in\N} \bigcup_{(n_1,...,n_m)\in \N^m} \bigcup_{(\lambda_1,...,\lambda_m)\in(\C_\Q)^m} \left\{\sum_{i=1}^{m}\lambda_i x_{n_i}\right\}
+\end{align*}
+which is countable. Thus we have a countable set for which
+\[
+    \overline{\mathrm{span}_\Q} = \overline{\mathrm{span}((x_n)_n)} = E.
+\]
+Hence $E$ is separable.
+
+
+Now for the second part of the task: We show that $E^*$ being separable implies $E$ being separable by proving that $\mathrm{span}((x_n)_n)$ is dense in E for a sequence $(x_n)$ as discussed in the task. We will, however, assume that $||x_n|| = 1$ for all natural $n$. We can do that because $1 = ||\ell_n|| = \sup_{||x|| = 1} |\ell(x)|$ implies that for all positive $\epsilon$ we can find an $x$ with $||x|| = 1$ and still $|\ell_n(x)| > 1-\epsilon$.
+
+Now towards a contradiction assume there exists a $x\in E$ with $x\notin \mathrm{span}((x_n)_n)$. This means we have
+\[
+    \inf_{y\in\mathrm{span}((x_n)_n)} ||x-y|| > 0.
+\]
+Then Corollary 4.8 in the script yields us an $\ell\in E^*$ with $\ell|_{\mathrm{span}((x_n)_n)} = 0$ and $||\ell|| = 1$, so $\ell\in S$.
+
+This leads us for any $n\in\N$ to
+\begin{align*}
+    ||\ell - \ell_n|| = \sup_{x\neq 0}\frac{|\ell(x)-\ell_n(x)|}{||x||} \geq \frac{|\ell(x_n)-\ell_n(x_n)|}{||x_n||} = \frac{|\ell_n(x_n)|}{||x_n||} = \frac{1}{2||x_n||} > 0.
+\end{align*}
+Thus, $\ell \notin \overline{(\ell_n)_n}$ and hence $(\ell_n)_n$ is not dense in $S$. That is a contradiction!
+
+\end{proof}
+
+
+\subsection*{Exercise 2}
+Let $E$ be a $\mathbb C$ vector space with a seminorm $\rho: E \to \mathbb R$ on $E$, and let $F$ be a linear subspace $F \subset E$. Let $f: F \to \mathbb K$ with
+\[
+    |f(x) | \leq \rho(x), \quad \forall x \in F.
+\]
+\begin{issue}{}{}
+There exists an extension $\ell: E \to \mathbb K$ such that
+\[
+    \ell_{|F} = f\text{ and } |\ell(x)| \leq \rho(x) \quad \forall x \in F.
+\]
+\end{issue}
+
+
+
+\subsection*{Exercise 3}
+\begin{enumerate}[label=(\roman*)]
+    \item     Let $X$ be a normed space and $C \subset X$ be open and convex with $0 \in C$. We show that $p_C: X \to [0,\infty)$ (note that $p_C(x) < \infty$ for all $x \in X$, which we will show later) is a sublinear functional.
+    \begin{issue}{}{}
+    For all $x,y \in X$ it holds
+    \[
+    	p_C(x+y) \leq p_C(x) + p_C(y) .
+    \] 
+    \end{issue}
+    \iffalse
+     \begin{proof}
+        Let $x,y \in X$. Let $C \subset X$ be a convex and open subset of $X$ with $0 \in C$. We will prove the claim by \emph{contradiction}.
+ Assume that $$ \underbrace{p_C(x)}_{\coloneqq \alpha} + \underbrace{p_C(y)}_{\coloneqq \beta} < \underbrace{p_C(x+y)}_{\coloneqq \gamma}.$$ 
+        So, there exist sequences $(u_n)_{n \in \mathbb N} \subset C$ and $(\alpha_n)_{n \in \mathbb N} \subset \mathbb R_{> 0}$ such that
+        \[
+            \lim_{n \to \infty} \alpha_n u_n = x \quad \text{and} \quad \lim_{n \to \infty} \alpha_n = \alpha.
+        \]
+        Likewise, there exist sequences $(v_n)_{n \in \mathbb N} \subset C$ and $(\beta_n)_{n \in \mathbb N} \subset \mathbb R_{> 0}$ such that
+        \[
+            \lim_{n \to \infty} \beta_n v_n = y \quad \text{and} \quad \lim_{n \to \infty} \beta_n = \beta.
+        \]
+        Without loss of generality, let $\beta < \alpha$. 
+        
+		\subsubsection*{Step 1}    
+		
+		\begin{goal}{}{}
+		Show that $\frac{1}{2}\gamma \leq \alpha$.
+		\end{goal}
+		    
+        Define a new sequence $(w_n)_{n \in \mathbb N}$ as
+        \[
+            \forall n \in \mathbb N: w_n \coloneqq \frac{\beta_n}{\alpha_n}v_n.
+        \]
+        We will now prove that $w_n \in C$ for all $n \in \mathbb N$. Note that $\frac{\beta_n}{\alpha_n} < 1$. Thus, $w_n = \frac{\beta_n}{\alpha_n}v_n$ lies in the convex hull of $\{ 0, v_n \}$. Note that $0 \in C$ and $v_n \in C$. So, $\mathrm{convex}(\{ 0, v_n \}) \subset C$ since $C$ is a convex set. Thus, $w_n = \frac{\beta_n}{\alpha_n}v_n \in C$.
+        
+		Consider the sequence $(\tilde a_n)_{n \in \mathbb N}$ defined as $\tilde a_n \coloneqq u_n + w_n$. We would like the sequence $(\tilde a_n)_{n \in \mathbb N}$ to be in the subset $C$. However, this need not be the case. Thus, we scale the sequence $(\tilde a_n)_{n \in \mathbb N}$  by a factor $\xi > 0$ such that $\xi a_n = \xi (u_n + w_n) \in C$ for all $n \in \mathbb N$.  The next steps will accomplish this.
+		
+		 \begin{itemize}
+		 	\item We know that $w_n$ and $u_n$ lie in $C$ for all $n \in \mathbb N$. Since $C$ is a convex set, the convex hull of $w_n$ and $u_n$ lies in $C$ for all $n \in \mathbb N$, i.e.
+		 	\[
+		 		\forall n \in \mathbb N: \mathrm{conv}({w_n,u_n}) = \{ p : p = \mu w_n + (1-\mu)u_n, \mu \in [0,1] \} \subset C.
+		 	\]
+		 	
+		 	\item Especially, there exists a point $p_n \in \mathrm{conv}(w_n,u_n) \subset C$ with $$p_n = \frac{1}{2}(w_n +
+		 	 u_n) \in C \qquad \forall n \in \mathbb N.$$
+		 	
+		 	\item Finally, choose $\xi = \frac{1}{2}$. Define a new sequence $(a_n)_{n \in \mathbb N}$ as 
+		 	\[
+		 		a_n \coloneqq \frac{1}{2}\tilde a_n =   \frac{1}{2}(w_n + u_n) = p_n \in C.
+		 	\]
+		 	Finally, we obtain a sequence $(a_n)_{n \in \mathbb N} \subset C$.
+		 \end{itemize}
+        
+        Now, finding the sequence $(a_n)_{n \in \mathbb N}$ is good news for we see that
+        \[
+            \lim_{n \to \infty} 2\alpha_n a_n = \lim_{n \to \infty} \alpha_n (u_n +w_n) = \lim_{n \to \infty} \alpha u_n + \beta_n v_n = x + y.
+        \]
+        Hence, $2\alpha \in \{ t > 0 : x+y \in t C \}$. Remember that $\gamma = \inf \{ t > 0 : x+y \in t C \}$. So,
+        \[
+        	\gamma \leq 2\alpha \quad \text{ which implies } \quad \frac{1}{2}\gamma \leq \alpha.
+        \]
+        
+        \subsubsection*{Step 2}    
+		
+		\begin{goal}{}{}
+		Show that $\frac{1}{2}\gamma \leq \beta$.
+		\end{goal}
+       
+       Define a new sequence $(t_n)_{n \in \mathbb N}$ as
+        \[
+            \forall n \in \mathbb N: t_n \coloneqq \frac{\alpha_n}{\beta_n}u_n.
+        \]
+		We know that $\alpha_n \geq \beta_n$, and hence $t_n$ might not need be in $C$. Yet, we know that $U_n \coloneqq \{ \mu u_n : \mu \in [0,1] \} = \mathrm{conv}(0,u_n) \subset C$ because $C$ is a convex set and $0 \in C$. Therefore, there exists a sequence $(\tilde u_n)_{n \in \mathbb N}$ such that 
+\[
+	\lim_{n \to \infty} \tilde \alpha_n \tilde u_n = x \quad \text{with} \quad \lim_{n \to \infty} \tilde \alpha_n \eqqcolon \tilde \alpha < \beta
+\]		
+by choosing
+\[
+	\tilde \u_n \coloneqq \frac{}{}u_n
+\]
+
+       
+       \subsubsection*{Conclusion}    
+		
+		\textbf{Goal:} Show that $\gamma \leq \alpha + \beta$.
+    \end{proof}
+    \fi
+       
+    \begin{proof}
+    	Let $x,y \in X$. From 3(ii) we know that $C$ is absorbing. Thus, $p_C(x) \neq \infty, p_C(y) \neq \infty$ and $p_C(x+y) \neq \infty$. Let $\epsilon> 0$ be arbitrary. For $x$ there exists $\mu_x \in \mathbb R_{> 0}$ and $z_y \in C$ such that $x = \mu_x z_x$ and $\mu_x < p_C(x) + \frac{\epsilon}{2}$. Likewise for $y$: there is $\mu_y \in \mathbb R_{>0}$ such that $y = \mu_y z_y$ with $\mu_y < p_C(y) + \frac{\epsilon}{2}$. Adding $\mu_x$ and $\mu_y$ together yields
+    	\[
+    		\mu_x + \mu_y < p_C(x) + p_C(y) + \epsilon.
+    	\]
+    	
+    	\begin{goal}{}{}
+    	Next, we try to find a vector $z_{x+y} \in C$ and scalar $\mu_{x+y} > 0$ such that $$\mu_{x+y} z_{x+y} = x+y.$$
+    	\end{goal}
+    	Consider the vector
+    	\[
+    		z_{x+y} \coloneqq \frac{\mu_x}{\mu_x + \mu_y}z_x + \frac{\mu_y}{\mu_x + \mu_y}z_y,
+    	\]
+    	which luckily lies in $C$. To see this, remember that $C$ is a convex set, and note that $z_{x+y}$ is a convex combination of $z_x \in C$ and $z_y \in C$ since
+    	\[
+    		 \frac{\mu_x}{\mu_x + \mu_y} + \frac{\mu_y}{\mu_x + \mu_y} = 1.
+    	\]
+    	Define the scalar $\mu_{x+y}$ as $\mu_{x+y} \coloneqq \mu_x + \mu_y > 0$. We see that
+    	\[
+    		\mu_{x+y}z_{x+y} = \mu_x z_x + \mu_y z_y = x+y.
+    	\]
+    	    	
+    	Putting everything together
+    	\[
+    		p_C(x+y) \overset{(*)}{\leq} \mu_{x+y} = \mu_x + \mu_y < p_C(x) + p_C(y) + \epsilon.
+    	\] 
+    	
+    	\begin{explanation}{}{}
+    	$(*)$ holds by definition of $p_C(x+y)$.
+    	\end{explanation}    	
+    	
+    	As $\epsilon$ was chosen arbitrarily, it holds
+    	\[
+    		p_C(x+y) \leq  p_C(x) + p_C(y).
+    	\]
+    	
+    	 \end{proof}
+    	
+    	\hline
+    	
+    	\begin{issue}{}{}
+    		For any $x \in X$ and $\lambda \in \mathbb R_{>0}$ it holds
+    		\[
+    			p_C(\lambda x) = \lambda p_C(x).
+    		\]
+    	\end{issue}
+    	
+    	\begin{proof}
+    	Let $x \in X$ and $\lambda > 0$. Then,
+    	\begin{align*}
+    		p_C(\lambda x) = \inf \{ \alpha > 0 : \lambda x \in \alpha  C \} &= \inf \{ \alpha > 0 : x \in \frac{\alpha}{\lambda}  C \} \\
+    		&= \inf \{ \lambda \alpha > 0 : x \in \alpha  C \} \\
+    		&= \lambda \inf \{ \alpha > 0 : x \in \alpha  C \} \\
+    		&= \lambda p_C(x).
+    	\end{align*}
+    	\end{proof}
+   
+   		\hline
+    	
+    	\textbf{Conclusion:} $p_C: X \to [0,\infty)$ is a sublinear functional.
+    
+    \item 
+    
+    \item We want to show:
+    \begin{issue}{}{}
+        \[
+            C = \{ x \in X : p_C(x) < 1 \}
+        \]
+    \end{issue}
+    
+    \begin{proof}
+    	sadasd
+    \end{proof}
+    
+   
+\end{enumerate}
+
+
+
+
+\end{document}
