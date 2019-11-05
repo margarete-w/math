@@ -1,0 +1,24 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{enumerate}
+
+
+\begin{document}
+
+\subsection*{Lemma}
+Let $f: (a,b) \to \mathbb{R}$ be convex. Let $a < x < y < z < b$. Then, it holds
+\begin{align*}
+    \frac{f(y-x)}{y-x} \leq \frac{f(z-x)}{z-x} \leq \frac{f(z-y)}{z-y}.
+\end{align*}
+\begin{proof}
+    Let $x < y < z$. It holds
+    \begin{align*}
+        y = \frac{y - z}{x - z} + \left(1 - \frac{y - z}{x - z}\right) \quad \text{and} \quad 0 < \frac{y - z}{x - z} < 1.
+    \end{align*}
+    With convexity of $f$ it follows
+    \begin{align*}
+        f\left(\frac{y - z}{x - z} + (1 - \frac{y - z}{x - z}) \right) = f(y) \leq 
+    \end{align*} 
+\end{proof}
+
+\end{document}

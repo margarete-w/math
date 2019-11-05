@@ -1,0 +1,50 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{enumerate}
+
+\setlength\parindent{0pt}
+
+\begin{document}
+Let $E$ be a Banach space, and let $T \in L(E)$.
+
+\textbf{To show:} $\ker T^* = (\text{ran} T)^\perp$
+
+\begin{proof}
+Let $x \in E$ such that $T^*x = 0$. Let $y \in H$. One sees that
+\[
+    \langle y, T^*x \rangle = \langle y, 0 \rangle = 0
+\]
+Using the adjoint operator one obtains
+\[
+    \langle Ty, x \rangle = 0.
+\]
+This holds for all $y \in H$ and $x \in \ker T^*$, and hence $x \in (\text{ran} T)^{\perp}$.
+
+For the reverse direction, let $x \in E$. Let $z \in \ker T^*$. Observe that
+\[
+    \langle z, Tx \rangle = \langle T^* z, x \rangle = 0,
+\]
+implying $Tx \in (\ker T^*)^\perp$.
+
+In the end, one obtains $\ker T^* = (\text{ran} T)^\perp$.
+\end{proof}
+
+Let $H$ be a Hilbert space, and let $F \in L(E)$.
+\textbf{To show:} $\ker F = (\overline{\text{ran} F^*})^\perp$.
+\begin{proof}
+It is already known that $\ker T^* = (\text{ran} T)^\perp$ in a Banach space for any linear and bounded operator $T$. Now, set $T = F^*$, and one obtains $\ker F = (\text{ran} F^*)^\perp$, since it holds ${F^*}^* = F$ for a reflexive space. Knowing that $S^\perp = \overline{S}^\perp$ for any subset $S \subset H$, one immediately sees $\ker F = (\text{ran} F^*)^\perp = (\overline{\text{ran} F^*})^\perp$.
+\end{proof}
+
+\textbf{To show:} Let $H$ be an inner product space. $S^\perp = \overline{S}^\perp$ for any subset $S \subset H$.
+
+\begin{proof}
+    Let $x \in S^\perp$. Per definition, one has $\langle x,y \rangle = 0$ for all $y \in S$. We want to show that even $\langle x,y \rangle$ holds for all $y \in \bar S$. Let $y \in \bar S$ with $\lim y_n = y$ with $y_n \in S$ for all $n \in \mathbb N$. Observe that
+    \begin{align*}
+        0 = \lim \langle x,y_n \rangle = \langle x,y \rangle.
+    \end{align*}
+    Thus, $S^\perp \subset \bar S^\perp$. For the other direction, note that $S \subset \bar S$, and as a result, one gets $\bar S^\perp \subset \bar S^\perp$.
+
+    In the end, $S^\perp = \overline{S}^\perp$.
+\end{proof}
+
+\end{document}

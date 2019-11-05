@@ -1,0 +1,132 @@
+% !TEX program = xelatex
+\documentclass[9pt]{extarticle}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+\usepackage{xfrac,unicode-math}
+\usepackage{physics}
+
+\input{support/font.tex}
+\input{support/style.tex}
+\input{support/newcommands.tex}
+\input{support/theorems.tex}
+    	
+
+\begin{document}
+
+\section*{Functional Analysis II - Exercise 02}
+\textbf{Lecturer:} Mones Raslan \\
+\noindent\textbf{Date:} 10/28/19
+
+\subsection*{Orthogonal Projections}
+\begin{definition}{}{}
+Let $E$ be a vector space. A mapping $P: E \to E$ is called a \textbf{projection} if $P^2 = P$.
+\end{definition} 
+From now on we only consider \textit{linear} projections.
+
+\begin{definition}{}{}
+Let $Y \subset E$ be a subspace. A mapping $P: E \to E$ is called a \textbf{projection onto $Y$} if $P^2 = P$ and $\ran(P) = Y$.
+\end{definition}
+
+\begin{proposition}{}{}
+\begin{enumerate}
+\item $P$ is a projection onto $Y$ if and only if
+\[
+    \forall x \in E: Px \in Y \quad \text{and} \quad P|_Y = \mathrm{Id}|_Y.
+\]
+
+\item If $P$ is a projection, then $E = \ker P \dot + \ran P$, where $\dot +$ denotes the direct sum.
+
+\item If $P$ is a projection, so is $\mathrm{Id} - P$. Additionally, $\ker{\mathrm{Id - P}} = \ran P$ and $\ran \mathrm{Id} - P = \ker P$.
+
+\item For every subspace $Y \subset E$ there exists a projection onto $Y$. The proof uses Zorn's lemma.
+\end{enumerate}
+\end{proposition}
+Now, let $E$ be a normed space. Under which circumstances is $P$ continuous?
+
+\begin{proposition}{}{}
+Let $P \in L(E)$ be a projection. Then,
+\begin{enumerate}
+\item $\ker P$ and $\ran P$ are closed
+\item $||P|| \geq 1$ or $||P|| = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item Let $P \in L(E)$. Because of continuity we immediately get that $\ker P = P^{-1}(\{0 \})$ is closed \textit{(preimage of closed sets of continuous functions are closed)}. To show that the range of $P$ is closed note that $\ran P = \ker \mathrm{Id} - P$ and $\mathrm{Id} - P \in L(E)$. We just showed that the $\ker \mathrm{Id} - P$ is closed, and so is $\ran P$.
+
+\item It holds $||P|| = ||P^2|| \leq ||P||^2$. Therefore, $Px \geq 1$ or $Px = 0$. Otherwise, $||P|| \leq ||P||^2$ cannot hold.
+\end{enumerate}
+\end{proof}
+
+There exist normed spaces $E$ and \vip{closed} subspaces $Y \subset E$ such that there is no continuous projection onto $Y$.
+
+In Hilbert spaces the situation is different. We showed in Functional Analysis I that 
+\[
+    E = Y \oplus Y^\perp, \quad \text{$E$ is Hilbert and $Y$ is closed.}
+\]
+For $x = y + z$ where $y \in Y$ and $z \in Y^\perp$ define 
+\[
+    P: E \to Y, x \mapsto y
+\]
+
+\begin{definition}{}{}
+    $P$ is called \textbf{orthogonal projection} if $\ker P \perp \ran P$.
+\end{definition}
+
+\begin{proposition}{}{}
+Let $H$ be a Hilbert space. Let $P \in L(H), P \neq 0$ be a projection. Then the following are equivalent
+\begin{enumerate}
+\item $P$ is an orthogonal projection
+\item $||P|| = 1$
+\item $P = P^*$
+\item $P^*P = PP^*$
+\item $P$ is positive, i.e. $\langle Tx,x \rangle \geq 0$ for all $x \in H$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{itemize}
+\item $(i) \implies (ii)$: Let $P$ be an orthogonal projection. We want to show that $||P|| = 1$. Let $x \in H$ with $x = y + z = Py + z$ where $y \in \ran P$ and $x \in \ker P$. Then,
+\[
+    ||Px||^2 = ||Py||^2 \leq ||Py||^2 + ||z||^2 \overset{(*)}{=} ||x||^2
+\]
+where $(*)$ is true because $Py \perp z$. To see this, note that $$||Py||^2 + ||z||^2 = ||Py||^2 + 2\langle Py, z \rangle + ||z||^2 = ||Py + z||^2.$$
+
+\item $(ii) \implies (i)$: Let $x \in \ker P$ and $y \in \mathrm{ran} P$. To show that $P$ is an orthogonal projection we need to prove that $\ker P \perp \ran P$. For any $\lambda$ we have 
+\[
+    ||\lambda y||^2 = ||P(\lambda y + x)||^2 \leq ||\lambda y + x||^2 = || x||^2 + 2\Re(\bar \lambda \langle x, y \rangle) + \lambda ||y||^2    
+\]
+Hence, $-2\Re(\bar \lambda \langle x, y \rangle) \leq ||x||^2$. Since this is true for all $\lambda \in \mathbb{C}$ we have $\langle x,y \rangle = 0$.
+
+\item $(iii) \implies (iv)$: This is clear.
+
+\item $(i) \implies (iii)$: Homework exercise.
+
+\item $(i) \implies (v)$: Let $P$ be an orthogonal projection. We want to show that $P$ is positive. Let $x = y + z \in H$ with $y \in \ran P$ and $z \in \ker P$. Then,
+\[
+    \langle Px, x \rangle = \langle y, y+z \rangle = ||y||^2 \geq 0.    
+\]
+Note that $\langle Px, x\rangle \in \mathbb{R}$ because of $||y||$.
+
+\item $(iii) \implies (i)$: Let $P$ be self-adjoint. We want to show that $P$ is an orthogonal projection. Let $y \in H$ and $z \in \ker P$. Then, $\langle Py,z \rangle = \langle y, Pz \rangle = 0$ as $Pz = 0$.
+\item $(v) \implies (iii)$: Let $P$ be positive. We want to show that $P = P^*$. $P \geq 0 \implies \langle Px, x \rangle \in \mathbb{R} \implies P = P^*$ (by exactly the same homework)
+
+\item $(iv) \implies (i)$: From homework sheet 1 \#1 we know
+\[
+    T \in L(H) \text{ is normal} \iff ||Tx|| = ||T^*x|| \quad \forall x \in H.  
+\]
+Thus, $\ker P = \ker P^*$. We proved earlier that the range of $P$ is closed. By the closed range theorem we have 
+\[
+    \ker P^* = (\ran P)^\perp \implies \ker P = (\ran P)^\perp.
+\]
+\end{itemize}
+\end{proof}
+
+\end{document}
