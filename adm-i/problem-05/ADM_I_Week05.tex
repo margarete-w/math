@@ -1,0 +1,70 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{enumerate}
+
+
+\begin{document}
+
+\begin{proof}
+    Let $A \in \mathbb R^{m \times n}$. Assume every basic feasible solutions is non degenerate. Since we know that $\mathrm{rank}(A) = m$ it follows from observation 3.42. that any basic feasible solution must have exactly $m$ positive components.
+
+    By contradiction, we will show that every feasible solution $x \in \mathbb R$ with $m$ positive components must be a basic feasible solution.
+
+    Let $x$ be feasible solution (i.e. $Ax = b$ and $x \geq 0$) with $m$ positive components (i.e. $x_{B(i)} > 0$ for $i = 1,...,m$ where $B(i) \in \{1,...,n\}$ and $B(i) \neq B(j)$ for $i \neq j$) and $n-m$ components that are zero (i.e. $x_j = 0$ for all $j \notin \{ B(i) \}_{i=1,...,m}$). In order to show that $x$ is a basic feasible solution, we need to show that there exist exactly $n$ linearly independent constraints which satisfy $x$. We know that $x$ satisfies $Ax = b$, which means that $m$ constraints are already fulfilled. Furthermore, $n-m$ inequalities of kind $x_i \geq 0$ are tight due to $x_j = 0$ for all $j \notin \{ B(i) \}_{i=1,...,m}$. So, $x$ satisfies $n$ constraints, but it remains unclear if these constraints are linearly independent. This is what we want to show next.
+
+    Let $a_i \in \mathbb R^{n}$ denote the i-th row of $A$. We know $a_i^T x = b_i$ for all $i = 1,...,m$ because of $Ax = b$. Additionally, let $e_i$ be the i-th unit vector in $\mathbb R^n$. It holds $e_{j}^T x = 0$ for all $j \notin \{ B(i) \}_{i=1,...,m}$ because exactly $n$ components of $x$ are non-zero, namely the components which belong to $\{ B(i) \}_{i=1,...,m}$. Let's denote the constraints $\{e_j\}_{j \neq B(i), i = 1,...,m}$ by $\{e_{C(i)}\}_{i = 1,...,n-m}$. 
+    
+    The constraints above are satisfied by the feasible solution $x$. Now, assume the constraints $\{ a_1,...,a_m, e_{C(1)}, ..., e_{C(n-m)} \}$ are linearly dependent. By theorem 3.18, this is equivalent to the fact that the linear system of equations given by 
+    \[
+        \begin{pmatrix}
+            a_1^T \\
+            \vdots \\
+            a_m^T \\
+            e_{C(1)}^T \\
+            \vdots \\
+            e_{C(n-m)}^T
+        \end{pmatrix} 
+        \begin{pmatrix}
+            y_1 \\ \vdots \\ y_n
+        \end{pmatrix}
+        = \begin{pmatrix}
+            b_1 \\ \vdots \\ b_m \\ 0 \\ \vdots \\ 0
+        \end{pmatrix}, \quad y \in \mathbb R^n
+    \]
+    has infinitely many solutions (one solution is given by $x$). The introduced system of linear equations can also be written as
+    \begin{align}\label{krass}
+        \begin{pmatrix}
+            \hat a_1^T \\
+            \vdots \\
+            \hat a_m^T
+        \end{pmatrix} \begin{pmatrix}
+            y_{B(1)} \\ \vdots \\ y_{B(m)}
+        \end{pmatrix} = \begin{pmatrix}
+            b_1 \\ \vdots \\ b_m
+        \end{pmatrix}, \quad y_j = 0, \quad \forall j \notin \{B(i)\}_{i=1,...,m} \tag{*}
+    \end{align}
+    where $\hat a_i \in \mathbb R^m$ is the vector $a_i = \begin{pmatrix} a_{i,1} & ... & a_{i,n} \end{pmatrix}$ which only contains components $a_{i,j}$ such that $j \in \{B(i)\}_{i=1,...,m}$, i.e. $\hat a_i = \begin{pmatrix} a_{i,B(1)} & ... & a_{i,B(m)} \end{pmatrix}^T$. By assumption, the system \eqref{krass} has infinitely many solutions. Equivalently, it holds 
+    \[
+        \mathrm{rank}(\begin{pmatrix}
+            \hat a_1^T \\
+            \vdots \\
+            \hat a_m^T
+        \end{pmatrix}) = \mathrm{rank}(\begin{pmatrix}
+            \hat a_1^T & b_1 \\
+            \vdots & \vdots \\
+            \hat a_m^T & b_m
+        \end{pmatrix}) < m.
+    \]
+    Hence, there exists a column of $(\hat a_i^T)_{i=1,...,m}$ which is linearly dependent on the other remaning columns. W.l.o.g. let this column be the $j$-th column of $(\hat a_i^T)_{i=1,...,m}$, and denote this column by $c = (\hat a^T_{1,B(j)}, ..., \hat a^T_{m,B(j)})^T$. 
+
+    Next, replace the column $c$ of the matrix $(\hat a_i^T)_{i=1,...,m}$ by another column $d = (\hat a^T_{1,k}, ..., \hat a^T_{m,k})^T$ for $k \notin \{B(i)\}_{i=1,...,m}$ such that (1) the resultant matrix (denoted by $B$) has full rank, and (2) $x_B = B^{-1} b \geq 0$. (1)  is possible due to $\mathrm{rank}(A) = m$, and (2) holds because $x$ is a feasible solution of the system \eqref{krass}.
+
+    Since all basic feasible solutions are non degenerate, it holds $x_B > 0$, where the vector $\begin{pmatrix} x_B & 0 & ... & 0\end{pmatrix}^T \in \mathbb R^n$ is the unique solution of $By = b, y \in \mathbb R^m$. However, we know that $c = \sum_{j \neq i, j = 1}^m \lambda_{i} \hat a_i^T$. Thus,
+    a solution of $By = b$ is given by 
+    \[
+        (x_1, ..., x_{j-1}, 0, x_{j+1}, ..., x_m) + x_j (\lambda_1,...,\lambda_{j-1},0,\lambda_{j+1},...,\lambda_m)
+    \]
+    For the solution of $By = b$ is unique, it holds $x_B = x$, and we found a contradiction due to $x_B > 0$.
+\end{proof}
+
+\end{document}
