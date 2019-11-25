@@ -1,10 +1,32 @@
+# -*- coding: utf-8 -*-
+"""
+The mod adm1 that implements the Fourier Motzkin elemination.
+"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 def read(path):
+    """
+    Reads the file located at path.
+
+    :param path: The path to the document that contains Matrix/Polyhedron
+    :type path: string
+    :returns: The matrix A that is contained in the file path.
+    :rtype: A is a list of lists
+    """
     print("Open file...")
     file = open(path, "r")
     A = parse(file)
     return A
 
 def parse(file):
+    """
+    Constructs a matrix A that contains the values from file.
+    :param file: contains the rows and columns of A
+    :type file: list of strings
+    :returns: A in case of a matrix, A|b in case of a polyhedron
+    :rtype: list of lists
+     """
     # kommentare rausnehmen
     file = [s.strip() for s in file if len(s.strip())> 0 and s.strip()[0] != "#" ]
     print("Strip comments from file...")
@@ -12,19 +34,28 @@ def parse(file):
         return []
     isPolyhedron = file[0] =="A"
     if isPolyhedron:
+        #Remove the first line, because it contains "A".
         file = file[1:]
+        # Find the line index of b
         bIndex = file.index("b")
+    #A is the constructed matrix.
     A = []
+    # In the case that A is not a polyhedron:
     if not isPolyhedron:
+        #Iterate through all the lines in file.
         for i in range(len(file)):
+            # Construct a list of floats from the current line
             A.append([float(s) for s in file[i].split()])
+    # If the matrix contained in file is a polyhedron:
     if isPolyhedron:
         for i in range(bIndex):
+            #Construct a list of floats from the current line
             A.append([float(s) for s in file[i].split() if len(s)>0])
         b = file[bIndex +1].split()
         for i in range(len(A)):
+            # Construct the vector b and add it to A as a column.
             A[i ].append(float(b[i]))
-    #Testfunktion, Überprüft die Dimension von A
+    #Testfunktion, Ueberprueft die Dimension von A
     a = len(A[0])
     for i in range(1, len(A)):
         if len(A[i]) != a:
@@ -36,6 +67,13 @@ def parse(file):
     return A
 
 def write(A, output_file):
+    """
+    Writes the matrix A in the file output_file.
+    :param A: a matrix
+    :type A: list of list
+    :param output_file: Where we will store the output_file
+    :type output_file: string
+     """
     print("Writing file to {}...".format(output_file))
     f = open(output_file, "w")
     s= "A\n"
@@ -52,23 +90,43 @@ def write(A, output_file):
 #----------------------
 
 def printmatrix(B):
+    """Prints the matrix B """
     for i in B:
         print(i)
 
 def multiply(s, B):
+    """
+    Calculates C = s*B
+    :param s: a scalar
+    :type s: float
+    :param B: a vector
+    :type B: list of floats
+    :returns: C
+    """
     C = []
     for i in B:
         C.append( s * i)
     return C
 
 def add(B,C):
-    assert len(B) == len(C), "Länge der Vektoren stimmt nicht. dim(C)={}, dim(B)={}".format(len(C), len(B))
+    """
+    Calculates D = B+C
+    :param B, C: vectors
+    :type B,C: lists containing floats
+    :return D: D = B+C
+    """
+    assert len(B) == len(C), "Laenge der Vektoren stimmt nicht. dim(C)={}, dim(B)={}".format(len(C), len(B))
     D = []
     for i in range(len(B)):
         D.append(B[i] +C[i])
     return D
 
 def transpose(A):
+    """
+    Transposes the matrix A.
+    :param A: matrix
+    :type A: list of lists
+    """
     n = len(A)
     m = len(A[0])
     B = []
@@ -79,10 +137,25 @@ def transpose(A):
     return B
 
 def transpose_sparse(M):
+    """
+    Transposes the sparse matrix M. M is given as a tuple.
+    The first component contains a list of triples (values, row, column)
+    and the second component contains the shape of M as a tuple.
+    :Example: ([(value_1, row_1, colum_1 ),....], (#rows, #columns))
+    :param M: sparse matrix
+    :returns: M^T
+    """
     return ([(i[0], i[2], i[1]) for i in M[0]], (M[1][1], M[1][0]))
 
 def matrix_vector(C, b):
-    # berechnet M*b = c, M gespeichert als Triple: (value, row , column )
+    """
+    Calculates c = C*b
+    :param C: a sparse matrix
+    :param b: a vector
+    :type b: list of floats
+    :returns: c
+    :rtype: c: list of floats
+    """
     M = C[0]
     Mshape = C[1]
     if M ==[]:
@@ -92,13 +165,29 @@ def matrix_vector(C, b):
     for i in M:
         c[i[1]] = c[i[1]]+ b[i[2]] * i[0]
     return c
+
 def inner_product(a,b):
+    """
+    Returns the inner product a^Tb
+    :param a, b: vectors
+    :type a, b: lists of floats
+    :returns: a^T *b
+    :rtype: c: float
+    """
     assert len(a) == len(b)
     c = 0
     for i in range(len(a)):
         c = c + a[i] * b[i]
     return c
+
 def is_greater(a,b):
+    """
+    Compares if a >= b.
+    :param a, b: vectors
+    :type a,b: lists of floats
+    :return: False if there is a component in b, such that
+    b_i > a_i, otherwise True.
+    """
     assert len(a) ==len(b)
     for i in range(len(a)):
         if a[i] < b[i]:
@@ -111,6 +200,12 @@ def is_greater(a,b):
 #----------------------
 
 def dimension_reduction(C):
+    """
+    :param C: polyhedron in the form A|b in R^n.
+    :type C: list of lists
+    :return: B|b', (M, (row, cols)): B|b' is the projection of A|b in R^{n-1},
+    M is the sparse matrix such that B|0 = M * A, b' = M* b .
+    """
     print("\tBeginning dimension reduction on A...")
     import copy
     if C == []:
@@ -134,30 +229,43 @@ def dimension_reduction(C):
     for i in range(len(A)):
         pivot1 = A[i][-2]
         if pivot1 == 0:
+            #Add the constraint to B and remove the last column.
             D = A[i][:-2] + [A[i][-1]]
             B.append(D)
-            # die i-te zeile von C wird übernommen in B
+            # Construct M
             M.append((1, row, i))
             row = row +1
         else:
             for j in range(i+1, len(A)):
+                #Look for all constraints where the pivot element has a different sign.
                 pivot2 = A[j][-2]
                 if pivot2 != 0:
                     if pivot1 * pivot2 < 0:
+                        #Add the linear combination of all rows with a different
+                        #sign to D
                         D = add(A[i][:-2], A[j][:-2])+ [A[i][-1] + A[j][-1]]
                         B.append(D)
-                        # die addition der j-ten und i-ten Zeile wird in M gespeichert
+                        #Construct M
                         M.append((abs(1.0/C[i][-2]), row, i))
                         M.append((abs(1.0/C[j][-2]), row, j))
                         row = row +1
-    #if B == []:
-        #B = [[0,0]]
+
     print("\tDimension reduction done!")
     return B, (M, (row, cols))
 
 
 
 def projection(input_file, k ,output_file):
+    """
+    Reads the polyhedron contained in input_file and returns the projection
+    of the polyhedron in k-dimensions.
+    :param input_file: the path to the file containing a polyhedron
+    :type input_file: string
+    :param k: the dimension in which the polyhedron is projected
+    :type k: int
+    :param output_file: the path where the projection is stored
+    :type output_file: string
+     """
     k = int(k)
     #reads input file
     A = read(input_file)
@@ -166,6 +274,15 @@ def projection(input_file, k ,output_file):
     write(A, output_file)
 
 def __proj(A, k):
+    """
+    Projects the matrix A in R^k.
+    :param A: matrix
+    :type A: list of lists
+    :param k:
+    :type k: int
+    :returns: A: the projection of A in R^k
+    :type: A: list of lists
+    """
     # empty matrix check
     if len(A)== 0:
         return A
@@ -182,19 +299,45 @@ def __proj(A, k):
     return A
 
 def image(input_polyhedron, input_matrix, output_file):
+    """
+    Computes M*P = {M*x : x in P} and stores it in a file.
+
+    :param input_polyhedron: the path to the polyhedron
+    :type input_polyhedron: string
+    :param input_matrix: the path to the matrix M
+    :type input_matrix: string
+    :param output_file: the path where M*P is stored
+    :type output_file: string
+    """
     A = read(input_polyhedron)
     M = read(input_matrix)
     Qk = __image(A,M)
     write(Qk, output_file)
 
 def __image(A,M):
+    """
+    A = A'|b
+    Calculates M*A = pi_m ({(y,x) in R^m+n | M*x -y= 0 for x in A }) =
+    pi_m({ (y, x) in R^{m+n}| |-I   M |   | x |    | 0 | 
+                              | I  -M | * |   | >= | 0 | 
+                              | 0   A |   | y |    | b | })
+    :param A: a polyhedron
+    :type A: list of lists
+    :param M: a matrix
+    :type M: list of lists
+    :returns: Q_k: M*A
+    :rtype: Q_k: list of lists
+     """
     m = len(A)
     if len(M) == 0:
         print("M is empty")
         return None
     n = len(M[0])
     k = len(M)
-    # kxk Einheitsmatrix
+    # Construct the matrix :
+    # |-I   M  0 |
+    # | I  -M  0 |
+    # | 0   A  b |
     I1= []
     I2 = []
     for i in range(0,k):
@@ -217,13 +360,30 @@ def __image(A,M):
         Q3.append([0]*k+ A[i])
 
     Q = Q1 +Q2 + Q3
+    # Project the constructed matrix
+        # |-I   M  0 |
+        # | I  -M  0 |
+        # | 0   A  b | in k dimensions
     Qk = __proj(Q, k)
     return Qk
 
 def H_representation(input_file, output_file):
-    X = read(input_file)
-    X = transpose(X)
-    k = len(X[0])
+    """
+    Computes the convex hull of the set of vectors specified in input_file
+    and stores the resulting polyhedron in output_file.
+    :param input_file: the path where the vectors are stored
+    :type input_file: string
+    :param output_file: the path to the file where the convex hull is stored
+    :type output_file: string
+    conv(x_1,...,x_k) = A*P with
+    A = (x_1,...,x_k) in R^{n x k}
+    and P = { lambda in R^{k}| lambda_i >= 0, sum_{i = 1}^k lambda_i = 1 }
+    """
+    # load matrix whose rows are the vectors x_1,...,x_k
+    A = read(input_file)
+    A = transpose(A)
+    k = len(A[0])
+    #Construct the polyhedron P
     I = []
     I1 = [[1]*(k+1)]
     I2 = [[-1]*(k+1)]
@@ -234,24 +394,34 @@ def H_representation(input_file, output_file):
                 I[i].append(1)
             else:
                 I[i].append(0)
-    Q = I + I1 +I2
-
-    D = __image(Q, X)
+    P = I + I1 +I2
+    #Calculate A*P
+    D = __image(P, A)
 
     write(D, output_file)
 
 def base_case(P):
+    """
+    P is a polyhedron in R^1, given by P = {x in R^1| a^T*x >=b}, a in R^m.
+    Check if P is empty, if so construct y such that y^T*a = 0 and y^T*b>0,
+    otherwise return x in P.
+    :param P: polyhedron in R^1
+    :type P: list of lists
+    :return: False, y if is empty, such that y^T*a = 0 and y^T*b > 0,
+    otherwise True, x such that x in P.
+     """
     import math
     #check if P is empty
     if len(P) ==0:
         return True, [42]
-    # check for impossible constrain 0 > b, b positive
+    # check for impossible constraint a_i^Tx > b, where a_i = 0 and b positive
     for i in range(len(P)):
         if P[i][0] ==0 and P[i][1] > 0:
             y = [0]* len(P)
             y[i] = 1
             assert abs(inner_product(y, transpose(P)[0])) < 10**(-12)
             assert inner_product(y, transpose(P)[1]) > 0
+            # impossible constraint found and return that P is empty
             return False, y
     lowerbound = - math.inf
     upperbound = math.inf
@@ -259,11 +429,11 @@ def base_case(P):
     ubIndex = None
     # calculate lower and upperbound for x
     for i in range(len(P)):
-        # improve lowerbound
+        # find greatest lowerbound
         if P[i][0] > 0 and P[i][1] / P[i][0] > lowerbound:
             lowerbound =   P[i][1] / P[i][0]
             lbIndex = i
-        # correct upperbound
+        # find smallest upperbound
         if P[i][0] < 0 and P[i][1] / P[i][0] < upperbound:
             upperbound = P[i][1] / P[i][0]
             ubIndex = i
@@ -272,6 +442,7 @@ def base_case(P):
         y = [0] *len(P)
         y[lbIndex] = 1
         y[ubIndex] = P[lbIndex][0] / (- P[ubIndex][0])
+        #check that y^T*a = 0 and y^T *b > 0.
         assert abs(inner_product(y, transpose(P)[0])) < 10**(-12)
         assert inner_product(y, transpose(P)[1]) > 0
         return False, y
@@ -280,26 +451,41 @@ def base_case(P):
         x = lowerbound if lowerbound != -math.inf else upperbound
         if lowerbound == -math.inf and upperbound == math.inf:
             x = 42
+        # check that a*x >= b
         assert is_greater(multiply(x, transpose(P)[0]), transpose(P)[1])
         return True, [x]
 
 def compute_x_or_y(input_file):
+    """
+    P is the polyhedron stored in path input_file. P in R^n, given by
+    P = {x in R^n| A*x >=b}, A in R^{m x n}.
+    Check if P is empty, if so construct y such that y^T*A = 0 and y^T*b>0,
+    otherwise return x in P.
+    :param P: polyhedron
+    :type P: list of lists
+    :return: False, y if is empty, such that y^T*A = 0 and y^T*b > 0,
+    otherwise True, x such that x in P.
+     """
     P = read(input_file)
     n = len(P[0])-1
     History = [(P, None)]
     B = P
+    #Project P onto R^1
     for i in range(0,n-1):
         B, M= dimension_reduction(B)
         History.append((B,M))
+    #Check if the projection onto R^1 is empty
     NotEmpty, z = base_case(History[-1][0])
     History = History[::-1]
+    # Construct y in the case that P is empty y_{n}= M^T_{n} y_{n-1}
     if not NotEmpty:
         for Q,M in History[:-1]:
             B = transpose_sparse(M)
             z = matrix_vector( B, z)
             #test3(Q, z)
-        test3(P,z)
+        #test3(P,z)
         return False, z
+    #Construct x in P if P is not empty
     if NotEmpty :
         for Q, _ in History[1:]:
             z = step(Q, z)
@@ -309,25 +495,34 @@ def compute_x_or_y(input_file):
 
 
 def step(P, x):
+    """
+    Calculates a new component of x_{old}, such that x_{new} in P.
+    :param P: polyhedron in R^m
+    :type P: list of lists
+    :param x: a vector in R^{m-1}
+    :type x: list of floats
+    :return: x_{new}: a vector such that x_{new} in P
+    :rtype: x_{new}: list of floats
+    """
     import math
     C = []
+    #Substitute x_old in P
     for i in range(0, len(P)):
         C.append([P[i][-2], P[i][-1]- inner_product(x, P[i][:-2])])
     lowerbound = - math.inf
     upperbound = math.inf
     lbIndex = None
     ubIndex = None
-    # calculate lower and upperbound for x
+    # calculate lower and upperbound for new component of x_new
     for i in range(len(C)):
-        # improve lowerbound
+        # find greatest lower bound
         if C[i][0] > 0 and C[i][1] / C[i][0] > lowerbound:
             lowerbound =   C[i][1] / C[i][0]
             lbIndex = i
-        # correct upperbound
+        # find smallest upperbound
         if C[i][0] < 0 and C[i][1] / C[i][0] < upperbound:
             upperbound = C[i][1] / C[i][0]
             ubIndex = i
-    print(lowerbound, upperbound)
     assert upperbound >= lowerbound or abs(lowerbound -upperbound) < 10**(-12)
     w= [lowerbound if lowerbound != -math.inf else upperbound ]
     if lowerbound == -math.inf and upperbound == math.inf:
@@ -370,6 +565,7 @@ def test():
 
     print("done")
 
+# Test if y^TA = 0 and y^Tb > 0
 def test3(P, z):
     import numpy as np
     P = np.array(P)
@@ -379,6 +575,7 @@ def test3(P, z):
     assert np.allclose(z.transpose().dot(A), np.zeros(A.shape[1]))
     assert z.transpose().dot(b) > 0
 
+# Test if Ax >= b
 def test4(P, z):
     import numpy as np
     P = np.array(P)
