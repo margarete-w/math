@@ -1,0 +1,827 @@
+% !TEX program = pdflatex
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{geometry}
+\geometry{
+  left=100pt,
+  right=100pt
+ }
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={red!50!black},
+	urlcolor={red!50!black}
+}
+
+\makeatletter
+\def\th@plain{%
+  \thm@notefont{}% same as heading font
+  \itshape % body font
+}
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+  
+\theoremstyle{definition}
+\newtheorem{theorem}{Satz}
+\newtheorem*{theorem*}{Satz}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Beispiel}
+\newtheorem{remark}[theorem]{Bemerkung}
+
+\begin{document}
+\title{Differentialgleichungen I}
+\author{Dr. Christian Kreusler \\ Technische Universität Berlin \\ Mitschrift von Viet Duc Nguyen}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Integral für stetige Funktionen}
+
+\begin{theorem}[Satz von Mazur]\label{theorem:mazur}
+Sei $M$ eine kompakte Menge. Dann ist $\overline{\mathrm{convex}(M)}$ kompakt.
+\end{theorem}
+
+\section{Existenz und Eindeutigkeit von Anfangswertproblemen}
+
+\subsection{Satz von Picard-Lindelöf}
+
+\begin{definition}[Lipschitz-Bedingung]
+    Eine Funktion $f: T \times X \to X$ genügt einer Lipschitz-Bedingung, wenn 
+    \begin{align*}
+        \exists L > 0, \forall t \in T, \forall v,w \in X: ||f(t,v) - f(t,w)|| \leq L||v - w||.
+    \end{align*}
+\end{definition}
+
+\begin{theorem}[Beschränktheit bei Lipschitz-Bedingung]
+\label{theorem:lipschitz_bounded}
+Sei $f:[0,T] \times \overline{B(u_0,r)} \to X$ stetig und genüge einer Lipschitz Bedingung. Dann gibt ist $f$ beschränkt durch
+\[
+    \exists M > 0, \forall t\in [0,T],  \forall v \in \overline{B(u_0,r)}: ||f(t,v)|| \leq M.
+\]
+\end{theorem}
+\begin{proof}
+Sei $t \in [0,T]$ und $v \in \overline{B(u_0,r)}$. Es gilt
+\begin{align*}
+    ||f(t,v)|| &\leq ||f(t,v) - f(t,u_0)|| + ||f(t,u_0)|| \\
+    &\leq L||v-u_0|| + \max_{t \in [0,T]} ||f(t,u_0)|| \\ 
+    &\leq Lr + \max_{t \in [0,T]} ||f(t,u_0)||.
+\end{align*}
+Wähle $M = Lr + \sup_{t \in [0,T]} ||f(t,u_0)||$. 
+\end{proof}
+
+\begin{theorem}[Satz von Picard-Lindelöf, lokale Version]
+Sei $f:[0,T] \times \overline{B(u_0,r)} \to X$ stetig und genüge einer Lipschitz-Bedingung. Dann besitzt das Problem
+\begin{align*}
+    \begin{cases}
+        u'(t) &= f(t, u(t)) \\
+        u(t_0) &= u_0
+    \end{cases}
+\end{align*}
+genau eine Lösung $u \in \mathcal C^{1}(I, X)$ mit 
+\begin{align*}
+    I &= [0,T] \cap [t_0 - a, t_0 + a], \\  
+    a &= \min\{ \frac{r}{M}, \frac{1}{2L} \},
+\end{align*}
+wobei $M$ eine obere Schranke von $f$ ist (siehe Satz \ref{theorem:lipschitz_bounded}).
+\end{theorem}
+
+\begin{proof}
+Definiere einen Operator $T: \mathcal C([0,T], X) \to \mathcal C([0,T], X)$ mit
+\[
+    (T(u))(t) = u_0 + \int^t_{t_0} f(s, u(s)) ds.
+\]
+\textbf{Idee:} Wir wollen einen Fixpunkt von $T$ finden, d.h. finde ein $u \in \mathcal C([0,T], X)$ mit $Tu = u$. Haben wir solch ein $u$, so löst dieses $u$ auch das Anfangswertproblem, denn Ableiten von $Tu=u$ auf beiden Seiten ergibt
+\[
+    f(t,u(t)) = u'(t).
+\]
+Um einen Fixpunkt zu finden, benutzen wir den Banachschen Fixpunktsatz.
+
+\begin{itemize}
+    \item Zuerst muss $T: A \to A$ auf eine Menge $A \subset \mathcal C([0,T], X)$ eingeschränkt werden, um den Banachschen Fixpunktsatz anwenden zu können. Definiere
+    \[
+        A = \mathcal C(I, \overline{B(u_0, r)}).
+    \]
+    Wir zeigen nun für $A$ die folgenden Eigenschaften:
+    \begin{itemize}
+        \item \textbf{Nicht leer:} die Menge $A$ ist natürlich nicht leer.
+        \item \textbf{Abgeschlossenheit:} Um die Abgeschlossenheit von $A$ zu zeigen, zeigen wir, dass für alle konvergenten Folgen $(u_n)_{n \in \mathbb N} \subset A$ der Grenzwert von $(u_n)_{n \in \mathbb N}$ auch in $A$ liegt. Sei $u$ der Grenzwert von $(u_n)_{n \in \mathbb N}$. Nun liegt $u$ in $A$, wenn $||u(t) - u_0|| \leq r$ für alle $t \in I$. Das werden wir jetzt zeigen: 
+        \[
+            || u(t) - u_0|| \leq ||  u(t) - u_n(t)|| + \underbrace{||u_n(t) - u_0||}_{\leq r} \quad \forall t \in [0,T], \forall n \in \mathbb N.
+        \]
+        Für den Grenzwert $n \to \infty$ erhält man
+        \[
+             || u(t) - u_0|| \leq r.
+        \]
+        Die Menge $A$ ist somit auch abgeschlossen.
+    \end{itemize}
+    \item Nun bleibt zu zeigen, dass $T$ eine Selbstabbildung ist. Es soll also $T(u) \in A$ für alle $u \in A$ gezeigt werden.
+    \begin{itemize}
+        \item \textbf{Stetigkeit:} Sei $u \in A$. Die Funktion
+        \[
+            (T(u))(t) = u_0 + \int^t_{t_0}f(s,u(s)) ds
+        \]
+        soll stetig sein. Da $u$ stetig ist, ist auch $f(s,u(s))$ stetig. Damit ergibt sich mit dem Hauptsatz der Integral und Differentialrechnung, dass $\int^t_{t_0}f(s,u(s)) ds$ stetig differenzierbar ist. Somit ist $T(u)$ stetig und sogar stetig differenzierbar.
+        
+    \item \textbf{Beschränktheit:} Sei $u \in A$. Es soll $(T(u))(t) \in \overline{B(u_0,r)}$ für alle $t \in [0,T]$ gelten. Sei $t \in [0,T]$.
+    \begin{align*}
+        ||Tu(t) - u_0|| \leq \int^{\max \{t,t_0\}}_{\min \{t,t_0 \}} ||f(s,u(s))||ds \leq M|t-t_0| \leq Ma = r.
+    \end{align*}
+    \end{itemize}
+    
+    \item Damit sind fast alle Voraussetzungen von dem Banachschen Fixpunktsatz erfüllt; es fehlt nur noch, dass $T$ eine Kontraktion ist, d.h.
+    \[
+        \exists K < 1, \forall u,v \in A: ||Tu - Tv||_{\infty} \leq K ||u-v||_{\infty}.
+    \]
+    Dies wollen wir jetzt zeigen. Seien $u,v \in A$. Sei $t \in [0,T]$. Dann gilt
+    \begin{align*}
+        ||Tu - Tv||_{\infty} &\leq \max_{t \in I} \int^{\max\{t,t_0\}}_{\min\{t,t_0\}} ||f(s,u(s)) - f(s,v(s))|| ds \\
+        &\leq  \max_{t \in I} L \int^{\max\{t,t_0\}}_{\min\{t,t_0\}} ||u(s) - v(s)|| ds\\
+        &\leq L |t-t_0| ||u-v||_{\infty} \\
+        &\leq \frac{1}{2}||u-v||_{\infty}.
+    \end{align*}
+\end{itemize}
+
+Zum Schluss wenden wir den Banachschen Fixpunktsatz auf $T: A \to A$ an und wir erhalten eine eindeutige Lösung $u: I \to \overline{B(u_0,r)}$ mit $Tu = u$. Diese Lösung $u$ löst das Anfangswertproblem.
+\end{proof}
+
+Wir zeigen als nächstes, dass eine Lösung $u$ auch auf ganz $[0,T]$ existieren kann, wenn die rechte Seite $f$ auf ganz $[0,T] \times X$ stetig ist und eine Lipschitz-Bedingung erfüllt.
+
+\begin{theorem}[Satz von Picard-Lindelöf, globale Version]
+Sei $f:[0,T] \times X \to X$ stetig und genüge einer Lipschitz-Bedingung. Dann besitzt das Problem
+\begin{align*}
+    \begin{cases}
+        u'(t) &= f(t, u(t)) \\
+        u(t_0) &= u_0
+    \end{cases}
+\end{align*}
+genau eine Lösung $u \in \mathcal C^{1}([0,T], X)$.
+\end{theorem}
+
+\begin{proof}
+Definiere den Operator $T$ wie beim Beweis der lokalen Version von Picard-Lindelöf
+\[
+    Tu(t) = u_0 + \int^t_{t_0} f(s, u(s)) ds.
+\]
+Allerdings werden wir $T$ im Gegensatz zum Beweis des lokalen Picard-Lindelöf nicht einschränken, das heißt, $T: \mathcal C([0,T], X) \to \mathcal C([0,T], X)$. Wir überprüfen die Voraussetzungen vom Banachschen Fixpunktsatz.
+
+\begin{itemize}
+    \item \textbf{Nicht leer:} die Menge $\mathcal C([0,T], X)$ ist natürlich nicht leer.
+    \item \textbf{Abgeschlossenheit:} die Menge $\mathcal C([0,T], X)$ ist ebenfalls offensichtlich abgeschlossen.
+    \item \textbf{Selbstabbildung:} es gilt $Tu \in C([0,T], X)$, denn $Tu$ ist stetig (siehe Beweis vom lokalen Picard-Lindelöf) und es gilt offensichtlich $Tu(t) \in X$ für alle $t \in [0,T]$.
+    \item \textbf{Kontraktion:} Dies ist das einzige, was wirklich gezeigt werden muss. Wir werden eine passende Norm definieren, sodass $T$ tatsächlich eine Kontraktion ist. Definiere die Norm
+    \[
+        ||u||_B = \max_{t \in [0,T]} e^{-L|t-t_0|}||u(t)|| 
+    \]
+    Nun zum Beweis der Kontraktion.
+    \begin{align*}
+        ||Tu-Tv||_{B} &\leq \max_{t \in [0,T]} e^{-L|t-t_0|} \int^{\max\{t,t_0\}}_{\min\{t,t_0\}} ||f(s,u(s)) - f(s,v(s))|| ds\\
+        &\leq \max_{t \in [0,T]} e^{-L|t-t_0|} L \int^{\max\{t,t_0\}}_{\min\{t,t_0\}} ||u(s) - v(s)|| ds \\
+        &=  \max_{t \in [0,T]} e^{-L|t-t_0|} L \int^{\max\{t,t_0\}}_{\min\{t,t_0\}}  e^{L|s-t_0|} \underbrace{e^{-L|s-t_0|} ||u(s) - v(s)||}_{=||u-v||_B} ds \\
+        &\leq ||u-v||_B \max_{t \in [0,T]} e^{-L|t-t_0|} L  \int^{\max\{t,t_0\}}_{\min\{t,t_0\}}  e^{L|s-t_0|}ds \\
+        &\leq ||u-v||_B \max_{t \in [0,T]} e^{-L|t-t_0|} \big[e^{L|s-t_0|}\big]^t_{t_0} \\
+        &= ||u-v||_B \max_{t \in [0,T]} e^{-L|t-t_0|}(e^{L|t-t_0|} - 1) \\
+        &= ||u-v||_B \max_{t \in [0,T]} (1 - e^{-L|t-t_0|}) \\
+        &\leq ||u-v||_B \underbrace{(1 - e^{-LT})}_{< 1}
+    \end{align*}
+\end{itemize}
+Alle Voraussetzungen des Banachschen Fixpunktsatzes sind erfüllt. Wir wenden ihn an und erhalten eine eindeutige Lösung auf ganz $[0,T]$.
+\end{proof}
+
+\begin{definition}[Lokale Lipschitz-Bedingung]
+Eine Funktion $f: T \times X \to X$ genügt einer lokalen Lipschitz-Bedingung, wenn 
+\begin{align*}
+    \forall t_0 \in T, \forall u_0 \in X, \exists \delta_1, \delta_2 > 0: \text{$f_{|\overline{B(t_0, \delta_1)} \times \overline{B(u_0, \delta_2)}}$ genügt einer lokalen Lipschitz-Bedingung.}
+\end{align*}
+\end{definition}
+
+\begin{theorem}[Satz von Picard-Lindelöf, globale Version bei lokaler Lösbarkeit]
+Sei $f: \mathbb{R}  \times X \to X$ stetig und genüge einer lokalen Lipschitz-Bedingung. Betrachte das Anfangswertproblem 
+\begin{align*}
+    \begin{cases}
+        u'(t) &= f(t, u(t)) \\
+        u(t_0) &= u_0
+    \end{cases}.
+\end{align*}
+Falls es eine obere Schranke $M>0$ gibt, sodass für jede Lösung $u: A \to X$ des Anfangswertproblems gilt
+\begin{align*}
+    \forall t \in A: ||f(t,u(t))|| \leq M,
+\end{align*}
+dann gibt es genau eine Lösung $u \in \mathcal{C}^1(\mathbb{R}, X)$.
+\end{theorem}
+
+\begin{proof}
+Die Voraussetzungen vom lokalen Picard-Lindelöf sind erfüllt. Dann garantiert uns der Satz von Picard-Lindelöf eine eindeutige Lösung $u$ auf einem Intervall. Sei $I$ das grö\ss tmögliche Intervall auf dem $u$ das Anfangswertproblem löst. Wir wollen $I = \mathbb{R}$ zeigen. Angenommen $I \neq \mathbb{R}$.
+
+\begin{itemize}
+    \item Falls $I = [a,b]$ abgeschlossen ist, so betrachte das folgende Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            v'(t) = f(t,v(t)) \\
+            v(b) = u(b)
+        \end{cases}.
+    \end{align*}
+    Die Voraussetzungen vom lokalen Picard-Lindelöf sind erfüllt. Daher gibt es eine eindeutige Lösung $v$ auf einem Intervall $[b - c, b+c]$ für ein $c > 0$. Aufgrund der Eindeutigkeit von $u$ und $v$ stimmen sich $u$ und $v$ auf dem Intervall $[b-c, b]$ überein. Also können wir $u$ bis nach $[a, b+c]$ stetig fortsetzen und haben somit ein noch grö\ss eres Intervall als $I=[a,b]$ gefunden. Ein Widerspruch, denn $I$ sollte das grö\ss tmögliche Intervall sein.
+
+    \item Falls $I = (a,b)$ offen ist, so gibt es eine Folge $b_n \to b$. Wir zeigen jetzt, dass $u(b_n) \to w$.
+    \begin{align*}
+        ||u(b_n) - u(b_m)|| \leq \int^{b_n}_{b_m}||f(s,u(s))||ds \leq M |b_n - b_m| \to 0.
+    \end{align*} 
+    Daher ist $(u(b_n))_{n \in \mathbb{N}}$ eine Cauchy-Folge und konvergiert damit gegen einen Grenzwert $w \in X$. Setze
+    \begin{align*}
+        u(b) = w.
+    \end{align*}
+    Analog tun wir das gleiche für die linke Seite $a$. Somit ist $u$ auf einem Intervall $[a,b]$ definiert. Erweitere das Intervall wie im ersten Fall.
+\end{itemize}
+Damit ist $I = \mathbb{R}$ gezeigt.
+\end{proof}
+
+\begin{example}[Anfangswertproblem mit keiner eindeutigen Lösung]
+Betrachte das Problem
+\begin{align*}
+    \begin{cases}
+        u'(t) &= \frac{3}{2}\sqrt[3]{u(t)} \\
+        u(0) &= 0
+    \end{cases}
+\end{align*}
+Mit Trennung der Variablen erhalten wir eine Lösung
+\begin{align*}
+    u^{-\frac{1}{3}}du &= \frac{3}{2} dt \\
+    &\Downarrow \text{Integrieren}\\
+    \frac{3}{2}u^{\frac{2}{3}} &= \frac{3}{2}t \\
+    &\Downarrow \text{Umstellen nach $t$}\\
+    u &= t^{\frac{3}{2}}.
+\end{align*}
+Andere Lösungen sind gegeben durch
+\begin{align*}
+    u_a(t) =
+    \begin{cases}
+        0, \quad &t < a \\
+        (t-a)^{\frac{3}{2}} & t \geq a
+    \end{cases}.
+\end{align*} 
+Sogar $u \equiv 0$ löst das Anfangswertproblem.
+\end{example}
+
+\subsection{Lineare Systeme mit beschränkten Operatoren}
+Sei $X$ ein Banachraum. Bezeichne $\mathcal{L}(X)$ den Raum der linearen, beschränkten Abbildungen von $X$ nach $X$, d,h, 
+\begin{align*}
+    \mathcal{L}(X) = \{ l: X \to X \, | \, \text{$l$ ist linear und beschränkt} \}.
+\end{align*}
+Ein linearer Operator ist beschränkt, falls 
+\begin{align*}
+    \exists C > 0, \forall x \in X: ||l(x)|| \leq C ||x||.
+\end{align*}
+In einem normierten Raum $(E, ||\cdot||)$ ist ein linearer Operator beschränkt genau dann, wenn der lineare Operator stetig ist. Das hei\ss t, Beschränktheit und Stetigkeit von linearen Operatoren sind äquivalent.
+
+Sei $b \in \mathcal{C}([0,T], X)$, $A \in \mathcal C([0,T], \mathcal{L}(X))$. Betrachte das Anfangswertproblem
+\begin{align}\label{problem:linear-system}
+    \begin{cases}
+        u'(t) + A(t)u(t) &= b(t) \\
+        u(t_0) &= u_0
+    \end{cases} \tag{$\star$}.
+\end{align}
+Wenn man genau sein will, sollte man es eigentlich so schreiben
+\begin{align*}
+    \begin{cases}
+        u'(t) + (A(t) \circ u)(t) &= b(t) \\
+        u(t_0) &= u_0
+    \end{cases}.
+\end{align*}
+Eine Eigenheit, dass man bei einem linearen Operator $L$ anstatt $L(x)$ die Schreibweise $Lx$ verwendet. Dies erinnert doch sehr an die Matrixmultiplikation.
+
+\begin{remark}
+Das AWP \eqref{problem:linear-system} hat genau eine eindeutige Lösung auf ganz $[0,T]$. Definiere
+\begin{align*}
+    f(t,v) = b(t) - A(t)v, \quad t \in [0,T], v \in X.
+\end{align*}
+Die rechte Seite $f$ ist stetig, weil $b$ und $A(t)$ stetige Funktionen sind. Auch erfüllt $f$ die Lipschitz-Bedingung
+\begin{align*}
+    ||f(t,v) - f(t,w)|| \leq \max_{t \in [0,T]}||A(t)||\cdot||v-w||, \quad \forall t \in [0,T], \forall v,w, \in X.
+\end{align*}
+Mit dem globalen Picard-Lindelöf erhält man die eindeutige Lösbarkeit auf ganz $[0,T]$.
+\end{remark}
+Hat man anstelle von $[0,T]$ ein beliebiges Intervall $I \subset \mathbb{R}$, so hat das AWP natürlich immer noch eine eindeutige Lösung.
+Sei $b \in \mathcal{C}(I, X)$, $A \in \mathcal C(I, \mathcal{L}(X))$. Betrachte das Anfangswertproblem
+\begin{align*}
+    \begin{cases}
+        u'(t) + A(t)u(t) &= b(t) \\
+        u(t_0) &= u_0
+    \end{cases}.
+\end{align*}
+Dieses AWP besitzt eine eindeutige Lösung auf ganz $I$. Die Beweisidee ist folgende: Falls $I$ abgeschlossen ist, so wende Picard-Lindelöf an. Andernfalls kann man $I$ als Vereinigung abschlossener Intervalle darstellen. Wegen der Eindeutigkeit der Lösung kann man dann eine Lösung auf ganz $I$ konstruieren.
+
+Wir definieren jetzt den Propagator für \emph{homogene} AWP mit $I = \mathbb{R}$.
+\begin{definition}[Propagator]
+Sei $b \in \mathcal{C}(\mathbb{R}, X)$, $A \in \mathcal C(\mathbb{R}, \mathcal{L}(X))$. Betrachte das homogene Anfangswertproblem
+\begin{align*}
+    \begin{cases}
+        u'(t) + A(t)u(t) &= 0 \\
+        u(t_0) &= u_0
+    \end{cases}.
+\end{align*}
+Sei $u \in \mathcal{C}(\mathbb{R}, X)$ die eindeutige Lösung des Anfangswertproblems. Der Propagator $U: \mathbb{R} \times \mathbb{R} \to \mathcal{L}(X)$ wird impliziert definiert über  
+\begin{align*}
+    u(t) = U(t,t_0)u_0.
+\end{align*}
+\end{definition}
+
+\textit{Intuition.} Beachte, dass $U(t,t_0) \in \mathcal L(X)$ ein linearer, beschränkter Operator ist. Hat man einen Propagator $U$  für die homogene Differentialgleichung
+\begin{align*}
+    u'(t) + A(t)u(t) &= 0
+\end{align*}
+gegeben, so löst $U(t,t_0)u_0$ die obige Differentialgleichung mit dem Anfangswert $u(t_0) = u_0$ für beliebige $t_0 \in \mathbb{R}$ und $u_0 \in X$. Der Propagator wird daher auch als \emph{Evolutionsoperator, Lösungsoperator} oder \emph{Übergangsoperator} bezeichnet.
+
+\begin{itemize}
+    \item \textbf{Explizite Darstellung:} Normalerweise existiert keine geschlossene, explizite Darstellung des Propagators. Ist jedoch $A$ kommutativ, d.h. $A(t)A(s) = A(s)A(t)$ für alle $t \in \mathbb{R}$, so gilt 
+    \begin{align*}
+        U(t,t_0) = e^{-\int^t_{t_0}A(s)ds}.
+    \end{align*}
+    Wenn $A$ konstant ist, ergibt sich somit
+    \begin{align*}
+        U(t,t_0) = e^{-(t-t_0)A}
+    \end{align*}
+    \item \textbf{Autonome Systeme:} Eine Differentialgleichung mit konstantem $A$ nennen wir autonomes System. Der Propagator lässt sich dann auch als $S(t-t_0) = e^{-(t-t_0)A}$, wobei $S(r) = e^{-rA}$. $\{ S(r)\}_{r \in \mathbb{R}}$ eine einparametrische, abelsche Gruppe bildet. Das hei\ss t, folgende Eigenschaften sind erfüllt 
+    \begin{enumerate}
+        \item \textbf{Assoziativität:} $\forall r,s,t \in \mathbb{R}: S(r)(S(s)S(t)) = (S(r)S(s))S(t)$,
+        \item \textbf{Neutrales Element:} $S(0) = \mathrm{id} \in \mathcal{L}(X)$,
+        \item \textbf{Inverses Element:} $S(t)^{-1} = S(-t)$,
+        \item \textbf{Kommutativität:} $S(r)S(t) = S(r+t) = S(t)S(r)$.
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Satz von Peano}
+Der Satz von Picard-Lindelöf garantiert uns eine \emph{eindeutige} Lösung des Anfangswertproblems
+\begin{align*}
+    \begin{cases}
+        u'(t)  &= f(t,u(t)) \\
+        u(t_0) &= u_0
+    \end{cases},
+\end{align*}
+falls die rechte Seite $f$ stetig ist und einer Lipschitz-Bedingung genügt. Lassen wir die Lipschitz-Bedingung weg, so erhalten wir mit dem Satz von Peano, dass eine Lösung existiert. Sie muss jedoch nicht eindeutig sein. Im folgenden wollen wir den Satz von Peano für endlichdimensionale und unendlichdimensionale Banachräume beweisen.
+
+\begin{theorem}[Satz von Peano für den endlichdimensionalen Fall]
+    Sei $X$ ein endlichdimensionaler Banachraum. Sei $f: [0,T] \times\overline{ B(u_0,r)} \to X$ stetig. Betrachte das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t)  &= f(t,u(t)) \\
+            u(t_0) &= u_0
+        \end{cases},
+    \end{align*}
+    Dann existiert eine Lösung $u \in \mathcal{C}^1(I, \overline{ B(u_0,r)})$ mit $I = [0,T] \cap [t_0 - \frac{r}{M}, t_0 + \frac{r}{M}]$ und $M = \max_{t \in [0,T], v \in \overline{ B(u_0,r)}}||f(t,v)||$.
+\end{theorem}
+
+Für den Satz von Peano benötigen wir den Schauderschen Fixpunktsatz, welcher einer Verallgemeinerung des Brouwerschen Fixpunktsatzes darstellt. 
+
+\begin{theorem}[Brouwerscher Fixpunktsatz]
+    Sei $X$ ein endlichdimensionaler Banachraum. Sei $T: \overline{B(0,1)} \to \overline{B(0,1)}$ stetig. Dann hat $f$ mindestens einen Fixpunkt.
+\end{theorem}
+
+Die Einheitskugel $\overline{B(0,1)} \subset X$ kann auch durch eine beliebige Menge $A \subset X$ ersetzt werden, solange sie \emph{nicht leer, abgeschlossen, beschränkt} und \emph{konvex} ist. 
+
+\begin{theorem}[Brouwerscher Fixpunktsatz alternativ]
+    Sei $X$ ein endlichdimensionaler Banachraum. Sei $T: A \to A$ stetig, wobei $A$ nicht leer, abgeschlossen, beschränkt und konvex ist. Dann hat $f$ mindestens einen Fixpunkt.
+\end{theorem}
+
+\begin{proof}
+    Siehe Übung, Naos/Tutschke „Gro\ss e Sätze und schöne Beweise der Mathematik“.
+\end{proof}
+
+Im beliebigen Banachraum (inklusive unendlichdimensionalen Fall) ist die Verallgemeinerung des Brouwerschen Fixpunktsatzes der \emph{Schaudersche Fixpunktsatz}. Anstelle der Stetigkeit muss $T$ \emph{kompakt} sein.
+
+\begin{definition}[Relativ kompakt]
+    Sei $X$ ein normierter Raum. Eine Menge $A\subset X$ hei\ss t relativ kompakt, wenn $\overline A$ kompakt ist. Eine andere äquivalente Formulierung ist, dass jede Folge in $A$ eine konvergente Teilfolge in $X$ besitzt.
+\end{definition}
+
+\begin{definition}[$\epsilon$-Netz]
+    Ein $\epsilon$-Netz einer Menge $A$ ist eine Menge $S \subset X$, sodass $A \subset \bigcup_{s \in S} B(s,\epsilon)$. Das heißt, $A$ wird von Kugeln mit Radius $\epsilon$ mit Mittelpunkten in $S$ überdeckt.
+\end{definition}
+
+\begin{definition}[Totale Beschränktheit]
+    Sei $X$ ein normierter Raum. Sei $A \subset X$. Die Menge $A$ hei"st total beschränkt, wenn für alle $\epsilon > 0$ ein endliches $\epsilon$-Netz existiert.
+
+    In anderen Worten: Eine Menge $A$ ist total beschränkt, wenn sie für alle $\epsilon > 0$ von endlich vielen $\epsilon$-Kugeln überdeckt werden kann. Es gibt also Punkte $y_1,...,y_n$, sodass $A \subset \bigcup_{i=1}^n B(y_i, \epsilon)$.
+\end{definition}
+
+\begin{theorem}[Äquivalenz von relativer Kompaktheit und totaler Beschränktheit]\label{theorem:relative-kompaktheit-totale-beschraenktheit}
+    Wenn $X$ ein Banachraum ist, dann sind totale Beschränktheit und relative Kompaktheit äquivalent.
+\end{theorem}
+
+\begin{definition}[Kompakte Funktion]
+    Seien $X$ und $Y$ normierte Räume. Sei $M \subset X$. Eine Funktion $T: M \to Y$ hei\ss t kompakt, wenn sie stetig ist und wenn $T(A)$ relativ kompakt ist für alle beschränkten $A \subset X$.
+\end{definition}
+
+Für beschränkte Folgen $(x_n)_{n \in \mathbb{N}} \subset X$ kann man also immer eine Teilfolge $(x_{n_k})_{k \in \mathbb N}$ finden, sodass $T(x_{n_k})$ in $Y$ konvergiert.
+ 
+Häufig definiert man kompakte Funktionen für lineare Funktionen. Dann kann man die Stetigkeit weglassen, da sie aus der zweiten Eigenschaft folgt.
+
+\begin{theorem}[Schauderscher Fixpunktsatz]
+    Sei $X$ ein Banachraum. Sei $T: A \to A$ kompakt, wobei $A$ nicht leer, abgeschlossen, beschränkt und konvex ist. Dann hat $T$ mindestens einen Fixpunkt.
+\end{theorem}
+
+Um den Schauderschen Fixpunktsatz beweisen zu können, benötigen wir noch den Approximationssatz für kompakte Operatoren. Dieser Satz erlaubt uns, kompakte Operatoren im unendlichdimensionalen Raum durch endlichdimensionale Operatoren zu approximieren.
+
+\vspace{1em}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,313.625); %set diagram left start at 0, and has height of 313.625
+
+%Straight Lines [id:da4640966505767118] 
+\draw    (98.5,66.63) -- (230.5,143.63) ;
+%Straight Lines [id:da8955892362796083] 
+\draw    (356.5,66.63) -- (230.5,143.63) ;
+%Straight Lines [id:da4485876257750061] 
+\draw    (231.5,163.63) -- (320.5,234.63) ;
+%Straight Lines [id:da7037234555321952] 
+\draw    (410.5,164.63) -- (320.5,234.63) ;
+
+% Text Node
+\draw (95,40) node   [align=center] {Brouwerscher Fixpunktsatz};
+% Text Node
+\draw (362,40) node   [align=center] {Approximationssatz für \\kompakte Operatoren};
+% Text Node
+\draw (231.5,150.63) node   [align=center] {Schauderscher Fixpunktsatz};
+% Text Node
+\draw (460,151) node   [align=center] {Arzela-Ascoli\\(endlichdimensional)};
+% Text Node
+\draw (326,262) node   [align=center] {Satz von Peano \\(endlichdimensional)};
+\end{tikzpicture}
+
+\vspace{1em}
+
+Mit dem Schauderschen Fixpunktsatz und den Satz von Arzela Ascoli können wir dann den Satz von Peano beweisen.
+
+\begin{theorem}[Approximationssatz für kompakte Operatoren]
+Seien $X$ und $Y$ Banachräume und sei $M \subset X$ beschränkt und nicht leer. Sei $T: M \to Y$ kompakt. Dann existieren stetige Funktionen $T_n$, sodass für alle $n \in \mathbb{N}$ folgende drei Eigenschaften erfüllt werden:
+\begin{enumerate}
+    \item $||T - T_n||_{\infty} \leq \frac{1}{n}$,
+    \item $\dim \mathrm{span}(T_n(M)) < \infty$,
+    \item $T_n(M) \subset \mathrm{convex}(T(M))$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Im folgenden werden wir die $T_n$ konstruieren.
+    \begin{itemize}
+        \item $T(M)$ ist relativ kompakt, weil $T$ ein kompakter Operator ist und $M$ beschränkt. Nach Satz \ref{theorem:relative-kompaktheit-totale-beschraenktheit} ist $T(M)$ total beschränkt. Es gibt also ein endliches $\frac{1}{n}$-Netz $y_1,...,y_n$ für $T(M)$.
+        \item Definiere für $i=1,...,n$:
+        \begin{align*}
+            a_i(x) = \max\{ \frac{1}{n} - ||T(x) - y_i || ,0\}, \quad x \in M
+        \end{align*}
+        Es gilt:
+        \begin{itemize}
+            \item $a_i(x) \geq 0$ für alle $i=1,...,n$ und $x \in M$
+            \item $\forall x \in M, \exists i \in \{1,...,n\}: a_i(x) > 0$
+            \item $a_i$ ist stetig, da $T$ stetig ist und somit auch $||T(x) - y_i||$ (die Norm ist stetig). Wegen der Stetigkeit von $\max\{x, 0 \}$ ist auch $a_i$ stetig als Komposition stetiger Funktionen.
+        \end{itemize}
+        \item Definiere $T_n: M \to Y$ als 
+        \begin{align*}
+            T_n(x) = \frac{\sum^n_{i=1}a_i(x)y_i}{\sum^n_{j=1}a_j(x)}.
+        \end{align*}
+        Dann ist $T_n$ stetig, weil jedes $a_i(x)$ stetig. Auch ist $T_n$ wohldefiniert, weil der Nenner grö"ser als null ist (es gibt ein $a_i(x) > 0$).
+        \item Zu zeigen: $T_n(M) \subset \mathrm{convex}(T(M))$. Definiere 
+        \begin{align*}
+            \lambda_i = \frac{a_i(x)}{\sum^n_{j=1} a_j(x)}, \quad i = 1,...,n.
+        \end{align*}
+        Es gilt $\lambda_i \in [0,1]$ für alle $i=1,...,n$ und $\sum^n_{i=1} \lambda_i = 1$. Dann schreibe $T_n$ als
+        \begin{align*}
+            T_n(x) = \sum^n_{i=1} \lambda_i y_i \in \mathrm{convex}\{ y_1,...,y_n \} \subset \mathrm{convex}(T(M)) \quad \forall x \in M.
+        \end{align*}
+
+        \item Zu zeigen: $\dim \mathrm{span}(T_n(M)) < \infty$. Wir wissen, dass $$T_n(x) \in \mathrm{convex}\{ y_1,...,y_n \} \subset \mathrm{span}\{y_1,...,y_n \}.$$ Damit ist $\dim \mathrm{span}(T_n(M)) \leq n$. 
+        
+        \item Zu zeigen: $||T_n - T||_\infty \leq \frac{1}{n}$. Sei $x \in M$.
+        \begin{align*}
+            ||T_n(x) - T(x)|| % first
+            \leq ||\frac{\sum^n_{i=1}a_i(x)y_i}{\sum^n_{j=1} a_j(x)} - \frac{\sum^n_{i=1} a_i(x)}{\sum^n_{j=1} a_j(x)} T(x)|| % second
+            \leq \frac{\sum^n_{i=1}a_i(x)||y_i - T(x)||}{\sum^n_{j=1} a_j(x)}
+        \end{align*}
+        Falls $||y_i - T(x)||>\frac{1}{n}$, so wird $a_i(x)||y_i - T(x)|| = 0$ wegen $a_i(x) = 0$. Sonst gilt $a_i(x)||y_i - T(x)|| > 0$, wenn $||y_i - T(x)||\leq \frac{1}{n}$. 
+        Daher 
+        \begin{align*}
+            ||T_n(x) - T(x)|| % first
+            \leq \frac{\sum^n_{i=1}a_i(x)\overbrace{||y_i - T(x)||}^{\leq\frac{1}{n}}}{\sum^n_{j=1} a_j(x)} \leq \frac{\sum^n_{i=1}a_i(x)}{\sum^n_{j=1} a_j(x)} \frac{1}{n}  \leq \frac{1}{n}.
+        \end{align*}
+    \end{itemize}
+\end{proof}
+
+Mit dem Approximationssatz für kompakte Operatoren und dem Brouwerschen Fixpunktsatz können wir den Schauderschen Fixpunktsatz beweisen.
+
+\begin{theorem*}[Schauderscher Fixpunktsatz]
+    Sei $X$ ein Banachraum. Sei $T: A \to A$ kompakt, wobei $A$ nicht leer, abgeschlossen, beschränkt und konvex ist. Dann hat $T$ mindestens einen Fixpunkt.
+\end{theorem*}
+
+\begin{proof}
+    Wende den Approximationssatz für kompakte Operatoren auf $T$ an. Wir erhalten $T_n: A \to X$. Auf diese Operatoren wollen wir den Brouwerschen Fixpunktsatz anwenden. Sei 
+    \begin{align*}
+        A_n = \mathrm{span}(T_n(A)) \cap A.
+    \end{align*}
+    Dieser Raum $A_n$ ist endlichdimensional. Überprüfe die anderen Voraussetzungen für den Brouwerschen Fixpunktsatz.
+
+    \begin{itemize}
+        \item \textbf{Nicht leer:} $A_n \neq \emptyset$, denn $A_n$ enthält den Nullvektor, wenn wir o.B.d.A. annehmen, dass $0 \in A$. Falls $0 \notin A$, betrachte $T': A' \to A', x \mapsto T(x + u_0) - u_0$ mit $A' = A - u_0$ für irgendein $u_0 \in A$. Wenn $T'(x) = x$ einen Fixpuntk $x$ besitzt, so auch $T(x+u_0) = x+u_0$.
+        \item \textbf{Abgeschlossenheit:} $\mathrm{span}(T_n(A))$ ist abgeschlossen, da endlich dimensionale Vektorräme immer vollständig sind. Somit ist $A_n$ abgeschlossen als Schnitt abgeschlossener Räume abgeschlossen.
+        \item \textbf{Beschränktheit:} die Menge $A$ ist beschränkt. Somit auch $A_n$.
+        \item \textbf{Konvexität:} die Menge $\mathrm{span}(T_n(A))$ und $A$ sind konvex. Somit auch $A_n$.
+        \item \textbf{Stetigkeit:} der Operator $T_n$ ist stetig.
+        \item \textbf{Selbstabbildung:} wir wollen $T_n: A_n \to A_n$ zeigen. Es gilt
+        \begin{align*}
+            T_n(A_n) \subset \mathrm{convex}(T(A)) = T(A) \subset A
+        \end{align*}
+        sowie 
+        \begin{align*}
+            T_n(A_n) \subset \mathrm{span}(T_n(A)).
+        \end{align*}
+        Also $T_n(A_n) \subset A_n$.
+    \end{itemize}
+    Der Operator $T_n$ hat nach dem Brouwerschen Fixpunktsatz mindestens einen Fixpunkt $x_n$. Die Menge $\{ x_n : n \in \mathbb{N} \} \subset A$ ist beschränkt. Wegen der Kompaktheit von $T$ gibt es eine Teilfolge $(x_{n_k})_{k \in \mathbb{N}}$, sodass $T(x_{n_k})$ gegen $y \in X$ konvergiert. Es gilt $x_{n_k} \to y$ für $k \to \infty$ wegen
+    \begin{align*}
+        ||x_{n_k} - y|| \leq ||T_{n_k}(x_{n_k}) - T(x_{n_k})|| + ||T(x_{n_k}) - y|| \to 0.
+    \end{align*}
+    Daher folgt 
+    \begin{align*}
+        Ty =  T(\lim_{k \to \infty} x_{n_k}) = \lim_{k \to \infty} T(x_{n_k}) = y.
+    \end{align*}
+\end{proof}
+
+Jetzt brauchen wir noch den endlichdimensionalen Arzela-Ascoli, um den endlichdimensionalen Satz von Peano beweisen zu können.
+
+\begin{definition}[Gleichgradige Stetigkeit]
+    Seien $X,Y$ normierte Räume. Sei $A \subset \{ f: X \to Y \}$. Die Funktionenfamilie $A$ hei"st gleichgradig stetig, wenn 
+    \begin{align*}
+        \forall \epsilon > 0, \exists \delta > 0, \forall x,y \in X, \forall f \in A: ||x-y|| < \delta \implies ||f(x) - f(y)|| < \epsilon.
+    \end{align*}
+\end{definition}
+In Wikipedia nennt man diese Definition \emph{gleichmäßige gleichgradige Stetigkeit}.
+
+\begin{theorem}[Arzela-Ascoli endlichdimensional]
+Sei $(u_n)_{n \in \mathbb{N}} \subset \mathcal{C}([0,T],\mathbb{R}^d)$. Wenn die Folge beschränkt ist und wenn die Folge gleichgradig stetig ist, dann gibt es eine konvergente Teilfolge. Mit anderen Worten: $(u_n)_{n \in \mathbb{N}}$ ist relativ kompakt.
+\end{theorem}
+
+Für den Funktionenraum $\mathcal{C}([0,T],\mathbb{R}^d)$ verwenden wir wie gewohnt die Norm $||\cdot||_\infty$. Dann ist eine Folge $(u_n)_{n \in \mathbb{N}}$ beschränkt, wenn es ein c > 0 gibt mit $||u_n||_\infty < c$ für alle $n \in \mathbb{N}$. Eine Folge $(u_n)_{n \in \mathbb{N}}$ konvergiert in diesem Raum gegen eine Funktion $u$, wenn $|| u_n - u||_\infty \to 0$.
+
+\begin{theorem*}[Satz von Peano für den endlichdimensionalen Fall]
+    Sei $X$ ein endlichdimensionaler Banachraum. Sei $f: [0,T] \times\overline{ B(u_0,r)} \to X$ stetig. Betrachte das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t)  &= f(t,u(t)) \\
+            u(t_0) &= u_0
+        \end{cases},
+    \end{align*}
+    Dann existiert eine Lösung $u \in \mathcal{C}^1(I, \overline{ B(u_0,r)})$ mit $I = [0,T] \cap [t_0 - \frac{r}{M}, t_0 + \frac{r}{M}]$ und $M = \max_{t \in [0,T], v \in \overline{ B(u_0,r)}}||f(t,v)||$.
+\end{theorem*}
+
+\begin{proof}
+Eine Schranke $M>0$ existiert, da $f$ stetig ist auf einer kompakten Menge $[0,T] \times\overline{ B(u_0,r)}$.
+
+Definiere wie beim Picard-Lindelöf den Operator $T:A \to A$ mit
+\begin{align*}
+    Tu(t) = u_0 + \int^t_{t_0} f(s,u(s)) ds \quad \forall t \in I,
+\end{align*}
+wobei $A = \mathcal{C}(I,\overline{ B(u_0,r)})$. Auch hier suchen wir wieder einen Fixpunkt von $T$. Diesmal benutzen wir den Schauderschen Fixpunktsatz. Dazu überprüfen wir die Voraussetzungen.
+\begin{itemize}
+    \item $A$ ist nicht leer.
+    \item $A$ ist abgeschlossen (siehe Beweis vom lokalen Picard-Lindelöf)
+    \item $A$ ist beschränkt. Sei $u \in A$. Sei $t \in I$.
+    \begin{align*}
+        ||u(t)|| \leq ||u(t) - u_0|| + ||u_0|| \leq r + ||u_0||.
+    \end{align*}
+    \item $A$ ist konvex: Seien $u_1, u_2 \in A$ und sei $\lambda \in [0,1]$. Dann ist 
+    \begin{align*}
+        ||\lambda u_1(t) + (1-\lambda)u_2(t) - u_0|| = \lambda||u_1(t) - u_0|| + (1-\lambda)||u_2(t) - u_0|| \leq r.
+    \end{align*}
+    \item $T: A \to A$ ist eine Selbstabbildung. Siehe Beweis vom lokalen Picard-Lindelöf.
+    \item $T$ ist kompakt. Zeige, dass $T$ stetig ist. Seien $u_1, u_2 \in A$. Da $f$ gleichmäßig stetig ist, gibt es $\delta > 0$, sodass $||f(t, u_1(t)) - f(t,u_2(t))|| < \epsilon$ für $||u_1 - u_2||_\infty < \delta$. Damit 
+    \begin{align*}
+        ||Tu_1(t) - Tu_2(t)||_\infty \leq \max_{t \in I}\int^t_{t_0}||f(s,u_1(s)) - f(s,u_2(s))|| \leq\max_{t \in I} \epsilon |t-t_0| \leq \epsilon \frac{r}{M}
+    \end{align*}
+    für alle $||u_1 - u_2||_\infty < \delta$. Damit ist $T$ stetig.
+
+    Als nächstes zeigen wir, dass $T(M)$ relativ kompakt ist für alle beschränkten Mengen $M \subset A$. Sei $M \subset A$ beliebig. Dann ist $M$ auf jeden Fall beschränkt, weil $A$ beschränkt ist. Nun ist $T(M)$ relativ kompakt, wenn es eine konvergente Folge $(u_n)_{n \in \mathbb{N}} \subset T(M)$ existiert. Dazu benutzen wir den Satz von Arzela-Ascoli. 
+
+    \begin{itemize}
+        \item \textbf{Beschränktheit:} $T(M) \subset A$ ist beschränkt wegen der Beschränktheit von $A$.
+        \item \textbf{Gleichgradig stetig:} $T(M)$ soll gleichgradig stetig sein. Sei $v \in T(M)$. Sei $u \in A$ mit $Tu = v$. Es gilt 
+        \begin{align*}
+            ||Tu(t) - Tu(s)|| \leq \int^t_{s} ||f(s,u(s))|| ds \leq M |s-t|.
+        \end{align*}
+        Wähle $\delta = \frac{\epsilon}{M}$. Dann ist für $t-s < \delta$ nämlich $||v(t) - v(s)|| < \epsilon$ für alle $v \in T(M)$.
+    \end{itemize}
+    Mit dem Satz von Arzela Ascoli ist $T$ kompakt.
+\end{itemize}
+
+Wir können den Schauderschen Fixpunktsatz anwenden und erhalten mindestens einen Fixpunkt $Tu = u$.
+\end{proof}
+
+\begin{example}[Gegenbeispiel für einen unendlichendimensionalen Raum]
+Betrachte den Raum der Nullfolgen $\ell_0 = \{ (x_n)_{n \in \mathbb{N}} : \lim_{n \to \infty} x_n = 0 \}$. Betrachte das folgende Differentialgleichungssystem 
+\begin{align*}
+    \begin{cases}
+        u_i'(t) = 2 \sqrt{u_i(t)} \\
+        u_i(0) = \frac{1}{i^2}
+    \end{cases}, \quad t \in [0,T], i=1,...
+\end{align*}
+Jede einzelne Gleichung besitzt nach Picard-Lindelöf eine eindeutige Lösung. So löst $u_i(t) = (t+\frac{i}{2})^2$ die i-te Differentialgleichung. Sei $u: [0,T] \to \ell, t \mapsto (u_1(t),u_2(t),...)$. Jedoch ist für $t > 0$ die Folge $u(t)$ keine Nullfolge mehr. Also besitzt das Differentialgleichungssystem im unendlichdimensionalen Raum $\ell_0$ keine Lösung, obwohl $f: \ell_0 \to \ell_0, (u_1(t),u_2(t),...) \mapsto (2\sqrt{u_1(t)},2\sqrt{u_2(t)},...)$ stetig ist.
+\end{example}
+
+Um den Satz von Peano auch auf den unendlichdimensionalen Fall zu erweitern, brauchen wir einen allgemenineren Arzela-Ascoli, der auch im unendlichdimensionalen Raum gilt.
+
+\begin{theorem}[Verallgemeinerter Satz von Arzela-Ascoli]
+Sei $X$ ein Banachraum. Sei $A \subset \mathcal{C}([0,T], X)$. Dann ist $A$ relativ kompakt, wenn $A$ gleichgradig stetig ist und $A(t) = \{ f(t) : f \in A \}$ für alle $t \in [0,T]$ relativ kompakt ist.
+\end{theorem}
+
+\begin{proof}
+    Dieudonné: „Grundzüge der modernen Analysis“, Band 1.
+\end{proof}
+
+Wir präsentieren den verallgemeinerten Satz von Peano. Wie bei der Verallgemeinerung vom Fixpunktsatz von Brouwer zum Fixpunktsatz von Schauder wird die Stetigkeit durch Kompaktheit ersetzt.
+
+\begin{theorem}[Verallgemeinerter Satz von Peano]
+    Sei $X$ ein Banachraum. Sei $f: [0,T] \times \overline{B(u_0,r)} \to X$ kompakt. Dann besitzt das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t)  &= f(t,u(t)) \\
+            u(t_0) &= u_0
+        \end{cases},
+    \end{align*}
+    mindestens eine Lösung $u \in \mathcal{C}^1(I, \overline{B(u_0,r)})$ mit $I = [0,T] \cap [t_0 - \frac{r}{M}, t_0 + \frac{r}{M}]$ und $M = \sup_{t \in [0,T], v \in \overline{B(u_0,r)}} ||f(t,v)||$.
+\end{theorem}
+
+\begin{proof}
+Eine Schranke $M > 0$ existiert, da $f$ kompakt ist und somit $f([0,T] \times \overline{B(u_0,r)})$ relativ kompakt ist. Eine relative kompakte Menge ist total beschränkt und somit auch beschränkt. Also gibt es ein $M \geq ||f(t,v)||$ für alle $(t,v) \in [0,T] \times \overline{B(u_0,r)}$.
+
+Definiere den Operator $T:A \to A$ mit
+\begin{align*}
+    Tu(t) = u_0 + \int^t_{t_0} f(s,u(s)) ds \quad \forall t \in I,
+\end{align*}
+wobei $A = \mathcal{C}(I,\overline{ B(u_0,r)})$. Auch hier suchen wir wieder einen Fixpunkt von $T$ mithilfe des Schauderschen Fixpunktsatzes. Der Beweis wird analog wie beim endlichendimensionalen Fall geführt, bloß wird die Kompaktheit von $T$ anders bewiesen.
+
+\begin{itemize}
+    \item \textbf{Nicht leer, abgeschlossen, beschränkt, konvex} wie beim endlichdimensionalen Satz von Peano.
+    \item \textbf{Selbstabbildung} wie beim endlichdimensionalen Satz von Peano.
+    \item \textbf{Kompaktheit:} Der Operator $T$ ist stetig (Beweis wie beim endlichdimensionalen Satz von Peano).
+    
+    Zu zeigen bleibt, dass $T(M)$ relativ kompakt ist für alle beschränkten $M \subset A$. Sei $M \subset A$. Weil $A$ beschränkt ist, ist auch $M$ beschränkt. Wir wollen den verallgemeinerten Arzela-Ascoli anwenden.
+    
+    \begin{itemize}
+        \item Wir wissen, dass $T(M)$ gleichgradig stetig ist (siehe Beweis vom endlichdimensionalen Satz von Peano). 
+
+        \item $M(t) = \{ f(t) : f \in T(M) \}$ soll relativ kompakt sein für alle $t \in I$. Sei $u \in M(t)$ für ein beliebiges $t \in I$. Dann gibt es $v \in M$ mit $u = Tv$. Es gilt 
+        \begin{align*}
+            Tv(t) = u_0 + (t-t_0) \frac{1}{t-t_0}\int^t_{t_0}f(s, v(s)) ds &\in u_0 + (t-t_0) \overline{\mathrm{convex}\{ f(s, v(s)) \}_{s \in I}} \\
+            &\subset u_0 + (t-t_0) \underbrace{\overline{\mathrm{convex}\{ f(s, w) \}_{(s,w) \in I \times \overline{B(u_0,r)}}}}_{(*)}.
+        \end{align*}
+        Nun ist $\{ f(s, w) \}_{(s,w) \in I \times \overline{B(u_0,r)}}$ relativ kompakt, weil $f$ kompakt und $I \times \overline{B(u_0,r)}$ beschränkt ist. Nach dem \hyperref[theorem:mazur]{Satz von Mazur [Satz \ref{theorem:mazur}]} ist auch die abgeschlossene konvexe Hülle kompakt und somit ist $(*)$ kompakt. Dann ist $(*)$ natürlich relativ kompakt. Daher ist $M(t)$ relativ kompakt, weil $M(t) \subset u_0 + (t-t_0)(*)$ und Teilmengen von relativ kompakten Mengen auch relativ kompakt sind.
+    \end{itemize}
+
+    Der verallgemeinerte Arzela-Ascoli liefert die Kompaktheit von $T$.
+\end{itemize}
+Somit ist der Schaudersche Fixpunktsatz anwendbar und wir erhalten mindestens einen Fixpunkt.
+\end{proof}
+
+\begin{theorem}[Struktur der Lösungsmenge]
+Unter Voraussetzungen des verallgemeinerten Satzes von Peano ist die Menge aller Lösungen des Anfangswertproblems 
+\begin{align*}
+    \begin{cases}
+        u'(t)  &= f(t,u(t)) \\
+        u(t_0) &= u_0
+    \end{cases}
+\end{align*}
+kompakt.
+\end{theorem}
+
+\begin{proof}
+    Sei $L \subset \mathcal{C}(I, \overline{B(u_0,r)})$ die Lösungsmenge. Sie ist relativ kompakt, da $L \subset T(A)$ und $T(A)$ relativ kompakt ist (siehe Beweis vom verallgemeinerten Satz von Peano). 
+    
+    Es bleibt nur zu zeigen, dass $L$ abgeschlossen ist. Dann ist $L$ nämlich kompakt. Sei $(u_n)_{n \in \mathbb{N}}$ eine Folge in $L$. Sei $u_n \to u$. Wir wollen zeigen, dass $u \in L$. Es gilt wegen der Stetigkeit von $T$, dass
+    \begin{align*}
+        u = \lim_{n \to \infty} u_n = \lim_{n \to \infty} Tu_n = T \lim_{n \to \infty} u_n= Tu. 
+    \end{align*}
+\end{proof}
+
+\begin{example}
+Betrachte den Raum der beschränkten Funktionen $\ell_\infty = \{ (x_n)_{n \in \mathbb{N}} : \exists C > 0, \forall n \in \mathbb{N} : ||x_n|| \leq C \}$. Das Anfangswertproblem
+\begin{align*}
+    \begin{cases}
+        u'(t) = 0 &\quad \text{falls $||u(t)|| = 0$} \\
+        u'(t) = \frac{2\sqrt{u(t)}}{||u(t)||} &\quad \text{sonst} \\
+        u(0) = 0
+    \end{cases}
+\end{align*}
+besitzt die Lösungen $u_0(t) = (0,0,...)$, $u_1(t) = (0, t^2, 0,...)$, $u_2(t) = (0,0,t^2,0,...)$ und so weiter. Diese Lösungsmenge $\{ u_i : i = 1,2,... \}$ ist nicht relativ kompakt, da es keine konvergente Teilfolge gibt. Betrachte dazu 
+\begin{align*}
+    ||u_i - u_j||_\infty = t^2 \neq 0 \quad i \neq j.
+\end{align*}
+\end{example}
+
+\subsection{Einzigkeitsaussagen}
+
+
+\section{Abhängigkeit der Lösungen von Daten, Stabilität und Zeitdiskretisierung}
+
+\subsection{Lemma von Gronwall}
+Es gibt zwei Versionen von Gronwall. Beim ersten ist es wichtig, dass $\lambda(t) \geq 0$ gilt. Bei der zweiten Version ist dies nicht wichtig.
+
+\begin{lemma}[Lemma von Gronwall]
+Sei $t_0 \in [0,T]$. Seien $a,b \in L^\infty(t_0, T)$ und sei $\lambda \in L^1(t_0, T)$ mit $\lambda(t) \geq 0$ für fast alle $t \in (t_0, T)$. Wenn $a(t) \leq b(t) + \int^t_{t_0} \lambda(s) a(s) ds$ für fast alle $t \in (t_0, T)$, dann folgt 
+\begin{align*}
+    a(t) \leq b(t) + \int^t_{t_0}e^{\Lambda(t) - \Lambda(s)}\lambda(s) b(s) ds
+\end{align*}
+für $\Lambda(t) = \int^t_{t_0} \lambda(s) ds$.\\
+
+Wenn $b$ absolut stetig ist, gilt sogar 
+\begin{align*}
+    a(t) \leq e^{\Lambda(t)}\left(b(t_0) + \int^t_{t_0} e^{-\Lambda(s)} b'(s) ds\right).
+\end{align*}
+
+Wenn $b$ stetig und monoton wachsend ist, gilt 
+\begin{align*}
+    a(t) \leq b(t)e^{\Lambda(t)}.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+    Betrachte den Ansatz 
+\begin{align*}
+    \tilde{a}(t) = e^{-\Lambda(t)}\int^t_{t_0} \lambda(s) a(s) ds.
+\end{align*}
+Dann ist die Ableitung 
+\begin{align*}
+    \tilde{a}'(t) = -\lambda(t) e^{-\Lambda(t)}\int^t_{t_0} \lambda(s) a(s) ds + e^{-\Lambda(t)}\lambda(t) a(t) &= e^{-\Lambda(t)} \lambda(t) \left(a(t) - \int^t_{t_0} \lambda(s) a(s) ds\right) \\ &\leq e^{-\Lambda(t)} \lambda(t) b(t).
+\end{align*}
+Wir integrieren auf beiden Seiten 
+\begin{align*}
+    e^{-\Lambda(t)}(a(t) - b(t)) \leq e^{-\Lambda(t)}\int^t_{t_0}\lambda(s)a(s)ds = \tilde{a}(t) = \int^t_{t_0} e^{-\Lambda(s)}\lambda(s)b(s)ds.
+\end{align*}
+Umstellen ergibt 
+\begin{align*}
+    a(t) \leq b(t) + \int^t_{t_0}e^{\Lambda(t)-\Lambda(s)}\lambda(s)b(s)ds.
+\end{align*}
+Sei $b$ auf $[t_0, T]$ absolut stetig. Dann ist mithilfe partieller Integration
+\begin{align*}
+    \int^t_{t_0} e^{-\Lambda(s)}\lambda(s)b(s)ds &= [-e^{-\Lambda(t)}b(t)]^t_{t_0} + \int^t_{t_0} e^{-\Lambda(s)}b'(s)ds \\
+    &= -e^{-\Lambda(t)}b(t) + b(t_0) + \int^t_{t_0} e^{-\Lambda(s)}b'(s)ds.
+\end{align*}
+Das ergibt 
+\begin{align*}
+    a(t) \leq e^{\Lambda(t)}\left(b(t_0) + \int^t_{t_0} e^{-\Lambda(s)}b'(s)ds\right).
+\end{align*}
+Sei $b$ stetig und monoton wachsend. Dann kennen wir bereits die Abschätzung 
+\begin{align*}
+    a(t) 
+    \leq b(t) + e^{\Lambda(t)} \int^t_{t_0} e^{-\Lambda(s)}\lambda(s)b(s) ds 
+    &\leq b(t) + e^{\Lambda(t)}b(t) \int^t_{t_0} e^{-\Lambda(s)}\lambda(s) ds \\
+    &\leq b(t) - e^{\Lambda(t)}b(t)[e^{-\Lambda(t)}]^t_{t_0} \\
+    &\leq b(t) (1 - e^{\Lambda(t)}(e^{-\Lambda(t)} - 1)) \\
+    &\leq b(t)e^{\Lambda(t)}.
+\end{align*}
+\end{proof}
+
+Betont sei wieder, dass $\lambda(t) \geq 0$ wesentlich ist. Für das nächste Lemma kann $\lambda$ auch negativ sein.
+
+\begin{lemma}[Differenzielle Lemma von Gronwall]
+Sei $a$ absolut stetig auf $[t_0, T]$. Seien $g, \lambda \in L^1(t_0, T)$. Wenn $a'(t) \leq g(t) + \lambda(t)a(t)$, dann folgt 
+\begin{align*}
+    a(t) \leq e^{\Lambda(t)}\left(a(t_0) + \int^t_{t_0} e^{-\Lambda(s)}g(s)ds\right).
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+Betrachte den Ansatz 
+\begin{align*}
+    \tilde a(t) = e^{-\Lambda(t)}a(t).
+\end{align*} 
+Ableiten ergibt 
+\begin{align*}
+    \tilde a'(t) = -\lambda(t)e^{-\Lambda(t)}a(t) +   e^{-\Lambda(t)}a'(t)   
+    &=    e^{-\Lambda(t)} (a'(t) - \lambda(t)a(t)) \\
+    &\leq e^{-\Lambda(t)}g(t).
+\end{align*}
+Integrieren ergibt 
+\begin{align*}
+    e^{-\Lambda(t)}a(t) - a(t_0) = \tilde a(t) - a(t_0) \leq \int^t_{t_0} e^{-\Lambda(s)}g(s)ds.
+\end{align*}
+Umstellen ergibt 
+\begin{align*}
+    a(t) \leq e^{\Lambda(t)}\left(a(t_0) + \int^t_{t_0} e^{-\Lambda(s)} g(s) ds\right).
+\end{align*}
+\end{proof}
+
+
+\end{document}
