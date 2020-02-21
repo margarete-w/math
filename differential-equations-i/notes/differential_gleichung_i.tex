@@ -50,13 +50,15 @@
 \tableofcontents
 \newpage
 
-\section{Integral für stetige Funktionen}
 
-\begin{theorem}[Satz von Mazur]\label{theorem:mazur}
-Sei $M$ eine kompakte Menge. Dann ist $\overline{\mathrm{convex}(M)}$ kompakt.
-\end{theorem}
+
 
 \section{Existenz und Eindeutigkeit von Anfangswertproblemen}
+
+\subsection{Integral für stetige Funktionen}
+\begin{theorem}[Satz von Mazur]\label{theorem:mazur}
+Sei $M$ eine kompakte Menge. Dann ist $\overline{\mathrm{convex}(M)}$ kompakt.
+    \end{theorem}
 
 \subsection{Satz von Picard-Lindelöf}
 
@@ -731,14 +733,140 @@ besitzt die Lösungen $u_0(t) = (0,0,...)$, $u_1(t) = (0, t^2, 0,...)$, $u_2(t) 
 \end{example}
 
 \subsection{Einzigkeitsaussagen}
+Im folgenden machen wir Aussagen, unter welchen Voraussetzungen es höchstens eine Lösung geben kann. 
 
+\begin{theorem}[Einzigkeit und lokale Lipschitz-Bedingung]
+    Sei $X$ ein Banachraum. Sei $J \subset \mathbb{R}$ und $D \subset X$ und beide offen. Sei $f: J \times D \to X$ stetig und genüge einer lokalen Lipschitz-Bedingung. Dann hat das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t) = f(t,u(t)) \\
+            u(t_0) = u_0
+        \end{cases}
+    \end{align*}
+    höchstens eine Lösung auf $u \in \mathcal C^1(J, D)$.
+\end{theorem}
+
+\begin{proof}
+    Angenommen, es gäbe zwei Lösungen $u$ und $v$ mit einem gemeinsamen Existenzintervall $\bar J$. Definiere 
+    \begin{align*}
+        \bar t = \inf \{ t \in \bar J_{> t_0} : u(t) \neq v(t) \}
+    \end{align*}
+    Aufgrund der Stetigkeit von $u$ und $v$ gilt $u(\bar t) = v(\bar t) = y$ für ein $y \in D$. Wegen der lokalen Lipschitz-Stetigkeit gibt es um $\bar t$ und $y$ Umgebungen, sodass $f$ eingeschränkt auf diesen Umgebungen der Lipschitz-Bedingung mit Lipschitzkonstante $L > 0$ genügt. 
+    
+    Sei $t > \bar t$. Nun gilt 
+    \begin{align*}
+        ||u(t) - v(t)|| \leq \int^t_{\bar t} ||f(s,u(s)) - f(s, v(s))|| ds \leq L \int^t_{\bar t}||u(s) - v(s)||ds
+    \end{align*}
+
+    Mit dem \hyperref[lemma:gronwall]{Lemma von Gronwall} erhalten wir 
+    \begin{align*}
+        ||u(t) - v(t)|| \leq 0 \cdot e^{L(t-\bar t)} = 0
+    \end{align*}
+    Widerspruch. Damit ist $u(t) = v(t)$ für alle $t > \bar t$.
+
+    Analog geht der Beweis für
+    \begin{align*}
+        \underbar t = \sup \{ t \in \bar J_{< t_0} : u(t) \neq v(t) \}
+    \end{align*} 
+\end{proof}
+
+Haben wir eine einseitige Lipschitz-Bedingung, so ist die Lösung rechts vom Anfangswert ebenfalls einzigartig, falls die Lösung existiert. Für den Beweis einer solchen Aussage benötigen wir das folgende Lemma.
+
+\begin{lemma}\label{lemma:einseitige-lipschitz-bedingung}
+    Sei $H$ ein Hilbertraum. Sei $u \in \mathcal{C}^1([0,T], H)$. Es gilt 
+    \begin{align*}
+        \forall t \in [0,T]: \frac{1}{2}\frac{d}{dt}||u(t)||^2 = \langle u'(t), u(t) \rangle.
+    \end{align*}
+\end{lemma}
+
+\begin{definition}[Einseitige Lipschitz-Bedingung]
+    Sei $H$ ein Hilbertraum. Sei $f: [0,T] \times H \to H$. Die Funktion $f$ genügt einer einseitigen Lipschitz-Bedingung, falls 
+    \begin{align*}
+        \exists L \in \mathbb{R}, \forall t \in [0,T], \forall v,w, \in H: \langle f(t, v) - f(t,w), v-w\rangle \leq L ||v-w||^2.
+    \end{align*}
+\end{definition}
+
+Die Konstante $L$ kann auch negativ sein!
+
+\begin{theorem}[Einzigkeit und einseitige Lipschitz-Bedingung]
+    Sei $H$ ein Hilbertraum. Sei $f: [0,T] \times H \to H$ stetig und genüge einer einseitigen Lipschitzbedingung mit Konstante $L \in \mathbb{R}$. Dann hat das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t) = f(t,u(t)) \\
+            u(t_0) = u_0
+        \end{cases}
+    \end{align*}
+    höchstens eine Lösung für $t \geq t_0$.
+\end{theorem}
+
+\begin{proof}
+    Angenommen, es gäbe zwei verschiedene Lösungen $u$ und $v$. Für $t > t_0$ wollen wir zeigen, dass $u(t) = v(t)$ ist. Sei $t > t_0$. Mit dem \hyperref[lemma:einseitige-lipschitz-bedingung]{Lemma \ref{lemma:einseitige-lipschitz-bedingung}} erhalten wir 
+    \begin{align*}
+        \frac{1}{2}\frac{d}{dt}||u(t) - v(t)||^2 = \langle f(t,u(t)) - f(t,v(t)), u(t) - v(t) \rangle \leq L ||u(t) - v(t)||^2.
+    \end{align*}
+    Integration von $t$ bis $t_0$ ergibt 
+    \begin{align*}
+        ||u(t) - v(t)||^2 \leq 2L \int^t_{t_0}||u(s) - v(s)||^2 ds
+    \end{align*}
+    Lemma von Gronwall ergibt wieder, dass $||u(t) - v(t)||^2 \leq 0$. Also ist $u(t) = v(t)$ für alle $t \geq t_0$.
+\end{proof}
+
+Hier ein Satz, der die Eindeutigkeit für beliebige Intervalle $J \subset [0,T]$ sichert. 
+
+\begin{theorem}[Eindeutigkeitssatz von Nagumo]
+    Sei $X$ ein Banachraum. Sei $f: [0,T] \times \overline{B(u_0,r)}$ stetig und genüge einer Nagumo-Bedingung, d.h. 
+    \begin{align*}
+        \forall t \in [0,T], \forall v,w \in \overline{B(u_0,r)}: ||f(t,v) - f(t,w)|| \leq \frac{1}{|t-t_0|} ||v-w||.
+    \end{align*}
+    Dann gibt es auf jedem Intervall $J \subset [0,T]$ höchstens eine Lösung, welche das Anfangswertproblem
+    \begin{align*}
+        \begin{cases}
+            u'(t) = f(t,u(t)) \\
+            u(t_0) = u_0
+        \end{cases}
+    \end{align*}
+    löst. 
+\end{theorem}
+
+\begin{proof}
+    Angenommen, es gäbe zwei verschiedene Lösungen $u$ und $v$ auf einem gemeinsamen Existenzintervall $J$. Wegen der Stetigkeit von $u$ und $v$ gibt es $\bar t \geq t_0$ und $\underbar t \leq t_0$, sodass $u(t) = v(t)$ für alle $t \in [\underbar t, \bar t] \subset J$. In kleinen Umgebungen rechts von $\bar t$ und links $\underbar t$ sind $u$ und $v$ verschieden.
+
+    Definiere 
+    \begin{align*}
+        m(t) = 
+        \begin{cases}
+            \frac{||u(t) - v(t)||}{|t-t_0|} \quad &\text{falls $t \neq t_0$} \\
+            0 &t=t_0
+        \end{cases}
+    \end{align*}
+
+    \textbf{Stetigkeit von $m$:} Sei $t \neq t_0$. Wir wollen zeigen, dass $m(t) \to 0$ für $t \to t_0$. Dann ist $m(t)$ überall stetig.
+    \begin{align*}
+        m(t) \leq \frac{1}{|t-t_0|} \int^{\max\{t,t_0 \}}_{\min\{ t,t_0 \}} ||f(s,u(s)) - f(s, v(s))|| ds.
+    \end{align*}
+    Für $t\to t_0$ erhalten wir dann
+    \begin{align*}
+        m(t) \leq ||f(t_0, u(t_0)) - f(t_0, v(t_0))|| = ||f(t_0, u_0) - f(t_0, u_0)|| = 0.
+    \end{align*}
+    Da $m(t) \geq 0$ für alle $t \in [0,T]$, folgt $m(t) = 0$ für $t \to t_0$. 
+    \vspace{5px}
+
+    \textbf{Zeige:} $m(t) = 0$ für alle $t \in [0,T]$. Wir wissen $m(t) = 0$ für alle $t \in [\underbar t, \bar t]$. Sei $h > 0$ und betrachte alle Werte $\bar t + h$:
+    \begin{align*}
+        m(\bar t + h) &\leq \underbrace{\frac{h}{\bar t + h -t_0}}_{\overset{(*)}{<} 1} \frac{1}{h} \int^{\bar t + h}_{\bar t} \underbrace{||f(s,u(s)) - f(s, v(s))||}_{\overset{(**)}{\leq} \frac{||u(s)-v(s)||}{|s-t_0|} = m(s)}ds \\
+        &\leq \frac{1}{h}\int^{\bar t + h}_{\bar t} m(s) ds.
+    \end{align*}
+    Beachte, dass $(*)$ nur gilt, weil $\bar t > t_0$. $(**)$ gilt, weil $f$ die Nagumo-Bedingung genügt. Mit Gronwall ergibt sich $m(\bar t + h) \leq 0$. Am Ende erhalten wir, dass $m(t) = 0$ für Werte rechts von $\bar t$. Analog für $\underbar t - h$.
+
+    Da $m(t) = 0$ für alle $t \in [0,T]$, folgt $u(t) = v(t)$ für alle $t \in [0,T]$.
+\end{proof}
 
 \section{Abhängigkeit der Lösungen von Daten, Stabilität und Zeitdiskretisierung}
 
 \subsection{Lemma von Gronwall}
 Es gibt zwei Versionen von Gronwall. Beim ersten ist es wichtig, dass $\lambda(t) \geq 0$ gilt. Bei der zweiten Version ist dies nicht wichtig.
 
-\begin{lemma}[Lemma von Gronwall]
+\begin{lemma}[Lemma von Gronwall]\label{lemma:gronwall}
 Sei $t_0 \in [0,T]$. Seien $a,b \in L^\infty(t_0, T)$ und sei $\lambda \in L^1(t_0, T)$ mit $\lambda(t) \geq 0$ für fast alle $t \in (t_0, T)$. Wenn $a(t) \leq b(t) + \int^t_{t_0} \lambda(s) a(s) ds$ für fast alle $t \in (t_0, T)$, dann folgt 
 \begin{align*}
     a(t) \leq b(t) + \int^t_{t_0}e^{\Lambda(t) - \Lambda(s)}\lambda(s) b(s) ds
