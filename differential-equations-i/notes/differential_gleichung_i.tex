@@ -366,6 +366,47 @@ gegeben, so löst $U(t,t_0)u_0$ die obige Differentialgleichung mit dem Anfangsw
     \end{enumerate}
 \end{itemize}
 
+
+\begin{theorem}[Eigenschaften des Propagators]
+Betrachte das Anfangswertproblem
+\begin{align*}
+    \begin{cases}
+        u'(t) + A(t)u(t) &= 0 \\
+        u(t_0) &= u_0
+    \end{cases} \tag{$\star$}.
+\end{align*}
+
+Der Propagator $U: \mathbb{R} \times \mathbb{R} \to \mathcal L(X)$ besitzt folgende Eigenschaften:
+
+\begin{enumerate}
+    \item der Propagator $U: \mathbb{R} \times \mathbb{R} \to \mathcal L(X)$ ist stetig und für jedes $t,t_0 \in \mathbb{R}$ ist $U(t,t_0): X \to X$ ein linearer und beschränkter Operator. Anders ausgedrückt: $U \in \mathcal{C}(\mathbb{R} \times \mathbb{R}, \mathcal{L}(X))$.
+    \item $\forall t \in \mathbb{R}: U(t,t) = \mathrm{id}$ und $\forall t,s,r \in \mathbb{R}: U(t,s) = U(t,r) U(r,s)$.
+    \item $\forall t,s \in \mathbb{R}: U(t,s)^{-1} = U(s,t)$.
+    \item der Propagator $U$ ist die \emph{eindeutige} Lösung des folgenden Anfangswertproblems
+    \begin{align*}
+        \begin{cases}
+            \frac{\partial}{\partial t}U(t,s) + A(t)U(t,s) &= 0 \\
+            U(s,s) &= \mathrm{id}
+        \end{cases}.
+    \end{align*}
+    \item Die partiellen Ableitungen von $U$ lauten 
+    \begin{align*}
+        \frac{\partial}{\partial t}U(t,s)=-A(t)U(t,s) \quad \text{und} \quad \frac{\partial}{\partial s}U(t,s)=U(t,s)A(t).
+    \end{align*}
+    \item Es gilt die Abschätzung 
+    \begin{align*}
+        \forall t,s \in \mathbb{R}: ||U(t,s)|| \leq \exp{\left(\int^{\max\{ t,s \}}_{\min \{t,s \}} ||A(\tau)|| d\tau \right)}.
+    \end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Sei $U$ der Propagator des im Satz betrachteten Anfangswertproblems.
+\begin{enumerate}
+    \item Die Linearität von $U(t,s)$ folgt aus dem Superpositionsprinzip.
+\end{enumerate}
+\end{proof}
+
 \subsection{Satz von Peano}
 Der Satz von Picard-Lindelöf garantiert uns eine \emph{eindeutige} Lösung des Anfangswertproblems
 \begin{align*}
