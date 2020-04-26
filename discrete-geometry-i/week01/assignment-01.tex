@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+
+
+
+\title{Discrete Geometrie I - Assignment 01}
+\date{}
+\author{Viet Duc Nguyen (395220)\\
+    \underline{vd.nguyen96@gmail.com}
+}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Find the dimension of the intersection of two hyperplanes in an n-dimensional linear space.} 
+
+    Consider two hyperplanes that have no point in common. The dimension of the subspace that comes from the intersection of both hyperplanes is zero.
+
+    For the case that both hyperplanes $H_1$ and $H_2$ have a point in common in $\mathbb R^n$, note that one can shift any linear subspace to contain the origin without affecting its dimension. This is known as $\dim(a + V) = \dim(V)$ for any linear subspace $V$. The intersection of two hyperplanes results in an affine linear subspace that can be shifted to include the origin. For the sake of simplicity, let $H_1$ and $H_2$ denote the shifted hyperplanes whose intersection holds the origin. Then, the dimension formula which reads $\dim(H_1 \cap H_2) = \dim H_1 + \dim H_2 - \dim (H_1+H_2)$ holds. The Minkowski sum of $H_1$ and $H_2$ either results in $H_1$ if both hyperplanes are identical, or $\mathbb R^n$ otherwise. Thus, the dimension of $H_1 \cap H_2$ takes the value $2n - 2 - (n - 1) = n-1$ or $2n - 2 - n = n- 2$.
+
+    All in all, possible values for $\dim(H_1 \cap H_2)$ are zero, $n-1$ or $n-2$.
+
+
+    \item \textbf{Find $\dim(H_1 \cap ... \cap H_7)$.}
+
+    The idea is to apply the previous result inductively on all the hyperplanes. First, all hyperplanes contain the origin, yet are distinct due to the linear independence of the normal vectors. Thus, each intersection of two hyperplanes shrinks the dimension by one as seen in the previous statement. Consequently, the dimension is $9 - 7 = 2$.
+\end{enumerate}
+
+
+
+
+\section*{Exercise 2}
+\textbf{Consider two sets $X,Y$ in an n-dimensional linear space. Show that the convex hull of $X+Y$ is the same as the Minkowski sum of $\mathrm{conv}(X)$ and $\mathrm{conv}(Y)$.}
+
+\begin{itemize}
+    \item $\mathrm{conv}(X+Y) \subset \mathrm{conv}(X) + \mathrm{conv}(Y)$: The Minkowski sum of the respective convex hulls of $X$ and $Y$ encompasses the Minkowski sum of $X$ and $Y$. In addition, $\mathrm{conv}(X) + \mathrm{conv}(Y)$ is convex as the Minkowski sum of convex sets is again convex. Since $\mathrm{conv}(X+Y)$ is the "smallest" convex set containing the Minkowski sum of $X$ and $Y$ the inclusion stated above is proven.
+    
+    \item $\mathrm{conv}(X+Y) \supset \mathrm{conv}(X) + \mathrm{conv}(Y)$: Any point $x \in \mathrm{conv}(X)$ translated by a vector $y \in Y$ is in $\mathrm{conv}(X+Y)$ as it is shown below: 
+    \begin{align*}
+        x + y = \sum_{i=1}^k \alpha_i (x_i + y),
+        \quad x_i \in X, \sum^k_{i=1} \alpha_i = 1.
+    \end{align*}
+    If one translates $x$ not by $y$ but instead by a convex combination of vectors $y_1,...,y_k$ from $Y$, one obtains 
+    \begin{align*}
+        x + \sum_{i=1}^k \alpha_i y_i 
+        = \sum_{i=1}^k \alpha_i(x + y_i) 
+        \in \mathrm{conv}\left(\mathrm{conv}(X+Y)\right) 
+        = \mathrm{conv}(X+Y).
+    \end{align*}
+\end{itemize}
+
+
+
+
+\section*{Exercise 3}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Statement:} If a set is closed, then its convex hull is also closed.
+
+    \textbf{Answer:} This statement is \emph{wrong}. Consider the set that contains all members of the sequence $(\frac{1}{n})_{n \in \mathbb N}$. This set is closed. Its convex hull yields the interval from zero to one, including one but excluding zero. Here is the reason why it does not contain zero: every member of the sequence is strictly positive, and thus the convex combination must be strictly positive, as well.
+
+    \item \textbf{Statement:} If a set is convex, then its closure is convex, too.
+    
+    \textbf{Answer:} This is \emph{true}. Consider two points $a$ and $b$ from the closure of $X$. Then, both $a$ and $b$ are the limits of two sequences $(a_n)$ and $(b_n)$ in $X$, respectively. We will see that any point $c = a + (b-a) \lambda$, where $\lambda \in (0,1)$, is in the closure of $X$, too. This follows from:
+    \begin{align*}
+        \underbrace{a_n + (b_n - a_n) \lambda}_{\in X} \to a + (b - a) \lambda = c \in \bar X, \quad n \to \infty.
+    \end{align*}
+
+    \item \textbf{Statement:} The convex hull of an open set is open.
+
+    \textbf{Answer:} This statement is \emph{true}. Let $X$ be a subset in an n-dimensional linear space. The convex hull of $X$ is the union of sets of the following form
+    \begin{align*}
+        \mathrm{conv}(X) &= \bigcup_{\substack{(\lambda_1,...,\lambda_{n+1})\\ \lambda_i \in [0,1] \\ \sum \lambda_i = 1}} \left\{ \sum^{n+1}_{i=1} \lambda_i x_i : x_i \in X \right\} \\
+       &= \bigcup_{\substack{(\lambda_1,...,\lambda_{n+1})\\ \lambda_i \in [0,1] \\ \sum \lambda_i = 1}} f_{(\lambda_1,...,\lambda_{n+1})}(X^{n+1}),
+    \end{align*}
+    with $f$ being defined as $f_{(\lambda_i)_{i=1}^j}(x_1,...,x_j) = \sum^j_{i=1}\lambda_i x_i$. On a sidenote, it is sufficient to take the convex combination of only $n+1$ vectors due to Carathéodory's theorem.
+    
+    Now, we make the following argument: the map $f_{(\lambda_i)_{i=1}^j}$ is an open mapping (the addition and scalar multiplication operators are open), and thus $f_{(\lambda_i)_{i=1}^j}(X^{n+1})$ is open since $X^{n+1}$ is open. Consequently, $\mathrm{conv}(X)$ is open since the union of open sets is open. 
+\end{enumerate}
+
+
+
+
+\section*{Exercise 4}
+\textbf{Given five or more points in a two dimensionsal plane such that no three pairwise different points lie on a common line, there exist four points whose convex hull forms a quadrilateral.}
+
+\begin{itemize}
+    \item If the convex hull of the given points has four or more vertices, we are done.
+    \item In the other case, the convex hull has three vertices, and two interior points. Select these interior points $i_1, i_2$ and any two vertices $v_1,v_2$ such that $\overline{i_1 i_2} \not \subset \overline{v_1 v_2}$. We found a quadrilateral.
+\end{itemize}
+
+
+\end{document}
