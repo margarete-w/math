@@ -7,11 +7,34 @@
 \usepackage{amsthm}
 \usepackage{enumitem}
 
+%Viktor
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\B}{\mathcal{B}}
+\renewcommand{\c}{\complement}
+
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+\newcommand{\R}{\mathbb{R}} % Reelle Zahlen
+\newcommand{\N}{\mathbb{N}} % Natürliche Zahlen
+\newcommand{\Z}{\mathbb{Z}} % Ganze Zahlen
+\newcommand{\C}{\mathbb{C}} % Komplexe Zahlen
+\newcommand{\Q}{\mathbb{Q}} % Rationale Zahlen
+\newcommand{\K}{\mathbb{K}}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\ran}{ran}
+
 
 
 \title{Measure- and Integrationtheory - Assignment 02}
 \author{Duc (395220), Viktor (392636), Jacky (391049)}
 
+
+%%
+% TO-DO:
+%   [ x ] Aufgabe 1 (Duc)
+%   [ x ] Aufgabe 2 (Duc)
+%
+% Alles fertig.
+%%
 
 
 \begin{document}
@@ -44,7 +67,7 @@ Let $\Omega$ be an universal set, and let $\mathcal S$ be a semiring over $\Omeg
     
     %First, we know that $\mathcal{S}$ can be extended to $\sigma$-algebra with the measure $\mu^*|_{\sigma(\mathcal{S})}$.
 
-    Let $A \subset \Omega$. By definition of the outer measure, there is a sequence of sets $(A_{nk})_{k \in \mathbb{N}} \subset \mathcal{S}$ for all $n \in \mathbb{N}$ with 
+    Let $A \subset \Omega$. By definition of the outer measure, for all $n \in \mathbb{N}$ there is a sequence of sets $(A_{nk})_{k \in \mathbb{N}} \subset \mathcal{S}$ with 
     \begin{align*}
         \bigcup_{k=1}^{\infty} A_{nk} \supset A \quad \text{and} \quad \sum^\infty_{k=1} A_{nk} \leq \mu^*(A) + \frac{1}{n}.
     \end{align*}
