@@ -1,0 +1,177 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+%Viktor
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\B}{\mathcal{B}}
+\renewcommand{\c}{\complement}
+
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+\newcommand{\R}{\mathbb{R}} % Reelle Zahlen
+\newcommand{\N}{\mathbb{N}} % Natürliche Zahlen
+\newcommand{\Z}{\mathbb{Z}} % Ganze Zahlen
+\newcommand{\C}{\mathbb{C}} % Komplexe Zahlen
+\newcommand{\Q}{\mathbb{Q}} % Rationale Zahlen
+\newcommand{\K}{\mathbb{K}}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\ran}{ran}
+
+
+\title{Measure- and Integrationtheory - Assignment 01}
+\author{Duc (395220), Viktor (392636), Jacky (391049)}
+
+
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Aufgabe 1}
+\textbf{Let $(X, \mathcal A, \mu)$ be a measure space.
+Show that $\mathcal{B} = \big\{ A \in \mathcal A: \mu(A) = 0 \text{ or } \mu(A^{c}) = 0\big\}$ is a $\sigma$ algebra on $X$.}
+
+\begin{proof}
+    We show the three properties from definition 3.3.
+    \begin{enumerate}[label = (\roman*)]
+        \item 
+        We have $\mu(X^{\c}) = \mu(\emptyset) = 0$ by definition 3.4, implying $X \in \B$.
+        
+        \item
+        Let $A \in \B$.
+        Then either $\mu(A) = 0$ or $\mu\big(A^{\c}\big) = 0$ holds.
+        
+        In the first case $A^{\c} \in \B$ as $\mu\big((A^{\c})^{\c}\big) = \mu(A) = 0$ holds.
+        In the second case $A^{\c} \in \B$ is immediate.
+        
+        \item
+        Let $(A_k)_{k \in \N} \subset \B$.
+        We first show that $\mu$ is monotone, i.e. $A \subset B$ $\implies$ $\mu(A) \le \mu(B)$ for $A,B \in \A$.
+        As $B = (B \setminus A) \cup A$ is a disjoint union, we have $\mu(B) = \mu(B \setminus A) + \mu(A) \ge \mu(A)$ as $\mu(C) \ge 0$ for all $C \in \A$.
+        (We have $B \setminus A= B \cap A^{\c} = \big(B^{\c} \cup A\big)^{\c} \in \A$ by properties two and three).
+        This argument holds for countable families, too.
+        
+        Next we show that $\mu\left(\bigcup_{k \in \N} A_k\right) \le \sum_{k \in \N}\mu(A_k)$.
+        We can rewrite
+        \begin{equation*}
+            \bigcup_{k \in \N} A_k
+            = \bigcup_{k \in \N} \left(A_k \setminus \bigcup_{j = 1}^{k - 1} A_k\right)    
+        \end{equation*}
+        as a disjoint union, implying the statement by the monotonicity of $\mu$.
+        
+        \underline{Case 1: $\mu(A_k) = 0$ for all $k \in \N$.}
+        We have
+        \begin{equation*}
+            0
+            \le \mu\left(\bigcup_{k \in \N} A_k\right)
+            \le \sum_{k \in \N}\mu(A_k)
+            = 0.
+        \end{equation*}
+        
+        \underline{Case 2: There exists $A \subset \N$ such that $\mu(A_k^{\c}) = 0$ for $k \in A$ and $\mu(A_k) = 0$ for $k \not\in A$.} \\
+        By \textsc{deMorgan}s laws and the monotonicity of $\mu$
+        \begin{equation*}
+            \mu\left(\left(\bigcup_{k \in \N} A_k\right)^{\c} \right)
+            = \mu\left(\bigcap_{k \in \N} A_k^{\c} \right)
+            \le \mu(A_k^{\c})
+            = 0
+        \end{equation*}
+        holds for some $k \in A$ as $\bigcap_{k \in \N} B_k \subset B_i$ holds for all $i \in \N$ and arbitrary sets $(B_k)_{k \in \N}$.
+    \end{enumerate}
+\end{proof}
+
+\textbf{
+    Let $(X, \A)$ be a measurable space and $X_0 \subset X$ a non-emptyset.
+    Show that the trace $\sigma$ algebra $\B \coloneqq \big\{A \cap X_0: A \in \A \big\}$ is a $\sigma$-algebra.
+}
+
+\begin{proof}
+    We show the three properties from definition 3.3.
+    \begin{enumerate}[label = (\roman*)]
+        \item
+        We have $X_0 = X \cap X_0 \in \B$, as $X \in \A$ as $\A$ is a $\sigma$ algebra $(\star)$.
+        
+        \item
+        For $B \coloneqq A \cap X_0 \in \B$ with $A \in \A$
+        \begin{equation*}
+            X_0 \setminus B
+            = X_0 \setminus (A \cap X_0)
+            = X_0 \setminus A 
+            = X_0 \cap A^{\c} \in \B
+        \end{equation*}
+        holds, as by $(\star)$, $A^{\c} \in \A$.
+        
+        \item
+        For $(B_k \coloneqq A_k \cap X_0)_{k \in \N} \subset \B$ with $(A_k)_{k \in \N} \subset \A$
+        \begin{equation*}
+            \bigcup_{k \in \N} B_k
+            = \bigcup_{k \in \N} (A_k \cap X_0)
+            = X_0 \cap \bigcup_{k \in \N} A_k
+            \in \B,
+        \end{equation*}
+        holds, as $\bigcup_{k \in \N} A_k \in \A$ by $(\star)$.
+    \end{enumerate}
+\end{proof}
+
+\subsection*{Aufgabe 2}
+\textbf{To show:
+    $$
+    \mu (\liminf_{n \to \infty} A_n) \overset{(1)}{\leq} \liminf_{n \to \infty} \mu(A_n) \overset{(2)}{\leq} \limsup \mu(A_n) \overset{(3)}{\leq} \mu(\limsup A_n).
+$$ 
+}
+
+
+Zur Erinnerung: 
+$$\liminf_{n \to \infty} A_n = \bigcup_{k=1}^\infty \bigcap_{n = k}^\infty A_n = \lim_{n \to \infty} \bigcap_{i=n}^\infty A_i$$
+
+\begin{proof}
+
+Seien $A_i \in \mathcal A$ für alle $i \in \mathbb N$.
+
+\begin{enumerate}[label=(\arabic*)]
+    \item
+    Sei $B_n \coloneqq \bigcap_{i = n}^\infty A_i$. Dann ist die Folge $(B_n)_{n \in \N}$ aufsteigend: $B_n \subset B_{n+1}$ gilt für alle $n \in \mathbb N$.
+    Aus Satz 3.7 (a) folgt
+    $$
+        \lim_{n \to \infty} \mu(B_n) = \mu(\lim_{n \to \infty} B_n) = \mu(\liminf_{n \to \infty} A_n).
+    $$
+    
+    Nun ist $B_n = \bigcap_{i = n}^\infty A_i \subset A_k$ für alle $k \geq n$. Daher $\mu(B_n) \leq \mu(A_k)$ für alle $k \geq n$. Somit auch $\mu(B_n) \leq \inf_{k \geq n}{\mu(A_k)}$. Grenzwertbildung ergibt
+    $$
+       \mu(\liminf_{n \to \infty} A_n) \le  \liminf_{n \to \infty} \mu(A_k).
+    $$
+
+    \item
+    Das ist klar aus der Definition des Limes superiors und Limes inferiors, da für alle $\varepsilon > 0$ und für fast alle Folgenglieder einer Folge $(x_n)_{n \in \N} \subset \R$ 
+    \begin{equation*}
+        \liminf_{n \to \infty} x_n - \varepsilon
+        < x_n
+        < \limsup_{n \to \infty} x_n + \varepsilon
+    \end{equation*}
+    gilt.
+    
+    \item
+    Das Maß ist endlich. Daher ist $\mu(A_i)$ endlich für alle Mengen $A_i$.
+    Damit können wir die Stetigkeit von oben von $\mu$ ausnutzen $(*)$.
+    Definiere die Menge $B_n \coloneqq \bigcup_{i=n}^\infty A_i$. Aus der Definition folgt, dass $(B_n)_{n \in \mathbb N}$ absteigend ist. Damit folgt
+    $$
+        \lim_{n \to \infty} \mu(B_n)
+        \overset{(*)}{=} \mu (\lim_{n \to \infty} B_n)
+        = \mu \left(\bigcap_{i=1}^\infty \bigcup_{n=i}^\infty A_n\right).
+    $$
+    Nun ist $B_n \supset A_i$ für alle $i \geq n$. Damit ist $\mu(B_n) \geq \mu(A_i)$ für alle $i \geq n$. Sodann haben wir $\mu(B_n) \geq \sup_{i \geq n}\mu(A_i)$. Grenzwertbildung ergibt dann
+    $$
+        \limsup_{n \to \infty} \mu(A_n)
+        \leq \mu \left(\bigcap_{i=1}^\infty \bigcup_{n=i}^\infty A_n\right).
+    $$
+\end{enumerate}
+\end{proof}
+
+Zum Schluss noch ein Beispiel, wo $\mu (\liminf_{n \to \infty} A_n) < \liminf_{n \to \infty} \mu(A_n)$ gilt. Betrachte die Lebesge-messbaren Mengen mit dem Lebesguemaß in $\mathbb R^2$. Sei $A_i = [0,1]^2$, falls $i$ gerade ist; andernfalls sei $A_i = [42,43]^2$. $\mu (\liminf_{n \to \infty} A_n) = 0$, da $\liminf_{n \to \infty} A_n$ die leere Menge ist. Wir sehen, dass $\liminf_{n \to \infty} \mu(A_n) = 1$ ist.
+
+\end{document}

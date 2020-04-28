@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+
+
+\title{Measure- and Integrationtheory - Assignment 02}
+\author{Duc (395220), Viktor (392636), Jacky (391049)}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1}
+\begin{itemize}
+    \item \textbf{From (i), \emph{(ii)}, (iii) to (i), \emph{(ii')}, (iii):} Consider sets $A$ and $B$ with the latter being a superset of the first from a system of sets $\mathcal D$, where the properties (i), (ii), and (iii) hold. Then, $B$ without $A$ is included in $\mathcal D$, for one concludes $B \setminus A = B \cap A^c = (B^c \cup A)^c$. Since the complement of $B$ and $A$ share no common element, the claim (ii') follows.
+
+    \textbf{From (i), \emph{(ii')}, (iii) to (i), \emph{(ii)}, (iii):} Consider a set $A \in \mathcal D$. Its complement is also contained in $\mathcal D$, following from $A^c = \Omega \setminus A$. Since $\Omega$ and $A$ are in $\mathcal D$ with $\Omega$ being a superset of $A$, the claim follows.
+
+    \item \textbf{From (i), (ii'), \emph{(iii)} to (i), (ii'), \emph{(iii')}:} Consider sets $(A_i)$ from $\mathcal D$ with $A_i \uparrow A$. Define pairwise disjoint sets $A'_i = A_i \setminus A_{i-1}$, which yield the set $A$ by union. All $A'_i$ are in $\mathcal D$ because of (ii'), and $A_i$ being a superset of $A_{i-1}$. From property (iii) it follows (iii)'.
+    
+    \textbf{From (i), (ii'), \emph{(iii')} to (i), (ii'), \emph{(iii)}:} Consider sets $(A_i)$ from $\mathcal D$ that are pairwise disjoint. First, for sake of simplicity, we will derive property (ii). This follows directly from (ii') by setting $B = \Omega$. With this in mind, one sees that the union of any disjoint sets $A_i$ and $A_{i+1}$ is the same as $(A_i^c \setminus A_{i+1})^c$. Being disjoint, $A_i^c$ is a superset of $A_{i+1}$. From (ii') and (ii), it follows $(A_i^c \setminus A_{i+1})^c \in \mathcal D$. 
+
+    Next, one defines $B_n = \bigcup^n_{i=1} A_i = (A_n^c \setminus B_{n-1})^c$ and $B_1 = A_1$. All sets $B_n$ are in $\mathcal D$, as shown before. Finally, $B_n \uparrow A \in \mathcal D$ due to property (iii').
+
+    \item \textbf{From (i), (ii), \emph{(iii)} to (i), (ii), \emph{(iii')}:} Consider sets $A_i \in \mathcal D$ with $A_i \subset A_{i+1}$. We showed that (ii) is equivalent to (ii') if (i) and (iii) hold. Thus, we can make use of the difference operator. It holds $\bigcup A_i = \bigcup (A_{i+1} \setminus A_i)$; the latter being a union of disjoint sets, where $A_{i+1} \setminus A_i$ is in $\mathcal D$ due to (ii'). Property (iii) then implies (iii').
+    
+    \item \textbf{Counterexample:} Let $\Omega = \left\{1,2,3\right\}$ and $$\mathcal{D} = \left\{ \left\{ 1\right\}, \left\{ 1,2\right\}, \left\{ 1,2,3 \right\}, \left\{ 2, 3 \right\}, \left\{ 3 \right\}, \left\{ \right\} \right\}.$$
+    The set $\left\{ 1 \right\} \cup \left\{ 3 \right\}$ is not included in $\mathcal{D}$.
+\end{itemize}
+
+
+\section*{Exercise 2}
+Let $\Omega$ be an universal set, and let $\mathcal S$ be a semiring over $\Omega$ with a $\sigma$-additive function $\mu: \mathcal S \to [0, \infty]$. Additionally, let $\mu(\emptyset) = 0$.
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Show that for any set $A \subset \Omega$ there exists a set $B \in \sigma(\mathcal{S})$ such that both sets have the same outer measure.}
+    
+    %First, we know that $\mathcal{S}$ can be extended to $\sigma$-algebra with the measure $\mu^*|_{\sigma(\mathcal{S})}$.
+
+    Let $A \subset \Omega$. By definition of the outer measure, there is a sequence of sets $(A_{nk})_{k \in \mathbb{N}} \subset \mathcal{S}$ for all $n \in \mathbb{N}$ with 
+    \begin{align*}
+        \bigcup_{k=1}^{\infty} A_{nk} \supset A \quad \text{and} \quad \sum^\infty_{k=1} A_{nk} \leq \mu^*(A) + \frac{1}{n}.
+    \end{align*}
+    Define $B_n = \bigcup_{k=1}^\infty A_{nk} \in \sigma(\mathcal S)$. It holds $\bigcap_{n = 1}^N B_n \supset A$ for any $N \in \mathbb{N}$. Thus, the following inequality holds 
+    \begin{align*}
+        \mu^*(A) \leq \mu^*(\cap^N_{n=1} B_n) \leq \mu^*(A) + \frac{1}{N}, \quad \forall N \in \mathbb{N}.
+    \end{align*}
+    Taking the limit $N \to \infty$ yields $$\mu^*(A) = \mu^*(\underbrace{\bigcap_{n=1}^\infty B_n}_{\in \sigma(\mathcal{S})}).$$ Thus, define $B = \bigcap_{n=1}^\infty B_n$.
+
+
+
+    \item \begin{itemize}
+        \item \textbf{Show that for any sets $A$ and $B$ in $\Omega$ it holds that $\mu^*(A) + \mu^*(B) \geq \mu^*(A \cap B) + \mu^*(A \cup B)$.}
+    
+        We make use of the previous result. Let $\lambda = \mu^*|_{\sigma(\mathcal{S})}$. Let $A$ and $B$ be subsets in $\Omega$. Let $A'$ and $B'$ be from $\sigma(\mathcal{S})$ such that $\mu^*(C') = \mu^*(C)$ and $C' \supset C$ for all $C \in \left\{ A,B \right\}$. Due to monotonicity of the outer measure, it holds 
+        $$
+            \mu^*(A \cup B) + \mu^*(A \cap B) \leq \mu^*(A' \cup B') + \mu^*(A' \cap B').
+        $$
+        The right hand side is equal to 
+        $$
+            \lambda(A' \cup B') + \lambda(A' \cap B') = \lambda(A') + \lambda(B') = \mu^*(A) + \mu^*(B).
+        $$  
+        This gives the desired inequality.
+
+        \item \textbf{If $A$ or $B$ is measurable, then equality holds.}
+
+        Let $A$ be measurable. We obtain
+        \begin{align*}
+            \mu^*(A) + \mu^*(B) &= \mu^*(A \cap B) + \mu^*(B \cap A^c) + \mu^*(A) \\
+            &= \mu^*(A \cap B) + \mu^*( (A \cup B) \cap A^c) + \mu^*(A) \\
+            &= \mu^*(A \cap B) + \mu^*( (A \cup B) \cap A^c) + \mu^*((A \cup B) \cap A) \\
+            &= \mu^*(A \cap B) + \mu^*(A \cup B),
+        \end{align*}
+        where for the first and last equality we made use of the fact that $A$ is measurable.
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
