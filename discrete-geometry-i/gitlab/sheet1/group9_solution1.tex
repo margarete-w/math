@@ -1,33 +1,29 @@
-\documentclass{article}
+\documentclass[fontsize=11pt, paper=a4]{scrartcl} 
 
+\usepackage[english,ngerman]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{mathtools}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{amsthm}
 \usepackage{enumitem}
+\usepackage{xstring}
+\StrBehind*{\jobname}{solution}[\sheetno]
+\usepackage[colorinlistoftodos,bordercolor=orange,backgroundcolor=orange!20,linecolor=orange,textsize=scriptsize]{todonotes}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}       
 \usepackage{tikz}
 
-
-
-
-\title{Discrete Geometrie I - Assignment 01}
-\date{}
-\author{Viet Duc Nguyen (395220)\\
-    \underline{vd.nguyen96@gmail.com}
-}
-
-
-
+\parindent0em
+\input{../macros}
 \begin{document}
 
-\maketitle
+%------------------------------------------------------------------------
 
-\section*{Exercise 1}
+\head{\sheetno}
+%------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%% exercise 1 %%%%%%%%%%%%%%%%%%% 
+\ex{1}{4}
+
+%% write solution for ex 1 here
 \begin{enumerate}[label=(\alph*)]
-    \item \textbf{Find the dimension of the intersection of two hyperplanes in an n-dimensional linear space.} 
-
-    Consider two hyperplanes that have no point in common. The dimension of the subspace that comes from the intersection of both hyperplanes is zero.
+    \item Consider two hyperplanes that have no point in common. The dimension of the intersection of both hyperplanes is zero.
 
     For the case that both hyperplanes $H_1$ and $H_2$ have a point in common in $\mathbb R^n$, note that one can shift any linear subspace to contain the origin without affecting its dimension. This is known as $\dim(a + V) = \dim(V)$ for any linear subspace $V$. The intersection of two hyperplanes results in an affine linear subspace that can be shifted to include the origin. For the sake of simplicity, let $H_1$ and $H_2$ denote the shifted hyperplanes whose intersection holds the origin. Then, the dimension formula which reads $\dim(H_1 \cap H_2) = \dim H_1 + \dim H_2 - \dim (H_1+H_2)$ holds. The Minkowski sum of $H_1$ and $H_2$ either results in $H_1$ if both hyperplanes are identical, or $\mathbb R^n$ otherwise. Thus, the dimension of $H_1 \cap H_2$ takes the value $2n - 2 - (n - 1) = n-1$ or $2n - 2 - n = n- 2$.
 
@@ -40,13 +36,15 @@
 \end{enumerate}
 
 
+\grading{4}
 
+%%%%%%%%%%%%%%%%%%% exercise 2 %%%%%%%%%%%%%%%%%%% 
+\ex{2}{2}
 
-\section*{Exercise 2}
-\textbf{Consider two sets $X,Y$ in an n-dimensional linear space. Show that the convex hull of $X+Y$ is the same as the Minkowski sum of $\mathrm{conv}(X)$ and $\mathrm{conv}(Y)$.}
+%% write solution for ex 2 here
 
 \begin{itemize}
-    \item $\mathrm{conv}(X+Y) \subset \mathrm{conv}(X) + \mathrm{conv}(Y)$: The Minkowski sum of the respective convex hulls of $X$ and $Y$ encompasses the Minkowski sum of $X$ and $Y$. In addition, $\mathrm{conv}(X) + \mathrm{conv}(Y)$ is convex as the Minkowski sum of convex sets is again convex. Since $\mathrm{conv}(X+Y)$ is the "smallest" convex set containing the Minkowski sum of $X$ and $Y$ the inclusion stated above is proven.
+    \item $\mathrm{conv}(X+Y) \subset \mathrm{conv}(X) + \mathrm{conv}(Y)$: First, $X+Y \subset \mathrm{conv}(X) + \mathrm{conv}(Y)$. In addition, $\mathrm{conv}(X) + \mathrm{conv}(Y)$ is convex as the Minkowski sum of convex sets is again convex. Since $\mathrm{conv}(X+Y)$ is the smallest convex set containing $X+Y$, the inclusion stated above is proven.
     
     \item $\mathrm{conv}(X+Y) \supset \mathrm{conv}(X) + \mathrm{conv}(Y)$: Any point $x \in \mathrm{conv}(X)$ translated by a vector $y \in Y$ is in $\mathrm{conv}(X+Y)$ as it is shown below: 
     \begin{align*}
@@ -62,10 +60,12 @@
     \end{align*}
 \end{itemize}
 
+\grading{2}
 
+%%%%%%%%%%%%%%%%%%% exercise 3 %%%%%%%%%%%%%%%%%%% 
+\ex{3}{6}
 
-
-\section*{Exercise 3}
+%% write solution for ex 3 here
 \begin{enumerate}[label=(\alph*)]
     \item \textbf{Statement:} If a set is closed, then its convex hull is also closed.
 
@@ -94,11 +94,12 @@
 \end{enumerate}
 
 
+\grading{6}
 
+%%%%%%%%%%%%%%%%%%% exercise 4 %%%%%%%%%%%%%%%%%%% 
+\ex{4}{4}
 
-\section*{Exercise 4}
-\textbf{Given five or more points in a two dimensionsal plane such that no three pairwise different points lie on a common line, there exist four points whose convex hull forms a quadrilateral.}
-
+%% write solution for ex 4 here
 \begin{itemize}
     \item If the convex hull of the given points has four or more vertices, then select any four vertices, and we are done.
     \begin{center}
@@ -143,6 +144,6 @@
     \end{center}
 \end{itemize}
 
-
-
+\grading{4}
+\totalgrade{16}
 \end{document}

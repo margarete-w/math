@@ -1,0 +1,102 @@
+\parindent0em 
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\betrag}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\eins}{ \mathds{1} } 
+\newcommand{\anfzeichen}[1]{"`#1"'}
+\newcommand{\entspricht}{\mathrel{\widehat{=}}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\konv}{konv}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\ospan}{span}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\rint}{rint}
+\DeclareMathOperator{\signum}{signum}
+\DeclareMathOperator{\diff}{diff}
+\DeclareMathOperator{\ggt}{ggT}
+\DeclareMathOperator{\ch}{ch}
+
+\newcommand{\eps}{\varepsilon}
+\providecommand{\dotcup}{\mathbin{\dot{\cup}}}
+\providecommand{\comment}[1]{}
+\def\dcup{\overset{.}{\cup}}
+\newcommand{\statistisch}[1]{}
+\newcommand{\pivot}[1]{\fcolorbox{red}{yellow}{#1}}
+
+\newcommand{\vorlesung}{Discrete Geometry I Summer term 2020}
+
+
+\newcommand{\pkt}[1]{
+\ifnum #1=1
+\textbf{(#1 Punkt)} \vspace{0.1cm}
+\else
+\textbf{(#1 Punkte)} \vspace{0.1cm}
+\fi
+}
+
+\newcommand{\pfad}[1]{[#1]} \vspace{0.1cm}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+
+
+\newtheorem{standardsolution}{standard solution for exercise}
+
+\makeatletter
+\g@addto@macro{\thm@space@setup}{\thm@headpunct{}}
+\makeatother
+
+\newcommand{\head}[1]{\clearpage
+\setcounter{exercise}{0}
+\setcounter{standardsolution}{0}
+\setcounter{page}{1}
+\hrule\vspace{3mm}
+
+\textbf{\centering{\vorlesung}} \hfill Viet Duc Nguyen (395220)\\
+Tutor: Ole or Holger \hfill  \\
+Homework group 9 \hfill  
+\begin{center}
+{\Large \textbf{Exercise sheet #1}} 
+\end{center}
+\hrule
+
+}
+
+
+\newcommand{\grading}[1]{
+\vspace{0.3cm}
+\textcolor{red}{grading:} \hfill \framebox(28,14){\textcolor{red}{/#1}}
+}
+
+\newcommand{\ex}[2]{
+\begin{exercise}\hfill \textbf{#2 Points}\\
+\input{exercises/ex#1}
+\end{exercise}
+\textbf{our solution:}
+}
+
+\newcommand{\totalgrade}[1]{
+\begin{center}
+\hrule
+\vspace{0.4cm}
+\textbf{total grade:}
+
+\vspace{0.1cm}
+ \framebox(40,20){\textbf{\textcolor{red}{/#1}}}
+\end{center}
+}
+
+\newcommand{\holger}[1]{\todo[size=\tiny,color=blue!20]{#1 \hfill --- H.E.}}
+\newcommand{\Holger}[1]{\todo[size=\scriptsize,inline,color=blue!20]{#1 \hfill --- H.E.}}
+\newcommand{\ole}[1]{\todo[size=\tiny,color=green!20]{#1 \hfill --- O.L.}}
+\newcommand{\Ole}[1]{\todo[size=\scriptsize,inline,color=green!20]{#1 \hfill --- O.W.}}
