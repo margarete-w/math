@@ -14,7 +14,7 @@ def read(path):
     :returns: The matrix A that is contained in the file path.
     :rtype: A is a list of lists
     """
-    print("Open file...")
+    #print("Open file...")
     file = open(path, "r")
     A = parse(file)
     return A
@@ -29,7 +29,7 @@ def parse(file):
      """
     # kommentare rausnehmen
     file = [s.strip() for s in file if len(s.strip())> 0 and s.strip()[0] != "#" ]
-    print("Strip comments from file...")
+    #print("Strip comments from file...")
     if file == []:
         return []
     isPolyhedron = file[0] =="A"
@@ -60,10 +60,10 @@ def parse(file):
     for i in range(1, len(A)):
         if len(A[i]) != a:
             print("Dimension of A at row {} is {} but should be {}".format(i, len(A[i]), a))
-    print("Matrix reads:")
-    print("\n--- MATRIX --------------------")
-    printmatrix(A)
-    print("---------------------------------\n")
+    #print("Matrix reads:")
+    #print("\n--- MATRIX --------------------")
+    #printmatrix(A)
+    #print("---------------------------------\n")
     return A
 
 def write(A, output_file):
@@ -76,13 +76,13 @@ def write(A, output_file):
      """
     print("Writing file to {}...".format(output_file))
     f = open(output_file, "w")
-    s= "A\n"
-    w = ""
-    for i in range(len(A)):
-        s = s+ str(A[i][:-1]).strip("[]").replace(",", "") + "\n"
-        w = w + " "+ str(A[i][-1])
-    c = s + "b\n"+w.strip()+"\n"
-    f.write(c)
+    s = "A\n"
+    b = ""
+    for row in A:
+        s += ' '.join(str(float(n)) for n in row[:-1]) + "\n"
+        b += str(float(row[-1])) + " "
+    content = s + "b\n"+b.strip()+"\n"
+    f.write(content)
     print("Writing done!")
 
 #----------------------
@@ -103,9 +103,16 @@ def multiply(s, B):
     :type B: list of floats
     :returns: C
     """
+    s = float(s)
     C = []
     for i in B:
-        C.append( s * i)
+        C.append( s * float(i))
+    return C
+
+def dec_multiply(s, B):
+    C = []
+    for i in B:
+        C.append(s * Fraction(i))
     return C
 
 def add(B,C):
@@ -118,7 +125,20 @@ def add(B,C):
     assert len(B) == len(C), "Laenge der Vektoren stimmt nicht. dim(C)={}, dim(B)={}".format(len(C), len(B))
     D = []
     for i in range(len(B)):
-        D.append(B[i] +C[i])
+        D.append(float(Decimal(B[i]) +Decimal(C[i])))
+    return D
+
+def add_dec(B,C):
+    """
+    Calculates D = B+C
+    :param B, C: vectors
+    :type B,C: lists containing floats
+    :return D: D = B+C
+    """
+    assert len(B) == len(C), "Laenge der Vektoren stimmt nicht. dim(C)={}, dim(B)={}".format(len(C), len(B))
+    D = []
+    for i in range(len(B)):
+        D.append(Fraction(B[i]) +Fraction(C[i]))
     return D
 
 def transpose(A):
@@ -163,7 +183,7 @@ def matrix_vector(C, b):
     assert len(b) == Mshape[1]
     c = [0]* Mshape[0]
     for i in M:
-        c[i[1]] = c[i[1]]+ b[i[2]] * i[0]
+        c[i[1]] = Fraction(c[i[1]])+ Fraction(b[i[2]]) * Fraction(i[0])
     return c
 
 def inner_product(a,b):
@@ -175,9 +195,9 @@ def inner_product(a,b):
     :rtype: c: float
     """
     assert len(a) == len(b)
-    c = 0
+    c = Fraction(0)
     for i in range(len(a)):
-        c = c + a[i] * b[i]
+        c = c + Fraction(a[i]) * Fraction(b[i])
     return c
 
 def is_greater(a,b):
@@ -198,39 +218,43 @@ def is_greater(a,b):
 #----------------------
 # Homework
 #----------------------
+from decimal import *
+from fractions import Fraction
 
 def dimension_reduction(C):
+
     """
     :param C: polyhedron in the form A|b in R^n.
     :type C: list of lists
     :return: B|b', (M, (row, cols)): B|b' is the projection of A|b in R^{n-1},
     M is the sparse matrix such that B|0 = M * A, b' = M* b .
     """
-    print("\tBeginning dimension reduction on A...")
+    #print("\tBeginning dimension reduction on A...")
     import copy
     if C == []:
-        return C
+        return [], ()
     assert len(C[0]) >= 2 , "EIFOK 42, spaltendimension von A ist zu klein {}".format(C)
     if len(C[0]) == 2:
-        return C
+        return C, ()
     B = []
     A = copy.deepcopy(C)
 
-    print("\t\tNormalize last column of A...")
-    for i in range(len(A)):
-        pivot = A[i][-2]
-        if pivot != 0:
-            A[i] = multiply(1.0/abs(pivot), A[i])
+    #print("\t\tNormalize last column of A...")
+    #for i in range(len(A)):
+     #   pivot = A[i][-2]
+      #  if pivot != 0:
+       #     s = Fraction(abs(pivot))
+        #    A[i] = dec_multiply(Fraction(1)/s, A[i])
     M = []
     row = 0
     cols = len(A)
-    print("\t\tRemove last column...")
+    #print("\t\tRemove last column...")
     # Linear combination of rows whose last column have different signs
     for i in range(len(A)):
         pivot1 = A[i][-2]
         if pivot1 == 0:
             #Add the constraint to B and remove the last column.
-            D = A[i][:-2] + [A[i][-1]]
+            D = [Fraction(v) for v in A[i][:-2]] + [Fraction(A[i][-1])]
             B.append(D)
             # Construct M
             M.append((1, row, i))
@@ -243,14 +267,14 @@ def dimension_reduction(C):
                     if pivot1 * pivot2 < 0:
                         #Add the linear combination of all rows with a different
                         #sign to D
-                        D = add(A[i][:-2], A[j][:-2])+ [A[i][-1] + A[j][-1]]
+                        D = add_dec(multiply(abs(pivot2),A[i][:-2]), multiply(abs(pivot1),A[j][:-2]))+ [Fraction(abs(pivot2)*A[i][-1]) + Fraction(abs(pivot1)*A[j][-1])]
                         B.append(D)
                         #Construct M
-                        M.append((abs(1.0/C[i][-2]), row, i))
-                        M.append((abs(1.0/C[j][-2]), row, j))
+                        M.append((Fraction(abs(pivot2)), row, i))
+                        M.append((Fraction(abs(pivot1)), row, j))
                         row = row +1
 
-    print("\tDimension reduction done!")
+    #print("\tDimension reduction done!")
     return B, (M, (row, cols))
 
 
@@ -287,15 +311,15 @@ def __proj(A, k):
     if len(A)== 0:
         return A
     n = len(A[0])-1
-    print("Start projecting on dimension {}...".format(k))
+    #print("Start projecting on dimension {}...".format(k))
     #apply dimension reduction n-k times
     for i in range(0, n-k):
-        print("\tProjection on dimension={}".format(n-i-1))
+        #print("\tProjection on dimension={}".format(n-i-1))
         A, _ = dimension_reduction(A)
-        print("-------- MATRIX -------------------")
-        printmatrix(A)
-        print("-----------------------------------")
-        print("\n")
+        #print("-------- MATRIX -------------------")
+        #printmatrix(A)
+        #print("-----------------------------------")
+        #print("\n")
     return A
 
 def image(input_polyhedron, input_matrix, output_file):
@@ -354,7 +378,7 @@ def __image(A,M):
     Q2 = []
     for i in range(0,k):
         Q1.append(I2[i]+ M[i]+ [0])
-        Q2.append(I1[i]+ multiply(-1, M[i])+ [0])
+        Q2.append(I1[i]+ multiply(-1.0, M[i])+ [0])
     Q3 = []
     for i in range(0,m):
         Q3.append([0]*k+ A[i])
@@ -385,19 +409,18 @@ def H_representation(input_file, output_file):
     k = len(A[0])
     #Construct the polyhedron P
     I = []
-    I1 = [[1]*(k+1)]
-    I2 = [[-1]*(k+1)]
+    I1 = [[1.0]*(k+1)]
+    I2 = [[-1.0]*(k+1)]
     for i in range(0,k):
         I.append([])
         for j in range(0,k+1):
             if i == j :
-                I[i].append(1)
+                I[i].append(1.0)
             else:
-                I[i].append(0)
+                I[i].append(0.0)
     P = I + I1 +I2
     #Calculate A*P
     D = __image(P, A)
-
     write(D, output_file)
 
 def base_case(P):
@@ -413,7 +436,7 @@ def base_case(P):
     import math
     #check if P is empty
     if len(P) ==0:
-        return True, [42]
+        return True, [Fraction(0.0)]
     # check for impossible constraint a_i^Tx > b, where a_i = 0 and b positive
     for i in range(len(P)):
         if P[i][0] ==0 and P[i][1] > 0:
@@ -431,17 +454,19 @@ def base_case(P):
     for i in range(len(P)):
         # find greatest lowerbound
         if P[i][0] > 0 and P[i][1] / P[i][0] > lowerbound:
-            lowerbound =   P[i][1] / P[i][0]
+            lowerbound =   Fraction(P[i][1]) / Fraction(P[i][0])
             lbIndex = i
         # find smallest upperbound
         if P[i][0] < 0 and P[i][1] / P[i][0] < upperbound:
-            upperbound = P[i][1] / P[i][0]
+            upperbound = Fraction(P[i][1]) / Fraction(P[i][0])
             ubIndex = i
     # construct y if lowerbound is greater than upperbound
     if lowerbound > upperbound :
         y = [0] *len(P)
-        y[lbIndex] = 1
-        y[ubIndex] = P[lbIndex][0] / (- P[ubIndex][0])
+        #y[lbIndex] = 1
+        #y[ubIndex] = Fraction(P[lbIndex][0]) / Fraction((- P[ubIndex][0]))
+        y[lbIndex] = Fraction(-P[ubIndex][0])
+        y[ubIndex] = Fraction(P[lbIndex][0])
         #check that y^T*a = 0 and y^T *b > 0.
         assert abs(inner_product(y, transpose(P)[0])) < 10**(-12)
         assert inner_product(y, transpose(P)[1]) > 0
@@ -449,11 +474,17 @@ def base_case(P):
     # return feasible x_1 if lowerbound is smaller than upperbound
     if lowerbound <= upperbound:
         x = lowerbound if lowerbound != -math.inf else upperbound
-        if lowerbound == -math.inf and upperbound == math.inf:
-            x = 42
+        if lowerbound != -math.inf and upperbound != math.inf:
+            x = lowerbound
+        elif lowerbound == -math.inf and upperbound != math.inf:
+            x = upperbound 
+        elif lowerbound != -math.inf and upperbound == math.inf:
+            x = lowerbound 
+        elif lowerbound == -math.inf and upperbound == math.inf:
+            x = 10000
         # check that a*x >= b
-        assert is_greater(multiply(x, transpose(P)[0]), transpose(P)[1])
-        return True, [x]
+        #assert is_greater(multiply(x, transpose(P)[0]), transpose(P)[1])
+        return True, [Fraction(x)]
 
 def compute_x_or_y(input_file):
     """
@@ -467,6 +498,9 @@ def compute_x_or_y(input_file):
     otherwise True, x such that x in P.
      """
     P = read(input_file)
+    for i in range(0, len(P)):
+        P[i] = [Fraction(p) for p in P[i]]
+
     n = len(P[0])-1
     History = [(P, None)]
     B = P
@@ -484,13 +518,13 @@ def compute_x_or_y(input_file):
             z = matrix_vector( B, z)
             #test3(Q, z)
         #test3(P,z)
-        return False, z
+        return False, [float(v) for v in z]
     #Construct x in P if P is not empty
     if NotEmpty :
         for Q, _ in History[1:]:
             z = step(Q, z)
             #test4(Q,z)
-        return True, z
+        return True, [float(v) for v in z]
 
 
 
@@ -508,7 +542,7 @@ def step(P, x):
     C = []
     #Substitute x_old in P
     for i in range(0, len(P)):
-        C.append([P[i][-2], P[i][-1]- inner_product(x, P[i][:-2])])
+        C.append([Fraction(P[i][-2]), Fraction(P[i][-1])- Fraction(inner_product(x, P[i][:-2]))])
     lowerbound = - math.inf
     upperbound = math.inf
     lbIndex = None
@@ -516,18 +550,23 @@ def step(P, x):
     # calculate lower and upperbound for new component of x_new
     for i in range(len(C)):
         # find greatest lower bound
-        if C[i][0] > 0 and C[i][1] / C[i][0] > lowerbound:
-            lowerbound =   C[i][1] / C[i][0]
+        if C[i][0] > 0 and Fraction(C[i][1]) / Fraction(C[i][0]) > lowerbound:
+            lowerbound =  Fraction(C[i][1]) / Fraction(C[i][0])
             lbIndex = i
         # find smallest upperbound
-        if C[i][0] < 0 and C[i][1] / C[i][0] < upperbound:
-            upperbound = C[i][1] / C[i][0]
+        if C[i][0] < 0 and Fraction(C[i][1]) / Fraction(C[i][0]) < upperbound:
+            upperbound = Fraction(C[i][1]) / Fraction(C[i][0])
             ubIndex = i
     assert upperbound >= lowerbound or abs(lowerbound -upperbound) < 10**(-12)
-    w= [lowerbound if lowerbound != -math.inf else upperbound ]
+    if lowerbound != -math.inf and upperbound != math.inf:
+        w = [Fraction(lowerbound+upperbound)/2.0]
+    elif upperbound != math.inf:
+        w = [math.floor(upperbound)]
+    elif lowerbound != -math.inf:
+        w = [math.ceil(lowerbound)]
     if lowerbound == -math.inf and upperbound == math.inf:
-        w = [42]
-    return x+w
+        w = [0.0]
+    return x+ w
 
 
 
@@ -584,3 +623,11 @@ def test4(P, z):
     A = P[:,:-1]
     b = P[:,-1]
     assert np.count_nonzero(A.dot(z) >= b) == A.shape[0]
+
+def test():
+    import numpy as np
+    p = [0.5194319805081822, 1.4903577379741426, 1.4151531151338057]
+    Ab = np.array(read("outfile.ot"))
+    b = np.array(Ab[:,-1])
+    A = np.array(Ab[:,:-1])
+    print(np.count_nonzero(A.dot(p) >= b) == A.shape[0])

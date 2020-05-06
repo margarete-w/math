@@ -1,0 +1,103 @@
+\documentclass[9pt]{extarticle}
+
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage[many]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}   
+\usepackage{physics}
+\usepackage{xfrac,unicode-math}
+\usepackage{geometry}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{nicefrac}
+
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+
+\geometry{a4paper,left=40mm,right=40mm}
+
+\input{support/font.tex}
+\input{support/style.tex}
+\input{support/newcommands.tex}
+\input{support/theorems.tex}
+    	
+
+
+\begin{document}
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+
+\section*{ADM I Problem Sheet 08}
+\subsubsection*{Team 42 Linear and Combinatorial Optimization Workgroup}
+
+\textbf{Affiliated Members:} Jacky Behrendt (391049) and Viet Duc Nguyen (395220)
+
+\noindent \textbf{Tutorial:} Thursday 10am - 12pm, Christos
+\\
+
+\noindent $
+\begin{array}{l}
+\includegraphics[width=0.5cm]{instagram.png}
+\end{array}
+$ Follow Team 42 on \vip{instagram.com/official\_team42} 
+
+
+\sep
+\subsection*{Exercise 22 (Helly’s Theorem for polyhedra)}
+\begin{enumerate}[label=(\roman*)]
+    \item Let $\mathcal F = \{ P_1, P_2, P_3 \}$ with 
+    \begin{itemize}
+        \item $P_1 = \{ (x,y) \in \mathbb R^2 : y \geq 0 \}$,
+        \item $P_2 = \{ (x,y) \in \mathbb R^2 : x \geq 0 \}$, and
+        \item $P_3 = \{ (x,y) \in \mathbb R^2 : -(x+y) \geq 4 \}$.
+    \end{itemize}
+    
+    We see that $(0,0) \in P_1 \cap P_2$, $(-4,0) \in P_1 \cap P_3$ and $(0,-4) \in P_2 \cap P_3$. So, \textbf{every polyhedron in $\mathcal F$ has a point in common.}
+    
+    However, there is no point in $P_1 \cap P_2 \cap P_3$. If this were the case, one would obtain a point $(x,y) \in \mathbb R^2_{\geq 0}$, but then $-(x+y) \leq 0$, which contradicts the inequality of $P_3$. \textbf{Therefore, all polyhedra in $\mathcal F$ share no point.} $\qed$
+
+    \item Sources: http://www.wisdom.weizmann.ac.il/~robi/teaching/AdvAlgs2008/handout4.pdf and https://math.stackexchange.com/questions/85560/proving-hellys-theorem
+    
+    Let $A = (a_i^T)_{i=1,...,m} \in \mathbb R^{m \times n}$, and let $b \in \mathbb R^m$. Assume $Ax \geq b$ has no solutions. Take a look at the following linear program:
+    \begin{align}\label{papa}
+        \min \quad &0^Tx \\
+        \text{s.t.} \quad &Ax \geq b \nonumber
+    \end{align}
+    For $Ax \geq b$ has no solutions, it follows that the dual program
+    \begin{alignat}{2}\label{hans}
+        \max \quad &p^Tb&  \\
+        \text{s.t.} \quad & A^Tp &= 0 \nonumber \\
+        & p &\geq 0 \nonumber 
+    \end{alignat}
+    is either \emph{unbounded} or \emph{infeasible}. Since $p=0$ is a solution of the dual program \eqref{hans}, \textbf{the dual program must be unbounded.}
+
+    Next, due to the simplex algorithm and the fact that \eqref{hans} is \emph{unbounded} it follows that there exists a basic variables $p_{B(1)},...,p_{B(n)}$ of \eqref{hans} and an non-basic index $j \notin \{B(i)\}_{i=1,...,n}$ such that it holds $B^{-1}A^T_j \leq 0$, where $B$ is the associated basis matrix of indexes $B(1),...,B(n)$, i.e. $B=(A^T_{B(1)},...,A^T_{B(n)})$. So, one obtains a feasible solution $p \in \R^m$ which satisfies 
+    \begin{itemize}
+        \item $A^Tp = 0$ and $p \geq 0$,
+        \item $-p^T b < 0$, and
+        \item $p_{i} = 0$ for all non-basic indexes $i \notin \{ B(k) \}_{k=1,...,n} \cup \{ j \}$.
+    \end{itemize}
+    In other words, it holds
+    \[
+        Bp_{B'} = 0 \quad \text{and} \quad p_{B'}^T b_{B'} < 0,
+    \]
+    where $B'$ denotes the associated basis indexes $B(1),...,B(n)$ and $j$, as well. Since the variable $p_j$ can be increased arbitrarily the cost $p_{B'}^T b_{B'}$ is unbounded. So, we obtain the following \emph{unbounded} linear program
+    \begin{alignat*}{2}
+        \max \quad &p_{B'}^Tb_{B'}&  \\
+        \text{s.t.} \quad & Bp_{B'} &= 0 \nonumber \\
+        & p_{B'} &\geq 0 \nonumber 
+    \end{alignat*}
+    The dual of this program results in a modified primal linear program where only $n+1$ rows of $A$ have been selected. This modified primal linear program is \textbf{infeasible} for the dual is unbounded. That's exactly what we wanted to prove. $\qed$
+
+    \item \textbf{Claim:} If for all $F \subset \mathcal F$ with $|F|=n+1$ it holds $\bigcap_{P \in F} P \neq \emptyset$, it follows that $\bigcap_{P \in \mathcal F} P \neq \emptyset$.
+
+    \textbf{Proof by contraposition:} Let $\mathcal F$ be a family of polyhedra such that $\bigcap_{P \in \mathcal F} P = \emptyset$. From exercise 1(ii) there exists a family $F \subset \mathcal F$ with 
+    \begin{itemize}
+        \item $|F|=n+1$, and
+        \item $\bigcap_{P \in F} P = \emptyset$.
+    \end{itemize}
+    This ends the proof since the claim follows by contraposition. $\qed$
+\end{enumerate}
+\end{document}

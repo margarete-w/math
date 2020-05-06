@@ -1,0 +1,20 @@
+% -----------------------
+% Font configuration
+% -----------------------
+\usepackage{fontspec}
+
+\setmainfont[
+    Path=fonts/
+]{NewYorkMedium-Regular.otf}
+\setmainfont[
+    Path = fonts/,
+    ItalicFont={NewYorkMedium-RegularItalic.otf},
+    BoldItalicFont={NewYorkMedium-BoldItalic.otf},
+    BoldFont={NewYorkMedium-Bold.otf}
+]{NewYorkMedium-Regular.otf}
+\setsansfont[
+    Path = fonts/,
+    BoldFont={SF-Pro-Display-Bold.otf}
+]{SF-Pro-Display-Medium.otf}
+
+\setmathfont{STIX2Math}[Path=fonts/]

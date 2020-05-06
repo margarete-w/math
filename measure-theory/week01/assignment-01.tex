@@ -73,15 +73,15 @@ Show that $\mathcal{B} = \big\{ A \in \mathcal A: \mu(A) = 0 \text{ or } \mu(A^{
             = 0.
         \end{equation*}
         
-        \underline{Case 2: There exists $A \subset \N$ such that $\mu(A_k^{\c}) = 0$ for $k \in A$ and $\mu(A_k) = 0$ for $k \not\in A$.} \\
-        By \textsc{deMorgan}s laws and the monotonicity of $\mu$
+        \underline{Case 2: There exists a subset $A \subset \N$ such that $\mu(A_k^{\c}) = 0$ for $k \in A$.} 
+        By \textsc{deMorgan}s laws and the monotonicity of $\mu$ it holds
         \begin{equation*}
             \mu\left(\left(\bigcup_{k \in \N} A_k\right)^{\c} \right)
             = \mu\left(\bigcap_{k \in \N} A_k^{\c} \right)
-            \le \mu(A_k^{\c})
+            \le \mu(A_i^{\c})
             = 0
         \end{equation*}
-        holds for some $k \in A$ as $\bigcap_{k \in \N} B_k \subset B_i$ holds for all $i \in \N$ and arbitrary sets $(B_k)_{k \in \N}$.
+        for some $i \in A$, as $\bigcap_{k \in \N} B_k \subset B_i$.
     \end{enumerate}
 \end{proof}
 

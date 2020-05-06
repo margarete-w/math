@@ -1,0 +1,39 @@
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgrey}{rgb}{0.8,0.8,0.8}
+\definecolor{darkgrey}{rgb}{0.3,0.3,0.3}
+\definecolor{orange}{rgb}{0.94, 0.55, 0.294}
+\definecolor{pink}{rgb}{0.94, 0.29, 0.7}
+\definecolor{yellow}{rgb}{1, 0.749, 0}
+\definecolor{green}{rgb}{0.235,0.702,0.443}
+
+\newcommand{\chapfnt}{\fontsize{16}{19}}
+\newcommand{\secfnt}{\fontsize{18}{17}}
+\newcommand{\ssecfnt}{\fontsize{14}{14}}
+
+%\renewcommand{\hline}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+
+\newcommand{\sep}{\noindent\makebox[\linewidth]{\rule{12cm}{1pt}}}
+
+\titleformat{\chapter}[display]
+{\normalfont\chapfnt\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\chapfnt}
+
+\titleformat{\section}
+{\normalfont\sffamily\secfnt\bfseries}{\thesection}{}{}
+
+\titleformat{\subsection}
+{\normalfont\sffamily\ssecfnt\mdseries}{\thesubsection}{}{}
+
+\titleformat{\subsubsection}
+{\normalfont\sffamily\ssecfnt\mdseries\color{grey}}{\thesubsection}{}{}
+
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+\titlespacing*{\section} {0pt}{0pt}{8pt}
+\titlespacing*{\subsection} {0pt}{12pt}{8pt}
+
+\linespread{1.3}
+
+\renewcommand{\baselinestretch}{1.4} 
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{lightgrey}{\old@rule[#1]{#2}{#3}}}
+\makeatother

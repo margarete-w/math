@@ -1,0 +1,194 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{bbm}
+
+%Viktor
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\B}{\mathcal{B}}
+\renewcommand{\c}{\complement}
+
+\newcommand{\vip}[1]{\textit{\textbf{#1}}}
+\newcommand{\R}{\mathbb{R}} % Reelle Zahlen
+\newcommand{\N}{\mathbb{N}} % Natürliche Zahlen
+\newcommand{\Z}{\mathbb{Z}} % Ganze Zahlen
+\newcommand{\C}{\mathbb{C}} % Komplexe Zahlen
+\newcommand{\Q}{\mathbb{Q}} % Rationale Zahlen
+\newcommand{\K}{\mathbb{K}}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\ran}{ran}
+
+
+
+\title{Measure- and Integrationtheory - Assignment 03}
+\author{Duc (395220), Viktor (392636), Jacky (391049)}
+
+
+%%
+% TO-DO:
+%   [ x ] Aufgabe 1 (Duc)
+%   [ x ] Aufgabe 2 (Duc)
+%   [ x ] Aufgabe 3 (Duc)
+%
+%%
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 1}
+\begin{enumerate}[label=(\roman*)]
+    \item Seien zwei messbare Räume $(\Omega, \mathcal A)$ und $(\Omega', \mathcal A')$ gegeben. Sei $\mathcal E \supset \mathcal A$ und $\mathcal E' \subset \mathcal A'$. Sei $f$ zudem $(\mathcal A, \mathcal A')$-messbar.
+    
+    Sei $A \in \mathcal E'$. Dann ist $A \in \mathcal A'$. Wegen der $(\mathcal A, \mathcal A')$-Messbarkeit ist das Urbild $f^{-1}(A)$ in $\mathcal A$ enthalten und somit auch in $\mathcal E$. Somit ist $f$ auch $(\mathcal E, \mathcal E')$-messbar.
+ 
+    \item Seien zwei messbare Räume $(\Omega, \mathcal A)$ und $(\Omega', \mathcal A')$ gegeben. Sei $\Omega'_0 \subset \Omega'$. Sei $f: \Omega \to \Omega'_0$. Zeige, dass $f$ genau dann $(\mathcal A, \mathcal A')$-messbar ist, wenn $f$ $(\mathcal A, \mathcal A'|_{\Omega'_0})$ messbar ist.
+    
+    "$\implies$": Sei $f$ $(\mathcal A, \mathcal A')$-messbar. Sei $A \in \mathcal A'|_{\Omega'_0}$. Dann ist $A = A' \cap \Omega'_0$ für ein $A' \in \mathcal A'$. 
+    $$
+        f^{-1}(A) = f^{-1}(A' \cap \Omega'_0) = f^{-1}(A') \cap \underbrace{f^{-1}(\Omega'_0)}_{= \Omega} = f^{-1}(A') \in \mathcal A.
+    $$
+    Somit ist $f$ $(\mathcal A, \mathcal A'|_{\Omega'_0})$-messbar.
+
+    "$\impliedby$": Sei $f$ $(\mathcal A, \mathcal A'|_{\Omega'_0})$-messbar. Sei $A \in \mathcal A'$. Dann ist $f^{-1}(A \cap \Omega'_0) \in \mathcal A$. Nun ist $f^{-1}(A \cap \Omega'_0) = f^{-1}(A) \cap f^{-1}(\Omega'_0) = f^{-1}(A)$ und daher ist $f^{-1}(A)  \in \mathcal A$. Also ist $f$ $(\mathcal A, \mathcal A')$-messbar.
+\end{enumerate}
+
+
+
+
+\section*{Exercise 2}
+
+Sei $(\Omega, \mathcal A)$ ein messbarer Raum und sei $(X,d)$ ein metrischer Raum. Seien $f,f_n: \Omega \to X$ Abbildungen mit $f_n \to f$. \textbf{Zeige, dass die $(\mathcal A, \mathfrak B(X))$-Messbarkeit von $f_n$ die $(\mathcal A, \mathfrak B(X))$-Messbarkeit von $f$ impliziert.}
+
+\begin{itemize}
+    \item Sei $A\subset X$ abgeschlossen. Sei $U_n = \{ x \in X: d(x,A) < \frac{1}{n}\}$. Zuerst zeigen wir 
+    $$
+        f^{-1}(A) = \bigcap_{n \in \mathbb N} \bigcup_{k \in \mathbb N} \bigcap_{j=k}^\infty f_j^{-1}(U_n)
+    $$
+    oder handlicher
+    $$
+        f^{-1}(A) = \bigcap_{n \in \mathbb N}\liminf_{j \to \infty}f_j^{-1}(U_n).
+    $$
+    
+    \begin{enumerate}
+        \item "$\subset$": Sei $x \in f^{-1}(A)$. Dann gibt es ein $a \in A$ mit 
+        $$
+            f(x) = \lim_{i \to \infty} f_i(x) = a.
+        $$ 
+        Sei $n \in \mathbb N$ beliebig. Dann gibt es einen Index $I \in \mathbb N$, sodass für alle $i \geq I$ gilt 
+        \begin{align*}
+            d(f_i(x), a) < \frac{1}{n}.
+        \end{align*}
+        Sei $j \geq I$. Dann ist $f_j(x) \in U_n$, da 
+        \begin{align*}
+            d(f_j(x), A) \leq d(f_j(x), a) < \frac{1}{n}.
+        \end{align*}
+        Somit ist $x \in f_j^{-1}(U_n)$ für alle $j \geq I$. Das ist nichts anderes als 
+        $$
+            x \in \liminf_{j \to \infty} f^{-1}_j(U_n).
+        $$
+        Da $n \in \mathbb N$ beliebig war, folgt 
+        $$
+            x \in \bigcap_{n \in \mathbb N} \liminf_{j \to \infty} f^{-1}_j(U_n)
+        $$
+        und somit 
+        $$  
+            f^{-1}(A) \subset \bigcap_{n \in \mathbb N} \liminf_{j \to \infty} f^{-1}_j(U_n).
+        $$
+
+        \item "$\supset$": Sei $x \in \bigcap_{n \in \mathbb N} \liminf_{j \to \infty}f^{-1}_j(U_n)$. Sei $n \in \mathbb N$. Dann gibt es einen Index $I(n) \in \mathbb N$, sodass für alle $j \geq I(n)$ gilt, dass $f_j(x) \in U_n$. Nun ist 
+        \begin{align*}
+            f_j(x) \in U_n &\iff d(f_j(x), A)< \frac{1}{n}\\ &\iff \exists a_{jn} \in A: d(f_j(x), a_{jn}) < \frac{1}{n}.
+        \end{align*}            
+        Außerdem gibt es einen Index $I^*$, sodass 
+        $$
+            \forall j \geq I^*: d(f(x), f_j(x)) < \frac{1}{n}.
+        $$
+        Sei $I = \max\{ I^*, I(n) \}$. Dann gilt für alle $j \geq I$, dass 
+        \begin{align*}
+            d(f(x), a_{jn}) \leq d(f(x), f_j(x)) + d(f_j(x), a_{jn}) < \frac{1}{n} + \frac{1}{n} = \frac{1}{2n}
+        \end{align*}
+        Damit gilt $d(f(x), A) < \frac{1}{2n}$ für alle $n \in \mathbb N$. Das heißt, 
+        $$
+            d(f(x), A) = 0
+        $$
+        und somit $f(x) \in A$. Also $x\in f^{-1}(A)$ und daher 
+        $$  
+            f^{-1}(A) \supset \bigcap_{n \in \mathbb N} \liminf_{j \to \infty} f^{-1}_j(U_n).
+        $$
+    \end{enumerate}
+
+    \item Nun wollen wir die $(\mathcal A, \mathfrak B(X))$-Messbarkeit von $f$ zeigen. Da $\mathfrak B(X)$ durch die abgeschlossene Mengen in $X$ erzeugt wird, reicht es, nur diese Mengen zu überprüfen. Das heißt, wir zeigen $f^{-1}(A) \in \mathcal A$ für alle abgeschlossenen Teilmengen $A \subset X$. Sei $A \subset X$ abgeschlossen. Wir haben gezeigt
+    $$
+        f^{-1}(A) = \bigcap_{n \in \mathbb N} \bigcup_{k \in \mathbb N} \bigcap_{j=k}^\infty f_j^{-1}(U_n).
+    $$
+
+    Nun ist $U_n$ offen in $X$ für alle $n \in \mathbb N$ und es folgt $U_n \in \mathfrak B(X)$. Damit ist $f_j^{-1}(U_n) \in \mathcal A$ für alle $j \in \mathbb N$ wegen der Messbarkeit von $f_j$. Abzählbare Schnitte und Vereinigungen von messbaren Mengen wie $f_j^{-1}(U_n)$ sind auch wieder in $\mathcal A$ enthalten. Also 
+    $$
+        f^{-1}(A) \in \mathcal A.
+    $$
+    Die Funktion $f$ ist $(\mathcal A, \mathfrak B(X))$-messbar.
+\end{itemize}
+
+
+
+
+\section*{Exercise 3}
+
+Sei $(\Omega, \mathcal A, \mu)$ ein Maßraum und $f: \Omega \to \overline{\mathbb R}$ $\mu$-integrierbar. \textbf{Zeige, dass für alle $\epsilon > 0$ ein $\delta > 0$ existiert, sodass}
+
+$$
+    \forall A \in \mathcal A: \mu(A) < \delta \implies \left|\int_A f d\mu\right| < \epsilon.
+$$
+
+\begin{enumerate}
+    \item Sei $\epsilon > 0$. Sei $f$ beschränkt, d.h. es gibt ein $C > 0$, sodass
+    $$
+        f(x) < c \quad \forall x \in \Omega.
+    $$ 
+    Definiere $\delta = \frac{\epsilon}{C}$. Sei $A \in \mathcal A$ mit $\mu(A) < \delta$. Dann folgt
+    \begin{align*}
+        \left|\int_A f d\mu\right| \leq \int_A |f| d\mu \leq C \int_A 1 d\mu = C \mu(A) < \epsilon.
+    \end{align*}
+
+    \item Sei $f$ unbeschränkt und $\epsilon > 0$. Da $f$ $\mu$-integrierbar ist, gilt 
+    \begin{align*}
+        \int f^+ d\mu &= \sup\left\{ \int g d\mu : g \leq f^+, g \in \mathfrak E_+ \right\}, \\
+        \int f^- d\mu &= \sup\left\{ \int g d\mu : g \leq f^-, g \in \mathfrak E_+ \right\}.
+    \end{align*}
+    Wir betrachten im Folgenden $f^+$; der Fall $f^-$ geht analog. 
+    \begin{enumerate}
+        \item Es gibt eine Elementarfunktion $g \in \mathfrak E_+$ mit $g \leq f$ und 
+        $$
+            \int (f^+ - g) d\mu < \frac{\epsilon}{2}.
+        $$
+        Für jedes $A \in \mathcal A$ gilt 
+        \begin{align}\label{klo}
+            \int_A (f^+ - g) d\mu < \frac{\epsilon}{2}.
+        \end{align}
+
+        \item Die Elementarfunktion $g$ ist beschränkt. Damit gibt es, wie wir im ersten Teil gezeigt haben, ein $\delta^+ > 0$, sodass für alle messbaren Mengen $A$ mit $\mu(A) < \delta^+$ gilt 
+        \begin{align}\label{kraft}
+            \int_A g d\mu < \frac{\epsilon}{2}.
+        \end{align}
+
+        \item Sei $A$ eine messbare Menge mit $\mu(A) < \delta^+$. Es gilt 
+        \begin{align*}
+            \int_A f^+ d\mu \overset{\eqref{klo}}{<} \frac{\epsilon}{2} + \int_A g d\mu \overset{\eqref{kraft}}{<} \epsilon.
+        \end{align*}
+
+        \item Die Schritte (a) bis (c) verlaufen analog für $f^-$ und wir erhalten ein $\delta^- > 0$. Sei $A$ eine messbare Menge mit $\mu(A) < \delta$, wobei $\delta = \min\{ \delta^+, \delta^- \}$. Nun gilt 
+        \begin{align*}
+            \left|\int_A f d\mu\right| = \Bigg|\underbrace{\int_A f^+ d\mu}_{< \epsilon} - \underbrace{\int_A f^- d\mu}_{<\epsilon}\Bigg| < \epsilon.
+        \end{align*}
+        Damit haben wir die Aussage bewiesen.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
