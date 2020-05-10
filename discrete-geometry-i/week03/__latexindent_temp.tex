@@ -1,0 +1,151 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{tikz}
+% \usetikzlibrary{patterns}
+
+
+
+\title{Discrete Geometrie I - Assignment 03}
+\date{}
+\author{Viet Duc Nguyen (395220)\\
+    \underline{vd.nguyen96@gmail.com}
+}
+
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Exercise 01}
+Let $P_1$ and $P_2$ be two polyhedron in $\mathbb R^n$. Consider the operator $+: \mathbb R^{n \times n} \to \mathbb R^n, (x,y) \mapsto x+y$. That operator is linear.
+
+\begin{enumerate}
+    \item $P_1 \times P_2$ is a polyhedron. To see this, let $A_1 x \leq b_1$ and $A_2 x \leq b_2$ denote the linear inequalities that define $P_1$ and $P_2$. Then, 
+    $$
+        P_1 \times P_2 = \{ (x,y) \in \mathbb R^{n \times n} : A_1 x \leq b_1 \land A_2 y \leq b_2 \},
+    $$
+    which shows that $P_1 \times P_2$ is a polyhedron.
+    \item $P_1 + P_2$ is the image of $P_1 \times P_2$ under the operator $+$. For applying a linear transformation on a polyhedra in $\mathbb R^n$ yields again a polyhedra, $P_1 + P_2$ is a polyhedra.
+\end{enumerate}
+
+
+\section*{Exercise 02}
+
+First, we show that $T(P)$ solves the linear inequalities. Second, we show that the linear inequalities are contained in the image of $P$ under the linear transformation $T$.
+
+\begin{enumerate}
+    \item Let $Q = T(P)$ and $y \in Q$. Then there exists $x \in P$ such that $T(x) = y$, which implies 
+
+    $$
+        \langle c_i, y \rangle = \langle c_i, T(x) \rangle = \langle T^*(c_i), x \rangle = \langle a_i, x\rangle \leq b_i \quad \forall i = 1,...,m.
+    $$
+
+    \item Let $y \in \mathbb R^n$ such that $\langle c_i,y\rangle \leq b_i$ for all $i = 1,...,m$. Then, there is $x \in \mathbb R^n$ such that $T(x) = y$ since $T$ is bijective. We show that $x \in P$, and hence it follows that $y \in T(P)$. We claim $\langle a_i, x\rangle \leq b_i$ for all $i = 1,...,m$.
+
+    $$
+        \langle c_i, y \rangle = \langle c_i, T(x) \rangle = \langle T^*(c_i), x \rangle = \langle a_i, x\rangle \leq b_i \quad \forall i = 1,...,m.
+    $$
+\end{enumerate}
+
+
+
+
+\section*{Exercise 03}
+Let $A \subset \mathbb{R}^d$. 
+\begin{enumerate}
+    \item \textbf{Let $A$ be convex and open. Then, $A$ is algebraically open.} Let $L = \{ r + \tau s : \tau \in \mathbb{R}\}$ for any $r,s \in \mathbb{R}^d$. We want to show that 
+    $$
+        A \cap L = \{ r + \tau s : \tau \in I \},
+    $$
+    where $I$ must be an open interval.
+
+    \begin{enumerate}
+        \item $I$ is an interval, because $L$ and $A$ are convex and the intersection of convex sets yields a convex set. Hence, 
+        $$
+            A \cap L = \{ r + \tau s : \tau \in I \}
+        $$
+        must be convex. This set is convex if and only if $I$ is convex. Consequently, $I$ must be an intervall for the only convex sets in $\mathbb{R}^1$ are intervals.        
+
+        \item Claim: $I$ is open. Let $x = r + \tau_0 s  \in A \cap L$ for some $\tau_0 \in \mathbb R$. To show that $I$ is open, we need to find an open neighborhood $\tau_0 \in U_\epsilon(\tau_0)$ with radius $\epsilon$ such that $r+\tau s \in A \cap L$ for all $\tau \in U_\epsilon(\tau_0)$.
+        
+        There exists an open neighborhood $U_{\delta}(x) \subset A$ with radius $\delta > 0$ since $A$ is open. Let $\epsilon = \frac{\delta}{||s||}$. Then, it holds for all $|\tau| < \epsilon$ that
+        $$
+            || x - \left(r + (\tau_0 + \tau) s\right)|| = ||\tau s|| < ||\frac{s}{||s||}\delta|| = \delta.
+        $$
+        This implies that 
+        $$
+            r + (\tau_0 + \tau) s \in U_\delta(x) \subset A \cap L.
+        $$
+        We found a neighborhood with the desired properties, and thus $I$ is open.
+    \end{enumerate}
+
+    We see that $I$ is an open interval. Hence, $A$ is algebraically open.
+
+    \item \textbf{Let $A$ be algebraically open. Then, $A$ is convex and open.} By definition, $A$ is convex if $A$ is algebraically open. So, $A$ is convex. It remains to show that $A$ is open.
+    
+    Remember that $A$ is a subset in $\mathbb R^d$. Let $e_i$ denote the $i$-th unit vector for $i=1,...,d$. Let $x \in A$. We want to find an open neighborhood $U_\delta(x) \subset A$.
+
+    Consider straight lines 
+    $$
+        L_i = \{ x  + \tau e_i : \tau \in \mathbb{R} \}, \quad i = 1,..., d,
+    $$
+    that when intersected with $A$ yields 
+    $$
+        A \cap L_i = \left\{ x + \tau e_i : \tau \in I_i \right\},
+    $$
+    where $I_i = (\alpha,\beta)$ is an open interval with $\alpha \in [-\infty, 0)$ and $\beta \in (0, \infty]$. Let $p_i^+ = x + \tau e_i$ with $\tau \in (\alpha,0)$ and $p_i^- = x + \tau e_i$ with $\tau \in (0, \beta)$. Then, consider the convex set 
+    $$
+        \mathrm{conv}\left(
+            \bigcup_{i=1}^d \left\{ p_i^+, p_i^- \right\}
+        \right).
+    $$
+    From the lecture we know that the interior of a convex set is convex. So, 
+    \begin{align}\label{sponge}
+        \mathrm{int}\left( \mathrm{conv}\left(
+        \bigcup_{i=1}^d \left\{ p_i^+, p_i^- \right\}
+    \right)\right)
+    \end{align}
+    is convex, too. That set is non-empty (the interior is non-empty, see exercise 5) and open. Furthermore, $A$ contains \eqref{sponge} since $A$ is convex. Thus, $\eqref{sponge}$ is an open neighborhood in $A$ containing $x$. We showed that $A$ is open.
+
+    \begin{tikzpicture}[scale=1.5]
+        \draw[dashed] (0,0.5)--(4,0.5) node[anchor=north east] {$A$}--(5,-1)--(2,-2.0)--(0,0.5);
+        \draw[fill=black] (2,-1) circle (0.05) node[anchor=south west] {$x$};
+        \draw (2,-1) -- (2, 1) node[anchor=west] {$L_1$};
+        \draw (2,-1) -- (2, -3);
+        \draw (2,-1) -- (0, -1);
+        \draw (2,-1) -- (6, -1)node[anchor=south] {$L_2$};
+        \draw[dashed] (2,-0.3) -- (3,-1) -- (2,-1.5) -- (1.5, -1)--(2,-0.3);
+        \draw[fill=black] (2,-0.3) circle (0.05) node[anchor=south west] {$p_1^+$} (2,-1.5) circle (0.05) node[anchor=west] {$p_1^-$} (3,-1) circle (0.05) node[anchor=south] {$p_2^+$} (1.5,-1) circle (0.05) node[anchor=south] {$p_2^-$};
+    \end{tikzpicture}
+\end{enumerate}
+
+\section*{Exercise 05}
+Let $\Delta \subset\mathbb R^n$ be a simplex. Let $a_1,...,a_{n+1}$ the affinely independent points that define the simplex. Without loss of generality, we can assume that one of the vertices is the origin, i.e. $a_{n+1} = 0 \in \mathbb R^n$. 
+
+\begin{enumerate}
+    \item We know from linear algebra that there exists a bijective linear transformation $T$ which transforms the simplex $\Delta$ to an unit cube $Q \subset \mathbb R^d$.
+    \item The point $y = \sum^n_{i=1}\frac{1}{n}e_i$ lies in the unit cube.
+    \item There is an open ball $U_1(y) \subset Q$ with radius $1$ which contains $y$.
+    \item $T$ and $T^{-1}$ are continous because they are bounded (known from functional analysis). Hence, $T^{-1}(U_1(y))$ is an open subset of the interior of $\Delta$, which shows that $\mathrm{int}(\Delta)\neq \emptyset$.
+\end{enumerate}
+
+\begin{tikzpicture}
+    \pgfmathsetmacro{\cubex}{1}
+    \pgfmathsetmacro{\cubey}{1}
+    \pgfmathsetmacro{\cubez}{1}
+    \draw[] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,-\cubey,0) -- ++(\cubex,0,0) -- cycle;
+    \draw[] (0,0,0) -- ++(0,0,-\cubez) -- ++(0,-\cubey,0) -- ++(0,0,\cubez) -- cycle;
+    \draw[] (0,0,0) -- ++(-\cubex,0,0) -- ++(0,0,-\cubez) -- ++(\cubex,0,0) -- cycle;
+    \draw (0,0) circle (2cm);
+  \draw (-2,0) arc (180:360:2 and 0.6);
+  \draw[dashed] (2,0) arc (0:180:2 and 0.6);
+\end{tikzpicture}
+
+\end{document}

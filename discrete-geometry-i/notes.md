@@ -403,7 +403,7 @@ An example is the ___cross polytope___ $\{ x \in \mathbb R^n : \sum^n_{i=1}|x_i|
 **Problem:**
 Prove that the Minkowski sum $P_1+P_2$ of two polyhedra is a polyhedron.
 
-_Proof._ Define the operator $+: \mathbb R^{2n} \to \mathbb R^n, (x,y) \mapsto x+y$. It is linear. Then, $P_1 \times P_2$ is a polyhedron. Thus, $P_1 + P_2$ is also a polyhedron, for the Minkowski sum is the image of $P_1 \times P_2$ under $+$.
+_Proof._ Define the operator $+: \mathbb R^{2n} \to \mathbb R^n, (x,y) \mapsto x+y$. It is linear. $P_1 \times P_2$ is a polyhedron. Thus, $P_1 + P_2$ is also a polyhedron, for the Minkowski sum is the image of $P_1 \times P_2$ under $+$.
 
 An importatnt subalgbera of $\mathcal C(\mathbb R^d)$ is the following.
 
