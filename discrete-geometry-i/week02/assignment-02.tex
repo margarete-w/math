@@ -13,7 +13,7 @@
 
 \title{Discrete Geometrie I - Assignment 02}
 \date{}
-\author{Viet Duc Nguyen (395220)\\
+\author{Viet Duc Nguyen (395220)\qquad Margarete Wohlleber (381132)\\
     \underline{vd.nguyen96@gmail.com}
 }
 
@@ -117,7 +117,7 @@
 
     Therfore, $\chi(I_2) = 1$.
 
-    \item Let's compute $\chi(I_3)$, where $I_3$ is the open unit cube in $\mathbb R^3$. The unit cube $Q = [0,1]^3$ has $8$ vertices, and $12$ edges. Each vertex has an Euler characteristic of $1$ and each edge has an Euler characteristic of $-1$. So, $1=\chi(Q) = \chi(I_3) + 8 - 12 \implies \chi(I_3) = 5$.
+    \item Let's compute $\chi(I_3)$, where $I_3$ is the open unit cube in $\mathbb R^3$. The unit cube $Q = [0,1]^3$ has $8$ vertices $12$ edges and $6$ faces. Each vertex has an Euler characteristic of $1$ and each edge has an Euler characteristic of $-1$. The characteristic of the facis can be calculatet campletly analogue to 1. So, $1=\chi(Q) = \chi(I_3) + 8 - 12 +6 \implies \chi(I_3) = -1$.
 \end{enumerate}
 
 
@@ -129,13 +129,15 @@ $n \leadsto n+1$. Assume $\chi(A_1 \cup ... \cup A_n) = 1$ for some $n \in \math
 \begin{align*}
     \chi(A_1 \cup ... \cup A_n \cup A_{n+1}) &= \chi(\left(\bigcup^n_{i=1} A_i\right) \cup A_{n+1})\\
     &= \chi\left(\bigcup^n_{i=1} A_i\right) + \chi(A_{n+1}) - \chi(\bigcup^n_{i=1} A_i \cap A_{n+1}) \\
-    &= 1 + 1 - \chi(\bigcup^n_{i=1} A_i \cap A_{n+1})
+    &= 1 + 1 -\left(  \chi(\bigcup^n_{i=1} A_i)\cdot( A_{n+1})\right)  \\
+    &= 1 + 1 -\left(  1\cdot1\right) \\
+    &=1
 \end{align*}
 
-Consider the set $B_i = A_i \cap A_{n+1}$. It holds $B_1 \cap ... \cap B_n \neq \emptyset$ and $B_i$ is convex and closed. Therefore, $\chi(B_1 \cup ... \cup B_n) = 1$. Thus, 
-$$
-\chi(A_1 \cup ... \cup A_n \cup A_{n+1})= 1 + 1 - \chi(\underbrace{\bigcup^n_{i=1} A_i \cap A_{n+1}}_{=B_1 \cup...\cup B_n})= 1+1-1 = 1.
-$$
+%Consider the set $B_i = A_i \cap A_{n+1}$. It holds $B_1 \cap ... \cap B_n \neq \emptyset$ and $B_i$ is convex and closed. Therefore, $\chi(B_1 \cup ... \cup B_n) = 1$. Thus, 
+%$$
+%\chi(A_1 \cup ... \cup A_n \cup A_{n+1})= 1 + 1 - \chi(\underbrace{\bigcup^n_{i=1} A_i \cap A_{n+1}}_{=B_1 \cup...\cup B_n})= 1+1-1 = 1.
+%$$
     
 \iffalse
 Let $A_1,...,A_n \subset \mathbb R^d$ be closed and convex such that $B = \bigcap^n_{i=1} A_i \neq \emptyset$. It holds $\chi(B) = 1$, for $B = \bigcap^n_{i=1} A_i$ is closed and convex. Let $\tilde A_0 = B$, $\tilde A_i = A_i \setminus \bigcup^{i-1}_{j=0}\tilde A_{j}$ for $i=1,...,n$. 
